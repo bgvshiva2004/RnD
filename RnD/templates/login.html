@@ -1,25 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href='{% static "style.css" %}'>
+    <link rel="stylesheet" href='{% static "login.css" %}'>
     <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>
     <title>Login</title>
 </head>
 <body>
     <div class="navbar1">
         <div class="title">
-            <a href="index.html" class="lo">
-              <img src="IITI_Logo.png" class="logo">
+            <a href='{% url "homepage" %}' class="lo">
+              <img src="{% static 'IITI_Logo.png' %}" class="logo">
               <h3>IIT Indore</h3>
             </a>
         </div>
         <div class="links">
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href='{% url "homepage" %}'>Home</a></li>
                 <li><a href="explore.html">Explore</a></li>
                 <li><a href="login.html" class="active">Login</a></li>
             </ul>
@@ -31,8 +32,8 @@
           <p><i class="fa-solid fa-bars"></i></p>
         </div>
         <div class="title">
-            <a href="index.html" class="lo">
-              <img src="IITI_Logo.png" class="logo">
+            <a href='{% url "homepage" %}' class="lo">
+              <img src="{% static 'IITI_Logo.png' %}" class="logo">
               <h3>IIT Indore</h3>
             </a>
         </div>
@@ -40,7 +41,7 @@
       <div class="side-bar">
         <div id="close"><i class="fa-solid fa-xmark"></i></div>
         <ul>
-          <li><a href="index.html">Home</a></li>
+          <li><a href='{% url "homepage" %}'>Home</a></li>
           <li><a href="#explore">Explore</a></li>
           <li><a href="#about" class="active">Login</a></li>
         </ul>
