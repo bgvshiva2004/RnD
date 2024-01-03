@@ -572,7 +572,12 @@ def monthly(request):
             return redirect('/monthly') 
     
     return render(request,'monthly.html')
-                
+
+def homepage(request):
+    return render(request, "homepage.html")         
+
+def login(request):
+    return render(request, "login.html")         
 
 
        

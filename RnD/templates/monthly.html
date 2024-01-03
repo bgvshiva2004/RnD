@@ -1,37 +1,173 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href='{% static "style.css" %}'>
+    <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>
     <title>Monthly_expense</title>
     <style>
+        :root{
+            --primary-color:#000;
+            --secondary-color: rgb(34,122,191);
+        }
+
+        .navbar1, .navbar2{
+            z-index: 5;
+        }
+
+        form{
+            width: 100%;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 30px auto;
+        }
+
         input{
             border:none;
             outline:none;
-            width:85px;
+            width: 100%;
+            padding: 5px;
         }
+
         th, td {
-            border: 1px solid black;
+            border: 1px solid var(--secondary-color);
             text-align: left;
+            height: 50px;
+            width: 5vw;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #fff;
+            padding: 5px;
         }
 
         th, .header-row {
             text-align: center;
         }
 
-        .header-row th {
-            background-color: #c4c4c4;
+        .header-row th{
+            background-color: var(--secondary-color);
+            color: white;
+            height: 50px;
+            padding: 5px;
+            font-size: 15px;
+            border: 1px solid #fff;
         }
-       {% comment %} #table_no{
+        #table_no{
             display:none;
-        } {% endcomment %}
+        }
+
+        form button{
+            display: block;
+            height: 50px;
+            font-size: 20px;
+            padding: 10px;
+            margin: 30px auto;
+            width: 150px;
+            cursor: pointer;
+            border: 0;
+            outline: none;
+            border-radius: 30px;
+            background-color: #fff;
+            color: var(--secondary-color);
+            font-weight: 400;
+            transition: 0.3s ease-in-out;
+            position: relative;
+            box-shadow: 6px 6px 1px -1px rgba(0, 0, 0, 0.15),
+                        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);  
+            z-index: 3;      
+      }
+
+      form button:hover{
+            color: #fff;
+            box-shadow: 6px 6px 1px -1px rgba(72,68,163,0.2),
+                        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+            z-index: 4;
+        }
+    
+        form button:hover::before{
+            content: '';
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            left: 0px;
+            top: 0px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            animation: btn 0.3s linear forwards;
+            border-radius: 30px;
+            opacity: 1;
+            z-index: -2;
+        }
+    
+        @keyframes btn{
+            0%{
+                width: 0%;
+            }
+            50%{
+                width: 50%;
+            }
+            100%{
+                width: 100%;
+            }
+        }
+
+        /* tr:nth-child(odd){
+            background-color: rgba(0,0,0,0.3);
+            color: #fff;
+            border: 1px solid #fff;
+        }
+
+        tr:nth-child(odd) input{
+            background: transparent;
+        } */
+
     </style>
 </head>
 <body>
+    <div class="navbar1">
+        <div class="title">
+          <a href='{% url "homepage" %}' class="lo">
+            <img src="{% static 'IITI_Logo.png' %}"class="logo">
+            <h3>IIT Indore</h3>
+          </a>
+      </div>
+          <div class="links">
+              <ul>
+                  <li><a href='{% url "homepage" %}' class="active">Home</a></li>
+                  <li><a href="explore.html">Explore</a></li>
+                  <li><a href='{% url "login" %}'>Login</a></li>
+              </ul>
+          </div>
+      </div>
+  
+      <div class="navbar2">
+          <div class="ham">
+            <p><i class="fa-solid fa-bars"></i></p>
+          </div>
+          <div class="title">
+            <a href='{% url "homepage" %}' class="lo">
+              <img src="{% static 'IITI_Logo.png' %}" class="logo">
+              <h3>IIT Indore</h3>
+            </a>
+        </div>
+        </div>
+        <div class="side-bar">
+          <div id="close"><i class="fa-solid fa-xmark"></i></div>
+          <ul>
+            <li><a href='{% url "homepage" %}' class="active">Home</a></li>
+            <li><a href="#explore">Explore</a></li>
+            <li><a href='{% url "login" %}'>Login</a></li>
+          </ul>
+        </div>
+
+<div class="tables">
+    <div class="table">
 {% for i in context.period_range %}
 
 <form action='/monthly/' method="post">
@@ -216,11 +352,33 @@
     {% endif %}
     
 </table>
-<br></br>
 <button type='submit'>Update</button>
 </form>
-<br></br>
 {% endfor %}
+    </div>
+</div>
+
+<footer>
+    <div class="footer">
+      <div class="info">
+        <h4>IIT Indore</h4>
+      </div>
+      <div class="social">
+        <ul>
+          <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+          <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+          <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+          <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+        </ul>
+      </div>
+      <div class="rights">
+        <p><i class="fa-solid fa-copyright"></i> Copyrights reserved.</p>
+      </div>
+    </div>
+    
+</footer>
+
+<script src="{% static 'script.js' %}"></script>
 
 </body>
 </html>
