@@ -580,4 +580,5 @@ def login(request):
     return render(request, "login.html")         
 
 
-       
+def project_list(request):
+    return render(request,'project_list.html')

@@ -137,69 +137,41 @@
     </style>
 </head>
 <body>
-    <div class="navbar1">
-        <div class="title">
-          <a href='{% url "homepage" %}' class="lo">
-            <img src="{% static 'IITI_Logo.png' %}"class="logo">
-            <h3>IIT Indore</h3>
-          </a>
-      </div>
-          <div class="links">
-              <ul>
-                  <li><a href='{% url "homepage" %}' class="active">Home</a></li>
-                  <li><a href="explore.html">Explore</a></li>
-                  <li><a href='{% url "login" %}'>Login</a></li>
-              </ul>
-          </div>
-      </div>
-  
-      <div class="navbar2">
-          <div class="ham">
-            <p><i class="fa-solid fa-bars"></i></p>
-          </div>
-          <div class="title">
-            <a href='{% url "homepage" %}' class="lo">
-              <img src="{% static 'IITI_Logo.png' %}" class="logo">
-              <h3>IIT Indore</h3>
-            </a>
-        </div>
-        </div>
-        <div class="side-bar">
-          <div id="close"><i class="fa-solid fa-xmark"></i></div>
-          <ul>
-            <li><a href='{% url "homepage" %}' class="active">Home</a></li>
-            <li><a href="#explore">Explore</a></li>
-            <li><a href='{% url "login" %}'>Login</a></li>
-          </ul>
-        </div>
+  <div class="navbar1">
+    <div class="title">
+        <a href="{% url "homepage" %}" class="lo">
+          <img src="{% static "IITI_Logo.png" %}" class="logo">
+          <h3>IIT Indore</h3>
+        </a>
+    </div>
+    <div class="links">
+        <ul>
+            <li><a href="{% url "index" %}">New Project Deal</a></li>
+            <li><a href="past.html">Project Deals</a></li>
+            <li><a href="{% url "login" %}"><i class="fa-solid fa-user"></i></a></li>
+        </ul>
+    </div>
+</div>
 
-    <!-- <form action='' method="post">
-        {% csrf_token %}
-    <table>
-<tr>
-    <th>Project/Fellowship No.</th>
-    <td><input type='text' name='Project_Fellowship_No'></td>
-</tr>
-<tr>
-    <th>PI of Project</th>
-    <td><input type='text' name='PI_of_Project'></td>
-</tr><tr>
-    <th>Sanctioned Date</th>
-    <td><input type='date' name='Sanctioned_Date'></td>
-</tr> <tr>
-    <th>Project Start Date</th>
-    <td><input type='date' name='Project_Start_Date'></td>
-</tr> <tr>
-    <th>Project Closure Date</th>
-    <td><input type='date' name='Project_Closure_Date'></td>
-</tr><tr>
-    <th>Title of Project</th>
-    <td><input type='text' name='Title_of_Project'></td>
-</tr>
-</table>
-<br></br>
-<button type='submit'>Submit</button>
-</form> -->
+<div class="navbar2">
+    <div class="ham">
+      <p><i class="fa-solid fa-bars"></i></p>
+    </div>
+    <div class="title">
+      <a href="{% url "homepage" %}" class="lo">
+        <img src="{% static "IITI_Logo.png" %}" class="logo">
+        <h3>IIT Indore</h3>
+      </a>
+  </div>
+</div>
+<div class="side-bar">
+    <div id="close"><i class="fa-solid fa-xmark"></i></div>
+    <ul>
+      <li><a href="{% url "index" %}">New Project Deal</a></li>
+      <li><a href="{% url "project_list" %}">Project Deals</a></li>
+      <li><a href="{% url "login" %}"><i class="fa-solid fa-user"></i></a></li>
+    </ul>
+</div>
 
 <div class="form">
     <form action='' method="post">
