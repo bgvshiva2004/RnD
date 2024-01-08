@@ -134,7 +134,7 @@ class table_info(models.Model):
     total_closing_balances=models.IntegerField(null=True)
 
 class project_details(models.Model):
-    Project_Fellowship_No = models.CharField(max_length=20,blank=True,null=True)
+    Project_Fellowship_No = models.CharField(max_length=20,primary_key=True)
     PI_of_Project = models.CharField(max_length=20,blank=True,null=True)
     Sanctioned_Date = models.DateField(null=True)
     Project_Start_Date = models.DateField(null=True)

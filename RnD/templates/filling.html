@@ -172,7 +172,9 @@
           </ul>
         </div>
 
-    
+    {{display.display_id}}
+    <br></br>
+    {{display.display_name}}
             <a href="{% url 'mastersheet' project_id=fellowship_no  %}">
                 <button type="button">Mastersheet</button>
             </a>
@@ -436,9 +438,9 @@
         calculateAndDisplayTotalAmount(tableId);
         calculateAndDisplayTotalExpenses(tableId);
         calculateAndDisplayClosingBalance(tableId);
-        console.log(tableId);
-        console.log(tablesData);
-        console.log(JSON.stringify(tableData));
+        //console.log(tableId);
+        //console.log(tablesData);
+        //console.log(JSON.stringify(tableData));
         var fellowshipNo = "{{ fellowship_no }}";
         saveTableDataToDjango(tablesData,fellowshipNo);
     //    saveTableDataToDjango(tablesData,);
@@ -586,7 +588,7 @@
     
     
 function saveTableDataToDjango(data, project_id) {
-    console.log(JSON.stringify(data));
+    //console.log(JSON.stringify(data));
     fetch(`/save_table_data/${project_id}/`, {
         method: 'POST',
         headers: {
@@ -597,7 +599,7 @@ function saveTableDataToDjango(data, project_id) {
     })
     .then(response => response.json())
     .then(result => {
-        console.log(result);
+        //console.log(result);
         // Handle success or error as needed
     })
     .catch(error => {

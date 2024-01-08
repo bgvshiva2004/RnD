@@ -2,9 +2,36 @@ from django.shortcuts import render,redirect
 from .models import table_info,project_details
 import os
 from django.conf import settings
-
+from datetime import datetime
 # Create your views here.
 period=0
+
+def duration(date1,date2):
+    date1 = datetime.strptime(date1,"%Y-%m-%d")
+    date2 = datetime.strptime(date2,"%Y-%m-%d")
+
+    start_month = date1.month
+    start_year = date1.year
+    end_month = date2.month
+    end_year = date2.year
+
+    count = 0 
+    if start_month < 4:
+        count += 1 
+        financial_year_start_index = start_year-1
+    if end_month > 3:
+        financial_year_end_index = end_year+1 
+        count += 1
+
+    count += (end_year - start_year)
+
+    result = {
+        'count':count,
+        'financial_year_start_index':financial_year_start_index,
+        'financial_year_end_index':financial_year_end_index
+    }
+
+    return result
 
 def index(request):
     if request.method == "POST":
@@ -15,16 +42,20 @@ def index(request):
         Project_Closure_Date = request.POST.get('Project_Closure_Date')
         Title_of_Project = request.POST.get('Title_of_Project')
 
-        start_year = ""
-        for i in range(0,4):
-            start_year = start_year + Project_Start_Date[i]
+        # start_year = ""
+        # for i in range(0,4):
+        #     start_year = start_year + Project_Start_Date[i]
 
-        closure_year = ""
-        for i in range(0,4):
-            closure_year = closure_year + Project_Closure_Date[i]
+        # closure_year = ""
+        # for i in range(0,4):
+        #     closure_year = closure_year + Project_Closure_Date[i]
 
-        period = int(closure_year)-int(start_year)
-
+    
+        results = duration(Project_Start_Date,Project_Closure_Date)
+        
+        start_year=results['financial_year_start_index']
+        closure_year=results['financial_year_end_index']
+        period = results['count']
         details = project_details.objects.create(
             Project_Fellowship_No =Project_Fellowship_No,
             PI_of_Project = PI_of_Project,
@@ -34,16 +65,18 @@ def index(request):
             Title_of_Project =Title_of_Project,
             project_duration = period
         )
+
         details.save()
 
-        start_year=int(start_year)
-        closure_year=int(closure_year)
+        
 
         period_range = range(0, period)
+
+        print(period," ",period_range)
         context = {'period': period, 'period_range': period_range}
         years = {'start_year':start_year, 'closure_year':closure_year}
 
-        years_dict = {'context':context, 'years':years, 'fellowship_no':Project_Fellowship_No}
+        years_dict = {'context':context, 'years':years, 'fellowship_no':Project_Fellowship_No,'title':Title_of_Project}
 
         return render(request,'monthly.html',years_dict)
         
@@ -749,7 +782,7 @@ def save_table_data(request, project_id):
 
         return JsonResponse({'success': True})
     except Exception as e:
-        print(e)
+        # print(e)
         return JsonResponse({'success': False, 'error': str(e)})
 
 
@@ -771,14 +804,20 @@ def fill(request, project_id):
     # for table_key, table_data in parsed_data.items():
     #     print(table_key)
 
-    years = {'start_year':2023, 'closure_year':2027}
     new_parsed_data = {int(key.split('_')[1]): value for key, value in parsed_data.items()}
 
-    print(new_parsed_data)
+    project = get_object_or_404(project_details,Project_Fellowship_No=project_id)
+    display_id = project.Project_Fellowship_No
+    display_name = project.Title_of_Project
+    display = {
+        'display_id':display_id,
+        'display_name':display_name
+    }
+
+    # print(new_parsed_data)
     parsed_data_json = json.dumps(parsed_data)
     # Pass the data to the template
-    return render(request, 'filling.html', {'fellowship_no':project_id,'tablesdata': new_parsed_data,'range':range(0,5),'table_1_data':table_1_data,'years':years,"hi":1,'parsed_data_json': parsed_data_json})
-    return render(request, 'filling.html', {'tablesdata': parsed_data,'range':range(0,5)})
+    return render(request, 'filling.html', {'fellowship_no':project_id,'tablesdata': new_parsed_data,'range':range(0,5),'table_1_data':table_1_data,'parsed_data_json': parsed_data_json,'display':display})
 
 def count_keys(d):
     if not isinstance(d, dict):
@@ -808,8 +847,8 @@ from django.views.decorators.http import require_POST
 def save_table_data_to_file(request):
     try:
         data = json.loads(request.body.decode('utf-8'))['tableData']  # Assuming the data is sent as an array
-        print(data)
-        print(1)
+        # print(data)
+        # print(1)
         # Process and save the data to the 'files.txt' file
         file_path = 'home/te.txt'
         with open(file_path, 'w') as file:
@@ -826,9 +865,7 @@ def save_data_to_file(request):
         try:
             # Parse the JSON data from the request
             json_data = json.loads(request.body.decode('utf-8'))
-            print("hi")
-            print(json_data)
-            print("hi")
+            # print(json_data)
 
             # Convert the JSON data to a text format (e.g., newline-separated)
             text_data = '\n'.join([f"{key}: {value}" for key, value in json_data.items()])
