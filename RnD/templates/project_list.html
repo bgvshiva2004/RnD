@@ -1,90 +1,284 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "style.css" %}">
+    <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>
     <title>Project List</title>
     <style>
-        body {
+        :root{
+          --main-color: #fff;
+          --secondary-color: rgb(34,122,191);
+        }
+
+        body .project-container{
+            min-height: 70vh;
+        }
+
+        .sub_nav{
+            display:flex;
+            justify-content:center;
+            {% comment %} border:2px solid black; {% endcomment %}
+            margin: 20px;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .sub_nav h1{
+            position: relative;
+        }
+
+        .sub_nav h1::before{
+            content: "";
+            position: absolute;
+            height: 3px;
+            width: 70%;
+            left: 15%;
+            bottom: -10px;
+            background-color: var(--secondary-color);
+            border-radius: 30px;
+        }
+
+        
+
+        .card {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background-color: var(--main-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            perspective: 1000px;
+            box-shadow: 0 0 20px rgba(34, 122, 191, 0.4);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+        }
+
+        .card__content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: var(--main-color);
+            transform: rotateX(-90deg);
+            transform-origin: bottom;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card:hover .card__content {
+            transform: rotateX(0deg);
+        }
+
+        .project-container{
+            display: flex;
+            align-items: center;
+            margin: 20px 40px;
+            /* justify-content: center; */
+            flex-wrap: wrap;
+        }
+
+        .project-container .card{
+            padding: 20px;
+            position: relative;
+            width: 300px;
+            height: 250px;
+            border-radius: 14px;
+            z-index: 1111;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+            margin: 30px 40px 30px 10px;
         }
 
-        .project-container {
+        .project-container .card .project-details{
             display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            font-size: 18px;
+            text-align: left;
+            margin: auto;
+            height: 100%;
         }
 
-        .project-box {
-            margin: 10px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            min-width: 300px; /* Adjust the minimum width as needed */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .project-container .card .project-details p{
+            line-height: 30px;
         }
 
-        .project-details {
-            flex: 1;
+        .project-container .card .project-details p span{
+            color: #fff;
             margin-right: 10px;
         }
 
-        .buttons {
+        .card__content .buttons{
             display: flex;
+            align-items: center;
+            justify-content: space-around;
             flex-direction: column;
+            height: 100%;
         }
 
-        .button {
-            margin-top: 5px;
-            padding: 5px;
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        .create-project-button {
-            margin-top: 20px;
+        .card__content .buttons a button{
+            height: 50px;
             padding: 10px;
-            background-color: #27ae60;
-            color: #fff;
+            font-size: 15px;
+            outline: 0;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
+            background-color: rgba(34,122,191,0.5);
+            color: var(--main-color);
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .card__content .buttons a button:hover{
+            box-shadow: 0px 10px 10px var(--secondary-color);
+        }
+
+        .bg{
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 96.5%;
+            height: 96.5%;
+            z-index: 2;
+            background: rgba(34,122,191,0.7);
+            backdrop-filter: blur(24px);
+            border-radius: 10px;
+            overflow: hidden;
+            outline: 2px solid white;
+        }
+
+        .blob {
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: rgb(6, 144, 243);
+            opacity: 1;
+            filter: blur(12px);
+            animation: blob-bounce 5s infinite ease;
+        }
+
+        @keyframes blob-bounce {
+            0% {
+                transform: translate(-100%, -100%) translate3d(0, 0, 0);
+            }
+
+            25% {
+                transform: translate(-100%, -100%) translate3d(100%, 0, 0);
+            }
+
+            50% {
+                transform: translate(-100%, -100%) translate3d(100%, 100%, 0);
+            }
+
+            75% {
+                transform: translate(-100%, -100%) translate3d(0, 100%, 0);
+            }
+
+            100% {
+                transform: translate(-100%, -100%) translate3d(0, 0, 0);
+            }
+        }
+
+        @media (max-width: 1000px){
+            .project-container{
+                flex-wrap: wrap;
+            }
+            .project-container .card{
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Project List</h1>
-    <a href="{% url 'index'  %}">
-        <button class="create-project-button">Create New Project</button>
-    </a>
+    <div class="navbar1">
+        <div class="title">
+            <a href="{% url "index" %}" class="lo">
+              <img src="{% static "IITI_Logo.png" %}" class="logo">
+              <h3>IIT Indore</h3>
+            </a>
+        </div>
+        <div class="links">
+            <ul>
+                <li><a href="{% url "index" %}">New Project Deal</a></li>
+                <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
+                <li><a href="{% url "login" %}"><i class="fa-solid fa-user"></i></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="navbar2">
+        <div class="ham">
+          <p><i class="fa-solid fa-bars"></i></p>
+        </div>
+        <div class="title">
+          <a href="{% url "index" %}" class="lo">
+            <img src="{% static "IITI_Logo.png" %}" class="logo">
+            <h3>IIT Indore</h3>
+          </a>
+      </div>
+    </div>
+    <div class="side-bar">
+        <div id="close"><i class="fa-solid fa-xmark"></i></div>
+        <ul>
+            <li><a href="{% url "index" %}">New Project Deal</a></li>
+            <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
+            <li><a href="{% url "login" %}"><i class="fa-solid fa-user"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="sub_nav">
+        <div class="project_list"><h1>Project List</h1></div>
+    </div>
+
     <div class="project-container">
         {% for project in projects %}
-            <div class="project-box">
+        <div class="card">
+            <div class="bg">
                 <div class="project-details">
                     <a href="{% url 'fill' project_id=project.Project_Fellowship_No %}">
                         {{ project.Title_of_Project }}
                     </a>
-                    <p>Project ID: {{ project.Project_Fellowship_No }}</p>
-                    <p>Start Date: {{ project.Project_Start_Date }}</p>
-                    <p>End Date: {{ project.Project_Closure_Date }}</p>
+                    <p><span>Project ID :</span>  {{ project.Project_Fellowship_No }}</p>
+                    <p><span>Start Date:</span>{{ project.Project_Start_Date }}</p>
+                    <p><span>End Date:</span>{{ project.Project_Closure_Date }}</p>
                 </div>
-                <div class="buttons">
-                    <a href="{% url 'fill' project_id=project.Project_Fellowship_No %}">
-                        <button class="button">Monthly Sheet</button>
-                    </a>
-                    <a href="{% url 'mastersheet' project_id=project.Project_Fellowship_No %}">
-                        <button class="button">Mastersheet</button>
-                    </a>
+                <div class="card__content">
+                    <div class="buttons">
+                        <a href="{% url 'fill' project_id=project.Project_Fellowship_No %}">
+                            <button class="button">Monthly Sheet</button>
+                        </a>
+                        <a href="{% url 'mastersheet' project_id=project.Project_Fellowship_No %}">
+                            <button class="button">Mastersheet</button>
+                        </a>
+                    </div>
                 </div>
-            </div>
+            </div> 
+            <div class="blob"></div>  
+        </div>
         {% endfor %}
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
