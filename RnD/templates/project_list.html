@@ -20,7 +20,6 @@
         .sub_nav{
             display:flex;
             justify-content:center;
-            {% comment %} border:2px solid black; {% endcomment %}
             margin: 20px;
             align-items: center;
             padding: 20px;
@@ -40,92 +39,68 @@
             background-color: var(--secondary-color);
             border-radius: 30px;
         }
-
-        
-
-        .card {
+    </style>
+    <style>
+        .book {
             position: relative;
-            width: 300px;
-            height: 200px;
-            background-color: var(--main-color);
             border-radius: 10px;
+            width: 25%;
+            height: 300px;
+            background-color: rgba(255, 255, 255, 0.5);
+            -webkit-box-shadow: 1px 1px 12px rgba(34, 122, 191, 0.5);
+            box-shadow: 8px 5px 5px rgba(0, 0, 0, 0.3);
+            -webkit-transform: preserve-3d;
+            -ms-transform: preserve-3d;
+            transform: preserve-3d;
+            -webkit-perspective: 2000px;
+            perspective: 2000px;
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
             justify-content: center;
-            overflow: hidden;
-            perspective: 1000px;
-            box-shadow: 0 0 20px rgba(34, 122, 191, 0.4);
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
-        }
-
-        .card__content {
-            position: absolute;
+            margin: 20px;
+          }
+          
+          .cover {
             top: 0;
-            left: 0;
+            position: absolute;
+            background-color: rgb(144,188,223);
             width: 100%;
             height: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            background-color: var(--main-color);
-            transform: rotateX(-90deg);
-            transform-origin: bottom;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .card:hover .card__content {
-            transform: rotateX(0deg);
-        }
-
-        .project-container{
+            border-radius: 10px;
+            cursor: pointer;
+            -webkit-transition: all 0.5s;
+            transition: all 0.5s;
+            -webkit-transform-origin: 0;
+            -ms-transform-origin: 0;
+            transform-origin: 0;
+            /* -webkit-box-shadow: 1px 1px 12px rgba(34, 122, 191, 0.5);
+           box-shadow: 8px 0px 5px rgba(34, 122, 191, 0.5);*/
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
-            margin: 20px 40px;
-            /* justify-content: center; */
-            flex-wrap: wrap;
-        }
-
-        .project-container .card{
-            padding: 20px;
-            position: relative;
-            width: 300px;
-            height: 250px;
-            border-radius: 14px;
-            z-index: 1111;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
             justify-content: center;
-            box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
-            margin: 30px 40px 30px 10px;
-        }
+          }
+          
+          .book:hover .cover {
+            -webkit-transition: all 0.5s;
+            transition: all 0.5s;
+            -webkit-transform: rotatey(-80deg);
+            -ms-transform: rotatey(-80deg);
+            transform: rotatey(-80deg);
+          }
 
-        .project-container .card .project-details{
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            padding: 20px;
-            font-size: 18px;
-            text-align: left;
-            margin: auto;
-            height: 100%;
-        }
-
-        .project-container .card .project-details p{
-            line-height: 30px;
-        }
-
-        .project-container .card .project-details p span{
-            color: #fff;
-            margin-right: 10px;
-        }
-
-        .card__content .buttons{
+          .book .buttons{
             display: flex;
             align-items: center;
             justify-content: space-around;
@@ -133,7 +108,7 @@
             height: 100%;
         }
 
-        .card__content .buttons a button{
+        .book .buttons a button{
             height: 50px;
             padding: 10px;
             font-size: 15px;
@@ -146,68 +121,41 @@
             transition: all 0.3s ease-in-out;
         }
 
-        .card__content .buttons a button:hover{
+        .book .buttons a button:hover{
             box-shadow: 0px 10px 10px var(--secondary-color);
         }
 
-        .bg{
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: 96.5%;
-            height: 96.5%;
-            z-index: 2;
-            background: rgba(34,122,191,0.7);
-            backdrop-filter: blur(24px);
-            border-radius: 10px;
-            overflow: hidden;
-            outline: 2px solid white;
+        .project-container .book .project-details{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            font-size: 18px;
+            text-align: left;
+            margin: auto;
+            height: 100%;
         }
 
-        .blob {
-            position: absolute;
-            z-index: 1;
-            top: 50%;
-            left: 50%;
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background-color: rgb(6, 144, 243);
-            opacity: 1;
-            filter: blur(12px);
-            animation: blob-bounce 5s infinite ease;
+        .project-container .book .project-details p{
+            line-height: 30px;
+            color: #fff;
         }
 
-        @keyframes blob-bounce {
-            0% {
-                transform: translate(-100%, -100%) translate3d(0, 0, 0);
-            }
-
-            25% {
-                transform: translate(-100%, -100%) translate3d(100%, 0, 0);
-            }
-
-            50% {
-                transform: translate(-100%, -100%) translate3d(100%, 100%, 0);
-            }
-
-            75% {
-                transform: translate(-100%, -100%) translate3d(0, 100%, 0);
-            }
-
-            100% {
-                transform: translate(-100%, -100%) translate3d(0, 0, 0);
-            }
+        .project-container .book .project-details p span{
+            color: var(--secondary-color);
+            margin-right: 10px;
         }
-
-        @media (max-width: 1000px){
-            .project-container{
-                flex-wrap: wrap;
-            }
-            .project-container .card{
-                margin-top: 20px;
-                margin-bottom: 20px;
-            }
+        .project-container{
+            display: flex;
+            align-items: center;
+            margin: 20px 40px;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .project-details h4{
+            color: #000;
+            font-size: 22px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -254,7 +202,7 @@
 
     <div class="project-container">
         {% for project in projects %}
-        <div class="card">
+        <!-- <div class="card">
             <div class="bg">
                 <div class="project-details">
                     <a href="{% url 'fill' project_id=project.Project_Fellowship_No %}">
@@ -276,7 +224,26 @@
                 </div>
             </div> 
             <div class="blob"></div>  
-        </div>
+        </div> -->
+        <div class="book">
+            <div class="buttons">
+                <a href="{% url 'fill' project_id=project.Project_Fellowship_No %}">
+                    <button class="button">Monthly Sheet</button>
+                </a>
+                <a href="{% url 'mastersheet' project_id=project.Project_Fellowship_No %}">
+                    <button class="button">Mastersheet</button>
+                </a>
+            </div>            <div class="cover">
+                <div class="project-details">
+                    
+                    <h4>   {{ project.Title_of_Project }}  </h4>
+                   
+                    <p><span>Project ID :</span>  {{ project.Project_Fellowship_No }}</p>
+                    <p><span>Start Date:</span>{{ project.Project_Start_Date }}</p>
+                    <p><span>End Date:</span>{{ project.Project_Closure_Date }}</p>
+                </div>
+            </div>
+           </div>
         {% endfor %}
     </div>          
     <script src="{% static 'script.js' %}"></script>

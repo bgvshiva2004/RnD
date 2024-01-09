@@ -1,11 +1,212 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <link rel="stylesheet" href='{% static "style.css" %}'>
+    <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>    <title>Home</title>
     {% csrf_token %}
     <style>
+      :root{
+          --primary-color:#000;
+          --secondary-color: rgb(34,122,191);
+      }
+
+      form{
+          width: 100%;
+      }
+
+      table {
+          border-collapse: collapse;
+          margin: 30px auto;
+      }
+
+      th, td {
+          text-align: left;
+          height: 50px;
+          width: 5vw;
+      }
+
+      table.table11{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 0px none;
+          width: 80%;
+          margin: 30px auto;
+      }
+
+      table.table11 tr{
+          width: 100%;
+      }
+
+      table.table11 tr th{
+          width: 40%;
+          text-align: left;
+          margin-right: 50px;
+          font-size: 18px;
+          font-weight: 900;
+      }
+
+      table.table11 tr td input{
+         /* height: 100%;
+          width: 100%;*/
+          border: none;
+          outline: 0;
+      }
+
+      button{
+          display: block;
+          height: 50px;
+          font-size: 20px;
+          padding: 10px;
+          margin: 30px auto;
+          width: 150px;
+          cursor: pointer;
+          border: 0;
+          outline: none;
+          border-radius: 30px;
+          background-color: #fff;
+          color: var(--secondary-color);
+          font-weight: 400;
+          transition: 0.3s ease-in-out;
+          position: relative;
+          box-shadow: 6px 6px 1px -1px rgba(0, 0, 0, 0.15),
+                      -6px -6px 10px -1px rgba(255, 255, 255, 0.7);        
+    }
+
+      button:hover{
+          color: #fff;
+          box-shadow: 6px 6px 1px -1px rgba(72,68,163,0.2),
+                      -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+          z-index: 2;
+      }
+  
+      button:hover::before{
+          content: '';
+          height: 100%;
+          position: absolute;
+          width: 100%;
+          left: 0px;
+          top: 0px;
+          background-color: var(--secondary-color);
+          color: #fff;
+          animation: btn 0.3s linear forwards;
+          border-radius: 30px;
+          opacity: 1;
+          z-index: -2;
+      }
+  
+      @keyframes btn{
+          0%{
+              width: 0%;
+          }
+          50%{
+              width: 50%;
+          }
+          100%{
+              width: 100%;
+          }
+      }
+
+      .btn-row{
+          display: flex;
+          justify-content: space-around;
+      }
+
+
+
+      /* tr:nth-child(odd){
+          background-color: rgba(0,0,0,0.3);
+          color: #fff;
+          border: 1px solid #fff;
+      }
+
+      tr:nth-child(odd) input{
+          background: transparent;
+      } */
+
+      table.table3{
+          width: 70%;
+          margin: 30px auto;
+          border: 1px solid var(--secondary-color);
+      }
+
+      table.table3 tr th{
+          font-size: 17px;
+          font-weight: 400;
+          border: 1px solid #fff;
+          padding: 10px;
+          background-color: var(--secondary-color);
+          color: #fff;
+      }
+
+      table.table3 tr td{
+          padding: 10px;
+          font-size: 17px;
+          text-align: center;
+          border: 1px solid var(--secondary-color);
+      }
+
+      .table3h2{
+          text-align: center;
+          margin-top: 70px;
+          margin-bottom: 50px;
+          position: relative;
+      }
+
+      .table3h2::before{
+          position: absolute;
+          content: '';
+          background-color: var(--secondary-color);
+          height: 3px;
+          border-radius: 10px;
+          width: 10%;
+          bottom: -15px;
+          left: 45%;
+      }
+
+      .side-by-side{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .side-by-side table{
+          width: 40vw;
+          margin-right: 0px;
+          margin-left: 0px;
+          height: 60vh;
+      }
+
+      .side-by-side table{
+          border-collapse: collapse;
+      }
+
+      .side-by-side table tr th{
+          font-size: 17px;
+          font-weight: 400;
+          border: 1px solid #fff;
+          padding: 10px;
+          background-color: var(--secondary-color);
+          color: #fff;  
+          text-align: center;
+      }
+
+      .side-by-side table tr td{
+          padding: 10px;
+          font-size: 17px;
+          text-align: center;
+          border: 1px solid var(--secondary-color);
+      }
+
+      .side-by-side table tr th, .side-by-side table tr td{
+          width: 3vw;
+      }
+  </style>
+    <!-- <style>
         table {
             border-collapse: collapse;
             width: 50%;
@@ -78,30 +279,65 @@
         .side-by-side th.column-names {
             height: 72px; /* Set the maximum height for column names */
         }
-    </style>
+    </style> -->
 </head>
 <body>
+  <div class="navbar1">
+    <div class="title">
+      <a href='{% url "homepage" %}' class="lo">
+        <img src="{% static 'IITI_Logo.png' %}"class="logo">
+        <h3>IIT Indore</h3>
+      </a>
+  </div>
+      <div class="links">
+          <ul>
+            <li><a href="{% url "index" %}">New Project Deal</a></li>
+            <li><a href="{% url "project_list" %}">Project Deals</a></li>
+            <li><a href="{% url "login" %}"><i class="fa-solid fa-user"></i></a></li>
+          </ul>
+      </div>
+  </div>
+
+  <div class="navbar2">
+      <div class="ham">
+        <p><i class="fa-solid fa-bars"></i></p>
+      </div>
+      <div class="title">
+        <a href='{% url "homepage" %}' class="lo">
+          <img src="{% static 'IITI_Logo.png' %}" class="logo">
+          <h3>IIT Indore</h3>
+        </a>
+    </div>
+    </div>
+    <div class="side-bar">
+      <div id="close"><i class="fa-solid fa-xmark"></i></div>
+      <ul>
+        <li><a href="{% url "index" %}">New Project Deal</a></li>
+        <li><a href="{% url "project_list" %}">Project Deals</a></li>
+        <li><a href="{% url "login" %}"><i class="fa-solid fa-user"></i></a></li>
+      </ul>
+    </div>
     
-    <table>
+    <table class="table11">
 <tr>
     <th>Project/Fellowship No.</th>
-    <td><input type='text' name='Project_Fellowship_No'>{{existing_project.Project_Fellowship_No}}</td>
+    <td  name='Project_Fellowship_No'>{{existing_project.Project_Fellowship_No}}</td>
 </tr>
 <tr>
     <th>PI of Project</th>
-    <td><input type='text' name='PI_of_Project'>{{ existing_project.PI_of_Project}}</td>
+    <td name='PI_of_Project'>{{ existing_project.PI_of_Project}}</td>
 </tr><tr>
     <th>Sanctioned Date</th>
-    <td><input type='text' name='Sanctioned_Date'>{{existing_project.Sanctioned_Date}}</td>
+    <td name='Sanctioned_Date'>{{existing_project.Sanctioned_Date}}</td>
 </tr> <tr>
     <th>Project Start Date</th>
-    <td><input type='text' name='Project_Start_Date'>{{ existing_project.Project_Start_Date}}</td>
+    <td name='Project_Start_Date'>{{ existing_project.Project_Start_Date}}</td>
 </tr> <tr>
     <th>Project Closure Date</th>
-    <td><input type='text' name='Project_Closure_Date'>{{existing_project.Project_Closure_Date}}</td>
+    <td name='Project_Closure_Date'>{{existing_project.Project_Closure_Date}}</td>
 </tr><tr>
     <th>Title of Project</th>
-    <td><input type='text' name='Title_of_Project'>{{existing_project.Title_of_Project}}</td>
+    <td name='Title_of_Project'>{{existing_project.Title_of_Project}}</td>
 </tr>
 </table>
 <br>
@@ -111,7 +347,7 @@
 
 
 
-<table border="1" class="table1" id="data-table">
+<table class="table1" id="data-table">
     <thead>
         <!-- Parent row for "Sanctioned Amount Rs." -->
         
@@ -127,7 +363,7 @@
           {% for year in financial_years %}
             <th  class="column-names">{{ year }}</th>
           {% endfor %}
-          <th   class="column-names">Total Funds Sanctioned for Project/Fellowship</th>
+          <th   class="column-names">Total Funds Sanctioned</th>
         </tr>
       </thead>
     <tbody>
@@ -163,7 +399,7 @@
 
 
 
-  <table border="1" class="table2" id="data-table1">
+  <table class="table2" id="data-table1">
     <thead>
         <!-- Parent row for "Sanctioned Amount Rs." -->
         
@@ -253,8 +489,8 @@
 </div>
 <button id="update-button">Update</button>
 <br>
-<h2>Details of Committed Expenditure</h2>
-<table border="1" class="table3" id="data-table3">
+<h2 class="table3h2">Details of Committed Expenditure</h2>
+<table class="table3" id="data-table3">
   <thead>
       <!-- Parent row for "Sanctioned Amount Rs." -->
       
@@ -299,12 +535,33 @@
     
   </tbody>
 </table>
-<button onclick="addRow()">Add Row</button>
-{% comment %} <button onclick="updateData()">Update Data</button> {% endcomment %}
-<button id="updateDataBtn" onclick="updateData()">Update Data</button>
-<br>
-<br>
-<br>
+<div class="btn-row">
+  <button onclick="addRow()">Add Row</button>
+  {% comment %} <button onclick="updateData()">Update Data</button> {% endcomment %}
+  <button id="updateDataBtn" onclick="updateData()">Update Data</button>
+</div>
+<footer>
+  <div class="footer">
+    <div class="info">
+      <h4>IIT Indore</h4>
+    </div>
+    <div class="social">
+      <ul>
+        <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+        <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+        <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+        <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+      </ul>
+    </div>
+    <div class="rights">
+      <p><i class="fa-solid fa-copyright"></i> Copyrights reserved.</p>
+    </div>
+  </div>
+  
+</footer>
+
+
+<script src="{% static 'script.js' %}"></script>
 
 <script>
   {% comment %} var rowData = {}; {% endcomment %}
