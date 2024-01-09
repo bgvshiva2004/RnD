@@ -21,7 +21,7 @@
         <div class="links">
             <ul>
                 <li><a href='{% url "homepage" %}'>Home</a></li>
-                <li><a href="{% url "index" %}">Projects</a></li>
+                <li><a href="{% url "project_list" %}">Projects</a></li>
                 <li><a href='{% url "login" %}'>Login</a></li>
             </ul>
         </div>
@@ -42,7 +42,7 @@
         <div id="close"><i class="fa-solid fa-xmark"></i></div>
         <ul>
           <li><a href='{% url "homepage" %}'>Home</a></li>
-          <li><a href="{% url "index" %}">Projects</a></li>
+          <li><a href="{% url "project_list" %}">Projects</a></li>
           <li><a href='{% url "login" %}'>Login</a></li>
         </ul>
       </div>
@@ -177,6 +177,6 @@
             s1.classList.add("right1");
         })
     </script>
-    <script src="script.js"></script>
+    <script src="{% static "script.js" %}"></script>
 </body>
 </html>

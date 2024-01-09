@@ -14,7 +14,8 @@ def duration(date1,date2):
     start_year = date1.year
     end_month = date2.month
     end_year = date2.year
-
+    financial_year_start_index = start_year
+    financial_year_end_index = end_year
     count = 0 
     if start_month < 4:
         count += 1 

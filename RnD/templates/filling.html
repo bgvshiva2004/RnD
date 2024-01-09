@@ -165,7 +165,10 @@
                 width: 100%;
             }
         }
-
+        .placeh{
+            background:#fff;
+            text-align:center;
+        }
     </style>
 </head>
 
@@ -246,7 +249,7 @@
     <tr>
         <th>1</th>
         <th>Non Recurring</th>
-        <td><input type='number' name='one_Grant_Amount' value="{{sum_data.one_Grant_Amount}}"></td>
+        <td><input type='number' name='one_Grant_Amount'  class="placeh" value="{{sum_data.one_Grant_Amount}}"></td>
         <td><input type='number' name='one_Apr' value="{{sum_data.one_Apr}}"></td>
         <td><input type='number' name='one_May' value="{{sum_data.one_May}}"></td>
         <td><input type='number' name='one_Jun' value="{{sum_data.one_Jun}}"></td>
@@ -259,14 +262,14 @@
         <td><input type='number' name='one_Jan' value="{{sum_data.one_Jan}}"></td>
         <td><input type='number' name='one_Feb' value="{{sum_data.one_Feb}}"></td>
         <td><input type='number' name='one_Mar' value="{{sum_data.one_Mar}}"></td>
-        <td><input type='number' name='one_expenses' value={{sum_data.one_expenses}}></td>
-        <td name='one_closing'>{{sum_data.one_closing}}</td>
+        <td><input disabled name='one_expenses'  class="placeh" placeholder={{sum_data.one_expenses}}></td>
+        <td name='one_closing' class="placeh">{{sum_data.one_closing}}</td>
         
     </tr>
     <tr>
         <th>2</th>
         <th>Manpower</th>
-        <td><input type='number' name='two_Grant_Amount' value="{{sum_data.two_Grant_Amount}}"></td>
+        <td><input type='number' name='two_Grant_Amount'  class="placeh" value="{{sum_data.two_Grant_Amount}}"></td>
         <td><input type='number' name='two_Apr' value="{{sum_data.two_Apr}}"></td>
         <td><input type='number' name='two_May' value="{{sum_data.two_May}}"></td>
         <td><input type='number' name='two_Jun' value="{{sum_data.two_Jun}}"></td>
@@ -279,13 +282,13 @@
         <td><input type='number' name='two_Jan' value="{{sum_data.two_Jan}}"></td>
         <td><input type='number' name='two_Feb' value="{{sum_data.two_Feb}}"></td>
         <td><input type='number' name='two_Mar' value="{{sum_data.two_Mar}}"></td>
-        <td><input type='number' name='two_expenses' value={{sum_data.two_expenses}}></td>
-        <td name='two_closing'>{{sum_data.two_closing}}</td>
+        <td><input disabled name='two_expenses'  class="placeh" placeholder={{sum_data.two_expenses}}></td>
+        <td name='two_closing'  class="placeh">{{sum_data.two_closing}}</td>
     </tr>
     <tr>
         <th>3</th>
         <th>Contingency</th>
-        <td><input type='number' name='three_Grant_Amount' value={{sum_data.three_Grant_Amount}}></td>
+        <td><input type='number' name='three_Grant_Amount' class="placeh" value={{sum_data.three_Grant_Amount}}></td>
         <td><input type='number' name='three_Apr' value={{sum_data.three_Apr}}></td>
         <td><input type='number' name='three_May' value={{sum_data.three_May}}></td>
         <td><input type='number' name='three_Jun' value={{sum_data.three_Jun}}></td>
@@ -298,13 +301,13 @@
         <td><input type='number' name='three_Jan' value={{sum_data.three_Jan}}></td>
         <td><input type='number' name='three_Feb' value={{sum_data.three_Feb}}></td>
         <td><input type='number' name='three_Mar' value={{sum_data.three_Mar}}></td>
-        <td><input type='number' name='three_expenses' value={{sum_data.three_expenses}}></td>
-        <td name='three_closing'>{{sum_data.three_closing}}</td>
+        <td><input disabled name='three_expenses' class="placeh" placeholder={{sum_data.three_expenses}}></td>
+        <td name='three_closing' class="placeh">{{sum_data.three_closing}}</td>
     </tr>
     <tr>
         <th>4</th>
         <th>Consumables</th>
-        <td><input type='number' name='four_Grant_Amount' value={{sum_data.four_Grant_Amount}}></td>
+        <td><input type='number' name='four_Grant_Amount' class="placeh" value={{sum_data.four_Grant_Amount}}></td>
         <td><input type='number' name='four_Apr' value={{sum_data.four_Apr}}></td>
         <td><input type='number' name='four_May' value={{sum_data.four_May}}></td>
         <td><input type='number' name='four_Jun' value={{sum_data.four_Jun}}></td>
@@ -317,13 +320,13 @@
         <td><input type='number' name='four_Jan' value={{sum_data.four_Jan}}></td>
         <td><input type='number' name='four_Feb' value={{sum_data.four_Feb}}></td>
         <td><input type='number' name='four_Mar' value={{sum_data.four_Mar}}></td>
-        <td><input type='number' name='four_expenses' value={{sum_data.four_expenses}}></td>
-        <td name='four_closing' >{{sum_data.four_closing}}</td>
+        <td><input disabled name='four_expenses' class="placeh" placeholder={{sum_data.four_expenses}}></td>
+        <td name='four_closing' class="placeh" >{{sum_data.four_closing}}</td>
     </tr>
     <tr>
         <th>5</th>
         <th>Travel</th>
-        <td><input type='number' name='five_Grant_Amount' value={{sum_data.five_Grant_Amount}}></td>
+        <td><input type='number' name='five_Grant_Amount' class="placeh" value={{sum_data.five_Grant_Amount}}></td>
         <td><input type='number' name='five_Apr' value={{sum_data.five_Apr}}></td>
         <td><input type='number' name='five_May' value={{sum_data.five_May}}></td>
         <td><input type='number' name='five_Jun' value={{sum_data.five_Jun}}></td>
@@ -336,13 +339,13 @@
         <td><input type='number' name='five_Jan' value={{sum_data.five_Jan}}></td>
         <td><input type='number' name='five_Feb' value={{sum_data.five_Feb}}></td>
         <td><input type='number' name='five_Mar' value={{sum_data.five_Mar}}></td>
-        <td><input type='number' name='five_expenses' value={{sum_data.five_expenses}}></td>
-        <td name='five_closing'>{{sum_data.five_closing}}</td>
+        <td><input disabled name='five_expenses' class="placeh" placeholder={{sum_data.five_expenses}}></td>
+        <td name='five_closing' class="placeh">{{sum_data.five_closing}}</td>
     </tr>
     <tr>
         <th>6</th>
         <th>Overhead</th>
-        <td><input type='number' name='six_Grant_Amount' value={{sum_data.six_Grant_Amount}}></td>
+        <td><input type='number' name='six_Grant_Amount' class="placeh" value={{sum_data.six_Grant_Amount}}></td>
         <td><input type='number' name='six_Apr' value={{sum_data.six_Apr}}></td>
         <td><input type='number' name='six_May' value={{sum_data.six_May}}></td>
         <td><input type='number' name='six_Jun' value={{sum_data.six_Jun}}></td>
@@ -355,13 +358,13 @@
         <td><input type='number' name='six_Jan' value={{sum_data.six_Jan}}></td>
         <td><input type='number' name='six_Feb' value={{sum_data.six_Feb}}></td>
         <td><input type='number' name='six_Mar' value={{sum_data.six_Mar}}></td>
-        <td><input type='number' name='six_expenses' value={{sum_data.six_expenses}}></td>
-        <td name='six_closing' >{{sum_data.six_closing}}</td>
+        <td><input disabled name='six_expenses' class="placeh" placeholder={{sum_data.six_expenses}}></td>
+        <td name='six_closing' class="placeh" >{{sum_data.six_closing}}</td>
     </tr>
     <tr>
         <th>7</th>
         <th>SSR</th>
-        <td><input type='number' name='seven_Grant_Amount' value={{sum_data.seven_Grant_Amount}}></td>
+        <td><input type='number' name='seven_Grant_Amount' class="placeh" value={{sum_data.seven_Grant_Amount}}></td>
         <td><input type='number' name='seven_Apr' value={{sum_data.seven_Apr}}></td>
         <td><input type='number' name='seven_May' value={{sum_data.seven_May}}></td>
         <td><input type='number' name='seven_Jun' value={{sum_data.seven_Jun}}></td>
@@ -374,27 +377,27 @@
         <td><input type='number' name='seven_Jan' value={{sum_data.seven_Jan}}></td>
         <td><input type='number' name='seven_Feb' value={{sum_data.seven_Feb}}></td>
         <td><input type='number' name='seven_Mar' value={{sum_data.seven_Mar}}></td>
-        <td><input type='number' name='seven_expenses' value={{sum_data.seven_expenses}}></td>
-        <td name='seven_closing'>{{sum_data.seven_closing}}</td>
+        <td><input disabled name='seven_expenses' class="placeh" placeholder={{sum_data.seven_expenses}}></td>
+        <td name='seven_closing' class="placeh">{{sum_data.seven_closing}}</td>
     </tr>
     <tr name='total_amount'>
         <th>8</th>
         <th>Total Amount</th>
-        <td name='total_grant'>{{sum_data.total_grant}}</td>
-        <td name='total_Apr' >{{sum_data.total_Apr}}</td>
-        <td name='total_May' >{{sum_data.total_May}}</td>
-        <td name='total_Jun' >{{sum_data.total_Jun}}</td>
-        <td name='total_Jul' >{{sum_data.total_Jul}}</td>
-        <td name='total_Aug' >{{sum_data.total_Aug}}</td>
-        <td name='total_Sep' >{{sum_data.total_Sep}}</td>
-        <td name='total_Oct' >{{sum_data.total_Oct}}</td>
-        <td name='total_Nov' >{{sum_data.total_Nov}}</td>
-        <td name='total_Dec' >{{sum_data.total_Dec}}</td>
-        <td name='total_Jan' >{{sum_data.total_Jan}}</td>
-        <td name='total_Feb' >{{sum_data.total_Feb}}</td>
-        <td name='total_Mar' >{{sum_data.total_Mar}}</td>
-        <td><input type='number' name='total_expenses' value={{sum_data.total_expenses}}></td>
-        <td name='total_balances_closing' value={{sum_data.total_closing_balances}}>{{sum_data.total_closing_balances}}</td>          
+        <td name='total_grant' class="placeh">{{sum_data.total_grant}}</td>
+        <td name='total_Apr' class="placeh" >{{sum_data.total_Apr}}</td>
+        <td name='total_May'  class="placeh">{{sum_data.total_May}}</td>
+        <td name='total_Jun' class="placeh" >{{sum_data.total_Jun}}</td>
+        <td name='total_Jul' class="placeh" >{{sum_data.total_Jul}}</td>
+        <td name='total_Aug' class="placeh" >{{sum_data.total_Aug}}</td>
+        <td name='total_Sep' class="placeh" >{{sum_data.total_Sep}}</td>
+        <td name='total_Oct' class="placeh" >{{sum_data.total_Oct}}</td>
+        <td name='total_Nov' class="placeh" >{{sum_data.total_Nov}}</td>
+        <td name='total_Dec' class="placeh" >{{sum_data.total_Dec}}</td>
+        <td name='total_Jan' class="placeh" >{{sum_data.total_Jan}}</td>
+        <td name='total_Feb'  class="placeh">{{sum_data.total_Feb}}</td>
+        <td name='total_Mar'  class="placeh">{{sum_data.total_Mar}}</td>
+        <td><input disabled name='total_expenses' class="placeh" placeholder={{sum_data.total_expenses}}></td>
+        <td name='total_balances_closing' class="placeh" value={{sum_data.total_closing_balances}}>{{sum_data.total_closing_balances}}</td>          
     </tr>
     
 </table>

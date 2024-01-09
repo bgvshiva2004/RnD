@@ -377,5 +377,35 @@ footer .footer{
 }
 
 
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent;
+    border-radius: 40px;
+}
 
+::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-corner {
+}
+
+::-webkit-scrollbar-track {
+}
+
+::-webkit-scrollbar-button {
+}
+
+::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: rgba(34,122,191,0.9);
+    border-radius: 40px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    width: 5px;
+
+    background-color: rgb(214, 214, 214);
+    border-radius: 40px;
+}
 
