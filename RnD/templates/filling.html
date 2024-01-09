@@ -62,7 +62,56 @@
             display:none;
         }
 
-        button{
+        
+
+        /* tr:nth-child(odd){
+            background-color: rgba(0,0,0,0.3);
+            color: #fff;
+            border: 1px solid #fff;
+        }
+
+        tr:nth-child(odd) input{
+            background: transparent;
+        } */
+        .negative-balance {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+        }
+        .mtitle{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin: 30px 10%;
+        }
+        .mtitle div:nth-child(1){
+            text-align: center;
+        }
+        .mtitle div:nth-child(1) h4:nth-child(1){
+            margin-bottom: 8px;
+            font-size: 23px;
+        }
+        .mtitle .mbtn a button{
+            height: 60px;
+            padding: 10px;
+            font-size: 20px;
+            outline: 0;
+            border: none;
+            cursor: pointer;
+            background-color: rgba(34,122,191,0.5);
+            color: #fff;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .mtitle .mbtn a button:hover{
+            box-shadow: 0px 10px 10px var(--secondary-color);
+        }
+
+        button.btn{
             display: block;
             height: 50px;
             font-size: 20px;
@@ -83,14 +132,14 @@
             z-index: 3;      
       }
 
-        button:hover{
+        button.btn:hover{
             color: #fff;
             box-shadow: 6px 6px 1px -1px rgba(72,68,163,0.2),
                         -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
             z-index: 4;
         }
     
-        button:hover::before{
+        button.btn:hover::before{
             content: '';
             height: 100%;
             position: absolute;
@@ -117,20 +166,6 @@
             }
         }
 
-        /* tr:nth-child(odd){
-            background-color: rgba(0,0,0,0.3);
-            color: #fff;
-            border: 1px solid #fff;
-        }
-
-        tr:nth-child(odd) input{
-            background: transparent;
-        } */
-        .negative-balance {
-            background-color: red;
-            color: white;
-            font-weight: bold;
-        }
     </style>
 </head>
 
@@ -171,13 +206,17 @@
             <li><a href="{% url "login" %}"><i class="fa-solid fa-user"></i></a></li>
           </ul>
         </div>
-
-    {{display.display_id}}
-    <br></br>
-    {{display.display_name}}
-            <a href="{% url 'mastersheet' project_id=fellowship_no  %}">
-                <button type="button">Mastersheet</button>
-            </a>
+        <div class="mtitle">
+        <div>
+         <h4>{{display.display_id}}</h4>   
+         <h4>{{display.display_name}}</h4> 
+        </div>
+         <div class="mbtn">
+         <a href="{% url 'mastersheet' project_id=fellowship_no  %}">
+            <button type="button">Mastersheet</button>
+        </a>
+        </div>
+        </div>
 
 <div class="tables">
     <div class="table">
@@ -359,7 +398,7 @@
     </tr>
     
 </table>
-<button type='button' onclick="updateTable('table_{{ table_key}}')">Update</button>
+<button type='button' class="btn" onclick="updateTable('table_{{ table_key}}')">Update</button>
 
 {% endfor %}
     </div>

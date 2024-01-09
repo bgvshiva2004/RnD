@@ -131,6 +131,20 @@
             color: white;
             font-weight: bold;
         }
+        .mtitle{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+        .mtitle div:nth-child(1) h4{
+            margin-bottom: 8px;
+            font-size: 23px;
+        }
     </style>
 </head>
 <body>
@@ -169,8 +183,11 @@
             <li><a href="{% url "login" %}"><i class="fa-solid fa-user"></i></a></li>
           </ul>
         </div>
-    {{fellowship_no}}<br></br>
-    {{title}}
+        <div class="mtitle">
+            <div><h4>{{fellowship_no}}</h4></div>
+            
+            <div><h4>{{title}}</h4></div>
+        </div>
 <div class="tables">
     <div class="table">
         {% for i in context.period_range %}
