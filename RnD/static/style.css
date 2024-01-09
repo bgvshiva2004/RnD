@@ -379,7 +379,7 @@ footer .footer{
 
 
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 7px;
     background-color: transparent;
     border-radius: 40px;
 }
