@@ -206,80 +206,7 @@
           width: 3vw;
       }
   </style>
-    <!-- <style>
-        table {
-            border-collapse: collapse;
-            width: 50%;
-            height:15vh;
-        }
-        input{
-            border:none;
-            outline:none;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-        td{
-          max-height:3px;
-        }
-
-        th, .header-row {
-            text-align: center;
-        }
-
-        .header-row th {
-            background-color: #c4c4c4;
-        }
-        .negative-balance {        
-          background-color: red;
-          color: white;
-          font-weight: bold;
-      }
-        
-            
-    
-        
-    </style>
-    <style>
-        /* Apply styling to the tables */
-        .side-by-side {
-            display: flex;
-        }
-
-        .side-by-side table {
-            border-collapse: collapse;
-            margin: 0;
-        }
-
-        .side-by-side .table1 {
-            border-right: 1px solid black; /* Border on the right side of the left table */
-        }
-
-        .side-by-side .table2 {
-            border-left: 1px solid black; /* Border on the left side of the right table */
-        }
-
-       
-        .side-by-side .table1,
-        .side-by-side .table2 {
-            width: 100%%; /* Make tables take up the full width of the container */
-        }
-        .side-by-side th, .side-by-side td {
-            border: 1px solid black;
-            padding: 8px;
-            width: 100px; /* Set the maximum width for each column */
-            word-wrap: break-word; /* Allow content to wrap onto the next line */
-        }
-        .side-by-side th.column-names {
-            height: 72px; /* Set the maximum height for column names */
-        }
-    </style> -->
+   
 </head>
 <body>
   <div class="navbar1">
@@ -405,7 +332,7 @@
         
         <tr>
             
-          <th colspan="{{ financial_years|length|add:1 }}"  >Expenditure Amount Rs1.</th>
+          <th colspan="{{ financial_years|length|add:1 }}"  >Expenditure Amount Rs.</th>
           <th rowspan="2"  >Committed Expenditure</th>
           <th rowspan="2"  >As per total sanctionss</th>
         </tr>
@@ -416,7 +343,7 @@
           {% for year in financial_years %}
             <th  class="column-names">{{ year }}</th>
           {% endfor %}
-          <th  class="column-names">Total</th>
+          <th  class="column-names">Total Expenditure</th>
 
         </tr>
       </thead>
