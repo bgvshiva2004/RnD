@@ -157,6 +157,11 @@
             font-size: 22px;
             margin-bottom: 20px;
         }
+        .project-details .detailss div{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -215,10 +220,11 @@
                 <div class="project-details">
                     
                     <h4 style="text-align:center;">   {{ project.Title_of_Project }}  </h4>
-                   
-                    <p><span>Project ID :</span>  {{ project.Project_Fellowship_No }}</p>
-                    <p><span>Start Date:</span>{{ project.Project_Start_Date }}</p>
-                    <p><span>End Date:</span>{{ project.Project_Closure_Date }}</p>
+                    <div class="detailss">
+                        <div><div><p><span>Project ID :</span></p></div><div><p>{{ project.Project_Fellowship_No }}</p></div></div>
+                        <div><div><p><span>Start Date:</span></p></div><div><p>{{ project.Project_Start_Date }}</p></div></div>
+                        <div><div><p><span>End Date:</span></p></div><div><p>{{ project.Project_Closure_Date }}</p></div></div>
+                    </div>
                 </div>
             </div>
            </div>

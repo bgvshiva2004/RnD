@@ -29,34 +29,6 @@
           width: 5vw;
       }
 
-      table.table11{
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border: 0px none;
-          width: 80%;
-          margin: 30px auto;
-      }
-
-      table.table11 tr{
-          width: 100%;
-      }
-
-      table.table11 tr th{
-          width: 40%;
-          text-align: left;
-          margin-right: 50px;
-          font-size: 18px;
-          font-weight: 900;
-      }
-
-      table.table11 tr td input{
-         /* height: 100%;
-          width: 100%;*/
-          border: none;
-          outline: 0;
-      }
-
       button{
           display: block;
           height: 50px;
@@ -115,8 +87,6 @@
           display: flex;
           justify-content: space-around;
       }
-
-
 
       /* tr:nth-child(odd){
           background-color: rgba(0,0,0,0.3);
@@ -205,6 +175,33 @@
       .side-by-side table tr th, .side-by-side table tr td{
           width: 3vw;
       }
+
+      table.table11{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 0px none;
+        margin: 30px auto;
+    }
+
+    table.table11 tr{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    table.table11 tr th{
+        width: 20vw;
+        text-align: left;
+        font-size: 18px;
+        font-weight: 900;
+        color: var(--secondary-color)
+    }
+
+    table.table11 tr td{
+      width: 20vw;
+      font-size: 18px;
+    }
   </style>
    
 </head>
@@ -248,7 +245,7 @@
     <table class="table11">
 <tr>
     <th>Project/Fellowship No.</th>
-    <td  name='Project_Fellowship_No'>{{existing_project.Project_Fellowship_No}}</td>
+    <td name='Project_Fellowship_No'>{{existing_project.Project_Fellowship_No}}</td>
 </tr>
 <tr>
     <th>PI of Project</th>

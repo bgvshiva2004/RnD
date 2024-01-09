@@ -27,6 +27,7 @@
 .navbar1.sticky{
     /* background-color: rgba(34,122,191,0.5); */
     background-color: var(--secondary-color);
+    z-index: 60;
 }
 
 .navbar1.sticky .title{
