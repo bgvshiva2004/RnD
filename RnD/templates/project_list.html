@@ -197,34 +197,12 @@
     </div>
 
     <div class="sub_nav">
-        <div class="project_list"><h1>Project List</h1></div>
+        <div class="project_list"><h1>Project Deals</h1></div>
     </div>
 
     <div class="project-container">
         {% for project in projects %}
-        <!-- <div class="card">
-            <div class="bg">
-                <div class="project-details">
-                    <a href="{% url 'fill' project_id=project.Project_Fellowship_No %}">
-                        {{ project.Title_of_Project }}
-                    </a>
-                    <p><span>Project ID :</span>  {{ project.Project_Fellowship_No }}</p>
-                    <p><span>Start Date:</span>{{ project.Project_Start_Date }}</p>
-                    <p><span>End Date:</span>{{ project.Project_Closure_Date }}</p>
-                </div>
-                <div class="card__content">
-                    <div class="buttons">
-                        <a href="{% url 'fill' project_id=project.Project_Fellowship_No %}">
-                            <button class="button">Monthly Sheet</button>
-                        </a>
-                        <a href="{% url 'mastersheet' project_id=project.Project_Fellowship_No %}">
-                            <button class="button">Mastersheet</button>
-                        </a>
-                    </div>
-                </div>
-            </div> 
-            <div class="blob"></div>  
-        </div> -->
+        
         <div class="book">
             <div class="buttons">
                 <a href="{% url 'fill' project_id=project.Project_Fellowship_No %}">
@@ -236,7 +214,7 @@
             </div>            <div class="cover">
                 <div class="project-details">
                     
-                    <h4>   {{ project.Title_of_Project }}  </h4>
+                    <h4 style="text-align:center;">   {{ project.Title_of_Project }}  </h4>
                    
                     <p><span>Project ID :</span>  {{ project.Project_Fellowship_No }}</p>
                     <p><span>Start Date:</span>{{ project.Project_Start_Date }}</p>

@@ -350,9 +350,7 @@
       <tbody>
         {% for budget_head in budget_heads %}
         <tr>
-        
-          
-          <!-- Add dynamic cells for each financial year -->
+      <!-- Add dynamic cells for each financial year -->
           {% for table_key, sum_data in tablesdata.items %}
 
           {% if  budget_head == "Equipment" %}
@@ -426,7 +424,7 @@
           <th rowspan="2">Particulars</th>
           <th rowspan="2">Indent No</th>
           <th rowspan="2">Indent DATE</th>
-          <th  colspan="5">Budget Head & Indent/Advance/Fellowship Amount</th>
+          <th  colspan="5" style="text-align:center;">Budget Head & Indent/Advance/Fellowship Amount</th>
           <th rowspan="2">Indent/Advance/Fellowship</th>
           <th rowspan="2">Status of Indent</th>
          
