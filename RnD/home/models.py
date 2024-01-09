@@ -141,6 +141,8 @@ class project_details(models.Model):
     Project_Closure_Date = models.DateField(null=True)
     Title_of_Project = models.CharField(max_length=50,blank=True,null=True)
     project_duration =models.IntegerField(null=True)
+    financial_year_start_index = models.IntegerField(null=True)
+    financial_year_end_index = models.IntegerField(null=True)
 
     def __str__(self):
         return f"{self.Project_Fellowship_No}"

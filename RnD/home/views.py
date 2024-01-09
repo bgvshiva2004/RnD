@@ -41,16 +41,7 @@ def index(request):
         Project_Start_Date = request.POST.get('Project_Start_Date')
         Project_Closure_Date = request.POST.get('Project_Closure_Date')
         Title_of_Project = request.POST.get('Title_of_Project')
-
-        # start_year = ""
-        # for i in range(0,4):
-        #     start_year = start_year + Project_Start_Date[i]
-
-        # closure_year = ""
-        # for i in range(0,4):
-        #     closure_year = closure_year + Project_Closure_Date[i]
-
-    
+  
         results = duration(Project_Start_Date,Project_Closure_Date)
         
         start_year=results['financial_year_start_index']
@@ -63,7 +54,9 @@ def index(request):
             Project_Start_Date =Project_Start_Date, 
             Project_Closure_Date =Project_Closure_Date,
             Title_of_Project =Title_of_Project,
-            project_duration = period
+            project_duration = period,
+            financial_year_start_index = start_year,
+            financial_year_end_index = closure_year
         )
 
         details.save()
@@ -656,7 +649,7 @@ def monthly(request):
 
             years_dict = {'context': context, 'years': years, 'fellowship_no': Project_Fellowship_No}
             return redirect('fill',project_id=Project_Fellowship_No)
-            return render(request, 'monthly.html', years_dict)
+            
 
         except project_details.DoesNotExist:
             # If the project doesn't exist, create a new one
@@ -787,36 +780,38 @@ def save_table_data(request, project_id):
 
 
 def fill(request, project_id):
-    # with open('home/3.txt', 'r') as file:
+    
     file_path = f'project_files/{project_id}.txt'
     with open(file_path, 'r') as file:
         table_data1 = file.read()
-    # print((table_data1))
+
     parsed_data = json.loads(table_data1)
     table_1_data = parsed_data["table_1"]
-    # print(table_1_data)
-    # print(len(parsed_data))
+ 
     table_data={
         '1':table_1_data,
         '0':table_1_data
     }
-    # print(parsed_data)
-    # for table_key, table_data in parsed_data.items():
-    #     print(table_key)
+  
 
     new_parsed_data = {int(key.split('_')[1]): value for key, value in parsed_data.items()}
 
     project = get_object_or_404(project_details,Project_Fellowship_No=project_id)
     display_id = project.Project_Fellowship_No
     display_name = project.Title_of_Project
+    start_year = project.financial_year_start_index
+    end_year = project.financial_year_end_index
+
     display = {
         'display_id':display_id,
-        'display_name':display_name
+        'display_name':display_name,
+        'start_year':start_year,
+        'end_year':end_year
     }
 
-    # print(new_parsed_data)
+ 
     parsed_data_json = json.dumps(parsed_data)
-    # Pass the data to the template
+  
     return render(request, 'filling.html', {'fellowship_no':project_id,'tablesdata': new_parsed_data,'range':range(0,5),'table_1_data':table_1_data,'parsed_data_json': parsed_data_json,'display':display})
 
 def count_keys(d):
