@@ -73,12 +73,6 @@
         tr:nth-child(odd) input{
             background: transparent;
         } */
-        .negative-balance {
-            background-color: red;
-            color: white;
-            font-weight: bold;
-            border-color: #fff;
-        }
         .mtitle{
             display: flex;
             justify-content: space-between;
@@ -171,6 +165,12 @@
         .placeh{
             background:#fff;
             text-align:center;
+        }
+        .negative-balance {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+            border-color: #fff;
         }
     </style>
 </head>
@@ -265,7 +265,7 @@
         <td><input type='number' name='one_Jan' value="{{sum_data.one_Jan}}"></td>
         <td><input type='number' name='one_Feb' value="{{sum_data.one_Feb}}"></td>
         <td><input type='number' name='one_Mar' value="{{sum_data.one_Mar}}"></td>
-        <td><input disabled name='one_expenses'  class="placeh" placeholder={{sum_data.one_expenses}}></td>
+        <td><input disabled name='one_expenses'  class="placeh" value="{{sum_data.one_expenses}}">{{sum_data.one_expenses}}</td>
         <td name='one_closing' class="placeh">{{sum_data.one_closing}}</td>
         
     </tr>
@@ -285,7 +285,7 @@
         <td><input type='number' name='two_Jan' value="{{sum_data.two_Jan}}"></td>
         <td><input type='number' name='two_Feb' value="{{sum_data.two_Feb}}"></td>
         <td><input type='number' name='two_Mar' value="{{sum_data.two_Mar}}"></td>
-        <td><input disabled name='two_expenses'  class="placeh" placeholder={{sum_data.two_expenses}}></td>
+        <td><input disabled name='two_expenses'  class="placeh" value="{{sum_data.two_expenses}}">{{sum_data.two_expenses}}</td>
         <td name='two_closing'  class="placeh">{{sum_data.two_closing}}</td>
     </tr>
     <tr>
@@ -386,7 +386,7 @@
     <tr name='total_amount'>
         <th>8</th>
         <th>Total Amount</th>
-        <td name='total_grant' class="placeh">{{sum_data.total_grant}}</td>
+        <td name='total_grant'>{{sum_data.total_grant}}</td>
         <td name='total_Apr' class="placeh" >{{sum_data.total_Apr}}</td>
         <td name='total_May'  class="placeh">{{sum_data.total_May}}</td>
         <td name='total_Jun' class="placeh" >{{sum_data.total_Jun}}</td>

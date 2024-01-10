@@ -35,6 +35,134 @@ def duration(date1,date2):
 
     return result
 
+import pickle
+def createfile(Project_file_name,period_range):
+    file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{Project_file_name}.txt'))
+
+    data={}
+    for i in range(0,period_range):
+        data[f"table_{i+1}"]={
+            "one_Grant_Amount": "0",
+            "one_Apr": "0",
+            "one_May": "0",
+            "one_Jun": "0",
+            "one_Jul": "0",
+            "one_Aug": "0",
+            "one_Sep": "0",
+            "one_Oct": "0",
+            "one_Nov": "0",
+            "one_Dec": "0",
+            "one_Jan": "0",
+            "one_Feb": "0",
+            "one_Mar": "0",
+
+            "two_Grant_Amount": "0",
+            "two_Apr": "0",
+            "two_May": "0",
+            "two_Jun": "0",
+            "two_Jul": "0",
+            "two_Aug": "0",
+            "two_Sep": "0",
+            "two_Oct": "0",
+            "two_Nov": "0",
+            "two_Dec": "0",
+            "two_Jan": "0",
+            "two_Feb": "0",
+            "two_Mar": "0",
+
+            "three_Grant_Amount": "0",
+            "three_Apr": "0",
+            "three_May": "0",
+            "three_Jun": "0",
+            "three_Jul": "0",
+            "three_Aug": "0",
+            "three_Sep": "0",
+            "three_Oct": "0",
+            "three_Nov": "0",
+            "three_Dec": "0",
+            "three_Jan": "0",
+            "three_Feb": "0",
+            "three_Mar": "0",
+
+            "four_Grant_Amount": "0",
+            "four_Apr": "0",
+            "four_May": "0",
+            "four_Jun": "0",
+            "four_Jul": "0",
+            "four_Aug": "0",
+            "four_Sep": "0",
+            "four_Oct": "0",
+            "four_Nov": "0",
+            "four_Dec": "0",
+            "four_Jan": "0",
+            "four_Feb": "0",
+            "four_Mar": "0",
+
+            "five_Grant_Amount": "0",
+            "five_Apr": "0",
+            "five_May": "0",
+            "five_Jun": "0",
+            "five_Jul": "0",
+            "five_Aug": "0",
+            "five_Sep": "0",
+            "five_Oct": "0",
+            "five_Nov": "0",
+            "five_Dec": "0",
+            "five_Jan": "0",
+            "five_Feb": "0",
+            "five_Mar": "0",
+
+            "six_Grant_Amount":"0",
+            "six_Apr": "0",
+            "six_May": "0",
+            "six_Jun": "0",
+            "six_Jul": "0",
+            "six_Aug": "0",
+            "six_Sep": "0",
+            "six_Oct": "0",
+            "six_Nov": "0",
+            "six_Dec": "0",
+            "six_Jan": "0",
+            "six_Feb": "0",
+            "six_Mar": "0",
+
+            "seven_Grant_Amount": "0",
+            "seven_Apr": "0",
+            "seven_May": "0",
+            "seven_Jun": "0",
+            "seven_Jul": "0",
+            "seven_Aug": "0",
+            "seven_Sep": "0",
+            "seven_Oct": "0",
+            "seven_Nov": "0",
+            "seven_Dec": "0",
+            "seven_Jan": "0",
+            "seven_Feb": "0",
+            "seven_Mar": "0",
+        }
+    
+    for table_name in data:
+        data[table_name]["total_Grant_Amount"]="0"
+        data[table_name]["total_Apr"] = "0"
+        data[table_name]["total_May"] = "0"
+        data[table_name]["total_Jun"] = "0"
+        data[table_name]["total_Jul"] = "0"
+        data[table_name]["total_Aug"] = "0"
+        data[table_name]["total_Sep"] = "0"
+        data[table_name]["total_Oct"] = "0"
+        data[table_name]["total_Nov"] = "0"
+        data[table_name]["total_Dec"] = "0"
+        data[table_name]["total_Jan"] = "0"
+        data[table_name]["total_Feb"] = "0"
+        data[table_name]["total_Mar"] = "0"
+
+    print(data)
+
+    with open(file_path, 'w') as file:
+        json_data = json.dumps(data, indent=2,sort_keys=True)
+        file.write(json_data)
+
+
 def index(request):
     if request.method == "POST":
         Project_Fellowship_No =request.POST.get('Project_Fellowship_No')
@@ -70,11 +198,15 @@ def index(request):
 
         period_range = range(0, period)
 
-        print(period," ",period_range)
+        createfile(Project_file_name,period)
+
+        # print(period," ",period_range)
         context = {'period': period, 'period_range': period_range}
         years = {'start_year':start_year, 'closure_year':closure_year}
 
         years_dict = {'context':context, 'years':years, 'fellowship_no':Project_Fellowship_No,'title':Title_of_Project ,'id':details.id}
+
+        save_table_data(request,details.id)
 
         return render(request,'monthly.html',years_dict)
         
@@ -177,7 +309,7 @@ def mastersheet(request,project_id):
 ]
     file_path = os.path.join('project_files', f'{existing_project.Project_file_name}.txt')
     with open(file_path, 'r') as file:
-     table_data1 = file.read()
+        table_data1 = file.read()
     # print((table_data1))
     parsed_data = json.loads(table_data1)
     table_1_data = parsed_data["table_1"]
@@ -191,7 +323,7 @@ def mastersheet(request,project_id):
     # for table_key, table_data in parsed_data.items():
     #     print(table_key)
 
-    years = {'start_year':2023, 'closure_year':2027}
+    # years = {'start_year':2023, 'closure_year':2027}
     new_parsed_data = {int(key.split('_')[1]): value for key, value in parsed_data.items()}
 
     # print(new_parsed_data)
@@ -199,7 +331,7 @@ def mastersheet(request,project_id):
 
     period_range =range(0,8)
     zipped_data = zip(period_range, budget_heads)
-    zipped_data1 = zip(range(1,len(financial_years)+1), financial_years)
+    # zipped_data1 = zip(range(1,len(financial_years)+1), financial_years)
     data={
         'financial_years':financial_years,
         'period_range' :range(0,8),

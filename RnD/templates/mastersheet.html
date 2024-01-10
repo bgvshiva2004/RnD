@@ -293,7 +293,7 @@
     <tbody>
         {% for period, budget_head in zipped_data %}
         <tr>
-          <td>{{ period }}</td>
+          <td>{{ period|add:1 }}</td>
           <td contenteditable="true"> {{ budget_head }}</td>
           <!-- Add dynamic cells for each financial year -->
           {% for table_key, sum_data in tablesdata.items %}
