@@ -29,7 +29,7 @@
           width: 5vw;
       }
 
-      button{
+      button.btn{
           display: block;
           height: 50px;
           font-size: 20px;
@@ -49,14 +49,14 @@
                       -6px -6px 10px -1px rgba(255, 255, 255, 0.7);        
     }
 
-      button:hover{
+      button.btn:hover{
           color: #fff;
           box-shadow: 6px 6px 1px -1px rgba(72,68,163,0.2),
                       -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
           z-index: 2;
       }
   
-      button:hover::before{
+      button.btn:hover::before{
           content: '';
           height: 100%;
           position: absolute;
@@ -159,7 +159,6 @@
           font-size: 17px;
           font-weight: 400;
           border: 1px solid #fff;
-          {% comment %} padding: 10px; {% endcomment %}
           background-color: var(--secondary-color);
           color: #fff;  
           text-align: center;
@@ -180,8 +179,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 0px none;
-        margin: 30px auto;
+        border: 2px solid rgba(34,122,191,0.5);
+        margin: 30px 50px 30px 0px;
+        padding: 40px;
+        box-shadow: 5px 10px 20px rgba(34,122,191,0.5);
     }
 
     table.table11 tr{
@@ -191,18 +192,28 @@
     }
 
     table.table11 tr th{
-        width: 20vw;
         text-align: left;
+        width: 20vw;
         font-size: 18px;
         font-weight: 900;
-        color: var(--secondary-color)
+        color: var(--secondary-color);
     }
 
     table.table11 tr td{
-      width: 20vw;
       font-size: 18px;
+      width: 20vw;
+      text-align: center;
     }
-    .mtitle .mbtn a button{
+
+    .mbtn{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
+
+    .mbtn a button{
       height: 60px;
       padding: 10px;
       font-size: 20px;
@@ -217,8 +228,14 @@
       color: var(--secondary-color);
   }
 
-  .mtitle .mbtn a button:hover{
+  .mbtn a button:hover{
       box-shadow: 0px 10px 10px var(--secondary-color);
+  }
+
+  .title-block{
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   </style>
    
@@ -260,36 +277,39 @@
       </ul>
     </div>
     
-    <table class="table11">
-<tr>
-    <th>Project/Fellowship No.</th>
-    <td name='Project_Fellowship_No'>{{existing_project.Project_Fellowship_No}}</td>
-</tr>
-<tr>
-    <th>PI of Project</th>
-    <td name='PI_of_Project'>{{ existing_project.PI_of_Project}}</td>
-</tr><tr>
-    <th>Sanctioned Date</th>
-    <td name='Sanctioned_Date'>{{existing_project.Sanctioned_Date}}</td>
-</tr> <tr>
-    <th>Project Start Date</th>
-    <td name='Project_Start_Date'>{{ existing_project.Project_Start_Date}}</td>
-</tr> <tr>
-    <th>Project Closure Date</th>
-    <td name='Project_Closure_Date'>{{existing_project.Project_Closure_Date}}</td>
-</tr><tr>
-    <th>Title of Project</th>
-    <td name='Title_of_Project'>{{existing_project.Title_of_Project}}</td>
-</tr>
-</table>
-<br>
+    <div class="title-block">
+      <div>
+        <table class="table11">
+        <tr>
+            <th>Project/Fellowship No.</th>
+            <td name='Project_Fellowship_No'>{{existing_project.Project_Fellowship_No}}</td>
+        </tr>
+        <tr>
+            <th>PI of Project</th>
+            <td name='PI_of_Project'>{{ existing_project.PI_of_Project}}</td>
+        </tr><tr>
+            <th>Sanctioned Date</th>
+            <td name='Sanctioned_Date'>{{existing_project.Sanctioned_Date}}</td>
+        </tr> <tr>
+            <th>Project Start Date</th>
+            <td name='Project_Start_Date'>{{ existing_project.Project_Start_Date}}</td>
+        </tr> <tr>
+            <th>Project Closure Date</th>
+            <td name='Project_Closure_Date'>{{existing_project.Project_Closure_Date}}</td>
+        </tr><tr>
+            <th>Title of Project</th>
+            <td name='Title_of_Project'>{{existing_project.Title_of_Project}}</td>
+        </tr>
+        </table>
+      </div>
+      <br>
 
-<div class="mbtn">
-  <a href="{% url 'fill' project_id=project_id %}">
-     <button type="button">Monthlysheet</button>
- </a>
- </div>
-
+     </div>
+     <div class="mbtn">
+        <a href="{% url 'fill' project_id=project_id %}">
+          <button type="button">Monthlysheet</button>
+      </a>
+      </div>
 <div class="side-by-side">
 
 
@@ -432,7 +452,8 @@
   
   
 </div>
-<button id="update-button">Update</button>
+<button class="btn" id="update-button">Update</button>
+
 <br>
 <h2 class="table3h2">Details of Committed Expenditure</h2>
 <table class="table3" id="data-table3">
@@ -481,9 +502,9 @@
   </tbody>
 </table>
 <div class="btn-row">
-  <button onclick="addRow()">Add Row</button>
+  <button onclick="addRow()" class="btn">Add Row</button>
   {% comment %} <button onclick="updateData()">Update Data</button> {% endcomment %}
-  <button id="updateDataBtn" onclick="updateData()">Update Data</button>
+  <button id="updateDataBtn" class="btn" onclick="updateData()">Update Data</button>
 </div>
 <footer>
   <div class="footer">
