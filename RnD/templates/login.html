@@ -58,12 +58,13 @@
         <section id="s1">
             <h2>LogIn</h2>
             <h5>Sign in to continue Access!</h5>
-            <form id="signin">
+            <form action='/login/' method='post' id="signin">
+              {% csrf_token %}
                 <div class="sipass">
-                    <input type="text" placeholder="UserID" id="si-ID">
+                    <input type="text" placeholder="UserID" id="si-ID" name='username'>
                 </div>
                 <div class="sipass">
-                    <input type="password" placeholder="Password" id="si-password">
+                    <input type="password" placeholder="Password" id="si-password" name='password'>
                     <span onclick="toggleShowSI();" class="si-span" id="si-show"><i class="fa-solid fa-eye-slash"></i></span>
                 </div>
                 <button type="submit" id="si-submit">Sign in</button>
@@ -120,7 +121,7 @@
         
       </footer>
 
-    <script src="script.js"></script>
+    <script src="{% static "script.js" %}"></script>
 
     <script>
 

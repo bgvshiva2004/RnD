@@ -1,12 +1,15 @@
 from django.shortcuts import render,redirect,HttpResponse
-from .models import table_info,project_details
+from .models import project_details
 import os
 from django.conf import settings
 from datetime import datetime
-from .models import *
+from django.contrib.auth import authenticate,login as auth_login , logout as auth_logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 # Create your views here.
 period=0
 
+@login_required
 def duration(date1,date2):
     date1 = datetime.strptime(date1,"%Y-%m-%d")
     date2 = datetime.strptime(date2,"%Y-%m-%d")
@@ -36,6 +39,7 @@ def duration(date1,date2):
     return result
 
 import pickle
+@login_required
 def createfile(Project_file_name,period_range):
     file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{Project_file_name}.txt'))
 
@@ -163,6 +167,7 @@ def createfile(Project_file_name,period_range):
         file.write(json_data)
 
 from django.core.exceptions import ObjectDoesNotExist
+@login_required
 def index(request):
     if request.method == "POST":
         Project_Fellowship_No =request.POST.get('Project_Fellowship_No')
@@ -220,14 +225,26 @@ def homepage(request):
     return render(request, "homepage.html")         
 
 def login(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request,username=username,password=password)
+
+        if user is not None and user.is_active:
+            auth_login(request,user)
+            return render(request,'homepage.html')
+        else:
+            messages.error(request,'Invalid Credentials')
     return render(request, "login.html")         
 
-
+@login_required
 def project_list(request):
     projects = project_details.objects.all()
     context = {'projects': projects}
     return render(request, 'project_list.html', context)
 
+@login_required
 def monthly(request):
     
     if request.method == "POST":
@@ -295,6 +312,7 @@ def monthly(request):
 
 
 from datetime import datetime
+@login_required
 def mastersheet(request,project_id):
     existing_project = project_details.objects.get(id=project_id)
     start_year1 = existing_project.financial_year_start_index
@@ -376,6 +394,7 @@ from django.conf import settings
 
 @csrf_exempt
 @require_POST
+@login_required
 def save_table_data(request, project_id):
     try:
         project = project_details.objects.get(id=project_id)
@@ -391,7 +410,7 @@ def save_table_data(request, project_id):
         # print(e)
         return JsonResponse({'success': False, 'error': str(e)})
 
-
+@login_required
 def fill(request, project_id):
     try:
         # project_id = project_id.replace('/','_')
@@ -442,6 +461,7 @@ def count_keys(d):
 
 @csrf_exempt
 @require_POST
+@login_required
 def save_tables_to_file(request, project_id):
     try:
         project = get_object_or_404(project_details, id=project_id)
@@ -459,6 +479,7 @@ def save_tables_to_file(request, project_id):
 from django.views.decorators.http import require_POST
 
 @require_POST
+@login_required
 def save_table_data_to_file(request):
     try:
         data = json.loads(request.body.decode('utf-8'))['tableData']  # Assuming the data is sent as an array
@@ -475,6 +496,7 @@ def save_table_data_to_file(request):
         print(f'Error saving file: {e}')
         return JsonResponse({'success': False, 'error': str(e)})
     
+@login_required
 def save_data_to_file(request):
     if request.method == 'POST':
         try:
@@ -494,3 +516,8 @@ def save_data_to_file(request):
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON data'})
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+    
+
+def logout(request):
+    auth_logout(request)
+    return render(request,'homepage.html')
