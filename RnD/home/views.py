@@ -74,7 +74,7 @@ def index(request):
         context = {'period': period, 'period_range': period_range}
         years = {'start_year':start_year, 'closure_year':closure_year}
 
-        years_dict = {'context':context, 'years':years, 'fellowship_no':Project_Fellowship_No,'title':Title_of_Project}
+        years_dict = {'context':context, 'years':years, 'fellowship_no':Project_Fellowship_No,'title':Title_of_Project ,'id':details.id}
 
         return render(request,'monthly.html',years_dict)
         
@@ -127,7 +127,7 @@ def monthly(request):
             years = {'start_year': start_year, 'closure_year': closure_year}
 
             years_dict = {'context': context, 'years': years, 'fellowship_no': Project_Fellowship_No}
-            return redirect('fill',project_id=Project_Fellowship_No)
+            return redirect('fill',project_id=existing_project.id)
             
 
         except project_details.DoesNotExist:
@@ -242,6 +242,7 @@ from django.conf import settings
 def save_table_data(request, project_id):
     try:
         project = project_details.objects.get(id=project_id)
+        print(f"project id: ",project_id)
         file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{project.Project_file_name}.txt'))
         # Decode and save the JSON data to the file
         with open(file_path, 'w') as file:
