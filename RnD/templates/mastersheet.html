@@ -159,7 +159,7 @@
           font-size: 17px;
           font-weight: 400;
           border: 1px solid #fff;
-          padding: 10px;
+          {% comment %} padding: 10px; {% endcomment %}
           background-color: var(--secondary-color);
           color: #fff;  
           text-align: center;
@@ -173,7 +173,7 @@
       }
 
       .side-by-side table tr th, .side-by-side table tr td{
-          width: 3vw;
+          width: 7vw;
       }
 
       table.table11{
@@ -202,6 +202,24 @@
       width: 20vw;
       font-size: 18px;
     }
+    .mtitle .mbtn a button{
+      height: 60px;
+      padding: 10px;
+      font-size: 20px;
+      outline: 0;
+      border: none;
+      cursor: pointer;
+      background-color: rgba(34,122,191,0.5);
+      color: #fff;
+      border-radius: 10px;
+      transition: all 0.3s ease-in-out;border: 2px solid rgba(34,122,191,0.5);
+      background-color: #fff;
+      color: var(--secondary-color);
+  }
+
+  .mtitle .mbtn a button:hover{
+      box-shadow: 0px 10px 10px var(--secondary-color);
+  }
   </style>
    
 </head>
@@ -266,6 +284,11 @@
 </table>
 <br>
 
+<div class="mbtn">
+  <a href="{% url 'fill' project_id=project_id %}">
+     <button type="button">Monthlysheet</button>
+ </a>
+ </div>
 
 <div class="side-by-side">
 
@@ -331,7 +354,7 @@
             
           <th colspan="{{ financial_years|length|add:1 }}"  >Expenditure Amount Rs.</th>
           <th rowspan="2"  >Committed Expenditure</th>
-          <th rowspan="2"  >As per total sanctionss</th>
+          <th rowspan="2"  >As per total sanctions</th>
         </tr>
         <!-- Subheader row for S.No., Budget Head, and financial years -->
         <tr>

@@ -162,7 +162,7 @@ def createfile(Project_file_name,period_range):
         json_data = json.dumps(data, indent=2,sort_keys=True)
         file.write(json_data)
 
-
+from django.core.exceptions import ObjectDoesNotExist
 def index(request):
     if request.method == "POST":
         Project_Fellowship_No =request.POST.get('Project_Fellowship_No')
@@ -173,42 +173,46 @@ def index(request):
         Title_of_Project = request.POST.get('Title_of_Project')
 
         Project_file_name = ''.join(letter for letter in Project_Fellowship_No if letter.isalnum())
-  
-        results = duration(Project_Start_Date,Project_Closure_Date)
-        
-        start_year=results['financial_year_start_index']
-        closure_year=results['financial_year_end_index']
-        period = results['count']
-        details = project_details.objects.create(
-            Project_Fellowship_No =Project_Fellowship_No,
-            Project_file_name = Project_file_name,
-            PI_of_Project = PI_of_Project,
-            Sanctioned_Date = Sanctioned_Date,
-            Project_Start_Date =Project_Start_Date, 
-            Project_Closure_Date =Project_Closure_Date,
-            Title_of_Project =Title_of_Project,
-            project_duration = period,
-            financial_year_start_index = start_year,
-            financial_year_end_index = closure_year
-        )
 
-        details.save()
+        try:
+            check = project_details.objects.get(Project_Fellowship_No=Project_Fellowship_No)
+            return render(request,'index.html')
+        except ObjectDoesNotExist:
+            results = duration(Project_Start_Date,Project_Closure_Date)
+            
+            start_year=results['financial_year_start_index']
+            closure_year=results['financial_year_end_index']
+            period = results['count']
+            details = project_details.objects.create(
+                Project_Fellowship_No =Project_Fellowship_No,
+                Project_file_name = Project_file_name,
+                PI_of_Project = PI_of_Project,
+                Sanctioned_Date = Sanctioned_Date,
+                Project_Start_Date =Project_Start_Date, 
+                Project_Closure_Date =Project_Closure_Date,
+                Title_of_Project =Title_of_Project,
+                project_duration = period,
+                financial_year_start_index = start_year,
+                financial_year_end_index = closure_year
+            )
 
-        
+            details.save()
 
-        period_range = range(0, period)
+            
 
-        createfile(Project_file_name,period)
+            period_range = range(0, period)
 
-        # print(period," ",period_range)
-        context = {'period': period, 'period_range': period_range}
-        years = {'start_year':start_year, 'closure_year':closure_year}
+            createfile(Project_file_name,period)
 
-        years_dict = {'context':context, 'years':years, 'fellowship_no':Project_Fellowship_No,'title':Title_of_Project ,'id':details.id}
+            # print(period," ",period_range)
+            context = {'period': period, 'period_range': period_range}
+            years = {'start_year':start_year, 'closure_year':closure_year}
 
-        save_table_data(request,details.id)
+            years_dict = {'context':context, 'years':years, 'fellowship_no':Project_Fellowship_No,'title':Title_of_Project ,'id':details.id}
 
-        return render(request,'monthly.html',years_dict)
+            save_table_data(request,details.id)
+
+            return render(request,'monthly.html',years_dict)
         
     return render(request,'index.html')
 
@@ -342,7 +346,8 @@ def mastersheet(request,project_id):
         'l':len(financial_years)+1,
         'tablesdata':new_parsed_data,
         'existing_project':existing_project,
-          }
+        'project_id':project_id
+        }
     return render(request,'mastersheet.html',data)
 
 
@@ -392,7 +397,7 @@ def fill(request, project_id):
         # project_id = project_id.replace('/','_')
         project = project_details.objects.get(id = project_id)
         project_file_name = project.Project_file_name
-        project_fellowship_no = project.Project_Fellowship_No
+        # project_fellowship_no = project.Project_Fellowship_No
         file_path = f'project_files/{project_file_name}.txt'
         with open(file_path, 'r') as file:
             table_data1 = file.read()
