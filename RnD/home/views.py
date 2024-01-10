@@ -1,8 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from .models import table_info,project_details
 import os
 from django.conf import settings
 from datetime import datetime
+from .models import *
 # Create your views here.
 period=0
 
@@ -42,6 +43,8 @@ def index(request):
         Project_Start_Date = request.POST.get('Project_Start_Date')
         Project_Closure_Date = request.POST.get('Project_Closure_Date')
         Title_of_Project = request.POST.get('Title_of_Project')
+
+        Project_file_name = ''.join(letter for letter in Project_Fellowship_No if letter.isalnum())
   
         results = duration(Project_Start_Date,Project_Closure_Date)
         
@@ -50,6 +53,7 @@ def index(request):
         period = results['count']
         details = project_details.objects.create(
             Project_Fellowship_No =Project_Fellowship_No,
+            Project_file_name = Project_file_name,
             PI_of_Project = PI_of_Project,
             Sanctioned_Date = Sanctioned_Date,
             Project_Start_Date =Project_Start_Date, 
@@ -156,10 +160,10 @@ def monthly(request):
 
 from datetime import datetime
 def mastersheet(request,project_id):
-    existing_project = project_details.objects.get(Project_Fellowship_No=project_id)
+    existing_project = project_details.objects.get(id=project_id)
     start_year1 = existing_project.financial_year_start_index
     end_year1 = existing_project.financial_year_end_index
-    
+
     financial_years = [f"{year}-{year+1}" for year in range(start_year1, end_year1)]
     budget_heads = [
     'Equipment',
@@ -171,7 +175,7 @@ def mastersheet(request,project_id):
     'SSR',
 
 ]
-    file_path = os.path.join('project_files', f'{project_id}.txt')
+    file_path = os.path.join('project_files', f'{existing_project.Project_file_name}.txt')
     with open(file_path, 'r') as file:
      table_data1 = file.read()
     # print((table_data1))
@@ -237,7 +241,8 @@ from django.conf import settings
 @require_POST
 def save_table_data(request, project_id):
     try:
-        file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{project_id}.txt'))
+        project = project_details.objects.get(id=project_id)
+        file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{project.Project_file_name}.txt'))
         # Decode and save the JSON data to the file
         with open(file_path, 'w') as file:
             json_data = json.loads(request.body)
@@ -250,40 +255,46 @@ def save_table_data(request, project_id):
 
 
 def fill(request, project_id):
+    try:
+        # project_id = project_id.replace('/','_')
+        project = project_details.objects.get(id = project_id)
+        project_file_name = project.Project_file_name
+        project_fellowship_no = project.Project_Fellowship_No
+        file_path = f'project_files/{project_file_name}.txt'
+        with open(file_path, 'r') as file:
+            table_data1 = file.read()
+
+        parsed_data = json.loads(table_data1)
+        table_1_data = parsed_data["table_1"]
     
-    file_path = f'project_files/{project_id}.txt'
-    with open(file_path, 'r') as file:
-        table_data1 = file.read()
+        table_data={
+            '1':table_1_data,
+            '0':table_1_data
+        }
+    
 
-    parsed_data = json.loads(table_data1)
-    table_1_data = parsed_data["table_1"]
- 
-    table_data={
-        '1':table_1_data,
-        '0':table_1_data
-    }
-  
+        new_parsed_data = {int(key.split('_')[1]): value for key, value in parsed_data.items()}
 
-    new_parsed_data = {int(key.split('_')[1]): value for key, value in parsed_data.items()}
+        display_id = project.Project_Fellowship_No
+        display_name = project.Title_of_Project
+        start_year = project.financial_year_start_index
+        end_year = project.financial_year_end_index
 
-    project = get_object_or_404(project_details,Project_Fellowship_No=project_id)
-    display_id = project.Project_Fellowship_No
-    display_name = project.Title_of_Project
-    start_year = project.financial_year_start_index
-    end_year = project.financial_year_end_index
+        display = {
+            'display_id':display_id,
+            'display_name':display_name,
+            'start_year':start_year,
+            'end_year':end_year
+        }
 
-    display = {
-        'display_id':display_id,
-        'display_name':display_name,
-        'start_year':start_year,
-        'end_year':end_year
-    }
-
-    print(start_year)
- 
-    parsed_data_json = json.dumps(parsed_data)
-  
-    return render(request, 'filling.html', {'fellowship_no':project_id,'tablesdata': new_parsed_data,'range':range(0,5),'table_1_data':table_1_data,'parsed_data_json': parsed_data_json,'display':display})
+        print(start_year)
+    
+        parsed_data_json = json.dumps(parsed_data)
+    
+        return render(request, 'filling.html', {'fellowship_no':project_id,'tablesdata': new_parsed_data,'range':range(0,5),'table_1_data':table_1_data,'parsed_data_json': parsed_data_json,'display':display})
+    except Exception as e:
+        print(e)
+        return HttpResponse(e)
 
 def count_keys(d):
     if not isinstance(d, dict):
@@ -296,7 +307,7 @@ def count_keys(d):
 def save_tables_to_file(request, project_id):
     try:
         project = get_object_or_404(project_details, id=project_id)
-        file_path = os.path.join('project_files', f'{project_id}.txt')
+        file_path = os.path.join('project_files', f'{project.Project_file_name}.txt')
 
         # Decode and save the JSON data to the file
         with open(file_path, 'w') as file:

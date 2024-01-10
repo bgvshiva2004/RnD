@@ -134,7 +134,8 @@ class table_info(models.Model):
     total_closing_balances=models.IntegerField(null=True)
 
 class project_details(models.Model):
-    Project_Fellowship_No = models.CharField(max_length=20,primary_key=True)
+    Project_Fellowship_No = models.CharField(max_length=20,null=True,blank=True,default=None)
+    Project_file_name = models.CharField(max_length=20,null=True,blank= True)
     PI_of_Project = models.CharField(max_length=20,blank=True,null=True)
     Sanctioned_Date = models.DateField(null=True)
     Project_Start_Date = models.DateField(null=True)
@@ -143,6 +144,3 @@ class project_details(models.Model):
     project_duration =models.IntegerField(null=True)
     financial_year_start_index = models.IntegerField(null=True)
     financial_year_end_index = models.IntegerField(null=True)
-
-    def __str__(self):
-        return f"{self.Project_Fellowship_No}"
