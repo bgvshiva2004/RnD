@@ -215,7 +215,7 @@ def index(request):
 
             years_dict = {'context':context, 'years':years, 'fellowship_no':Project_Fellowship_No,'title':Title_of_Project ,'id':details.id}
 
-            save_table_data(request,details.id)
+            # save_table_data(request,details.id)
 
             return render(request,'monthly.html',years_dict)
         
