@@ -9,7 +9,7 @@ from django.contrib import messages
 # Create your views here.
 period=0
 
-@login_required
+# @login_required
 def duration(date1,date2):
     date1 = datetime.strptime(date1,"%Y-%m-%d")
     date2 = datetime.strptime(date2,"%Y-%m-%d")
@@ -39,7 +39,7 @@ def duration(date1,date2):
     return result
 
 import pickle
-@login_required
+# @login_required
 def createfile(Project_file_name,period_range):
     file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{Project_file_name}.txt'))
 
@@ -394,7 +394,7 @@ from django.conf import settings
 
 @csrf_exempt
 @require_POST
-@login_required
+# @login_required
 def save_table_data(request, project_id):
     try:
         project = project_details.objects.get(id=project_id)
@@ -461,7 +461,7 @@ def count_keys(d):
 
 @csrf_exempt
 @require_POST
-@login_required
+# @login_required
 def save_tables_to_file(request, project_id):
     try:
         project = get_object_or_404(project_details, id=project_id)
@@ -479,7 +479,7 @@ def save_tables_to_file(request, project_id):
 from django.views.decorators.http import require_POST
 
 @require_POST
-@login_required
+# @login_required
 def save_table_data_to_file(request):
     try:
         data = json.loads(request.body.decode('utf-8'))['tableData']  # Assuming the data is sent as an array
@@ -496,7 +496,7 @@ def save_table_data_to_file(request):
         print(f'Error saving file: {e}')
         return JsonResponse({'success': False, 'error': str(e)})
     
-@login_required
+# @login_required
 def save_data_to_file(request):
     if request.method == 'POST':
         try:
