@@ -15,6 +15,7 @@ def duration(date1,date2):
     date2 = datetime.strptime(date2,"%Y-%m-%d")
 
     start_month = date1.month
+    # print(start_month)
     start_year = date1.year
     end_month = date2.month
     end_year = date2.year
@@ -33,7 +34,9 @@ def duration(date1,date2):
     result = {
         'count':count,
         'financial_year_start_index':financial_year_start_index,
-        'financial_year_end_index':financial_year_end_index
+        'financial_year_end_index':financial_year_end_index,
+        'start_month':start_month,
+        'end_month':end_month
     }
 
     return result
@@ -160,7 +163,7 @@ def createfile(Project_file_name,period_range):
         data[table_name]["total_Feb"] = "0"
         data[table_name]["total_Mar"] = "0"
 
-    print(data)
+    # print(data)
 
     with open(file_path, 'w') as file:
         json_data = json.dumps(data, indent=2,sort_keys=True)
@@ -188,6 +191,9 @@ def index(request):
             start_year=results['financial_year_start_index']
             closure_year=results['financial_year_end_index']
             period = results['count']
+            start_month = results['start_month']
+            end_month = results['end_month']
+
             details = project_details.objects.create(
                 Project_Fellowship_No =Project_Fellowship_No,
                 Project_file_name = Project_file_name,
@@ -210,7 +216,7 @@ def index(request):
             createfile(Project_file_name,period)
 
             # print(period," ",period_range)
-            context = {'period': period, 'period_range': period_range}
+            context = {'period': period, 'period_range': period_range,'start_month':start_month,'end_month':end_month}
             years = {'start_year':start_year, 'closure_year':closure_year}
 
             years_dict = {'context':context, 'years':years, 'fellowship_no':Project_Fellowship_No,'title':Title_of_Project ,'id':details.id}
