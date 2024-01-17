@@ -457,17 +457,92 @@
     document.addEventListener('DOMContentLoaded', function () {
         // initializeTableValues();
         const tableIds = document.querySelectorAll('table[id^="table_"]');
-         //console.log(tableIds)
+        console.log(tableIds)
         tableIds.forEach(function (table) {
             const tableId = table.id;
+            console.log("id",tableId)
             // tablesData[tableId] = initializeTableData(table);
             calculateAndDisplayTotalAmount(tableId);
             calculateAndDisplayTotalExpenses(tableId);
             calculateAndDisplayClosingBalance(tableId);
+
+           // console.log(table.children[0].children)
+            if(tableId==='table_1'){
+                let allrows = table.children[0].children 
+                console.log(allrows)
+                let startMonth = table.getAttribute('start-month');
+
+                for(let i=0;i<8;i++){
+                    let eachrow = allrows[i]
+                    let childrenArray = Array.from(eachrow.children);
+                    childrenArray.forEach(function(ele){
+                        let inputElement = ele.children[0];
+                        if(inputElement && inputElement.tagName==='INPUT'){
+                            let inputClass = inputElement.getAttribute('class');
+                            console.log('class: ',inputClass);
+                            if(parseInt(startMonth,10)===1){
+                                if(parseInt(inputClass,10)<13){
+                                    inputElement.setAttribute('disabled','disabled');
+                                    inputElement.style.backgroundColor='#90bcdf'; 
+                                    ele.style.backgroundColor='#90bcdf'; 
+                                }
+                            }else if(parseInt(startMonth,10)===2){
+                                if(parseInt(inputClass,10)<14){
+                                    inputElement.setAttribute('disabled','disabled');
+                                    inputElement.style.backgroundColor='#90bcdf';
+                                    ele.style.backgroundColor='#90bcdf'; 
+                                }
+                            }else if(parseInt(startMonth,10)===3){
+                                if(parseInt(inputClass,10)<15){
+                                    inputElement.setAttribute('disabled','disabled');
+                                    inputElement.style.backgroundColor='#90bcdf';
+                                    ele.style.backgroundColor='#90bcdf'; 
+                                }
+                            }else if(parseInt(inputClass,10)<startMonth){
+                                inputElement.setAttribute('disabled','disabled');
+                                inputElement.style.backgroundColor='#90bcdf';
+                                ele.style.backgroundColor='#90bcdf';
+                            }    
+                        }
+                    });
+                }
+            }
+            const lastTable = tableIds[tableIds.length-1];
+
+            if(table===lastTable){
+                let allrows = table.children[0].children
+                let endMonth = table.getAttribute('end-month');
+                for(let i=0;i<8;i++){
+                    let eachrow = allrows[i]
+                    let childrenArray = Array.from(eachrow.children);
+                    childrenArray.forEach(function(ele){
+                        let inputElement = ele.children[0];
+                        if(inputElement && inputElement.tagName === 'INPUT'){
+                            let inputClass = inputElement.getAttribute('class');
+                            if(parseInt(endMonth,10)===1){
+                                if(parseInt(inputClass,10)>13){
+                                    inputElement.setAttribute('disabled','disabled');
+                                    inputElement.style.backgroundColor='#90bcdf'; 
+                                    ele.style.backgroundColor='#90bcdf'; 
+                                }
+                            }else if(parseInt(endMonth,10)===2){
+                                if(parseInt(inputClass,10)>14){
+                                    inputElement.setAttribute('disabled','disabled');
+                                    inputElement.style.backgroundColor='#90bcdf'; 
+                                    ele.style.backgroundColor='#90bcdf'; 
+                                }
+                            }else if(parseInt(endMonth,10)!=3 && parseInt(inputClass,10)>endMonth){
+                                inputElement.setAttribute('disabled','disabled');
+                                inputElement.style.backgroundColor='#90bcdf'; 
+                                ele.style.backgroundColor='#90bcdf'; 
+                            }
+                        }
+                    })
+                }
+            }
         });
 
-        // Your existing DOMContentLoaded code (if any)
-        console.log(tableIds)
+        
     });
 
     function initializeTableData(table) {
