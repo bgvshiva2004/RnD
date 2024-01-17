@@ -318,17 +318,13 @@
 
 <table class="table1" id="data-table">
     <thead>
-        <!-- Parent row for "Sanctioned Amount Rs." -->
-        
         <tr>
             <th rowspan="2">S.No.</th>
             <th rowspan="2">Budget Head</th>
             <th colspan="{{ financial_years|length|add:1 }}">Sanctioned Amount Rs.</th>
            
         </tr>
-        <!-- Subheader row for S.No., Budget Head, and financial years -->
         <tr>
-          <!-- Display financial years -->
           {% for year in financial_years %}
             <th  class="column-names">{{ year }}</th>
           {% endfor %}
@@ -363,6 +359,14 @@
           <td contenteditable="false" id="total-{{ period }}">1</td>
         </tr>
       {% endfor %}
+      <tr>
+        <td>8</td>
+        <td>Total</td>
+        {% for year in financial_years %}
+          <td name={{year.total_grants}}>{{year.total_grants}}</td>
+        {% endfor %}
+        <td name="total_funds_sanctioned_all_years">{{total_funds_sanctioned_all_years}}</td>
+      </tr>
     </tbody>
   </table>
 
@@ -376,7 +380,7 @@
             
           <th colspan="{{ financial_years|length|add:1 }}"  >Expenditure Amount Rs.</th>
           <th rowspan="2"  >Committed Expenditure</th>
-          <th rowspan="2"  >As per total sanctions</th>
+          <th rowspan="2"  >Balance Amount</th>
         </tr>
         <!-- Subheader row for S.No., Budget Head, and financial years -->
         <tr>
@@ -446,6 +450,12 @@
 
         </tr>
       {% endfor %}
+      {% for year in financial_years %}
+          <td name={{year.total_expenses}}>{{year.total_expenses}}</td>
+        {% endfor %}
+        <td name="total_expenditure_all_years">{{total_expenditure_all_years}}</td>
+        <td name='total_committed_expenditure_all_domains'>{{total_committed_expenditure_all_domains}}</td>
+        <td name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
     </tbody>
   </table>
 
