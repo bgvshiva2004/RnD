@@ -144,3 +144,5 @@ class project_details(models.Model):
     project_duration =models.IntegerField(null=True)
     financial_year_start_index = models.IntegerField(null=True)
     financial_year_end_index = models.IntegerField(null=True)
+    start_month = models.IntegerField(null=True)
+    end_month = models.IntegerField(null=True)

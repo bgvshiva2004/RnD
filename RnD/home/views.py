@@ -204,7 +204,9 @@ def index(request):
                 Title_of_Project =Title_of_Project,
                 project_duration = period,
                 financial_year_start_index = start_year,
-                financial_year_end_index = closure_year
+                financial_year_end_index = closure_year,
+                start_month = start_month,
+                end_month = end_month
             )
 
             details.save()
@@ -442,12 +444,16 @@ def fill(request, project_id):
         display_name = project.Title_of_Project
         start_year = project.financial_year_start_index
         end_year = project.financial_year_end_index
+        start_month = project.start_month
+        end_month = project.end_month
 
         display = {
             'display_id':display_id,
             'display_name':display_name,
             'start_year':start_year,
-            'end_year':end_year
+            'end_year':end_year,
+            'start_month':start_month,
+            'end_month':end_month
         }
 
         print(start_year)
