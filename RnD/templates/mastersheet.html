@@ -326,9 +326,9 @@
         </tr>
         <tr>
           {% for year in financial_years %}
-            <th  class="column-names">{{ year }}</th>
+            <th  class="column-names" id='years'>{{ year }}</th>
           {% endfor %}
-          <th   class="column-names">Total Funds Sanctioned</th>
+          <th   class="column-names">Funds Sanctioned</th>
         </tr>
       </thead>
     <tbody>
@@ -365,7 +365,7 @@
         {% for table_key, sum_data in tablesdata.items %}
           <td id="total-grant-{{forloop.counter}}"></td>
         {% endfor %}
-        <td class="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years">{{total_funds_sanctioned_all_years}}</td>
+        <td id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years">{{total_funds_sanctioned_all_years}}</td>
       </tr>
     </tbody>
   </table>
@@ -450,10 +450,10 @@
 
         </tr>
       {% endfor %}
-      {% for year in financial_years %}
-          <td name={{year.total_expenses}}>{{year.total_expenses}}</td>
-        {% endfor %}
-        <td name="total_expenditure_all_years">{{total_expenditure_all_years}}</td>
+      {% for table_key, sum_data in tablesdata.items %}
+          <td id="total-expense-{{forloop.counter}}"></td>
+      {% endfor %}
+      <td id="total_expenditure_all_years" name="total_expenditure_all_years">{{total_expenditure_all_years}}</td>
         <td name='total_committed_expenditure_all_domains'>{{total_committed_expenditure_all_domains}}</td>
         <td name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
     </tbody>
@@ -875,25 +875,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.addEventListener('DOMContentLoaded',function(){
             
-      var values= [];
-
+      var columns = document.getElementById('years');
+      // console.log('columns length',years.length);
+      var values={};
+      var expenses={};
+      var sum_yearwise = 0;
+      var expense_sum_yearwise = 0;
+      for(let j=1;j<years.length+1;j++){
+        values[`values${j}`] = [];
+        expenses[`expenses${j}`]=[];
         for(let i=0;i<7;i++){
-          var domaingrants = document.getElementById(`1-row-${i}-col-1`);
+          var domaingrants = document.getElementById(`1-row-${i}-col-${j}`);
+          var domainexpenses = document.getElementById(`2-row-${i}-col-${j}`);
           if(domaingrants){
             var value = domaingrants.textContent;
-            values.push(value);
+            values[`values${j}`].push(value);
+          }
+          if(domainexpenses){
+            var expense = domainexpenses.textContent;
+            expenses[`expenses${j}`].push(expense);
           }
         }
-        
-        var total_grant_one = document.getElementById('total-grant-1');
 
-        var sum =0;
-        for(var i=0;i<values.length;i++){
-          var num = parseFloat(values[i])||0;
-            sum += num;
-        }
-        total_grant_one.textContent = sum;
+        var total_grants_yearwise = document.getElementById(`total-grant-${j}`);
+        var total_expenses_yearwise = document.getElementById(`total-expense-${j}`);
+        var sum = 0;var expense_sum = 0;
         
+        for(var i=1;i<values[`values${j}`].length+1;i++){
+          var num = parseFloat(values[`values${j}`][i-1])||0;
+          sum+=num;
+
+          var expense_num = parseFloat(expenses[`expenses${j}`][i-1])||0;
+          expense_sum += expense_num;
+        }
+        total_grants_yearwise.textContent = sum;
+        sum_yearwise += sum;
+
+        total_expenses_yearwise.textContent = expense_sum;
+        expense_sum_yearwise += expense_sum;
+      }
+
+       var total_funds_sanctioned_all_years = document.getElementById('total_funds_sanctioned_all_years');
+       total_funds_sanctioned_all_years.textContent = sum_yearwise;
+        
+       var total_expenditure_all_years = document.getElementById('total_expenditure_all_years');
+       total_expenditure_all_years.textContent = expense_sum_yearwise;
     });
 
 
