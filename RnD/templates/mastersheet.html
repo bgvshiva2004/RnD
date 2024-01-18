@@ -362,10 +362,10 @@
       <tr>
         <td>8</td>
         <td>Total</td>
-        {% for year in financial_years %}
-          <td name={{year.total_grants}}>{{year.total_grants}}</td>
+        {% for table_key, sum_data in tablesdata.items %}
+          <td id="total-grant-{{forloop.counter}}"></td>
         {% endfor %}
-        <td name="total_funds_sanctioned_all_years">{{total_funds_sanctioned_all_years}}</td>
+        <td class="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years">{{total_funds_sanctioned_all_years}}</td>
       </tr>
     </tbody>
   </table>
@@ -464,60 +464,61 @@
   
   
 </div>
-<button class="btn" id="update-button">Update</button>
+  <button class="btn" id="update-button">Update</button>
 
-<br>
-<h2 class="table3h2">Details of Committed Expenditure</h2>
-<table class="table3" id="data-table3">
-  <thead>
-      <!-- Parent row for "Sanctioned Amount Rs." -->
-      
-      <tr>
-          <th rowspan="2">S.No.</th>
-          <th rowspan="2">Particulars</th>
-          <th rowspan="2">Indent No</th>
-          <th rowspan="2">Indent DATE</th>
-          <th  colspan="5" style="text-align:center;">Budget Head & Indent/Advance/Fellowship Amount</th>
-          <th rowspan="2">Indent/Advance/Fellowship</th>
-          <th rowspan="2">Status of Indent</th>
-         
-      </tr>
-      <!-- Subheader row for S.No., Budget Head, and financial years -->
-      <tr>
-       
-          <th  class="column-names">Equipment</th>
-          <th  class="column-names">Manpower</th>
-          <th  class="column-names">Consumables</th>
-          <th  class="column-names">Contingecy</th>
-          <th  class="column-names">Travel</th>
-       
-      </tr>
-    </thead>
-  <tbody>
-      
-      <tr id="1">
+  <br>
+  <h2 class="table3h2">Details of Committed Expenditure</h2>
+  <table class="table3" id="data-table3">
+    <thead>
+        <!-- Parent row for "Sanctioned Amount Rs." -->
         
-        <td contenteditable="true" id="1-1"> 1</td>
-        <td contenteditable="true" id="2-1"> 0</td>
-        <td contenteditable="true" id="3-1"> 0</td>
-        <td contenteditable="true" id="4-1"> 0</td>
-        <td contenteditable="true" id="5-1"> 0</td>
-        <td contenteditable="true" id="6-1"> 0</td>
-        <td contenteditable="true" id="7-1"> 0</td>
-        <td contenteditable="true" id="8-1"> 0</td>
-        <td contenteditable="true" id="9-1"> 0</td>
-        <td contenteditable="true" id="10-1"> 0</td>
-        <td contenteditable="true" id="11-1"> 0</td>
+        <tr>
+            <th rowspan="2">S.No.</th>
+            <th rowspan="2">Particulars</th>
+            <th rowspan="2">Indent No</th>
+            <th rowspan="2">Indent DATE</th>
+            <th  colspan="5" style="text-align:center;">Budget Head & Indent/Advance/Fellowship Amount</th>
+            <th rowspan="2">Indent/Advance/Fellowship</th>
+            <th rowspan="2">Status of Indent</th>
+          
+        </tr>
+        <!-- Subheader row for S.No., Budget Head, and financial years -->
+        <tr>
+        
+            <th  class="column-names">Equipment</th>
+            <th  class="column-names">Manpower</th>
+            <th  class="column-names">Consumables</th>
+            <th  class="column-names">Contingecy</th>
+            <th  class="column-names">Travel</th>
+        
+        </tr>
+      </thead>
+    <tbody>
+        
+        <tr id="1">
+          
+          <td contenteditable="true" id="1-1"> 1</td>
+          <td contenteditable="true" id="2-1"> 0</td>
+          <td contenteditable="true" id="3-1"> 0</td>
+          <td contenteditable="true" id="4-1"> 0</td>
+          <td contenteditable="true" id="5-1"> 0</td>
+          <td contenteditable="true" id="6-1"> 0</td>
+          <td contenteditable="true" id="7-1"> 0</td>
+          <td contenteditable="true" id="8-1"> 0</td>
+          <td contenteditable="true" id="9-1"> 0</td>
+          <td contenteditable="true" id="10-1"> 0</td>
+          <td contenteditable="true" id="11-1"> 0</td>
 
-      </tr>
-    
-  </tbody>
-</table>
-<div class="btn-row">
-  <button onclick="addRow()" class="btn">Add Row</button>
-  {% comment %} <button onclick="updateData()">Update Data</button> {% endcomment %}
-  <button id="updateDataBtn" class="btn" onclick="updateData()">Update Data</button>
+        </tr>
+      
+    </tbody>
+  </table>
+  <div class="btn-row">
+    <button onclick="addRow()" class="btn">Add Row</button>
+    {% comment %} <button onclick="updateData()">Update Data</button> {% endcomment %}
+    <button id="updateDataBtn" class="btn" onclick="updateData()">Update Data</button>
 </div>
+
 <footer>
   <div class="footer">
     <div class="info">
@@ -682,59 +683,10 @@
 
 
 <script>
- 
-  // document.addEventListener('DOMContentLoaded', function() {
-  //   var updateButton = document.getElementById('update-button');
-  //   var tableData = Array.from({ length: 6 }, () => Array(3).fill(0));  // Initialize as a 6x3 matrix of zeros
-  
-  //   updateButton.addEventListener('click', function() {
-  //     var startRow = 0;
-  //     var endRow = 5;  // Adjusted to 5 for a 6x3 matrix
-  //     var startCol = 0;
-  //     var endCol = 2;  // Adjusted to 2 for a 6x3 matrix
-  
-  //     var table = document.getElementById('data-table');
-  //     var tbody = table.getElementsByTagName('tbody')[0];
-  
-  //     for (var i = startRow; i <= endRow; i++) {
-  //       var row = tbody.rows[i];
-  //       // console.log(row)
-  
-  //       for (var j = startCol; j <= endCol; j++) {
-  //         var cell = row.cells[j];
-  //         // console.log((row.cells[j]).textContent )
-  //         // console.log("end")
-          
-  //         var cellContent = tableData[i][j].toString();  // Convert to string
-  
-  //         // Update the content of the cell
-  //         // cell.textContent = cellContent;
-  
-  //         // Access the cell using its ID
-  //         var cellId = `1-row-${i }-col-${j+1}`;
-  //         var cellElement = document.getElementById(cellId);
-  
-  //         if (cellElement) {
-  //           // Update the content of the cell using the ID
-  //           console.log(cellElement.textContent)
-  //           // if(cellElement.textContent==)
-  //           // cellElement.textContent = cellContent;
-  //           tableData[i][j]=cellElement.textContent;
-  //         } else {
-  //           console.error('Cell with ID', cellId, 'not found.');
-  //         }
-  //       }
-  //     }
-  
-  //     // Now 'tableData' is a 2D array containing the content of the specified cells
-  //     console.log(tableData);
-      
-  //   });
-    
-  // });
 
 
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
+
   var updateButton = document.getElementById('update-button');
   var tableData = Array.from({ length: 7 }, () => Array(3).fill(0));  // Initialize as a 6x3 matrix of zeros
   updateTotalCell();
@@ -835,29 +787,11 @@
     // Send the 'tableData' to the Django view for saving to 'files.txt'
     updateTotalCell();
     
-    
+   
    
   });
-});
-  {% comment %} function sendToServer(data) {
-    console.log(JSON.stringify(data));
-    fetch('/save_tables_to_file/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': getCookie('csrftoken')
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(result => {
-      console.log(result);
-      // Handle success or error as needed
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-  } {% endcomment %}
+  });
+ 
   function sendToServer(data, project_id) {
     console.log(JSON.stringify(data));
     fetch(`/save_tables_to_file/${project_id}/`, {
@@ -876,7 +810,7 @@
     .catch(error => {
         console.error('Error:', error);
     });
-}
+  }   
 
 
 
@@ -919,79 +853,50 @@
     }
   }
   }
-// Function to get CSRF token from cookies
-function getCookie(name) {
-  var cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    var cookies = document.cookie.split(';');
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === (name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
+  // Function to get CSRF token from cookies
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
       }
     }
+    return cookieValue;
   }
-  return cookieValue;
-}
 
-// document.addEventListener('DOMContentLoaded', function() {
-//   var updateButton = document.getElementById('update-button');
+</script>
 
-//   // Initialize two tables as JavaScript objects
-//   var tablesData = {
-//     'Table1': Array.from({ length: 3 }, () => Array(3).fill(1)),
-//     'Table2': Array.from({ length: 3 }, () => Array(3).fill(2))
-//   };
+<script>
 
-//   updateButton.addEventListener('click', function() {
-//     // Code to update tables and send data to the server
-//     sendToServer(tablesData);
-//   });
+    document.addEventListener('DOMContentLoaded',function(){
+            
+      var values= [];
 
-//   // Function to send data to the server using AJAX
-//   function sendToServer(data) {
-//     console.log(JSON.stringify(data));
-//     fetch('/save_tables_to_file/', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'X-CSRFToken': getCookie('csrftoken')
-//       },
-//       body: JSON.stringify(data)
-//     })
-//     .then(response => response.json())
-//     .then(result => {
-//       console.log(result);
-//       // Handle success or error as needed
-//     })
-//     .catch(error => {
-//       console.error('Error:', error);
-//     });
-//   }
+        for(let i=0;i<7;i++){
+          var domaingrants = document.getElementById(`1-row-${i}-col-1`);
+          if(domaingrants){
+            var value = domaingrants.textContent;
+            values.push(value);
+          }
+        }
+        
+        var total_grant_one = document.getElementById('total-grant-1');
 
-//   // Function to get CSRF token from cookies
-//   function getCookie(name) {
-//     var cookieValue = null;
-//     if (document.cookie && document.cookie !== '') {
-//       var cookies = document.cookie.split(';');
-//       for (var i = 0; i < cookies.length; i++) {
-//         var cookie = cookies[i].trim();
-//         if (cookie.substring(0, name.length + 1) === (name + '=')) {
-//           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-//           break;
-//         }
-//       }
-//     }
-//     return cookieValue;
-//   }
-// });
+        var sum =0;
+        for(var i=0;i<values.length;i++){
+          var num = parseFloat(values[i])||0;
+            sum += num;
+        }
+        total_grant_one.textContent = sum;
+        
+    });
 
 
-  
-  
-  
-  
 </script>
 
 </body>
