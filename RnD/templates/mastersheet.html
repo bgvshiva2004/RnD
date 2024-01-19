@@ -434,32 +434,32 @@
           {% endfor %}
           {% if  budget_head == "Equipment" %}
           <td contenteditable="true" id="2-row-0" class="2-row-0"></td>
-          <td id="2-row-0-col-{{l|add:1}}" class="2-row1-0"><input type='number' name='2-row-0-col-8'></td>
-          <td id="2-row-0-col-{{l|add:2}}" class="2-row2-0"><input type='number' name='2-row-0-col-9'></td>
+          <td id="2-row-0-col-{{l|add:1}}" class="2-row1-0"><input type='number' name='2-row-0-col-100' value={{2_row_0_col_100}}></td>
+          <td id="2-row-0-col-{{l|add:2}}" class="2-row2-0"><input type='number' name='2-row-0-col-101' value={{2_row_0_col_101}}></td>
         {% elif budget_head == "Manpower" %}
           <td contenteditable="true" id="2-row-1" class="2-row-1"></td>
-          <td id="2-row-1-col-{{l|add:1 }}" class="2-row1-1"><input type='number' name='2-row-1-col-8'></td>
-          <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' name='2-row-1-col-9'></td>
+          <td id="2-row-1-col-{{l|add:1 }}" class="2-row1-1"><input type='number' name='2-row-1-col-100' value={{2_row_1_col_100}}></td>
+          <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' name='2-row-1-col-101' value={{2_row_1_col_101}}></td>
         {% elif  budget_head == "Contingency" %}
           <td contenteditable="true" id="2-row-2" class="2-row-2"></td>
-          <td id="2-row-2-col-{{l|add:1 }}" class="2-row1-2"><input type='number' name='2-row-2-col-8'></td>
-          <td id="2-row-2-col-{{l|add:2}}" class="2-row2-2"><input type='number' name='2-row-2-col-9'></td>
+          <td id="2-row-2-col-{{l|add:1 }}" class="2-row1-2"><input type='number' name='2-row-2-col-100' value={{2_row_2_col_100}}></td>
+          <td id="2-row-2-col-{{l|add:2}}" class="2-row2-2"><input type='number' name='2-row-2-col-101' value={{2_row_2_col_101}}></td>
         {% elif  budget_head == "Consumables" %}
           <td contenteditable="true" id="2-row-3" class="2-row-3"></td>
-          <td id="2-row-3-col-{{l|add:1 }}" class="2-row1-3"><input type='number' name='2-row-3-col-8'></td>
-          <td id="2-row-3-col-{{l|add:2}}" class="2-row-3"><input type='number' name='2-row-3-col-9'></td>
+          <td id="2-row-3-col-{{l|add:1 }}" class="2-row1-3"><input type='number' name='2-row-3-col-100' value={{2_row_3_col_100}}></td>
+          <td id="2-row-3-col-{{l|add:2}}" class="2-row-3"><input type='number' name='2-row-3-col-101' value={{2_row_3_col_101}}></td>
         {% elif  budget_head == "Travel" %}
           <td contenteditable="true" id="2-row-4" class="2-row-4"></td>
-          <td id="2-row-4-col-{{l|add:1 }}" class="2-row1-4"><input type='number' name='2-row-4-col-8'></td>
-          <td id="2-row-4-col-{{l|add:2}}" class="2-row2-4"><input type='number' name='2-row-4-col-9'></td>
+          <td id="2-row-4-col-{{l|add:1 }}" class="2-row1-4"><input type='number' name='2-row-4-col-100' value={{2_row_4_col_100}}></td>
+          <td id="2-row-4-col-{{l|add:2}}" class="2-row2-4"><input type='number' name='2-row-4-col-101' value={{2_row_4_col_101}}></td>
         {% elif  budget_head == "Overhead" %}
           <td contenteditable="true" id="2-row-5" class="2-row-5"></td>
-          <td id="2-row-5-col-{{l|add:1 }}" class="2-row1-5"><input type='number' name='2-row-5-col-8'></td>
-          <td id="2-row-5-col-{{l|add:2}}" class="2-row2-5"><input type='number' name='2-row-5-col-9'></td>
+          <td id="2-row-5-col-{{l|add:1 }}" class="2-row1-5"><input type='number' name='2-row-5-col-100' value={{2_row_5_col_100}}></td>
+          <td id="2-row-5-col-{{l|add:2}}" class="2-row2-5"><input type='number' name='2-row-5-col-101' value={{2_row_5_col_101}}></td>
         {% elif  budget_head == "SSR" %}
           <td contenteditable="true" id="2-row-6" class="2-row-6"></td>
-          <td id="2-row-6-col-{{l|add:1 }}" class="2-row1-6"><input type='number' name='2-row-6-col-8'></td>
-          <td id="2-row-6-col-{{l|add:2}}" class="2-row2-6"><input type='number' name='2-row-6-col-9'></td>
+          <td id="2-row-6-col-{{l|add:1 }}" class="2-row1-6"><input type='number' name='2-row-6-col-100' value={{2_row_6_col_100}}></td>
+          <td id="2-row-6-col-{{l|add:2}}" class="2-row2-6"><input type='number' name='2-row-6-col-101' value={{2_row_6_col_101}}></td>
         {% endif %}
         
 
@@ -469,7 +469,7 @@
           <td id="total-expense-{{forloop.counter}}"></td>
       {% endfor %}
       <td id="total_expenditure_all_years" name="total_expenditure_all_years">{{total_expenditure_all_years}}</td>
-        <td id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains'>{{total_committed_expenditure_all_domains}}</td>
+        <td id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
         <td name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
     </tbody>
   </table>
@@ -936,21 +936,68 @@ document.addEventListener('DOMContentLoaded', function() {
        var total_expenditure_all_years = document.getElementById('total_expenditure_all_years');
        total_expenditure_all_years.textContent = expense_sum_yearwise;
 
+
+       loadValues();
     });
 
     function updation(){
-      var committed_expenditure_sum = 0;
-       for(let i=0;i<7;i++){
-          var committed_expenditure = document.getElementById(`2-row-${i}-col-8`);
-          if(committed_expenditure){
-            var value= parseFloat(committed_expenditure.value)||0;
-            committed_expenditure_sum += value; 
-          }
-       }
-      
-       var total_committed_expenditure_all_domains=document.getElementById('total_committed_expenditure_all_domains');
-       total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
 
+       var committed_expenditure_sum = 0;
+       // console.log('updation called')
+        for(let i=0;i<7;i++){
+           var committed_expenditure = document.querySelector(`input[name$="2-row-${i}-col-100"]`);
+           if(committed_expenditure){
+             var num= parseInt(committed_expenditure.value)||0;
+             committed_expenditure_sum += num; 
+             localStorage.setItem(`committed_expenditure_${i}`,num);
+             //console.log('value',num);
+             // console.log('commited sum',committed_expenditure_sum);
+           }
+        }
+      
+        var total_committed_expenditure_all_domains=document.getElementById('total_committed_expenditure_all_domains');
+        total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
+
+
+        for(let i=0;i<7;i++){
+          var balance_amount_row = 0;
+          var totalFunds = parseInt(document.querySelector(`total-${i}`))||0;
+          var totalExp = parseInt(document.querySelector(`2-row-${i}`))||0;
+          var committedExp = parseInt(document.querySelector(`input[name$="2-row-${i}-col-100"]`))||0;
+
+          balance_amount_row = totalFunds-totalExp-committedExp;
+
+          var inputField = document.querySelector(`input[name$="2-row-${i}-col-101"]`);
+
+          if(inputField){
+            inputField.value = balance_amount_row || '0';
+          }
+        }
+
+
+
+
+     }
+      
+       
+
+    function loadValues(){
+      var committed_expenditure_sum = 0;
+      for(let i=0;i<7;i++){
+        var storedValue = localStorage.getItem(`committed_expenditure_${i}`);
+        var inputField = document.querySelector(`input[name$="2-row-${i}-col-100"]`);
+
+        if(inputField){
+          inputField.value = storedValue || '0';
+        }
+
+        if(storedValue){
+          committed_expenditure_sum += parseInt(storedValue);
+        }
+      }
+
+      var total_committed_expenditure_all_domains = document.getElementById('total_committed_expenditure_all_domains');
+      total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
     }
 
 </script>
