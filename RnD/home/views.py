@@ -322,6 +322,7 @@ def monthly(request):
 from datetime import datetime
 @login_required
 def mastersheet(request,project_id):
+    print("mastersheet called")
     existing_project = project_details.objects.get(id=project_id)
     start_year1 = existing_project.financial_year_start_index
     end_year1 = existing_project.financial_year_end_index
@@ -374,6 +375,7 @@ def mastersheet(request,project_id):
         'existing_project':existing_project,
         'project_id':project_id
         }
+    print("zipped data",new_parsed_data)
     return render(request,'mastersheet.html',data)
 
 
@@ -412,6 +414,8 @@ def save_table_data(request, project_id):
         with open(file_path, 'w') as file:
             json_data = json.loads(request.body)
             json.dump(json_data, file)
+        
+        # print('data',json_data)
 
         return JsonResponse({'success': True})
     except Exception as e:

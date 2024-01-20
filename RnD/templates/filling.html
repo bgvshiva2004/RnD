@@ -565,13 +565,17 @@
 
     function updateTable(tableId) {
       //  console.log(tableId);
-        const tableData = getTableData(tableId);
+        var tableData = getTableData(tableId);
         tablesData[tableId] = tableData;
 
         // Implement the logic to update the table with the retrieved data
         calculateAndDisplayTotalAmount(tableId);
         calculateAndDisplayTotalExpenses(tableId);
         calculateAndDisplayClosingBalance(tableId);
+
+        var tableData = getTableData(tableId);
+        tablesData[tableId] = tableData;
+            
         //console.log(tableId);
         //console.log(tablesData);
         //console.log(JSON.stringify(tableData));
