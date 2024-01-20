@@ -434,32 +434,32 @@
           {% endfor %}
           {% if  budget_head == "Equipment" %}
           <td contenteditable="true" id="2-row-0" class="2-row-0"></td>
-          <td id="2-row-0-col-{{l|add:1}}" class="2-row1-0"><input type='number' name='2-row-0-col-100' value={{2_row_0_col_100}}></td>
-          <td id="2-row-0-col-{{l|add:2}}" class="2-row2-0"><input type='number' name='2-row-0-col-101' value={{2_row_0_col_101}}></td>
+          <td id="2-row-0-col-{{l|add:1}}" class="2-row1-0"><input type='number' name='2-row-0-col-100-{{data.project_id}}' value={{2_row_0_col_100}}></td>
+          <td id="2-row-0-col-{{l|add:2}}" class="2-row2-0"><input type='number' name='2-row-0-col-101-{{data.project_id}}' value={{2_row_0_col_101}}></td>
         {% elif budget_head == "Manpower" %}
           <td contenteditable="true" id="2-row-1" class="2-row-1"></td>
-          <td id="2-row-1-col-{{l|add:1 }}" class="2-row1-1"><input type='number' name='2-row-1-col-100' value={{2_row_1_col_100}}></td>
-          <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' name='2-row-1-col-101' value={{2_row_1_col_101}}></td>
+          <td id="2-row-1-col-{{l|add:1 }}" class="2-row1-1"><input type='number' name='2-row-1-col-100-{{data.project_id}}' value={{2_row_1_col_100}}></td>
+          <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' name='2-row-1-col-101-{{data.project_id}}' value={{2_row_1_col_101}}></td>
         {% elif  budget_head == "Contingency" %}
           <td contenteditable="true" id="2-row-2" class="2-row-2"></td>
-          <td id="2-row-2-col-{{l|add:1 }}" class="2-row1-2"><input type='number' name='2-row-2-col-100' value={{2_row_2_col_100}}></td>
-          <td id="2-row-2-col-{{l|add:2}}" class="2-row2-2"><input type='number' name='2-row-2-col-101' value={{2_row_2_col_101}}></td>
+          <td id="2-row-2-col-{{l|add:1 }}" class="2-row1-2"><input type='number' name='2-row-2-col-100-{{data.project_id}}' value={{2_row_2_col_100}}></td>
+          <td id="2-row-2-col-{{l|add:2}}" class="2-row2-2"><input type='number' name='2-row-2-col-101-{{data.project_id}}' value={{2_row_2_col_101}}></td>
         {% elif  budget_head == "Consumables" %}
           <td contenteditable="true" id="2-row-3" class="2-row-3"></td>
-          <td id="2-row-3-col-{{l|add:1 }}" class="2-row1-3"><input type='number' name='2-row-3-col-100' value={{2_row_3_col_100}}></td>
-          <td id="2-row-3-col-{{l|add:2}}" class="2-row-3"><input type='number' name='2-row-3-col-101' value={{2_row_3_col_101}}></td>
+          <td id="2-row-3-col-{{l|add:1 }}" class="2-row1-3"><input type='number' name='2-row-3-col-100-{{data.project_id}}' value={{2_row_3_col_100}}></td>
+          <td id="2-row-3-col-{{l|add:2}}" class="2-row-3"><input type='number' name='2-row-3-col-101-{{data.project_id}}' value={{2_row_3_col_101}}></td>
         {% elif  budget_head == "Travel" %}
           <td contenteditable="true" id="2-row-4" class="2-row-4"></td>
-          <td id="2-row-4-col-{{l|add:1 }}" class="2-row1-4"><input type='number' name='2-row-4-col-100' value={{2_row_4_col_100}}></td>
-          <td id="2-row-4-col-{{l|add:2}}" class="2-row2-4"><input type='number' name='2-row-4-col-101' value={{2_row_4_col_101}}></td>
+          <td id="2-row-4-col-{{l|add:1 }}" class="2-row1-4"><input type='number' name='2-row-4-col-100-{{data.project_id}}' value={{2_row_4_col_100}}></td>
+          <td id="2-row-4-col-{{l|add:2}}" class="2-row2-4"><input type='number' name='2-row-4-col-101-{{data.project_id}}' value={{2_row_4_col_101}}></td>
         {% elif  budget_head == "Overhead" %}
           <td contenteditable="true" id="2-row-5" class="2-row-5"></td>
-          <td id="2-row-5-col-{{l|add:1 }}" class="2-row1-5"><input type='number' name='2-row-5-col-100' value={{2_row_5_col_100}}></td>
-          <td id="2-row-5-col-{{l|add:2}}" class="2-row2-5"><input type='number' name='2-row-5-col-101' value={{2_row_5_col_101}}></td>
+          <td id="2-row-5-col-{{l|add:1 }}" class="2-row1-5"><input type='number' name='2-row-5-col-100-{{data.project_id}}' value={{2_row_5_col_100}}></td>
+          <td id="2-row-5-col-{{l|add:2}}" class="2-row2-5"><input type='number' name='2-row-5-col-101-{{data.project_id}}' value={{2_row_5_col_101}}></td>
         {% elif  budget_head == "SSR" %}
           <td contenteditable="true" id="2-row-6" class="2-row-6"></td>
-          <td id="2-row-6-col-{{l|add:1 }}" class="2-row1-6"><input type='number' name='2-row-6-col-100' value={{2_row_6_col_100}}></td>
-          <td id="2-row-6-col-{{l|add:2}}" class="2-row2-6"><input type='number' name='2-row-6-col-101' value={{2_row_6_col_101}}></td>
+          <td id="2-row-6-col-{{l|add:1 }}" class="2-row1-6"><input type='number' name='2-row-6-col-100-{{data.project_id}}' value={{2_row_6_col_100}}></td>
+          <td id="2-row-6-col-{{l|add:2}}" class="2-row2-6"><input type='number' name='2-row-6-col-101-{{data.project_id}}' value={{2_row_6_col_101}}></td>
         {% endif %}
         
 
@@ -479,7 +479,7 @@
   
   
 </div>
-  <button class="btn" id="update-button" onclick="updation()">Update</button>
+  <button class="btn" id="update-button" onclick="updation('{{data.project_id}}')">Update</button>
 
   <br>
   <h2 class="table3h2">Details of Committed Expenditure</h2>
@@ -699,6 +699,7 @@
 
 <script>
 
+  
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -888,6 +889,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 
+  var project_id = '{{ data.project_id}}';
+  console.log('project_id',project_id);
+
     document.addEventListener('DOMContentLoaded',function(){
             
       var columns = document.getElementById('years');
@@ -937,19 +941,59 @@ document.addEventListener('DOMContentLoaded', function() {
        total_expenditure_all_years.textContent = expense_sum_yearwise;
 
 
-       loadValues();
+      initializeZero(project_id);
+
+       loadValues(project_id);
+
+       var total_balance_amount = 0;
+       for(let i=0;i<7;i++){
+        var balance_amount_row = 0;
+        var totalFundsEle = document.getElementById(`total-${i}`);
+        var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
+
+       console.log('totalFunds',totalFunds);
+
+        var totalExpEle = document.getElementById(`2-row-${i}`);
+        var totalExp = parseInt(totalExpEle.innerHTML)||0;
+
+        console.log('totalEXp',totalExp);
+
+       //  console.log('before committed_expenditure');
+        var committedExpEle = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
+        var committedExp = committedExpEle ? parseInt(committedExpEle.value) || 0 : 0;
+       //  console.log('after committed_expenditure');
+
+        console.log('committedExp',committedExp);
+
+        balance_amount_row = totalFunds-totalExp-committedExp;
+
+        console.log('balance',balance_amount_row);
+
+        var inputField = document.querySelector(`input[name$="2-row-${i}-col-101-${project_id}"]`);
+
+        if(inputField){
+          inputField.value = balance_amount_row || '0';
+        }
+
+        total_balance_amount+=balance_amount_row;
+      }
+
+      var total_balance_amount_all_domains = document.getElementById('total_balance_amount_all_domains');
+      total_balance_amount_all_domains.textContent = total_balance_amount;
+
+
     });
 
-    function updation(){
+    function updation(projectId){
 
        var committed_expenditure_sum = 0;
        // console.log('updation called')
         for(let i=0;i<7;i++){
-           var committed_expenditure = document.querySelector(`input[name$="2-row-${i}-col-100"]`);
+           var committed_expenditure = document.querySelector(`input[name$="2-row-${i}-col-100-${projectId}"]`);
            if(committed_expenditure){
              var num= parseInt(committed_expenditure.value)||0;
              committed_expenditure_sum += num; 
-             localStorage.setItem(`committed_expenditure_${i}`,num);
+             localStorage.setItem(`committed_expenditure_${projectId}_${i}`,num);
              //console.log('value',num);
              // console.log('commited sum',committed_expenditure_sum);
            }
@@ -971,7 +1015,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
           console.log('totalEXp',totalExp);
 
-          var committedExpEle = document.querySelector(`input[name$="2-row-${i}-col-100"]`);
+          console.log('projectId', projectId);
+          var committedExpEle = document.querySelector(`input[name$="2-row-${i}-col-100-${projectId}"]`);
+          
+          console.log('committedExpEle',committedExpEle);
+
           var committedExp = parseInt(committedExpEle.value)||0;
 
           console.log('committedExp',committedExp);
@@ -980,41 +1028,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
           console.log('balance',balance_amount_row);
 
-          var inputField = document.querySelector(`input[name$="2-row-${i}-col-101"]`);
-
+          var inputField = document.querySelector(`input[name$="2-row-${i}-col-101-${projectId}"]`);
+        
           if(inputField){
             inputField.value = balance_amount_row || '0';
           }
+
         }
 
-        var total_funds_sanctioned_all_yearsEle= = document.getElementById('total_funds_sanctioned_all_years');
-        var total_funds_sanctioned_all_years =  parseInt(total_funds_sanctioned_all_yearsEle.innerHTML)||0;
-
-        var total_committed_expenditure_all_domainsEle=document.getElementById('total_committed_expenditure_all_domains');
-        var total_committed_expenditure_all_domains =parseInt(total_committed_expenditure_all_domainsEle.innerHTML)||0;
-
-        var total_expenditure_all_yearsEle = document.getElementById('total_expenditure_all_years');
-        var total_expenditure_all_years = parseInt(total_expenditure_all_yearsEle.innerHTML)||0;
-
-        var total_balance_amount_all_domains = document.getElementById('total_balance_amount_all_domains');
-        var final = 0;
-        final = total_funds_sanctioned_all_years-total_committed_expenditure_all_domains-total_expenditure_all_years;
-        total_balance_amount_all_domains.textContent = final;
-
+        
+        
      }
       
-       
+      
+    function initializeZero(project_id){
+      var zero = '0';
+      for(let i=0;i<7;i++){
+        var inputField = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
+        if(inputField){
+          inputField.value=zero;
+        }
+        // console.log('intitalised..');
+      }
+    }
 
-    function loadValues(){
+    function loadValues(project_id){
       var committed_expenditure_sum = 0;
       for(let i=0;i<7;i++){
-        var storedValue = localStorage.getItem(`committed_expenditure_${i}`);
-        var inputField = document.querySelector(`input[name$="2-row-${i}-col-100"]`);
-
+        var storedValue = localStorage.getItem(`committed_expenditure_${project_id}_${i}`);
+        var inputField = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
+        console.log()
+        console.log('before inputfield');
         if(inputField){
-          inputField.value = storedValue || '0';
-        }
+          // Check if the stored value is not null or undefined
+          var storedValueIsDefined = storedValue !== null && storedValue !== undefined;
 
+          // Set the input value to the stored value if defined, otherwise set it to '0'
+          inputField.value = storedValueIsDefined ? storedValue.trim() : '0';
+          console.log('near inputField', inputField.value);
+        }
+        console.log('near inputField 2');
         if(storedValue){
           committed_expenditure_sum += parseInt(storedValue);
         }
