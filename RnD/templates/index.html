@@ -177,8 +177,10 @@
     <form action='' method="post">
       {% csrf_token %}
         <div class="form-title"><h2>Create Deal!</h2></div>
-        <input type='text' name='Project_Fellowship_No' placeholder="Project Fellowship No.">            
-        <input type='text' name='PI_of_Project' placeholder="PI of Project">
+        <input type='text' name='Project_Fellowship_No' placeholder="Project Fellowship No. *">            
+        <input type='text' name='PI_of_Project' placeholder="PI of Project *">
+        <input type='text' name='Co_PI_of_Project' placeholder="Co-PI of Project (if any)">
+        <input type='text' name='funding_agency' placeholder="Funding Agency (if any)">
         <div class="label">
           <label for="Sanctioned_Date">Sanctioned Date</label>
           <input type='date' name='Sanctioned_Date' placeholder="Sanctioned_Date">
