@@ -418,7 +418,7 @@
         <td name='seven_closing' class="placeh">{{sum_data.seven_closing}}</td>
     </tr> {% endcomment %}
     <tr name='total_amount'>
-        <th>8</th>
+        <th>*</th>
         <th>Total Amount</th>
         <td name='total_grant'>{{sum_data.total_grant}}</td>
         <td name='total_Apr' class="placeh" >{{sum_data.total_Apr}}</td>
@@ -497,18 +497,18 @@
             <td><input type='text' name='${i}_text' value='${tablesData[tableId][`${i}_text`] || `new_data_${i}`}'></td>
             
             <td><input type='number' name='${i}_Grant_Amount' value='${tablesData[tableId][`${i}_Grant_Amount`] || '0'}'></td>
-            <td><input type='number' name='${i}_Apr' value='${tablesData[tableId][`${i}_Apr`] || '0'}'></td>
-            <td><input type='number' name='${i}_May' value='${tablesData[tableId][`${i}_May`] || '0'}'></td>
-            <td><input type='number' name='${i}_Jun' value='${tablesData[tableId][`${i}_Jun`] || '0'}'></td>
-            <td><input type='number' name='${i}_Jul' value='${tablesData[tableId][`${i}_Jul`] || '0'}'></td>
-            <td><input type='number' name='${i}_Aug' value='${tablesData[tableId][`${i}_Aug`] || '0'}'></td>
-            <td><input type='number' name='${i}_Sep' value='${tablesData[tableId][`${i}_Sep`] || '0'}'></td>
-            <td><input type='number' name='${i}_Oct' value='${tablesData[tableId][`${i}_Oct`] || '0'}'></td>
-            <td><input type='number' name='${i}_Nov' value='${tablesData[tableId][`${i}_Nov`] || '0'}'></td>
-            <td><input type='number' name='${i}_Dec' value='${tablesData[tableId][`${i}_Dec`] || '0'}'></td>
-            <td><input type='number' name='${i}_Jan' value='${tablesData[tableId][`${i}_Jan`] || '0'}'></td>
-            <td><input type='number' name='${i}_Feb' value='${tablesData[tableId][`${i}_Feb`] || '0'}'></td>
-            <td><input type='number' name='${i}_Mar' value='${tablesData[tableId][`${i}_Mar`] || '0'}'></td>
+            <td><input type='number' class='4' name='${i}_Apr' value='${tablesData[tableId][`${i}_Apr`] || '0'}'></td>
+            <td><input type='number' class='5' name='${i}_May' value='${tablesData[tableId][`${i}_May`] || '0'}'></td>
+            <td><input type='number' class='6' name='${i}_Jun' value='${tablesData[tableId][`${i}_Jun`] || '0'}'></td>
+            <td><input type='number' class='7' name='${i}_Jul' value='${tablesData[tableId][`${i}_Jul`] || '0'}'></td>
+            <td><input type='number' class='8' name='${i}_Aug' value='${tablesData[tableId][`${i}_Aug`] || '0'}'></td>
+            <td><input type='number' class='9' name='${i}_Sep' value='${tablesData[tableId][`${i}_Sep`] || '0'}'></td>
+            <td><input type='number' class='10' name='${i}_Oct' value='${tablesData[tableId][`${i}_Oct`] || '0'}'></td>
+            <td><input type='number' class='11' name='${i}_Nov' value='${tablesData[tableId][`${i}_Nov`] || '0'}'></td>
+            <td><input type='number' class='12' name='${i}_Dec' value='${tablesData[tableId][`${i}_Dec`] || '0'}'></td>
+            <td><input type='number' class='13' name='${i}_Jan' value='${tablesData[tableId][`${i}_Jan`] || '0'}'></td>
+            <td><input type='number' class='14' name='${i}_Feb' value='${tablesData[tableId][`${i}_Feb`] || '0'}'></td>
+            <td><input type='number' class='15' name='${i}_Mar' value='${tablesData[tableId][`${i}_Mar`] || '0'}'></td>
             <td><input type='number' name='${i}_expenses' value='${tablesData[tableId][`${i}_expenses`] || '0'}'></td>
             <td name='${i}_closing'></td>
             
@@ -516,8 +516,6 @@
             `;
             
             tbody.insertBefore(row, totalAmountRow);
-            
-            
         }
     }
       
@@ -539,12 +537,12 @@
             calculateAndDisplayClosingBalance(tableId);
 
            // console.log(table.children[0].children)
-            {% comment %} if(tableId==='table_1'){
+           if(tableId==='table_1'){
                 let allrows = table.children[0].children 
                 console.log(allrows)
                 let startMonth = table.getAttribute('start-month');
 
-                for(let i=0;i<8;i++){
+                for(let i=0;i<=n;i++){
                     let eachrow = allrows[i]
                     let childrenArray = Array.from(eachrow.children);
                     childrenArray.forEach(function(ele){
@@ -584,7 +582,7 @@
             if(table===lastTable){
                 let allrows = table.children[0].children
                 let endMonth = table.getAttribute('end-month');
-                for(let i=0;i<8;i++){
+                for(let i=0;i<=n;i++){
                     let eachrow = allrows[i]
                     let childrenArray = Array.from(eachrow.children);
                     childrenArray.forEach(function(ele){
@@ -611,7 +609,7 @@
                         }
                     })
                 }
-            } {% endcomment %}
+            }
         });
 
         
@@ -642,9 +640,9 @@
             }
             var tableData = getTableData(table.id);
             tablesData[table.id] = tableData;
-            var fellowshipNo = "{{ fellowship_no }}";
-            saveTableDataToDjango(tablesData,fellowshipNo);
         });
+        var fellowshipNo = "{{ fellowship_no }}";
+        saveTableDataToDjango(tablesData,fellowshipNo);
     }
     
     function deleteRow() {
@@ -679,18 +677,18 @@
                 <td><input type='text' name='${table.rows.length - 1}_head' value='${table.rows.length - 1}'></td>
                 <td><input type='text' name='${table.rows.length - 1}_text' value='${table.rows.length - 1}_newRow'></td>
                 <td><input type='number' name='${table.rows.length - 1}_Grant_Amount' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Apr' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_May' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Jun' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Jul' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Aug' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Sep' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Oct' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Nov' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Dec' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Jan' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Feb' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Mar' value='0'></td>
+                <td><input type='number' class='4' name='${table.rows.length - 1}_Apr' value='0'></td>
+                <td><input type='number' class='5' name='${table.rows.length - 1}_May' value='0'></td>
+                <td><input type='number' class='6' name='${table.rows.length - 1}_Jun' value='0'></td>
+                <td><input type='number' class='7' name='${table.rows.length - 1}_Jul' value='0'></td>
+                <td><input type='number' class='8' name='${table.rows.length - 1}_Aug' value='0'></td>
+                <td><input type='number' class='9' name='${table.rows.length - 1}_Sep' value='0'></td>
+                <td><input type='number' class='10' name='${table.rows.length - 1}_Oct' value='0'></td>
+                <td><input type='number' class='11' name='${table.rows.length - 1}_Nov' value='0'></td>
+                <td><input type='number' class='12' name='${table.rows.length - 1}_Dec' value='0'></td>
+                <td><input type='number' class='13' name='${table.rows.length - 1}_Jan' value='0'></td>
+                <td><input type='number' class='14' name='${table.rows.length - 1}_Feb' value='0'></td>
+                <td><input type='number' class='15' name='${table.rows.length - 1}_Mar' value='0'></td>
                 <td><input type='number' name='${table.rows.length - 1}_expenses' value='0'></td>
                 <td name='${table.rows.length - 1}_closing'>0</td>
             </tr>
@@ -702,9 +700,10 @@
            // table.insertAdjacentHTML('beforeend', newRowContent);
            var tableData = getTableData(table.id);
            tablesData[table.id] = tableData;
-           console.log("hi")
+           // console.log("hi")
            console.log(tableData)
-           console.log("hi")
+           // console.log("hi")
+
         });
         
         var fellowshipNo = "{{ fellowship_no }}";
