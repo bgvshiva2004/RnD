@@ -179,6 +179,8 @@ def index(request):
         Project_Start_Date = request.POST.get('Project_Start_Date')
         Project_Closure_Date = request.POST.get('Project_Closure_Date')
         Title_of_Project = request.POST.get('Title_of_Project')
+        Co_PI_of_Project = request.POST.get('Co_PI_of_Project')
+        funding_agency = request.POST.get('funding_agency')
 
         Project_file_name = ''.join(letter for letter in Project_Fellowship_No if letter.isalnum())
 
@@ -206,7 +208,9 @@ def index(request):
                 financial_year_start_index = start_year,
                 financial_year_end_index = closure_year,
                 start_month = start_month,
-                end_month = end_month
+                end_month = end_month,
+                funding_agency= funding_agency,
+                Co_PI_of_Project = Co_PI_of_Project
             )
 
             details.save()
@@ -263,6 +267,8 @@ def monthly(request):
         Project_Start_Date = request.POST.get('Project_Start_Date')
         Project_Closure_Date = request.POST.get('Project_Closure_Date')
         Title_of_Project = request.POST.get('Title_of_Project')
+        Co_PI_of_Project = request.POST.get('Co_PI_of_Project')
+        funding_agency = request.POST.get('funding_agency')
 
         start_year = Project_Start_Date[:4]
         closure_year = Project_Closure_Date[:4]
@@ -279,6 +285,8 @@ def monthly(request):
             existing_project.Project_Closure_Date = Project_Closure_Date
             existing_project.Title_of_Project = Title_of_Project
             existing_project.project_duration = period
+            existing_project.Co_PI_of_Project = Co_PI_of_Project
+            existing_project.funding_agency = funding_agency
             existing_project.save()
 
             start_year = int(start_year)
@@ -301,7 +309,9 @@ def monthly(request):
                 Project_Start_Date=Project_Start_Date,
                 Project_Closure_Date=Project_Closure_Date,
                 Title_of_Project=Title_of_Project,
-                project_duration=period
+                project_duration=period,
+                funding_agency = funding_agency,
+                Co_PI_of_Project=Co_PI_of_Project
             )
 
             details.save()
@@ -608,7 +618,9 @@ def project_search(request):
         (
             Q(Project_Fellowship_No__icontains=query) |
             Q(PI_of_Project__icontains=query) |
-            Q(Title_of_Project__icontains=query)
+            Q(Title_of_Project__icontains=query) | 
+            Q(funding_agency__icontains=query) | 
+            Q(Co_PI_of_Project__icontains=query)
         ) &
         Q(task='ongoing')
     )

@@ -221,8 +221,10 @@
                 <div class="project-details">
                     
                     <h4 style="text-align:center;">   {{ project.Title_of_Project }}  </h4>
-                   
                     <p><span>Project ID  :</span>  {{ project.Project_Fellowship_No }}</p>
+                    <p><span>Project PI :</span>  {{ project.PI_of_Project }}</p>
+                    {% if project.Co_PI_of_Project %}<p><span>Project Co-PI :</span>{{ project.Co_PI_of_Project }}</p>{% endif %}
+                    {% if project.funding_agency %}<p><span>Funding Agency:</span>{{ project.funding_agency }}</p>{% endif %}
                     <p><span>Start Date     :</span>{{ project.Project_Start_Date }}</p>
                     <p><span>Closure Date:</span>{{ project.Project_Closure_Date }}</p>
                 </div>
