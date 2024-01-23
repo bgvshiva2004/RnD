@@ -14,5 +14,6 @@ urlpatterns = [
      path('save_table_data1/<int:project_id>/', views.save_table_data1, name='save_table_data1'),
     path('save_table_data/<int:project_id>/',views.save_table_data,name='save_table_data'),
     path('save_tables_to_file/<project_id>/', views.save_tables_to_file, name='save_tables_to_file'),
-    path('logout/',views.logout,name='logout')
+    path('logout/',views.logout,name='logout'),
+    path('project_search/', views.project_search, name='project_search'),
 ]

@@ -146,3 +146,13 @@ class project_details(models.Model):
     financial_year_end_index = models.IntegerField(null=True)
     start_month = models.IntegerField(null=True)
     end_month = models.IntegerField(null=True)
+    TASK_CHOICES = [
+        ('ongoing', 'Ongoing'),
+        ('completed', 'Completed'),
+    ]
+
+    task = models.CharField(
+        max_length=10,
+        choices=TASK_CHOICES,
+        default='ongoing',
+    )

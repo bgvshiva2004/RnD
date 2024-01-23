@@ -595,3 +595,34 @@ def save_table_data1(request,project_id):
             return JsonResponse({'success': False, 'error': 'Invalid JSON data'})
 
     return JsonResponse({'success': False, 'error': 'Invalid request method'})    
+
+
+from django.db.models import Q
+from django.urls import reverse
+def project_search(request):
+    query = request.GET.get('q')
+
+   
+    if query:
+     projects = project_details.objects.filter(
+        (
+            Q(Project_Fellowship_No__icontains=query) |
+            Q(PI_of_Project__icontains=query) |
+            Q(Title_of_Project__icontains=query)
+        ) &
+        Q(task='ongoing')
+    )
+    else:
+     projects = project_details.objects.filter(task='ongoing')
+ 
+    print(projects)    
+
+    context = {
+        'projects': projects,
+        'query': query,
+    }
+    # if query:
+    return render(request, 'project_list.html', context)
+    # else:
+        # return redirect(f'{reverse("project_search")}?q={query}')
+

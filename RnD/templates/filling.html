@@ -642,9 +642,9 @@
             }
             var tableData = getTableData(table.id);
             tablesData[table.id] = tableData;
-            var fellowshipNo = "{{ fellowship_no }}";
-            saveTableDataToDjango(tablesData,fellowshipNo);
         });
+        var fellowshipNo = "{{ fellowship_no }}";
+        saveTableDataToDjango(tablesData,fellowshipNo);
     }
     
     function deleteRow() {
