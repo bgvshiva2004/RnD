@@ -171,7 +171,7 @@
         <div class="links">
             <ul>
                 <li><a href="{% url "index" %}">New Project Deal</a></li>
-                <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
+                <li><a href="{% url "project_list" %}" class="active"> Project Deals</a></li>           
                 <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
             </ul>
         </div>
@@ -205,8 +205,21 @@
         <input type="text" name="q" placeholder="Search">
         <button type="submit">Search</button>
     </form>
+    <a href="{% url 'project_listwise' %}" class="btn">Go to List Page</a>
     
     <div class="project-container">
+        <div class="dropdown" style="position: absolute; top: 120px; left: 20px;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Filter Projects
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#" onclick="showAllProjects()">All Projects</a>
+              <a class="dropdown-item" href="#" onclick="showOngoingProjects()">Ongoing Projects</a>
+              <a class="dropdown-item" href="#" onclick="showCompletedProjects()">Completed Projects</a>
+            </div>
+          </div>
+    
+         
         {% for project in projects %}
         
         <div class="book">
@@ -233,5 +246,22 @@
         {% endfor %}
     </div>          
     <script src="{% static 'script.js' %}"></script>
+    <script >
+        function showAllProjects() {
+            // Redirect to the same page without any filter
+            window.location.href = "{% url 'project_list' %}";
+          }
+        
+          function showOngoingProjects() {
+            // Redirect to the same page with a filter for ongoing projects
+            window.location.href = "{% url 'project_list' %}?filter=ongoing";
+          }
+        
+          function showCompletedProjects() {
+            // Redirect to the same page with a filter for completed projects
+            window.location.href = "{% url 'project_list' %}?filter=completed";
+          }
+    </script>
+    
 </body>
 </html>

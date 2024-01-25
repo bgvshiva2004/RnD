@@ -254,7 +254,15 @@ def login(request):
 @login_required
 def project_list(request):
     projects = project_details.objects.all()
+    filter_option = request.GET.get('filter')
+    
+    # Apply filtering if a filter option is selected
+    if filter_option == 'ongoing':
+        projects = projects.filter(task='ongoing')
+    elif filter_option == 'completed':
+        projects = projects.filter(task='completed')
     context = {'projects': projects}
+
     return render(request, 'project_list.html', context)
 
 @login_required
@@ -638,3 +646,41 @@ def project_search(request):
     # else:
         # return redirect(f'{reverse("project_search")}?q={query}')
 
+
+
+
+def complete_task(request, project_id):
+    project = get_object_or_404(project_details, id=project_id)
+    
+    # Set the task field to "completed"
+    project.task = 'completed'
+    project.save()
+    projects = project_details.objects.all()
+    return redirect('project_list')
+
+def project_listwise(request):
+    # Fetch all projects from the database
+    projects =  project_details.objects
+    # projects =  project_details.objects.filter(task='ongoing')
+
+    filter_option = request.GET.get('filter')
+    
+    # Apply filtering if a filter option is selected
+    if filter_option == 'ongoing':
+        projects = projects.filter(task='ongoing')
+    elif filter_option == 'completed':
+        projects = projects.filter(task='completed')
+
+    # Sorting parameters
+    sort_by = request.GET.get('sortBy', 'Title_of_Project')
+    sort_order = request.GET.get('sortOrder', 'asc')
+
+    # Sort projects based on the specified column and order
+    if sort_order == 'asc':
+        projects = projects.order_by(sort_by)
+    else:
+        projects = projects.order_by(f'-{sort_by}')
+
+    # Pass the list of sorted projects to the template
+    context = {'projects': projects}
+    return render(request, 'project_listwise.html', context)

@@ -11,7 +11,7 @@
 
         .table-container {
             overflow-x: auto; /* Enable horizontal scrolling for the table container */
-            width: 90%; /* Set a maximum width for the container */
+            width: 100%; /* Set a maximum width for the container */
         }
 
         table {
@@ -91,16 +91,9 @@
         <button type="submit">Search</button>
     </form>
 
-    <div class="dropdown" style="position: absolute; top: 20px; right: 20px;">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Filter Projects
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#" onclick="showAllProjects()">All Projects</a>
-          <a class="dropdown-item" href="#" onclick="showOngoingProjects()">Ongoing Projects</a>
-          <a class="dropdown-item" href="#" onclick="showCompletedProjects()">Completed Projects</a>
-        </div>
-      </div>
+    <a href="{% url 'index'  %}">
+        <button class="create-project-button">Create New Project</button>
+    </a>
 
     <div class="table-container">
         <table>
@@ -108,13 +101,6 @@
                 <tr>
                     <th onclick="sortTable('Title_of_Project')">Project Title</th>
                 <th onclick="sortTable('Project_Fellowship_No')">Project ID</th>
-                <th >Catergory</th>
-                <th >Country</th>
-                <th >Status</th>
-                <th >Name Of PI</th>
-                <th >Name Of Co PI</th>
-                <th >Name Of Agency</th>
-                <th >department</th>
                 <th onclick="sortTable('Project_Start_Date')">Start Date</th>
                 <th onclick="sortTable('Project_Closure_Date')">End Date</th>
                 <th >Action</th>
@@ -130,29 +116,9 @@
                        
                         <td>{{ project.Project_Start_Date }}</td>
                         <td>{{ project.Project_Closure_Date }}</td>
-                        <td>{{ project.task }}</td>
-                        <td>{{ project.PI_of_Project }}</td>
-                        <td>{{ project.Co_PI_of_Project }}</td>
-                        
-                        <td>N.A</td>
-                        <td>N.A</td>
-                        
-                       
-                        <td>{{ project.funding_agency }}</td>
-                        <td>N.A</td>
                       
                         <!-- Repeat the pattern for other columns -->
-                        <td>
-                            <a href="{% url 'fill' project_id=project.id %}">
-                                <button class="button">Monthly Sheet</button>
-                            </a>
-                            <a href="{% url 'mastersheet' project_id=project.id %}">
-                                <button class="button">Mastersheet</button>
-                            </a>
-                            <a href="{% url 'complete_task' project_id=project.id %}">
-                                <button class="button">Complete Task</button>
-                            </a>
-                        </td>
+                      
                     </tr>
                 {% endfor %}
             </tbody>
@@ -168,20 +134,6 @@
 
             window.location.href = url.href;
         }
-        function showAllProjects() {
-            // Redirect to the same page without any filter
-            window.location.href = "{% url 'project_listwise' %}";
-          }
-        
-          function showOngoingProjects() {
-            // Redirect to the same page with a filter for ongoing projects
-            window.location.href = "{% url 'project_listwise' %}?filter=ongoing";
-          }
-        
-          function showCompletedProjects() {
-            // Redirect to the same page with a filter for completed projects
-            window.location.href = "{% url 'project_listwise' %}?filter=completed";
-          }
     </script>
 </body>
 </html>

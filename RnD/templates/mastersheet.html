@@ -549,7 +549,7 @@
           <td contenteditable="true" id="1-1"> 1</td>
           <td contenteditable="true" id="2-1"> 0</td>
           <td contenteditable="true" id="3-1"> 0</td>
-          <td contenteditable="true" id="4-1"> 0</td>
+          <td contenteditable="true" ><input type="date" id="4-1" name="date"></td>
           {% for  budget_head in  budget_heads %}
         <td contenteditable="true" id="1-{{ budget_head }}"> 0</td>
       {% endfor %}
@@ -756,10 +756,22 @@ function updateFile() {
 
       // Get all cells in the row
       var cells = row.querySelectorAll("[contenteditable=true]");
+      console.log(cells)
 
       // Iterate over each cell and update the 2D cellContents object
-      cells.forEach(function (cell) {
+     // cells.forEach(function (cell) {
+     //     cellContents[rowId][cell.id] = cell.textContent;
+     cells.forEach(function (cell) {
+      if (cell.firstChild && cell.firstChild.nodeName === "INPUT") {
+          // Use cell.value if the cell contains an input element
+          var cellId = cell.querySelector("input[type=date]").id;
+          console.log("input tag")
+          console.log(cellId)
+          cellContents[rowId][cellId] = cell.firstChild.value;
+      } else {
+          // Use cell.textContent for regular text content
           cellContents[rowId][cell.id] = cell.textContent;
+      }
       });
     }
   });
@@ -821,10 +833,19 @@ function fillTableWithData() {
           else{
             row.id = rowId;
             for (var colIndex = 1; colIndex <= 6; colIndex++) {
+              if(colIndex!=4){
               var cellId = `${colIndex}-${rowId}`;
               var cell = document.getElementById(cellId);
            
-              cell.textContent = parsedData2[rowId][ colIndex+ '-' + rowId] || "0";
+              cell.textContent = parsedData2[rowId][ colIndex+ '-' + rowId] || "0";}
+              else{
+                var cellId = `${colIndex}-${rowId}`;
+        var cell = document.getElementById(cellId);
+        var cell1 = cell.querySelector("input[type=date]");
+        console.log(cell)
+        console.log(cell1)
+           cell1.value= parsedData2[rowId][colIndex + '-' + rowId] ;
+              }
 
             }
             let budgetHeads={{budget_heads|safe}}
@@ -895,18 +916,33 @@ function fillTableWithData() {
     // Add contenteditable cells with default value 0
     for (var i = 1; i <= 1; i++) {
       var cell = document.createElement("td");
-      cell.contentEditable = true;
+      cell.contentEditable = false;
       cell.textContent = newRow.id.toString();
       cell.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each td
       newRow.appendChild(cell);
     }
-    for (var i = 2; i <= (4); i++) {
+    {% comment %} for (var i = 2; i <= (4); i++) {
+      var cell = document.createElement("td");
+      cell.contentEditable = true;
+      cell.textContent = "0";
+      cell.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each td
+      newRow.appendChild(cell);
+    } {% endcomment %}
+    for (var i = 2; i <= (3); i++) {
       var cell = document.createElement("td");
       cell.contentEditable = true;
       cell.textContent = "0";
       cell.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each td
       newRow.appendChild(cell);
     }
+    for (var i = 4; i <= 4; i++) {
+      var cell = document.createElement("td");
+      var input = document.createElement("input");
+      input.type = "date"; // Set the input type to date
+      input.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each input
+      cell.appendChild(input);
+      newRow.appendChild(cell);
+  }
     for (var i = 0; i <n; i++) {
       var budgetHead = b[i];
       var cell = document.createElement("td");
