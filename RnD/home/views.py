@@ -341,7 +341,7 @@ def monthly(request):
 from datetime import datetime
 @login_required
 def mastersheet(request,project_id):
-    print("mastersheet called")
+    # print("mastersheet called")
     existing_project = project_details.objects.get(id=project_id)
     start_year1 = existing_project.financial_year_start_index
     end_year1 = existing_project.financial_year_end_index

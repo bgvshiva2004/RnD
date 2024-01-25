@@ -300,16 +300,22 @@
       <div>
         <table class="table11">
         <tr>
-            <th>Project/Fellowship No.</th>
+            <th>Project_ID</th>
             <td name='Project_Fellowship_No'>{{existing_project.Project_Fellowship_No}}</td>
         </tr>
         <tr>
-            <th>PI of Project</th>
+            <th>Project PI</th>
             <td name='PI_of_Project'>{{ existing_project.PI_of_Project}}</td>
-        </tr><tr>
-            <th>Sanctioned Date</th>
-            <td name='Sanctioned_Date'>{{existing_project.Sanctioned_Date}}</td>
-        </tr> <tr>
+        </tr>
+          <tr>
+            <th>Project Co-PI</th>
+            <td name='PI_of_Project'>{{ existing_project.Co_PI_of_Project}}</td>
+        </tr>
+        <tr>
+          <th>Project Co-PI</th>
+          <td name='PI_of_Project'>{{ existing_project.Co_PI_of_Project}}</td>
+        </tr> 
+         <tr>
             <th>Project Start Date</th>
             <td name='Project_Start_Date'>{{ existing_project.Project_Start_Date}}</td>
         </tr> <tr>
@@ -730,6 +736,7 @@ function deleteLastRow() {
     if (lastRow.id !== 'total-row') {
       table.deleteRow(lastRowIndex);
       updateFile()
+      console.log(" deleted the 'Total' row.")
     } else {
       console.error("Cannot delete the 'Total' row.");
     }
@@ -737,13 +744,13 @@ function deleteLastRow() {
     console.error("No rows to delete.");
   }
 }
-
-  var cellContents = {};
+var cellContents = {};
 
 function updateFile() {
+  var cellContents = {};
     // Get all rows in the table
     var rows = document.querySelectorAll("#data-table3 tbody tr");
-    console.log(rows)
+    console.log("rows",rows)
 
     // Iterate over each row
     rows.forEach(function (row) {
@@ -765,8 +772,8 @@ function updateFile() {
       if (cell.firstChild && cell.firstChild.nodeName === "INPUT") {
           // Use cell.value if the cell contains an input element
           var cellId = cell.querySelector("input[type=date]").id;
-          console.log("input tag")
-          console.log(cellId)
+          console.log("cellId",cellId)
+       
           cellContents[rowId][cellId] = cell.firstChild.value;
       } else {
           // Use cell.textContent for regular text content
@@ -775,7 +782,7 @@ function updateFile() {
       });
     }
   });
-  console.log(cellContents)
+  console.log("cellContents",cellContents)
   updateTotalRow( cellContents)
 
     // Use AJAX to send data to Django server
@@ -837,14 +844,20 @@ function fillTableWithData() {
               var cellId = `${colIndex}-${rowId}`;
               var cell = document.getElementById(cellId);
            
-              cell.textContent = parsedData2[rowId][ colIndex+ '-' + rowId] || "0";}
+              cell.textContent = parsedData2[rowId][ colIndex+ '-' + rowId] || "0";
+            }
               else{
                 var cellId = `${colIndex}-${rowId}`;
         var cell = document.getElementById(cellId);
-        var cell1 = cell.querySelector("input[type=date]");
-        console.log(cell)
-        console.log(cell1)
-           cell1.value= parsedData2[rowId][colIndex + '-' + rowId] ;
+        console.log("default value");
+        console.log(cell);
+        console.log(cell1);
+        console.log(parsedData2[rowId][colIndex + '-' + rowId]);
+        if(rowId==1){
+        cell.value= parsedData2[rowId][colIndex + '-' + rowId]|| "default value";}
+        else{
+            var cell1 = cell.querySelector("input[type=date]");
+           cell1.value= parsedData2[rowId][colIndex + '-' + rowId]|| "default value";}
               }
 
             }
@@ -916,18 +929,18 @@ function fillTableWithData() {
     // Add contenteditable cells with default value 0
     for (var i = 1; i <= 1; i++) {
       var cell = document.createElement("td");
-      cell.contentEditable = false;
+      cell.contentEditable = true;
       cell.textContent = newRow.id.toString();
       cell.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each td
       newRow.appendChild(cell);
     }
-    {% comment %} for (var i = 2; i <= (4); i++) {
+    /* for (var i = 2; i <= (4); i++) {
       var cell = document.createElement("td");
       cell.contentEditable = true;
       cell.textContent = "0";
       cell.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each td
       newRow.appendChild(cell);
-    } {% endcomment %}
+    } */
     for (var i = 2; i <= (3); i++) {
       var cell = document.createElement("td");
       cell.contentEditable = true;
@@ -937,9 +950,11 @@ function fillTableWithData() {
     }
     for (var i = 4; i <= 4; i++) {
       var cell = document.createElement("td");
+      cell.contentEditable = true;
       var input = document.createElement("input");
       input.type = "date"; // Set the input type to date
       input.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each input
+      cell.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each input
       cell.appendChild(input);
       newRow.appendChild(cell);
   }
@@ -962,11 +977,12 @@ function fillTableWithData() {
 
     // Append the new row to the tbody
     //tbody.appendChild(newRow);
+    console.log(newRow)
     tbody.insertBefore(newRow, totalRow);
-    updateFile()
+   // updateFile()
 
     // Store the row data in the rowData object
-    {% comment %} rowData[newRow.id] = {};
+    rowData[newRow.id] = {};
     newRow.childNodes.forEach(function (node) {
       // Skip non-element nodes (such as text nodes)
       if (node.nodeType === 1) {
@@ -975,7 +991,7 @@ function fillTableWithData() {
       }
     });
 
-    console.log("Row data:", rowData); {% endcomment %}
+    console.log("Row data:", rowData);
 
 
     
@@ -1000,8 +1016,10 @@ document.addEventListener('DOMContentLoaded', function() {
   fillCells1();
   fillCells2();
   fillCells();
+  console.log("fill")
   fillTableWithData();
   fillTableWithData();
+  console.log("filled")
   updateTotalRow( parsedData2);
   updateCellValue()
 
