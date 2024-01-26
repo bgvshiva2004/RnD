@@ -307,14 +307,18 @@
             <th>Project PI</th>
             <td name='PI_of_Project'>{{ existing_project.PI_of_Project}}</td>
         </tr>
-          <tr>
+        {% if existing_project.Co_PI_of_Project %}  
+        <tr>
             <th>Project Co-PI</th>
             <td name='PI_of_Project'>{{ existing_project.Co_PI_of_Project}}</td>
         </tr>
+        {% endif %}
+        {% if existing_project.funding_agency %}
         <tr>
-          <th>Project Co-PI</th>
-          <td name='PI_of_Project'>{{ existing_project.Co_PI_of_Project}}</td>
+          <th>Funding agency</th>
+          <td name='PI_of_Project'>{{ existing_project.funding_agency}}</td>
         </tr> 
+        {% endif %}
          <tr>
             <th>Project Start Date</th>
             <td name='Project_Start_Date'>{{ existing_project.Project_Start_Date}}</td>
@@ -385,7 +389,7 @@
           
           
           {% endfor %}
-          <td contenteditable="false" id="total-{{ period }}">1</td>
+          <td contenteditable="false" id="total-{{ period }}">0</td>
         </tr>
       {% endfor %}
       {% comment %} <tr>
@@ -396,6 +400,13 @@
         {% endfor %}
         <td id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years">1</td>
       </tr> {% endcomment %}
+      <td id="total_no">*</td>
+        <td>Total</td>
+        {% for table_key, sum_data in tablesdata.items %}
+          <td id="total-grant-{{forloop.counter}}"></td>
+        {% endfor %}
+        <td id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
+      </tr>
     </tbody>
   </table>
 
@@ -494,20 +505,28 @@
         <!-- Add dynamic cells for each financial year -->
         {% for table_key, sum_data in tablesdata1.items %}
 
-        <td contenteditable="false" id="2-row-{{ period }}-col-{{table_key}}" class="row-{{ period }}">2</td>
+        <td contenteditable="false" id="2-row-{{ period }}-col-{{table_key}}" class="row-{{ period }}"></td>
       
       
         
         {% endfor %}
-        <td contenteditable="true" id="2-row-{{period}}" class="2-row-{{period}}">0</td>
-        <td contenteditable="true" id="2-row-{{period}}-col-com" class="2-row1-{{period}}">01</td>
-        <td contenteditable="true" id="2-row-{{period}}-col-{{l|add:2}}" class="2-row2-{{period}}">0</td>
-       
+        <td contenteditable="true" id="2-row-{{period}}" class="2-row-{{period}}"></td>
+        <td contenteditable="true" id="2-row-{{period}}-col-com" class="2-row1-{{period}}"></td>
+        {% comment %} <td contenteditable="true" id="2-row-{{period}}-col-{{l|add:2}}" class="2-row2-{{period}}"></td> {% endcomment %}
+        <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' name='2-row-{{period}}-col-101-{{project_id}}' value={{2_row_1_col_101}}></td>
       
 
       </tr>
     {% endfor %}
   </tbody>
+  <tbody>
+  {% for table_key, sum_data in tablesdata.items %}
+          <td id="total-expense-{{forloop.counter}}"></td>
+      {% endfor %}
+      <td id="total_expenditure_all_years" name="total_expenditure_all_years">{{total_expenditure_all_years}}</td>
+        <td id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
+        <td id='total_balance_amount_all_domains' name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
+    </tbody>
   </table>
 
 
@@ -612,9 +631,9 @@
   
 </footer>
 
-{% comment %} {{ project_id|json_script:"room-name"}}
+{{ project_id|json_script:"room-name"}}
 
-<script src="{% static 'script.js' %}"></script> {% endcomment %}
+<script src="{% static 'script.js' %}"></script>
 <script>
   var tablesData = {{ tablesdata|safe }};
   console.log(tablesData)
@@ -802,6 +821,7 @@ xhr.onload = function () {
 };
 xhr.send(JSON.stringify(cellContents));
 
+  calculateTotalBalance();
 }
 
 var parsedData2 = {{ parsed_data2|safe }};
@@ -1219,9 +1239,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // alert('project_id',project_id);
 
     document.addEventListener('DOMContentLoaded',function(){
+
+      let n = {{ budget_heads|length }};
+      console.log('n start',n);
             
       var columns = document.getElementById('years');
-      // console.log('columns length',years.length);
+      console.log('columns length',years.length,",",columns);
       var values={};
       var expenses={};
       var sum_yearwise = 0;
@@ -1229,7 +1252,7 @@ document.addEventListener('DOMContentLoaded', function() {
       for(let j=1;j<years.length+1;j++){
         values[`values${j}`] = [];
         expenses[`expenses${j}`]=[];
-        for(let i=0;i<7;i++){
+        for(let i=1;i<=n;i++){
           var domaingrants = document.getElementById(`1-row-${i}-col-${j}`);
           var domainexpenses = document.getElementById(`2-row-${i}-col-${j}`);
           if(domaingrants){
@@ -1272,7 +1295,7 @@ document.addEventListener('DOMContentLoaded', function() {
        loadValues(project_id);
 
        var total_balance_amount = 0;
-       for(let i=0;i<7;i++){
+       for(let i=1;i<=n;i++){
         var balance_amount_row = 0;
         var totalFundsEle = document.getElementById(`total-${i}`);
         var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
@@ -1284,10 +1307,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log('totalEXp',totalExp);
 
-       //  console.log('before committed_expenditure');
-        var committedExpEle = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
-        var committedExp = committedExpEle ? parseInt(committedExpEle.value) || 0 : 0;
-       //  console.log('after committed_expenditure');
+       console.log('before committed_expenditure');
+        var committedExpEle = document.getElementById(`2-row-${i}-col-com`);
+        var committedExp = committedExpEle ? parseInt(committedExpEle.textContent) || 0 : 0;
+        console.log('after committed_expenditure',committedExp);
 
         console.log('committedExp',committedExp);
 
@@ -1307,14 +1330,17 @@ document.addEventListener('DOMContentLoaded', function() {
       var total_balance_amount_all_domains = document.getElementById('total_balance_amount_all_domains');
       total_balance_amount_all_domains.textContent = total_balance_amount;
 
+    //   calculateTotalBalance();
 
     });
 
-    function updation(projectId){
+    {% comment %} function updation(projectId){
+
+      let n = {{ budget_heads|length }};
 
        var committed_expenditure_sum = 0;
        // console.log('updation called')
-        for(let i=0;i<7;i++){
+        for(let i=1;i<=n;i++){
            var committed_expenditure = document.querySelector(`input[name$="2-row-${i}-col-100-${projectId}"]`);
            if(committed_expenditure){
              var num= parseInt(committed_expenditure.value)||0;
@@ -1329,7 +1355,7 @@ document.addEventListener('DOMContentLoaded', function() {
         total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
 
 
-        for(let i=0;i<7;i++){
+        for(let i=1;i<=n;i++){
           var balance_amount_row = 0;
           var totalFundsEle = document.getElementById(`total-${i}`);
           var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
@@ -1364,11 +1390,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         calculateTotalBalance();
         
-     }
+     } {% endcomment %}
 
     function calculateTotalBalance(){
+      let n = {{ budget_heads|length }};
       var total_balance_amount = 0;
-      for(let i=0;i<7;i++){
+      for(let i=1;i<=n;i++){
        var balance_amount_row = 0;
        var totalFundsEle = document.getElementById(`total-${i}`);
        var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
@@ -1381,8 +1408,8 @@ document.addEventListener('DOMContentLoaded', function() {
        console.log('totalEXp',totalExp);
 
       //  console.log('before committed_expenditure');
-       var committedExpEle = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
-       var committedExp = committedExpEle ? parseInt(committedExpEle.value) || 0 : 0;
+       var committedExpEle = document.getElementById(`2-row-${i}-col-com`);
+       var committedExp = committedExpEle ? parseInt(committedExpEle.textContent) || 0 : 0;
       //  console.log('after committed_expenditure');
 
        console.log('committedExp',committedExp);
@@ -1418,7 +1445,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function loadValues(project_id){
       var committed_expenditure_sum = 0;
-      for(let i=0;i<7;i++){
+      for(let i=1;i<=n;i++){
         var storedValue = localStorage.getItem(`committed_expenditure_${project_id}_${i}`);
         var inputField = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
         console.log()
