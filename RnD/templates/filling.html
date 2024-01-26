@@ -185,6 +185,105 @@
         input[type="number"] {
         -moz-appearance: textfield;
         }
+
+        .titles{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 50px;
+        }
+
+        .titles form input{
+            width: 150px;
+            height: 30px;
+            outline: none;
+            border: 1.5px solid var(--secondary-color);
+            box-shadow: 0px 7px 5px rgba(0,0,0,0.5);
+            color: var(--secondary-color);
+            font-size: 15px;
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 10px;
+          }
+    
+          .titles form input::placeholder{
+            color: var(--secondary-color);
+          }
+    
+          .titles form input:focus{
+            box-shadow: 0px 7px 5px var(--secondary-color);
+          }
+
+          button.btn-1{
+            display: block;
+            height: 50px;
+            font-size: 15px;
+            padding: 10px;
+            margin: 30px auto;
+            width: 100px;
+            cursor: pointer;
+            border: 0;
+            outline: none;
+            border-radius: 30px;
+            background-color: #fff;
+            color: var(--secondary-color);
+            font-weight: 400;
+            transition: 0.3s ease-in-out;
+            position: relative;
+            box-shadow: 6px 6px 1px -1px rgba(0, 0, 0, 0.15),
+                        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);  
+            z-index: 3;      
+      }
+
+        button.btn-1:hover{
+            color: #fff;
+            box-shadow: 6px 6px 1px -1px rgba(72,68,163,0.2),
+                        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+            z-index: 4;
+        }
+    
+        button.btn-1:hover::before{
+            content: '';
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            left: 0px;
+            top: 0px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            animation: btn-1 0.3s linear forwards;
+            border-radius: 30px;
+            opacity: 1;
+            z-index: -2;
+        }
+    
+        @keyframes btn-1{
+            0%{
+                width: 0%;
+            }
+            50%{
+                width: 50%;
+            }
+            100%{
+                width: 100%;
+            }
+        }
+
+        .titles div:nth-child(2), .titles div form{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .titles div:nth-child(2) button{
+            margin-right: 20px;
+        }
+
+        .titles div form div:nth-child(1){
+            display: flex;
+            flex-direction: column;
+            margin-right: 10px;
+        }
     </style>
 </head>
 
@@ -237,26 +336,26 @@
         </div>
         </div>
 
-        <form id="updateForm">
-            <div style="display: flex; align-items: center;">
-                <label for="rowNumber" style="margin-right: 10px; color: black;">Row Number:</label>
-                <input type="number" id="rowNumber" name="rowNumber" required style="width: 60px; color: black;"> <!-- Adjust the width as needed -->
+        <div class="titles">
+            <div>
+                <form id="updateForm">
+                    <div>
+                        <input type="number" id="rowNumber" name="rowNumber" required placeholder="Row Number"> <!-- Adjust the width as needed -->
+                        <input type="text" id="newValue" name="newValue" required placeholder="New Value"> <!-- Adjust the width as needed -->  
+                    </div>     
+                    <div>         
+                        <button type="button" onclick="updateCellValue()" class="btn-1">Update Cell Value</button>
+                    </div>
+                </form>
             </div>
-            
-            <div style="display: flex; align-items: center; margin-top: 10px;">
-                <label for="newValue" style="margin-right: 10px; color: black;">New Value:</label>
-                <input type="text" id="newValue" name="newValue" required style="width: 200px; color: black;"> <!-- Adjust the width as needed -->
+            <!-- <a href="{% url 'mastersheet' project_id=fellowship_no  %}">
+                    <button type="button">Marksheet</button>
+        </a> -->
+            <div>
+                <button type='button' onclick="addRow()" class="btn-1">Add New Row</button>
+                <button onclick="deleteRow()" class="btn-1">Delete Last Row</button>
             </div>
-            
-            <button type="button" onclick="updateCellValue()" style="margin-top: 10px;">Update Cell Value</button>
-        </form>
-        
-            <a href="{% url 'mastersheet' project_id=fellowship_no  %}">
-                <button type="button">Marksheet</button>
-            </a>
-            <button type='button' onclick="addRow()">Add New Row</button>
-            <button onclick="deleteRow()">Delete Last  Row</button>
-        
+        </div>     
 
 <div class="tables">
     <div class="table">

@@ -67,7 +67,7 @@
             border: 2px solid rgba(34, 122, 191, 0.5);
           }
           
-          .cover {
+          .cover{
             top: 0;
             position: absolute;
             background-color: rgb(144,188,223);
@@ -93,7 +93,7 @@
             justify-content: center;
           }
           
-          .book:hover .cover {
+          .book:hover .cover{
             -webkit-transition: all 0.5s;
             transition: all 0.5s;
             -webkit-transform: rotatey(-80deg);
@@ -137,14 +137,16 @@
             height: 100%;
         }
 
-        .project-container .book .project-details p{
+        .project-container .book .project-details p span:nth-child(2){
             line-height: 30px;
             color: #fff;
+            text-align: center;
         }
 
-        .project-container .book .project-details p span{
+        .project-container .book .project-details p span:nth-child(1){
             color: var(--secondary-color);
             margin-right: 10px;
+            text-align: left;
         }
         .project-container{
             display: flex;
@@ -158,7 +160,10 @@
             font-size: 22px;
             margin-bottom: 20px;
         }
-        #trash{
+        button#trash{
+          background: transparent;
+        }
+        #trash i{
             cursor: pointer;
             position: absolute;
             top: 30px;
@@ -169,10 +174,98 @@
             font-size: 20px;
             transition: 0.3s all ease-in-out;
         }
-        #trash:hover{
+        #trash i:hover{
             color: red;
             box-shadow: 0px 0px 10px red;
         }
+        .titles{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .titles .dropdown .dropdown-menu{
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          margin-left: 50px;
+        }
+
+        .titles .dropdown .dropdown-menu a, .titles .search a{
+          text-decoration: none;
+          height: 40px;
+          padding: 10px;
+          font-size: 16px;
+          outline: 0;
+          border: none;
+          cursor: pointer;
+          background-color: rgba(34,122,191,0.5);
+          color: #fff;
+          border-radius: 10px;
+          transition: all 0.3s ease-in-out;
+          border: 2px solid rgba(34,122,191,0.5);
+          background-color: #fff;
+          color: var(--secondary-color);
+          margin-bottom: 10px;
+      }
+    
+      .titles .dropdown .dropdown-menu a:hover, .titles .search a:hover{
+          box-shadow: 0px 10px 10px var(--secondary-color);
+      }
+
+      .titles .sub_nav{
+        text-align: right;
+      }
+      
+      .titles .search{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .titles .search form{
+        position: relative;
+      }
+
+      .titles .search form input{
+        width: 100%;
+        height: 50px;
+        outline: none;
+        border: none;
+        box-shadow: 0px 7px 5px rgba(0,0,0,0.5);
+        color: var(--secondary-color);
+        font-size: 18px;
+        border-radius: 20px;
+        padding: 10px;
+      }
+
+      .titles .search form input::placeholder{
+        color: var(--secondary-color);
+      }
+
+      .titles .search form input:focus{
+        box-shadow: 0px 7px 5px var(--secondary-color);
+      }
+
+      .titles .search form button{
+        position: absolute;
+        right: 20px;
+        top: 23%;
+        height: 50px;
+        border-radius: 20px;
+        font-size: 18px;
+        background: transparent;
+        padding: 10px;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        color: var(--secondary-color);
+      }
+
+      .titles .search form button:hover{
+        text-shadow: 0px 0px 5px var(--secondary-color);
+      }
     </style>
 </head>
 <body>
@@ -212,50 +305,54 @@
         </ul>
     </div>
 
-    <div class="sub_nav">
-        <div class="project_list"><h1>Project Deals</h1></div>
-    </div>
+    <div class="titles">
+      <div class="dropdown">
+        <!-- {% comment %} <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Filter Projects
+        </button> {% endcomment %} -->
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <!-- <a class="dropdown-item" href="#" onclick="showAllProjects()">All Projects</a> -->
+          <a class="dropdown-item" href="#" onclick="showOngoingProjects()">Ongoing Projects</a>
+          <a class="dropdown-item" href="#" onclick="showCompletedProjects()">Completed Projects</a>
+        </div>
+      </div>
 
-    <form class="search-bar sub_nav" method="GET" action="{% url 'project_search' %}">
-        <input type="text" name="q" placeholder="Search">
-        <button type="submit">Search</button>
-    </form>
-    <a href="{% url 'project_listwise' %}" class="btn">Go to List Page</a>
+      <div class="sub_nav">
+          <div class="project_list"><h1>Project Deals</h1></div>
+      </div>
+
+      <div class="search">
+        <form class="search-bar sub_nav" method="GET" action="{% url 'project_search' %}">
+            <input type="text" name="q" placeholder="Search">
+            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+        <a href="{% url 'project_listwise' %}">List View</a>
+      </div>
+    </div>
     
-    <div class="project-container">
-        <div class="dropdown" style="position: absolute; top: 120px; left: 20px;">
-            {% comment %} <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Filter Projects
-            </button> {% endcomment %}
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#" onclick="showAllProjects()">All Projects</a>
-              <a class="dropdown-item" href="#" onclick="showOngoingProjects()">Ongoing Projects</a>
-              <a class="dropdown-item" href="#" onclick="showCompletedProjects()">Completed Projects</a>
-            </div>
-          </div>
-    
-         
+    <div class="project-container">         
         {% for project in projects %}
         
         <div class="book">
             <div class="buttons">
-                <button id="trash"><i class="fa-solid fa-trash"></i></button>
+                <!-- <button id="trash"><i class="fa-solid fa-trash"></i></button> -->
                 <a href="{% url 'fill' project_id=project.id %}">
                     <button class="button">Monthly Sheet</button>
                 </a>
                 <a href="{% url 'mastersheet' project_id=project.id %}">
                     <button class="button">Mastersheet</button>
                 </a>
-            </div>            <div class="cover">
+            </div>            
+            <div class="cover">
                 <div class="project-details">
                     
                     <h4 style="text-align:center;">   {{ project.Title_of_Project }}  </h4>
-                    <p><span>Project ID  :</span>  {{ project.Project_Fellowship_No }}</p>
-                    <p><span>Project PI :</span>  {{ project.PI_of_Project }}</p>
-                    {% if project.Co_PI_of_Project %}<p><span>Project Co-PI :</span>{{ project.Co_PI_of_Project }}</p>{% endif %}
-                    {% if project.funding_agency %}<p><span>Funding Agency:</span>{{ project.funding_agency }}</p>{% endif %}
-                    <p><span>Start Date     :</span>{{ project.Project_Start_Date }}</p>
-                    <p><span>Closure Date:</span>{{ project.Project_Closure_Date }}</p>
+                    <p><span>Project ID  :</span><span> {{ project.Project_Fellowship_No }}</span></p>
+                    <p><span>Project PI :</span><span> {{ project.PI_of_Project }}</span></p>
+                    {% if project.Co_PI_of_Project %}<p><span>Project Co-PI :</span><span>{{ project.Co_PI_of_Project }}</span></p>{% endif %}
+                    {% if project.funding_agency %}<p><span>Funding Agency:</span><span>{{ project.funding_agency }}</span></p>{% endif %}
+                    <p><span>Start Date     :</span><span>{{ project.Project_Start_Date }}</span></p>
+                    <p><span>Closure Date:</span><span>{{ project.Project_Closure_Date }}</span></p>
                 </div>
             </div>
            </div>

@@ -99,8 +99,7 @@
       } */
 
       table.table3{
-          width: 70%;
-          margin: 30px auto;
+          margin: 30px 30px;
           border: 1px solid var(--secondary-color);
       }
 
@@ -225,13 +224,18 @@
       background-color: rgba(34,122,191,0.5);
       color: #fff;
       border-radius: 10px;
-      transition: all 0.3s ease-in-out;border: 2px solid rgba(34,122,191,0.5);
+      transition: all 0.3s ease-in-out;
+      border: 2px solid rgba(34,122,191,0.5);
       background-color: #fff;
       color: var(--secondary-color);
   }
 
   .mbtn a button:hover{
       box-shadow: 0px 10px 10px var(--secondary-color);
+  }
+
+  .btn.lastrow{
+    height: 60px;
   }
 
   .title-block{
@@ -604,11 +608,11 @@
   </table>
   <div class="btn-row">
     {% comment %} <button onclick="addRow()" class="btn">Add Row</button>
-    <button onclick="updateData()">Update Data</button>
-    <button id="updateDataBtn" class="btn" onclick="updateData()">Update Data</button> {% endcomment %}
-    <button onclick="addRow()">Add Row</button>
-  <button onclick="updateFile()">Update</button>
-  <button onclick="deleteLastRow()">Delete Last Row</button>
+    <button class="btn" onclick="updateData()">Update Data</button>
+    <button class="btn" id="updateDataBtn" class="btn" onclick="updateData()">Update Data</button> {% endcomment %}
+    <button class="btn" onclick="addRow()">Add Row</button>
+  <button class="btn" onclick="updateFile()">Update</button>
+  <button class="btn lastrow" onclick="deleteLastRow()">Delete Last Row</button>
 </div>
 
 <footer>

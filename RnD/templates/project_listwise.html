@@ -1,14 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Project List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
         .table-container {
             overflow-x: auto; /* Enable horizontal scrolling for the table container */
             width: 90%; /* Set a maximum width for the container */
@@ -52,19 +50,59 @@
             margin-right: 10px;
         }
 
-        .buttons {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .button {
-            margin-top: 5px;
-            padding: 5px;
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
+        button.button{
+            display: block;
+            height: 35px;
+            font-size: 15px;
+            padding: 10px;
+            margin: 10px auto;
+            width: 150px;
             cursor: pointer;
+            border: 0;
+            outline: none;
+            border-radius: 10px;
+            background-color: #fff;
+            color: var(--secondary-color);
+            font-weight: 400;
+            transition: 0.3s ease-in-out;
+            position: relative;
+            box-shadow: 6px 6px 1px -1px rgba(0, 0, 0, 0.15),
+                        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);  
+            z-index: 3;      
+      }
+
+        button.button:hover{
+            color: #fff;
+            box-shadow: 6px 6px 1px -1px rgba(72,68,163,0.2),
+                        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+            z-index: 4;
+        }
+    
+        button.button:hover::before{
+            content: '';
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            left: 0px;
+            top: 0px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            animation: btn-1 0.3s linear forwards;
+            border-radius: 10px;
+            opacity: 1;
+            z-index: -2;
+        }
+    
+        @keyframes btn-1{
+            0%{
+                width: 0%;
+            }
+            50%{
+                width: 50%;
+            }
+            100%{
+                width: 100%;
+            }
         }
 
         .create-project-button {
@@ -77,36 +115,203 @@
             cursor: pointer;
         }
 
-        .search-bar {
-            margin-top: 20px;
+        .titles{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+  
+          .titles .dropdown .dropdown-menu{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-left: 50px;
+          }
+  
+          .titles .dropdown .dropdown-menu a, .titles .search a{
+            text-decoration: none;
+            height: 40px;
+            padding: 10px;
+            font-size: 16px;
+            outline: 0;
+            border: none;
+            cursor: pointer;
+            background-color: rgba(34,122,191,0.5);
+            color: #fff;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+            border: 2px solid rgba(34,122,191,0.5);
+            background-color: #fff;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+      
+        .titles .dropdown .dropdown-menu a:hover, .titles .search a:hover{
+            box-shadow: 0px 10px 10px var(--secondary-color);
+        }
+  
+        .titles .sub_nav{
+          text-align: right;
+        }
+        
+        .titles .search{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+        }
+  
+        .titles .search form{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 30px;
+        }
+  
+        .titles .search form input{
+          width: 100%;
+          height: 50px;
+          outline: none;
+          border: none;
+          box-shadow: 0px 7px 5px rgba(0,0,0,0.5);
+          color: var(--secondary-color);
+          font-size: 18px;
+          border-radius: 20px;
+          padding: 10px;
+          margin-bottom: 20px;
+        }
+  
+        .titles .search form input::placeholder{
+          color: var(--secondary-color);
+        }
+  
+        .titles .search form input:focus{
+          box-shadow: 0px 7px 5px var(--secondary-color);
+        }
+  
+        .titles .search form button{
+          height: 50px;
+          border-radius: 20px;
+          font-size: 18px;
+          background: transparent;
+          padding: 10px;
+          cursor: pointer;
+          outline: none;
+          border: none;
+          color: var(--secondary-color);
+          margin-left: -35px;
+          margin-top: -14px;
+        }
+  
+        .titles .search form button:hover{
+          text-shadow: 0px 0px 5px var(--secondary-color);
+        }
+
+        .sub_nav h1{
+            position: relative;
+        }
+
+        .sub_nav h1::before{
+            content: "";
+            position: absolute;
+            height: 3px;
+            width: 70%;
+            left: 15%;
+            bottom: -10px;
+            background-color: var(--secondary-color);
+            border-radius: 30px;
+        }
+
+        .table-container table{
+            margin: 30px;
+            border: 1px solid var(--secondary-color);
+        }
+  
+        .table-container table tr th{
+            font-size: 17px;
+            font-weight: 400;
+            border: 1px solid #fff;
+            padding: 10px;
+            background-color: var(--secondary-color);
+            color: #fff;
+        }
+  
+        .table-container table tr td{
+            padding: 10px;
+            font-size: 17px;
+            text-align: center;
+            border: 1px solid var(--secondary-color);
         }
     </style>
 </head>
 <body>
-    <h1>Project List</h1>
 
-    <!-- Search bar -->
-    <form class="search-bar" method="GET" action="{% url 'project_search' %}">
-        <input type="text" name="q" placeholder="Search">
-        <button type="submit">Search</button>
-    </form>
+    <div class="navbar1">
+        <div class="title">
+            <a href="{% url "homepage" %}" class="lo">
+              <img src="{% static "IITI_Logo.png" %}" class="logo">
+              <h3>IIT Indore</h3>
+            </a>
+        </div>
+        <div class="links">
+            <ul>
+                <li><a href="{% url "index" %}">New Project Deal</a></li>
+                <li><a href="{% url "project_list" %}" class="active"> Project Deals</a></li>           
+                <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+            </ul>
+        </div>
+    </div>
 
-    <div class="dropdown" style="position: absolute; top: 20px; right: 20px;">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="navbar2">
+        <div class="ham">
+          <p><i class="fa-solid fa-bars"></i></p>
+        </div>
+        <div class="title">
+          <a href="{% url "index" %}" class="lo">
+            <img src="{% static "IITI_Logo.png" %}" class="logo">
+            <h3>IIT Indore</h3>
+          </a>
+      </div>
+    </div>
+    <div class="side-bar">
+        <div id="close"><i class="fa-solid fa-xmark"></i></div>
+        <ul>
+            <li><a href="{% url "index" %}">New Project Deal</a></li>
+            <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
+            <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="titles">
+      <div class="dropdown">
+        <!-- {% comment %} <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Filter Projects
-        </button>
+        </button> {% endcomment %} -->
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#" onclick="showAllProjects()">All Projects</a>
+          <!-- <a class="dropdown-item" href="#" onclick="showAllProjects()">All Projects</a> -->
           <a class="dropdown-item" href="#" onclick="showOngoingProjects()">Ongoing Projects</a>
           <a class="dropdown-item" href="#" onclick="showCompletedProjects()">Completed Projects</a>
         </div>
       </div>
 
+      <div class="sub_nav">
+          <div class="project_list"><h1>Project Deals</h1></div>
+      </div>
+
+      <div class="search">
+        <form class="search-bar sub_nav" method="GET" action="{% url 'project_search' %}">
+            <div><input type="text" name="q" placeholder="Search"></div>
+            <div><button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button></div>
+        </form>
+        <a href="{% url 'project_listwise' %}">List View</a>
+      </div>
+    </div>
+
     <div class="table-container">
         <table>
             <thead>
                 <tr>
-                    <th onclick="sortTable('Title_of_Project')">Project Title</th>
+                <th onclick="sortTable('Title_of_Project')">Project Title</th>
                 <th onclick="sortTable('Project_Fellowship_No')">Project ID</th>
                 <th >Catergory</th>
                 <th >Country</th>
@@ -143,13 +348,13 @@
                       
                         <!-- Repeat the pattern for other columns -->
                         <td>
-                            <a href="{% url 'fill' project_id=project.id %}">
+                            <a style="text-decoration: none;" href="{% url 'fill' project_id=project.id %}">
                                 <button class="button">Monthly Sheet</button>
                             </a>
-                            <a href="{% url 'mastersheet' project_id=project.id %}">
+                            <a style="text-decoration: none;" href="{% url 'mastersheet' project_id=project.id %}">
                                 <button class="button">Mastersheet</button>
                             </a>
-                            <a href="{% url 'complete_task' project_id=project.id %}">
+                            <a style="text-decoration: none;" href="{% url 'complete_task' project_id=project.id %}">
                                 <button class="button">Complete Task</button>
                             </a>
                         </td>
@@ -158,6 +363,29 @@
             </tbody>
         </table>
     </div>
+
+    <footer>
+        <div class="footer">
+          <div class="info">
+            <h4>IIT Indore</h4>
+          </div>
+          <div class="social">
+            <ul>
+              <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+            </ul>
+          </div>
+          <div class="rights">
+            <p><i class="fa-solid fa-copyright"></i> Copyrights reserved.</p>
+          </div>
+        </div>
+        
+      </footer>
+           
+    <script src="{% static 'script.js' %}"></script>
+
     <script>
         function sortTable(column) {
             const url = new URL(window.location.href);
