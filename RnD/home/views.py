@@ -15,6 +15,7 @@ def duration(date1,date2):
     date2 = datetime.strptime(date2,"%Y-%m-%d")
 
     start_month = date1.month
+    # print(start_month)
     start_year = date1.year
     end_month = date2.month
     end_year = date2.year
@@ -33,7 +34,9 @@ def duration(date1,date2):
     result = {
         'count':count,
         'financial_year_start_index':financial_year_start_index,
-        'financial_year_end_index':financial_year_end_index
+        'financial_year_end_index':financial_year_end_index,
+        'start_month':start_month,
+        'end_month':end_month
     }
 
     return result
@@ -160,7 +163,7 @@ def createfile(Project_file_name,period_range):
         data[table_name]["total_Feb"] = "0"
         data[table_name]["total_Mar"] = "0"
 
-    print(data)
+    # print(data)
 
     with open(file_path, 'w') as file:
         json_data = json.dumps(data, indent=2,sort_keys=True)
@@ -176,6 +179,8 @@ def index(request):
         Project_Start_Date = request.POST.get('Project_Start_Date')
         Project_Closure_Date = request.POST.get('Project_Closure_Date')
         Title_of_Project = request.POST.get('Title_of_Project')
+        Co_PI_of_Project = request.POST.get('Co_PI_of_Project')
+        funding_agency = request.POST.get('funding_agency')
 
         Project_file_name = ''.join(letter for letter in Project_Fellowship_No if letter.isalnum())
 
@@ -188,6 +193,9 @@ def index(request):
             start_year=results['financial_year_start_index']
             closure_year=results['financial_year_end_index']
             period = results['count']
+            start_month = results['start_month']
+            end_month = results['end_month']
+
             details = project_details.objects.create(
                 Project_Fellowship_No =Project_Fellowship_No,
                 Project_file_name = Project_file_name,
@@ -198,7 +206,11 @@ def index(request):
                 Title_of_Project =Title_of_Project,
                 project_duration = period,
                 financial_year_start_index = start_year,
-                financial_year_end_index = closure_year
+                financial_year_end_index = closure_year,
+                start_month = start_month,
+                end_month = end_month,
+                funding_agency= funding_agency,
+                Co_PI_of_Project = Co_PI_of_Project
             )
 
             details.save()
@@ -210,7 +222,7 @@ def index(request):
             createfile(Project_file_name,period)
 
             # print(period," ",period_range)
-            context = {'period': period, 'period_range': period_range}
+            context = {'period': period, 'period_range': period_range,'start_month':start_month,'end_month':end_month}
             years = {'start_year':start_year, 'closure_year':closure_year}
 
             years_dict = {'context':context, 'years':years, 'fellowship_no':Project_Fellowship_No,'title':Title_of_Project ,'id':details.id}
@@ -218,6 +230,7 @@ def index(request):
             # save_table_data(request,details.id)
 
             return render(request,'monthly.html',years_dict)
+        
         
     return render(request,'index.html')
 
@@ -241,7 +254,15 @@ def login(request):
 # @login_required
 def project_list(request):
     projects = project_details.objects.all()
+    filter_option = request.GET.get('filter')
+    
+    # Apply filtering if a filter option is selected
+    if filter_option == 'ongoing':
+        projects = projects.filter(task='ongoing')
+    elif filter_option == 'completed':
+        projects = projects.filter(task='completed')
     context = {'projects': projects}
+
     return render(request, 'project_list.html', context)
 
 # @login_required
@@ -262,6 +283,8 @@ def monthly(request):
         Project_Start_Date = request.POST.get('Project_Start_Date')
         Project_Closure_Date = request.POST.get('Project_Closure_Date')
         Title_of_Project = request.POST.get('Title_of_Project')
+        Co_PI_of_Project = request.POST.get('Co_PI_of_Project')
+        funding_agency = request.POST.get('funding_agency')
 
         start_year = Project_Start_Date[:4]
         closure_year = Project_Closure_Date[:4]
@@ -278,6 +301,8 @@ def monthly(request):
             existing_project.Project_Closure_Date = Project_Closure_Date
             existing_project.Title_of_Project = Title_of_Project
             existing_project.project_duration = period
+            existing_project.Co_PI_of_Project = Co_PI_of_Project
+            existing_project.funding_agency = funding_agency
             existing_project.save()
 
             start_year = int(start_year)
@@ -300,7 +325,9 @@ def monthly(request):
                 Project_Start_Date=Project_Start_Date,
                 Project_Closure_Date=Project_Closure_Date,
                 Title_of_Project=Title_of_Project,
-                project_duration=period
+                project_duration=period,
+                funding_agency = funding_agency,
+                Co_PI_of_Project=Co_PI_of_Project
             )
 
             details.save()
@@ -322,6 +349,7 @@ def monthly(request):
 from datetime import datetime
 @login_required
 def mastersheet(request,project_id):
+    # print("mastersheet called")
     existing_project = project_details.objects.get(id=project_id)
     start_year1 = existing_project.financial_year_start_index
     end_year1 = existing_project.financial_year_end_index
@@ -338,6 +366,8 @@ def mastersheet(request,project_id):
 
 ]
     file_path = os.path.join('project_files', f'{existing_project.Project_file_name}.txt')
+    file_path1 = os.path.join('commited', f'{existing_project.id}.txt')
+    print(file_path1)
     with open(file_path, 'r') as file:
         table_data1 = file.read()
     # print((table_data1))
@@ -349,6 +379,23 @@ def mastersheet(request,project_id):
         '1':table_1_data,
         '0':table_1_data
     }
+    your_data=parsed_data
+    text_values_set = set()
+    
+# Loop through the outer dictionary
+    for key, inner_dict in your_data.items():
+        # Loop through the inner dictionary
+        for inner_key, value in inner_dict.items():
+            # Check if the key ends with "_text"
+            if inner_key.endswith('_text'):
+                # Add the value to the set
+                text_values_set.add(value)
+
+    # Print the resulting set
+    print(type(text_values_set))
+    print(type(budget_heads))
+    text_values_list = list(text_values_set)
+    budget_heads=text_values_list
     # print(parsed_data)
     # for table_key, table_data in parsed_data.items():
     #     print(table_key)
@@ -359,21 +406,30 @@ def mastersheet(request,project_id):
     # print(new_parsed_data)
     parsed_data_json = json.dumps(parsed_data)
 
-    period_range =range(0,8)
+    period_range =range(1,len(text_values_set)+1)
     zipped_data = zip(period_range, budget_heads)
     # zipped_data1 = zip(range(1,len(financial_years)+1), financial_years)
+    if os.path.exists(file_path1):
+        with open(file_path1, 'r') as file:
+         table_data2 = file.read()
+        parsed_data2 = json.loads(table_data2)
+    else:
+        parsed_data2 = "null"
     data={
         'financial_years':financial_years,
-        'period_range' :range(0,8),
+        'period_range' :period_range,
         'period_range1' :range(0,7),
         'budget_heads':budget_heads,
         'zipped_data':zipped_data,
         'zipped_data1':zipped_data,
         'l':len(financial_years)+1,
         'tablesdata':new_parsed_data,
+        'tablesdata1':new_parsed_data,
         'existing_project':existing_project,
+        'parsed_data2':parsed_data2,
         'project_id':project_id
         }
+    # print("zipped data",new_parsed_data)
     return render(request,'mastersheet.html',data)
 
 
@@ -412,6 +468,8 @@ def save_table_data(request, project_id):
         with open(file_path, 'w') as file:
             json_data = json.loads(request.body)
             json.dump(json_data, file)
+        
+        # print('data',json_data)
 
         return JsonResponse({'success': True})
     except Exception as e:
@@ -431,6 +489,20 @@ def fill(request, project_id):
 
         parsed_data = json.loads(table_data1)
         table_1_data = parsed_data["table_1"]
+        your_data=parsed_data
+        text_values_set = set()
+    
+# Loop through the outer dictionary
+        for key, inner_dict in your_data.items():
+                # Loop through the inner dictionary
+                for inner_key, value in inner_dict.items():
+                    # Check if the key ends with "_text"
+                    if inner_key.endswith('_text'):
+                        # Add the value to the set
+                        text_values_set.add(value)
+    # Print the resulting set
+        print(text_values_set)
+        budget_heads = list(text_values_set)
     
         table_data={
             '1':table_1_data,
@@ -444,19 +516,23 @@ def fill(request, project_id):
         display_name = project.Title_of_Project
         start_year = project.financial_year_start_index
         end_year = project.financial_year_end_index
+        start_month = project.start_month
+        end_month = project.end_month
 
         display = {
             'display_id':display_id,
             'display_name':display_name,
             'start_year':start_year,
-            'end_year':end_year
+            'end_year':end_year,
+            'start_month':start_month,
+            'end_month':end_month
         }
 
         print(start_year)
     
         parsed_data_json = json.dumps(parsed_data)
     
-        return render(request, 'filling.html', {'fellowship_no':project_id,'tablesdata': new_parsed_data,'range':range(0,5),'table_1_data':table_1_data,'parsed_data_json': parsed_data_json,'display':display})
+        return render(request, 'filling.html', {'budget_heads':budget_heads,'fellowship_no':project_id,'tablesdata': new_parsed_data,'range':range(0,5),'table_1_data':table_1_data,'parsed_data_json': parsed_data_json,'display':display})
     except Exception as e:
         print(e)
         return HttpResponse(e)
@@ -529,3 +605,90 @@ def save_data_to_file(request):
 def logout(request):
     auth_logout(request)
     return render(request,'homepage.html')
+
+def save_table_data1(request,project_id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            # Process and save the data to a text file
+        
+            file_path = os.path.join('commited', f'{project_id}.txt')
+            # file_path = f"committed/{project_id}.txt"
+            with open(file_path, 'w') as file:
+                file.write(json.dumps(data, indent=2))
+            return JsonResponse({'success': True})
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Invalid JSON data'})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})    
+
+
+from django.db.models import Q
+from django.urls import reverse
+def project_search(request):
+    query = request.GET.get('q')
+
+   
+    if query:
+     projects = project_details.objects.filter(
+        (
+            Q(Project_Fellowship_No__icontains=query) |
+            Q(PI_of_Project__icontains=query) |
+            Q(Title_of_Project__icontains=query) | 
+            Q(funding_agency__icontains=query) | 
+            Q(Co_PI_of_Project__icontains=query)
+        ) &
+        Q(task='ongoing')
+    )
+    else:
+     projects = project_details.objects.filter(task='ongoing')
+ 
+    print(projects)    
+
+    context = {
+        'projects': projects,
+        'query': query,
+    }
+    # if query:
+    return render(request, 'project_list.html', context)
+    # else:
+        # return redirect(f'{reverse("project_search")}?q={query}')
+
+
+
+
+def complete_task(request, project_id):
+    project = get_object_or_404(project_details, id=project_id)
+    
+    # Set the task field to "completed"
+    project.task = 'completed'
+    project.save()
+    projects = project_details.objects.all()
+    return redirect('project_list')
+
+def project_listwise(request):
+    # Fetch all projects from the database
+    projects =  project_details.objects
+    # projects =  project_details.objects.filter(task='ongoing')
+
+    filter_option = request.GET.get('filter')
+    
+    # Apply filtering if a filter option is selected
+    if filter_option == 'ongoing':
+        projects = projects.filter(task='ongoing')
+    elif filter_option == 'completed':
+        projects = projects.filter(task='completed')
+
+    # Sorting parameters
+    sort_by = request.GET.get('sortBy', 'Title_of_Project')
+    sort_order = request.GET.get('sortOrder', 'asc')
+
+    # Sort projects based on the specified column and order
+    if sort_order == 'asc':
+        projects = projects.order_by(sort_by)
+    else:
+        projects = projects.order_by(f'-{sort_by}')
+
+    # Pass the list of sorted projects to the template
+    context = {'projects': projects}
+    return render(request, 'project_listwise.html', context)

@@ -142,6 +142,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        
       }
 
       .side-by-side table{
@@ -149,6 +150,7 @@
           margin-right: 0px;
           margin-left: 0px;
           height: 60vh;
+          max-height:200px;
       }
 
       .side-by-side table{
@@ -163,14 +165,14 @@
           color: #fff;  
           text-align: center;
       }
-
+      
       .side-by-side table tr td{
           padding: 10px;
           font-size: 17px;
           text-align: center;
           border: 1px solid var(--secondary-color);
       }
-
+      
       .side-by-side table tr th, .side-by-side table tr td{
           width: 7vw;
       }
@@ -239,6 +241,21 @@
     justify-content: center;  
     align-items: center;
   }
+  input{
+    border:none;
+    outline:none;
+    width: 100%;
+    padding: 5px;
+}
+  input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+
+        input[type="number"] {
+        -moz-appearance: textfield;
+        }
   </style>
    
 </head>
@@ -283,16 +300,26 @@
       <div>
         <table class="table11">
         <tr>
-            <th>Project/Fellowship No.</th>
+            <th>Project_ID</th>
             <td name='Project_Fellowship_No'>{{existing_project.Project_Fellowship_No}}</td>
         </tr>
         <tr>
-            <th>PI of Project</th>
+            <th>Project PI</th>
             <td name='PI_of_Project'>{{ existing_project.PI_of_Project}}</td>
-        </tr><tr>
-            <th>Sanctioned Date</th>
-            <td name='Sanctioned_Date'>{{existing_project.Sanctioned_Date}}</td>
-        </tr> <tr>
+        </tr>
+        {% if existing_project.Co_PI_of_Project %}  
+        <tr>
+            <th>Project Co-PI</th>
+            <td name='PI_of_Project'>{{ existing_project.Co_PI_of_Project}}</td>
+        </tr>
+        {% endif %}
+        {% if existing_project.funding_agency %}
+        <tr>
+          <th>Funding agency</th>
+          <td name='PI_of_Project'>{{ existing_project.funding_agency}}</td>
+        </tr> 
+        {% endif %}
+         <tr>
             <th>Project Start Date</th>
             <td name='Project_Start_Date'>{{ existing_project.Project_Start_Date}}</td>
         </tr> <tr>
@@ -318,30 +345,26 @@
 
 <table class="table1" id="data-table">
     <thead>
-        <!-- Parent row for "Sanctioned Amount Rs." -->
-        
         <tr>
             <th rowspan="2">S.No.</th>
             <th rowspan="2">Budget Head</th>
             <th colspan="{{ financial_years|length|add:1 }}">Sanctioned Amount Rs.</th>
            
         </tr>
-        <!-- Subheader row for S.No., Budget Head, and financial years -->
         <tr>
-          <!-- Display financial years -->
           {% for year in financial_years %}
-            <th  class="column-names">{{ year }}</th>
+            <th  class="column-names" id='years'>{{ year }}</th>
           {% endfor %}
-          <th   class="column-names">Total Funds Sanctioned</th>
+          <th   class="column-names">Funds Sanctioned</th>
         </tr>
       </thead>
     <tbody>
         {% for period, budget_head in zipped_data %}
         <tr>
-          <td>{{ period|add:1 }}</td>
-          <td contenteditable="true"> {{ budget_head }}</td>
+          <td>{{ period }}</td>
+          <td contenteditable="true" id="text-{{period}}"> {{ budget_head }}</td>
           <!-- Add dynamic cells for each financial year -->
-          {% for table_key, sum_data in tablesdata.items %}
+          {% comment %} {% for table_key, sum_data in tablesdata.items %}
 
           {% if budget_head == "Manpower" %}
           <td contenteditable="false" id="1-row-{{ period }}-col-{{forloop.counter}}" class="1-row-{{ period }}">{{sum_data.two_Grant_Amount}}</td>
@@ -359,10 +382,31 @@
           <td contenteditable="false" id="1-row-{{ period }}-col-{{forloop.counter}}" class="1-row-{{ period }}">{{sum_data.seven_Grant_Amount}}</td>
           {% endif %}
           
+          {% endfor %} {% endcomment %}
+          {% for table_key, sum_data in tablesdata.items %}
+
+          <td contenteditable="false" id="1-row-{{ period }}-col-{{table_key}}" class="1-row-{{ period }}">{{sum_data.period_Grant_Amount}}</td>
+          
+          
           {% endfor %}
-          <td contenteditable="false" id="total-{{ period }}">1</td>
+          <td contenteditable="false" id="total-{{ period }}">0</td>
         </tr>
       {% endfor %}
+      {% comment %} <tr>
+        <td id="total_no">8</td>
+        <td>Total</td>
+        {% for table_key, sum_data in tablesdata.items %}
+          <td id="total-grant-{{forloop.counter}}"></td>
+        {% endfor %}
+        <td id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years">1</td>
+      </tr> {% endcomment %}
+      <td id="total_no">*</td>
+        <td>Total</td>
+        {% for table_key, sum_data in tablesdata.items %}
+          <td id="total-grant-{{forloop.counter}}"></td>
+        {% endfor %}
+        <td id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
+      </tr>
     </tbody>
   </table>
 
@@ -376,7 +420,7 @@
             
           <th colspan="{{ financial_years|length|add:1 }}"  >Expenditure Amount Rs.</th>
           <th rowspan="2"  >Committed Expenditure</th>
-          <th rowspan="2"  >As per total sanctions</th>
+          <th rowspan="2"  >Balance Amount</th>
         </tr>
         <!-- Subheader row for S.No., Budget Head, and financial years -->
         <tr>
@@ -389,7 +433,7 @@
 
         </tr>
       </thead>
-      <tbody>
+      {% comment %} <tbody>
         {% for budget_head in budget_heads %}
         <tr>
       <!-- Add dynamic cells for each financial year -->
@@ -414,38 +458,74 @@
           
           {% endfor %}
           {% if  budget_head == "Equipment" %}
-          <td contenteditable="true" id="2-row-0" class="2-row-0">0</td>
-          <td contenteditable="true" id="2-row-0-col-{{l|add:1 }}" class="2-row1-0">0</td>
-          <td contenteditable="true" id="2-row-0-col-{{l|add:2}}" class="2-row2-0">0</td>
+          <td contenteditable="true" id="2-row-0" class="2-row-0"></td>
+          <td id="2-row-0-col-{{l|add:1}}" class="2-row1-0"><input type='number' name='2-row-0-col-100-{{project_id}}' value={{2_row_0_col_100}}></td>
+          <td id="2-row-0-col-{{l|add:2}}" class="2-row2-0"><input type='number' name='2-row-0-col-101-{{project_id}}' value={{2_row_0_col_101}}></td>
         {% elif budget_head == "Manpower" %}
-          <td contenteditable="true" id="2-row-1" class="2-row-1">0</td>
-          <td contenteditable="true" id="2-row-1-col-{{l|add:1 }}" class="2-row1-1">0</td>
-          <td contenteditable="true" id="2-row-1-col-{{l|add:2}}" class="2-row2-1">0</td>
+          <td contenteditable="true" id="2-row-1" class="2-row-1"></td>
+          <td id="2-row-1-col-{{l|add:1 }}" class="2-row1-1"><input type='number' name='2-row-1-col-100-{{project_id}}' value={{2_row_1_col_100}}></td>
+          <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' name='2-row-1-col-101-{{project_id}}' value={{2_row_1_col_101}}></td>
         {% elif  budget_head == "Contingency" %}
-          <td contenteditable="true" id="2-row-2" class="2-row-2">0</td>
-          <td contenteditable="true" id="2-row-2-col-{{l|add:1 }}" class="2-row1-2">0</td>
-          <td contenteditable="true" id="2-row-2-col-{{l|add:2}}" class="2-row2-2">0</td>
+          <td contenteditable="true" id="2-row-2" class="2-row-2"></td>
+          <td id="2-row-2-col-{{l|add:1 }}" class="2-row1-2"><input type='number' name='2-row-2-col-100-{{project_id}}' value={{2_row_2_col_100}}></td>
+          <td id="2-row-2-col-{{l|add:2}}" class="2-row2-2"><input type='number' name='2-row-2-col-101-{{project_id}}' value={{2_row_2_col_101}}></td>
         {% elif  budget_head == "Consumables" %}
-          <td contenteditable="true" id="2-row-3" class="2-row-3">0</td>
-          <td contenteditable="true" id="2-row-3-col-{{l|add:1 }}" class="2-row1-3">0</td>
-          <td contenteditable="true" id="2-row-3-col-{{l|add:2}}" class="2-row-3">0</td>
+          <td contenteditable="true" id="2-row-3" class="2-row-3"></td>
+          <td id="2-row-3-col-{{l|add:1 }}" class="2-row1-3"><input type='number' name='2-row-3-col-100-{{project_id}}' value={{2_row_3_col_100}}></td>
+          <td id="2-row-3-col-{{l|add:2}}" class="2-row-3"><input type='number' name='2-row-3-col-101-{{project_id}}' value={{2_row_3_col_101}}></td>
         {% elif  budget_head == "Travel" %}
-          <td contenteditable="true" id="2-row-4" class="2-row-4">0</td>
-          <td contenteditable="true" id="2-row-4-col-{{l|add:1 }}" class="2-row1-4">0</td>
-          <td contenteditable="true" id="2-row-4-col-{{l|add:2}}" class="2-row2-4">0</td>
+          <td contenteditable="true" id="2-row-4" class="2-row-4"></td>
+          <td id="2-row-4-col-{{l|add:1 }}" class="2-row1-4"><input type='number' name='2-row-4-col-100-{{project_id}}' value={{2_row_4_col_100}}></td>
+          <td id="2-row-4-col-{{l|add:2}}" class="2-row2-4"><input type='number' name='2-row-4-col-101-{{project_id}}' value={{2_row_4_col_101}}></td>
         {% elif  budget_head == "Overhead" %}
-          <td contenteditable="true" id="2-row-5" class="2-row-5">0</td>
-          <td contenteditable="true" id="2-row-5-col-{{l|add:1 }}" class="2-row1-5">0</td>
-          <td contenteditable="true" id="2-row-5-col-{{l|add:2}}" class="2-row2-5">0</td>
+          <td contenteditable="true" id="2-row-5" class="2-row-5"></td>
+          <td id="2-row-5-col-{{l|add:1 }}" class="2-row1-5"><input type='number' name='2-row-5-col-100-{{project_id}}' value={{2_row_5_col_100}}></td>
+          <td id="2-row-5-col-{{l|add:2}}" class="2-row2-5"><input type='number' name='2-row-5-col-101-{{project_id}}' value={{2_row_5_col_101}}></td>
         {% elif  budget_head == "SSR" %}
-          <td contenteditable="true" id="2-row-6" class="2-row-6">0</td>
-          <td contenteditable="true" id="2-row-6-col-{{l|add:1 }}" class="2-row1-6">0</td>
-          <td contenteditable="true" id="2-row-6-col-{{l|add:2}}" class="2-row2-6">0</td>
+          <td contenteditable="true" id="2-row-6" class="2-row-6"></td>
+          <td id="2-row-6-col-{{l|add:1 }}" class="2-row1-6"><input type='number' name='2-row-6-col-100-{{project_id}}' value={{2_row_6_col_100}}></td>
+          <td id="2-row-6-col-{{l|add:2}}" class="2-row2-6"><input type='number' name='2-row-6-col-101-{{project_id}}' value={{2_row_6_col_101}}></td>
         {% endif %}
         
 
         </tr>
       {% endfor %}
+      {% for table_key, sum_data in tablesdata.items %}
+          <td id="total-expense-{{forloop.counter}}"></td>
+      {% endfor %}
+      <td id="total_expenditure_all_years" name="total_expenditure_all_years">{{total_expenditure_all_years}}</td>
+        <td id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
+        <td id='total_balance_amount_all_domains' name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
+    </tbody> {% endcomment %}
+    <tbody>
+      {% for period in period_range %}
+      <tr>
+      
+        
+        <!-- Add dynamic cells for each financial year -->
+        {% for table_key, sum_data in tablesdata1.items %}
+
+        <td contenteditable="false" id="2-row-{{ period }}-col-{{table_key}}" class="row-{{ period }}"></td>
+      
+      
+        
+        {% endfor %}
+        <td contenteditable="true" id="2-row-{{period}}" class="2-row-{{period}}"></td>
+        <td contenteditable="true" id="2-row-{{period}}-col-com" class="2-row1-{{period}}"></td>
+        {% comment %} <td contenteditable="true" id="2-row-{{period}}-col-{{l|add:2}}" class="2-row2-{{period}}"></td> {% endcomment %}
+        <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' name='2-row-{{period}}-col-101-{{project_id}}' value={{2_row_1_col_101}}></td>
+      
+
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tbody>
+  {% for table_key, sum_data in tablesdata.items %}
+          <td id="total-expense-{{forloop.counter}}"></td>
+      {% endfor %}
+      <td id="total_expenditure_all_years" name="total_expenditure_all_years">{{total_expenditure_all_years}}</td>
+        <td id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
+        <td id='total_balance_amount_all_domains' name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
     </tbody>
   </table>
 
@@ -454,60 +534,83 @@
   
   
 </div>
-<button class="btn" id="update-button">Update</button>
+  <button class="btn" id="update-button" onclick="updation('{{project_id}}')">Update</button>
 
-<br>
-<h2 class="table3h2">Details of Committed Expenditure</h2>
-<table class="table3" id="data-table3">
-  <thead>
-      <!-- Parent row for "Sanctioned Amount Rs." -->
-      
-      <tr>
-          <th rowspan="2">S.No.</th>
-          <th rowspan="2">Particulars</th>
-          <th rowspan="2">Indent No</th>
-          <th rowspan="2">Indent DATE</th>
-          <th  colspan="5" style="text-align:center;">Budget Head & Indent/Advance/Fellowship Amount</th>
-          <th rowspan="2">Indent/Advance/Fellowship</th>
-          <th rowspan="2">Status of Indent</th>
-         
-      </tr>
-      <!-- Subheader row for S.No., Budget Head, and financial years -->
-      <tr>
-       
-          <th  class="column-names">Equipment</th>
-          <th  class="column-names">Manpower</th>
-          <th  class="column-names">Consumables</th>
-          <th  class="column-names">Contingecy</th>
-          <th  class="column-names">Travel</th>
-       
-      </tr>
-    </thead>
-  <tbody>
-      
-      <tr id="1">
+  <br>
+  <h2 class="table3h2">Details of Committed Expenditure</h2>
+  <table class="table3" id="data-table3">
+    <thead>
+        <!-- Parent row for "Sanctioned Amount Rs." -->
         
-        <td contenteditable="true" id="1-1"> 1</td>
-        <td contenteditable="true" id="2-1"> 0</td>
-        <td contenteditable="true" id="3-1"> 0</td>
-        <td contenteditable="true" id="4-1"> 0</td>
-        <td contenteditable="true" id="5-1"> 0</td>
-        <td contenteditable="true" id="6-1"> 0</td>
-        <td contenteditable="true" id="7-1"> 0</td>
-        <td contenteditable="true" id="8-1"> 0</td>
-        <td contenteditable="true" id="9-1"> 0</td>
-        <td contenteditable="true" id="10-1"> 0</td>
-        <td contenteditable="true" id="11-1"> 0</td>
+        <tr>
+            <th rowspan="2">S.No.</th>
+            <th rowspan="2">Particulars</th>
+            <th rowspan="2">Indent No</th>
+            <th rowspan="2">Indent DATE</th>
+            <th  colspan="{{budget_heads|length}}" style="text-align:center;">Budget Head & Indent/Advance/Fellowship Amount</th>
+            <th rowspan="2">Indent/Advance/Fellowship</th>
+            <th rowspan="2">Status of Indent</th>
+          
+        </tr>
+        <!-- Subheader row for S.No., Budget Head, and financial years -->
+        <tr>
+        
+            {% comment %} <th  class="column-names">Equipment</th>
+            <th  class="column-names">Manpower</th>
+            <th  class="column-names">Consumables</th>
+            <th  class="column-names">Contingecy</th>
+            <th  class="column-names">Travel</th>
+         {% endcomment %}
+         {% for  budget_head in  budget_heads %}
+         <th  class="column-names">{{budget_head}}</th>
+       
+       {% endfor %}
+        </tr>
+      </thead>
+    <tbody>
+        
+        <tr id="1">
+          
+          <td contenteditable="true" id="1-1"> 1</td>
+          <td contenteditable="true" id="2-1"> 0</td>
+          <td contenteditable="true" id="3-1"> 0</td>
+          <td contenteditable="true" ><input type="date" id="4-1" name="date"></td>
+          {% for  budget_head in  budget_heads %}
+        <td contenteditable="true" id="1-{{ budget_head }}"> 0</td>
+      {% endfor %}
+          <td contenteditable="true" id="5-1"> 0</td>
+          <td contenteditable="true" id="6-1"> 0</td>
+         
 
-      </tr>
-    
-  </tbody>
-</table>
-<div class="btn-row">
-  <button onclick="addRow()" class="btn">Add Row</button>
-  {% comment %} <button onclick="updateData()">Update Data</button> {% endcomment %}
-  <button id="updateDataBtn" class="btn" onclick="updateData()">Update Data</button>
+        </tr>
+        <tr id="total-row">
+        
+          <td contenteditable="true" id="total-row-1" colspan="4" style="text-align: center;"> TOTAL</td>
+          <!-- <td contenteditable="true" id="total-row-2"> 0</td>
+          <td contenteditable="true" id="total-row-3"> 0</td>
+          <td contenteditable="true" id="total-row-4"> 0</td> -->
+          {% for  budget_head in  budget_heads %}
+          
+          <td contenteditable="true" id="total-row-{{ budget_head }}"> 0</td>
+          {% endfor %}
+          <td contenteditable="true" id="total-row-5"> 0</td>
+          <td contenteditable="true" id="total-row-6"> 0</td>
+          
+          
+  
+        </tr>
+      
+    </tbody>
+  </table>
+  <div class="btn-row">
+    {% comment %} <button onclick="addRow()" class="btn">Add Row</button>
+    <button onclick="updateData()">Update Data</button>
+    <button id="updateDataBtn" class="btn" onclick="updateData()">Update Data</button> {% endcomment %}
+    <button onclick="addRow()">Add Row</button>
+  <button onclick="updateFile()">Update</button>
+  <button onclick="deleteLastRow()">Delete Last Row</button>
 </div>
+
 <footer>
   <div class="footer">
     <div class="info">
@@ -528,10 +631,271 @@
   
 </footer>
 
+{{ project_id|json_script:"room-name"}}
 
 <script src="{% static 'script.js' %}"></script>
-
 <script>
+  var tablesData = {{ tablesdata|safe }};
+  console.log(tablesData)
+  console.log("1")
+
+  // console.log(zipped_data)
+   console.log(tablesData[1]['1_Grant_Amount'])
+ 
+   // Function to get the value of a cell based on its id
+   function getCellValue(cellId) {
+     var parts = cellId.split('-');
+     var tableKey = parts[0];
+     var row = parts[2];
+     var col = parts[4];
+     console.log(row+"+"+col+"+"+tableKey)
+     
+     if (tablesData[col] && tablesData[col][row + '_Grant_Amount']) {
+       return tablesData[col][row + '_Grant_Amount'];
+     } else {
+       return 'Not found';
+     }
+   }
+ 
+   // Function to fill the cells with data
+   function fillCells() {
+     var tableBody = document.getElementById('data-table');
+     var rows = tableBody.getElementsByTagName('tr');
+    
+ 
+     for (var i = 0; i < rows.length; i++) {
+       var cells = rows[i].getElementsByTagName('td');
+ 
+       for (var j = 2; j < cells.length - 1; j++) {
+         var cellId = cells[j].id;
+         cells[j].textContent = getCellValue(cellId);
+       }
+     }
+   }
+   function getCellValue1(cellId) {
+    var parts = cellId.split('-');
+    var tableKey = parts[0];
+    var row = parts[2];
+    var col = parts[4];
+    //   console.log(row+"+"+col)
+   
+  
+  if (tablesData[col] && tablesData[col][row + '_expenses']) {
+    return tablesData[col][row + '_expenses'];
+  } else {
+    return 'Not found';
+  }
+}
+
+// Function to fill the cells with data
+function fillCells1() {
+  var tableBody = document.getElementById('data-table1');
+  var rows = tableBody.getElementsByTagName('tr');
+  
+  
+  for (var i = 0; i < rows.length; i++) {
+      var cells = rows[i].getElementsByTagName('td');
+    
+
+    for (var j = 0; j < cells.length - 3; j++) {
+      var cellId = cells[j].id;
+      cells[j].textContent = getCellValue1(cellId);
+    }
+  }
+}
+   // Function to fill the cells with data
+
+// Function to fill the cells with data
+
+function fillCells2() {
+  console.log(tablesData[1])
+var tableBody = document.getElementById('data-table');
+var rows = tableBody.getElementsByTagName('tr');
+console.log(rows)
+
+for (var i = 2; i < rows.length; i++) {
+  var cells = rows[i].getElementsByTagName('td');
+  
+
+ for (var j = 1; j < cells.length - 1; j++) {
+   var cellId = cells[j].id;
+
+   // Check if the ID starts with "text-"
+   if (cellId.startsWith('text-')) {
+       var rowNumber = cellId.replace('text-', '');
+       console.log(rowNumber)
+
+     cells[j].textContent = tablesData[1][rowNumber + '_text'] || 'Not found';
+   }
+ }
+}
+}
+
+function updateCellValue() {
+  let n = {{ budget_heads|length }};
+  for (let i = 1; i <= n; i++) {
+    // Get the "Total" cell's value
+    let b = tablesData[1][i + '_text'];
+    var totalCellValue = document.getElementById(`total-row-${b}`).textContent;
+
+    // Update the content of the specified cell
+    document.getElementById(`2-row-${i}-col-com`).textContent = totalCellValue;
+  }
+}
+
+
+
+
+function deleteLastRow() {
+  var table = document.getElementById("data-table3").getElementsByTagName('tbody')[0];
+  var lastRowIndex = table.rows.length - 2; // Last but one row
+
+  if (lastRowIndex >= 0) {
+    var lastRow = table.rows[lastRowIndex];
+    if (lastRow.id !== 'total-row') {
+      table.deleteRow(lastRowIndex);
+      updateFile()
+      console.log(" deleted the 'Total' row.")
+    } else {
+      console.error("Cannot delete the 'Total' row.");
+    }
+  } else {
+    console.error("No rows to delete.");
+  }
+}
+var cellContents = {};
+
+function updateFile() {
+  var cellContents = {};
+    // Get all rows in the table
+    var rows = document.querySelectorAll("#data-table3 tbody tr");
+    console.log("rows",rows)
+
+    // Iterate over each row
+    rows.forEach(function (row) {
+      // Get the row ID
+      if (row.id !== 'total-row') {
+      var rowId = row.id;
+
+      // Initialize an empty object for the row
+      cellContents[rowId] = {};
+
+      // Get all cells in the row
+      var cells = row.querySelectorAll("[contenteditable=true]");
+      console.log(cells)
+
+      // Iterate over each cell and update the 2D cellContents object
+     // cells.forEach(function (cell) {
+     //     cellContents[rowId][cell.id] = cell.textContent;
+     cells.forEach(function (cell) {
+      if (cell.firstChild && cell.firstChild.nodeName === "INPUT") {
+          // Use cell.value if the cell contains an input element
+          var cellId = cell.querySelector("input[type=date]").id;
+          console.log("cellId",cellId)
+       
+          cellContents[rowId][cellId] = cell.firstChild.value;
+      } else {
+          // Use cell.textContent for regular text content
+          cellContents[rowId][cell.id] = cell.textContent;
+      }
+      });
+    }
+  });
+  console.log("cellContents",cellContents)
+  updateTotalRow( cellContents)
+
+    // Use AJAX to send data to Django server
+    var xhr = new XMLHttpRequest();
+var project_id = {{ existing_project.id }};
+xhr.open('POST', `/save_table_data1/${project_id}/`, true);  // Use backticks for string interpolation
+xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+
+xhr.onload = function () {
+    if (xhr.status === 200) {
+        console.log(xhr.responseText);
+        console.log("success");
+        // alert("File updated!");
+    } else {
+        console.error("Failed to update file");
+    }
+};
+xhr.send(JSON.stringify(cellContents));
+
+  calculateTotalBalance();
+}
+
+var parsedData2 = {{ parsed_data2|safe }};
+function fillTableWithData() {
+  // Get the tbody element
+  console.log(parsedData2)
+  console.log("bye")
+  var tbody = document.querySelector("#data-table3 tbody");
+  var totalRow = document.getElementById("total-row");
+
+  // Loop through the rows and cells, fill data based on row ID
+  for (var rowId in parsedData2) {
+    if (parsedData2.hasOwnProperty(rowId)) {
+        console.log(rowId+2)
+          var row = document.getElementById(rowId);
+          console.log(row)
+
+          // If the row does not exist, create a new row
+          if (!row) {
+              // row = document.createElement("tr");
+              // row.id = rowId;
+
+              // // Create contenteditable cells with default value 0
+              // for (var i = 1; i <= 11; i++) {
+              //     var cell = document.createElement("td");
+              //     cell.contentEditable = true;
+              //     cell.textContent = parsedData2[rowId][i + '-' + rowId] || "0";
+              //     cell.id = i + '-' + rowId; // Assign a unique ID to each td
+              //     row.appendChild(cell);
+              // }
+
+              // // Append the new row to the tbody
+              // tbody.insertBefore(row,totalRow);
+              addRow()
+          }
+          else{
+            row.id = rowId;
+            for (var colIndex = 1; colIndex <= 6; colIndex++) {
+              if(colIndex!=4){
+              var cellId = `${colIndex}-${rowId}`;
+              var cell = document.getElementById(cellId);
+           
+              cell.textContent = parsedData2[rowId][ colIndex+ '-' + rowId] || "0";
+            }
+              else{
+                var cellId = `${colIndex}-${rowId}`;
+        var cell = document.getElementById(cellId);
+        console.log("default value");
+        console.log(cell);
+        console.log(cell1);
+        console.log(parsedData2[rowId][colIndex + '-' + rowId]);
+        if(rowId==1){
+        cell.value= parsedData2[rowId][colIndex + '-' + rowId]|| "default value";}
+        else{
+            var cell1 = cell.querySelector("input[type=date]");
+           cell1.value= parsedData2[rowId][colIndex + '-' + rowId]|| "default value";}
+              }
+
+            }
+            let budgetHeads={{budget_heads|safe}}
+            for (var i = 0; i < budgetHeads.length; i++) {
+              var budgetHead = budgetHeads[i];
+              var cellId = `${rowId}-${budgetHead}`;
+              var cell = document.getElementById(cellId);
+           
+              cell.textContent = parsedData2[rowId][rowId + '-' + budgetHead] || "0";
+              
+          }
+          }
+      }
+  }
+}
+
+
   {% comment %} var rowData = {}; {% endcomment %}
   var rowData = initializeRowData();
 
@@ -568,11 +932,15 @@
   }
 
   function addRow() {
+    let n = {{ budget_heads|length }};
+    let b={{budget_heads|safe}}
     // Get the tbody element
     var tbody = document.querySelector("#data-table3 tbody");
+    var totalRow = document.getElementById("total-row");
 
     // Get the last row ID
-    var lastRowId = parseInt(tbody.lastElementChild.id);
+    //var lastRowId = parseInt(tbody.lastElementChild.id);
+    var lastRowId = parseInt(tbody.lastElementChild.previousElementSibling.id);
 
     // Create a new row with the next integer as ID
     var newRow = document.createElement("tr");
@@ -586,7 +954,40 @@
       cell.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each td
       newRow.appendChild(cell);
     }
-    for (var i = 2; i <= 11; i++) {
+    /* for (var i = 2; i <= (4); i++) {
+      var cell = document.createElement("td");
+      cell.contentEditable = true;
+      cell.textContent = "0";
+      cell.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each td
+      newRow.appendChild(cell);
+    } */
+    for (var i = 2; i <= (3); i++) {
+      var cell = document.createElement("td");
+      cell.contentEditable = true;
+      cell.textContent = "0";
+      cell.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each td
+      newRow.appendChild(cell);
+    }
+    for (var i = 4; i <= 4; i++) {
+      var cell = document.createElement("td");
+      cell.contentEditable = true;
+      var input = document.createElement("input");
+      input.type = "date"; // Set the input type to date
+      input.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each input
+      cell.id = i.toString() + '-' + newRow.id; // Assign a unique ID to each input
+      cell.appendChild(input);
+      newRow.appendChild(cell);
+  }
+    for (var i = 0; i <n; i++) {
+      var budgetHead = b[i];
+      var cell = document.createElement("td");
+      cell.contentEditable = true;
+      cell.textContent = "0";
+      cell.id = newRow.id + '-' + budgetHead; // Assign a unique ID to each td
+      newRow.appendChild(cell);
+    }
+
+    for (var i = 5; i <= 6; i++) {
       var cell = document.createElement("td");
       cell.contentEditable = true;
       cell.textContent = "0";
@@ -595,7 +996,10 @@
     }
 
     // Append the new row to the tbody
-    tbody.appendChild(newRow);
+    //tbody.appendChild(newRow);
+    console.log(newRow)
+    tbody.insertBefore(newRow, totalRow);
+   // updateFile()
 
     // Store the row data in the rowData object
     rowData[newRow.id] = {};
@@ -615,119 +1019,35 @@
 
   }
 
-  function updateData() {
-    // Iterate over the rows in rowData
-    for (var rowId in rowData) {
-      if (rowData.hasOwnProperty(rowId)) {
-        // Iterate over the columns in the current row
-        for (var colId in rowData[rowId]) {
-          if (rowData[rowId].hasOwnProperty(colId)) {
-            // Update rowData with the current content of each cell
-            console.log("this c",colId);
-            var cell = document.getElementById(colId );
-
-            // Check if the element exists before accessing textContent
-            if (cell) {
-              var cellContent = cell.textContent.trim();
-              rowData[rowId][colId] = cellContent;
-            } else {
-              console.error("Element not found for ID: " + colId + '-' + rowId);
-            }
-          }
-        }
-      }
-    }
-
-    console.log("Updated Row data:", rowData);
-    var jsonData = JSON.stringify(rowData);
-
-    // Send the data to the Django view using AJAX
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '{% url "save_data_to_file" %}', true);
-    
-    // Include the CSRF token in the request headers
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
-
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.status === 'success') {
-                    alert('Data updated and saved successfully!');
-                } else {
-                    alert('Error: ' + response.message);
-                }
-            } else {
-                alert('Error: Unable to update and save data');
-            }
-        }
-    };
-    xhr.send(jsonData);
-  }
-
-
-
-</script>
-
-
-<script>
+  
  
-  // document.addEventListener('DOMContentLoaded', function() {
-  //   var updateButton = document.getElementById('update-button');
-  //   var tableData = Array.from({ length: 6 }, () => Array(3).fill(0));  // Initialize as a 6x3 matrix of zeros
+
   
-  //   updateButton.addEventListener('click', function() {
-  //     var startRow = 0;
-  //     var endRow = 5;  // Adjusted to 5 for a 6x3 matrix
-  //     var startCol = 0;
-  //     var endCol = 2;  // Adjusted to 2 for a 6x3 matrix
   
-  //     var table = document.getElementById('data-table');
-  //     var tbody = table.getElementsByTagName('tbody')[0];
-  
-  //     for (var i = startRow; i <= endRow; i++) {
-  //       var row = tbody.rows[i];
-  //       // console.log(row)
-  
-  //       for (var j = startCol; j <= endCol; j++) {
-  //         var cell = row.cells[j];
-  //         // console.log((row.cells[j]).textContent )
-  //         // console.log("end")
-          
-  //         var cellContent = tableData[i][j].toString();  // Convert to string
-  
-  //         // Update the content of the cell
-  //         // cell.textContent = cellContent;
-  
-  //         // Access the cell using its ID
-  //         var cellId = `1-row-${i }-col-${j+1}`;
-  //         var cellElement = document.getElementById(cellId);
-  
-  //         if (cellElement) {
-  //           // Update the content of the cell using the ID
-  //           console.log(cellElement.textContent)
-  //           // if(cellElement.textContent==)
-  //           // cellElement.textContent = cellContent;
-  //           tableData[i][j]=cellElement.textContent;
-  //         } else {
-  //           console.error('Cell with ID', cellId, 'not found.');
-  //         }
-  //       }
-  //     }
-  
-  //     // Now 'tableData' is a 2D array containing the content of the specified cells
-  //     console.log(tableData);
-      
-  //   });
-    
-  // });
 
 
-  document.addEventListener('DOMContentLoaded', function() {
+
+  
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  console.log("hi")
+  console.log("hi")
+  fillCells1();
+  fillCells2();
+  fillCells();
+  console.log("fill")
+  fillTableWithData();
+  fillTableWithData();
+  console.log("filled")
+  updateTotalRow( parsedData2);
+  updateCellValue()
+
   var updateButton = document.getElementById('update-button');
   var tableData = Array.from({ length: 7 }, () => Array(3).fill(0));  // Initialize as a 6x3 matrix of zeros
+  console.log("called")
   updateTotalCell();
+  console.log("called")
   updateButton.addEventListener('click', function() {
     var startRow = 0;
     var endRow = 6;
@@ -825,29 +1145,11 @@
     // Send the 'tableData' to the Django view for saving to 'files.txt'
     updateTotalCell();
     
-    
+   
    
   });
-});
-  {% comment %} function sendToServer(data) {
-    console.log(JSON.stringify(data));
-    fetch('/save_tables_to_file/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': getCookie('csrftoken')
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(result => {
-      console.log(result);
-      // Handle success or error as needed
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-  } {% endcomment %}
+  });
+ 
   function sendToServer(data, project_id) {
     console.log(JSON.stringify(data));
     fetch(`/save_tables_to_file/${project_id}/`, {
@@ -866,16 +1168,20 @@
     .catch(error => {
         console.error('Error:', error);
     });
-}
+  }   
 
 
 
 
   
 
+  let n = {{ budget_heads|length }};
+  console.log("n",n)
   function updateTotalCell() {
-    for(let j=0;j<7;j++){
+    for(let j=1;j<=n;j++){
     var totalCell = document.getElementById(`total-${j}`);
+    
+
     var totalCell1 = document.getElementById(`2-row-${j}`);
   
     if (totalCell) {
@@ -895,8 +1201,7 @@
     if (totalCell1) {
       // Get the values from cells with the 'sum-cell' class and calculate the sum
       var sumCells = document.getElementsByClassName(`row-${j}`);
-      console.log("hi")
-      console.log(sumCells)
+     
       var sum = 0;
 
       for (var i = 0; i < sumCells.length; i++) {
@@ -909,80 +1214,331 @@
     }
   }
   }
-// Function to get CSRF token from cookies
-function getCookie(name) {
-  var cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    var cookies = document.cookie.split(';');
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === (name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
+  // Function to get CSRF token from cookies
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
       }
     }
+    return cookieValue;
   }
-  return cookieValue;
-}
-
-// document.addEventListener('DOMContentLoaded', function() {
-//   var updateButton = document.getElementById('update-button');
-
-//   // Initialize two tables as JavaScript objects
-//   var tablesData = {
-//     'Table1': Array.from({ length: 3 }, () => Array(3).fill(1)),
-//     'Table2': Array.from({ length: 3 }, () => Array(3).fill(2))
-//   };
-
-//   updateButton.addEventListener('click', function() {
-//     // Code to update tables and send data to the server
-//     sendToServer(tablesData);
-//   });
-
-//   // Function to send data to the server using AJAX
-//   function sendToServer(data) {
-//     console.log(JSON.stringify(data));
-//     fetch('/save_tables_to_file/', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'X-CSRFToken': getCookie('csrftoken')
-//       },
-//       body: JSON.stringify(data)
-//     })
-//     .then(response => response.json())
-//     .then(result => {
-//       console.log(result);
-//       // Handle success or error as needed
-//     })
-//     .catch(error => {
-//       console.error('Error:', error);
-//     });
-//   }
-
-//   // Function to get CSRF token from cookies
-//   function getCookie(name) {
-//     var cookieValue = null;
-//     if (document.cookie && document.cookie !== '') {
-//       var cookies = document.cookie.split(';');
-//       for (var i = 0; i < cookies.length; i++) {
-//         var cookie = cookies[i].trim();
-//         if (cookie.substring(0, name.length + 1) === (name + '=')) {
-//           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-//           break;
-//         }
-//       }
-//     }
-//     return cookieValue;
-//   }
-// });
 
 
-  
-  
-  
-  
 </script>
+
+<script>
+
+  const project_id = JSON.parse(document.getElementById('room-name').textContent);
+  // alert('project_id',project_id);
+
+    document.addEventListener('DOMContentLoaded',function(){
+
+      let n = {{ budget_heads|length }};
+      console.log('n start',n);
+            
+      var columns = document.getElementById('years');
+      console.log('columns length',years.length,",",columns);
+      var values={};
+      var expenses={};
+      var sum_yearwise = 0;
+      var expense_sum_yearwise = 0;
+      for(let j=1;j<years.length+1;j++){
+        values[`values${j}`] = [];
+        expenses[`expenses${j}`]=[];
+        for(let i=1;i<=n;i++){
+          var domaingrants = document.getElementById(`1-row-${i}-col-${j}`);
+          var domainexpenses = document.getElementById(`2-row-${i}-col-${j}`);
+          if(domaingrants){
+            var value = domaingrants.textContent;
+            values[`values${j}`].push(value);
+          }
+          if(domainexpenses){
+            var expense = domainexpenses.textContent;
+            expenses[`expenses${j}`].push(expense);
+          }
+        }
+
+        var total_grants_yearwise = document.getElementById(`total-grant-${j}`);
+        var total_expenses_yearwise = document.getElementById(`total-expense-${j}`);
+        var sum = 0;var expense_sum = 0;
+        
+        for(var i=1;i<values[`values${j}`].length+1;i++){
+          var num = parseFloat(values[`values${j}`][i-1])||0;
+          sum+=num;
+
+          var expense_num = parseFloat(expenses[`expenses${j}`][i-1])||0;
+          expense_sum += expense_num;
+        }
+        total_grants_yearwise.textContent = sum;
+        sum_yearwise += sum;
+
+        total_expenses_yearwise.textContent = expense_sum;
+        expense_sum_yearwise += expense_sum;
+      }
+
+       var total_funds_sanctioned_all_years = document.getElementById('total_funds_sanctioned_all_years');
+       total_funds_sanctioned_all_years.textContent = sum_yearwise;
+        
+       var total_expenditure_all_years = document.getElementById('total_expenditure_all_years');
+       total_expenditure_all_years.textContent = expense_sum_yearwise;
+
+
+      initializeZero(project_id);
+
+       loadValues(project_id);
+
+       var total_balance_amount = 0;
+       for(let i=1;i<=n;i++){
+        var balance_amount_row = 0;
+        var totalFundsEle = document.getElementById(`total-${i}`);
+        var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
+
+       console.log('totalFunds',totalFunds);
+
+        var totalExpEle = document.getElementById(`2-row-${i}`);
+        var totalExp = parseInt(totalExpEle.innerHTML)||0;
+
+        console.log('totalEXp',totalExp);
+
+       console.log('before committed_expenditure');
+        var committedExpEle = document.getElementById(`2-row-${i}-col-com`);
+        var committedExp = committedExpEle ? parseInt(committedExpEle.textContent) || 0 : 0;
+        console.log('after committed_expenditure',committedExp);
+
+        console.log('committedExp',committedExp);
+
+        balance_amount_row = totalFunds-totalExp-committedExp;
+
+        console.log('balance',balance_amount_row);
+
+        var inputField = document.querySelector(`input[name$="2-row-${i}-col-101-${project_id}"]`);
+
+        if(inputField){
+          inputField.value = balance_amount_row || '0';
+        }
+
+        total_balance_amount+=balance_amount_row;
+      }
+
+      var total_balance_amount_all_domains = document.getElementById('total_balance_amount_all_domains');
+      total_balance_amount_all_domains.textContent = total_balance_amount;
+
+    //   calculateTotalBalance();
+
+    });
+
+    {% comment %} function updation(projectId){
+
+      let n = {{ budget_heads|length }};
+
+       var committed_expenditure_sum = 0;
+       // console.log('updation called')
+        for(let i=1;i<=n;i++){
+           var committed_expenditure = document.querySelector(`input[name$="2-row-${i}-col-100-${projectId}"]`);
+           if(committed_expenditure){
+             var num= parseInt(committed_expenditure.value)||0;
+             committed_expenditure_sum += num; 
+             localStorage.setItem(`committed_expenditure_${projectId}_${i}`,num);
+             //console.log('value',num);
+             // console.log('commited sum',committed_expenditure_sum);
+           }
+        }
+      
+        var total_committed_expenditure_all_domains=document.getElementById('total_committed_expenditure_all_domains');
+        total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
+
+
+        for(let i=1;i<=n;i++){
+          var balance_amount_row = 0;
+          var totalFundsEle = document.getElementById(`total-${i}`);
+          var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
+
+         console.log('totalFunds',totalFunds);
+
+          var totalExpEle = document.getElementById(`2-row-${i}`);
+          var totalExp = parseInt(totalExpEle.innerHTML)||0;
+
+          console.log('totalEXp',totalExp);
+
+          console.log('projectId', projectId);
+          var committedExpEle = document.querySelector(`input[name$="2-row-${i}-col-100-${projectId}"]`);
+          
+          console.log('committedExpEle',committedExpEle);
+
+          var committedExp = parseInt(committedExpEle.value)||0;
+
+          console.log('committedExp',committedExp);
+
+          balance_amount_row = totalFunds-totalExp-committedExp;
+
+          console.log('balance',balance_amount_row);
+
+          var inputField = document.querySelector(`input[name$="2-row-${i}-col-101-${projectId}"]`);
+        
+          if(inputField){
+            inputField.value = balance_amount_row || '0';
+          }
+
+        }
+
+        calculateTotalBalance();
+        
+     } {% endcomment %}
+
+    function calculateTotalBalance(){
+      let n = {{ budget_heads|length }};
+      var total_balance_amount = 0;
+      for(let i=1;i<=n;i++){
+       var balance_amount_row = 0;
+       var totalFundsEle = document.getElementById(`total-${i}`);
+       var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
+
+      console.log('totalFunds',totalFunds);
+
+       var totalExpEle = document.getElementById(`2-row-${i}`);
+       var totalExp = parseInt(totalExpEle.innerHTML)||0;
+
+       console.log('totalEXp',totalExp);
+
+      //  console.log('before committed_expenditure');
+       var committedExpEle = document.getElementById(`2-row-${i}-col-com`);
+       var committedExp = committedExpEle ? parseInt(committedExpEle.textContent) || 0 : 0;
+      //  console.log('after committed_expenditure');
+
+       console.log('committedExp',committedExp);
+
+       balance_amount_row = totalFunds-totalExp-committedExp;
+
+       console.log('balance',balance_amount_row);
+
+       var inputField = document.querySelector(`input[name$="2-row-${i}-col-101-${project_id}"]`);
+
+       if(inputField){
+         inputField.value = balance_amount_row || '0';
+       }
+
+       total_balance_amount+=balance_amount_row;
+     }
+
+     var total_balance_amount_all_domains = document.getElementById('total_balance_amount_all_domains');
+     total_balance_amount_all_domains.textContent = total_balance_amount;
+    }
+      
+      
+    function initializeZero(project_id){
+      var zero = '0';
+      for(let i=0;i<7;i++){
+        var inputField = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
+        if(inputField){
+          inputField.value=zero;
+        }
+        // console.log('intitalised..');
+      }
+    }
+
+    function loadValues(project_id){
+      var committed_expenditure_sum = 0;
+      for(let i=1;i<=n;i++){
+        var storedValue = localStorage.getItem(`committed_expenditure_${project_id}_${i}`);
+        var inputField = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
+        console.log()
+        console.log('before inputfield');
+        if(inputField){
+          // Check if the stored value is not null or undefined
+          var storedValueIsDefined = storedValue !== null && storedValue !== undefined;
+
+          // Set the input value to the stored value if defined, otherwise set it to '0'
+          inputField.value = storedValueIsDefined ? storedValue.trim() : '0';
+          console.log('near inputField', inputField.value);
+        }
+        console.log('near inputField 2');
+        if(storedValue){
+          committed_expenditure_sum += parseInt(storedValue);
+        }
+      }
+
+      var total_committed_expenditure_all_domains = document.getElementById('total_committed_expenditure_all_domains');
+      total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
+    }
+
+</script>
+<script>
+
+
+  // Example usage to calculate and update the sums for each column
+  function updateTotalRow( parsedData) {
+    var tbody = document.querySelector("#data-table3 tbody");
+    var totalRow = tbody.querySelector(`#total-row`);
+    console.log('totalrow is ',totalRow)
+  
+    if (!totalRow) {
+        console.error(`Total row with ID ${totalRow.Id} not found`);
+        return;
+    }
+  
+    for (var colIndex = 5; colIndex <= 6; colIndex++) {
+        var totalSum = 0;
+  
+        // Loop through each row in parsedData
+        for (var rowId in parsedData) {
+          console.log(rowId,"ROWID")
+            if (parsedData.hasOwnProperty(rowId)) {
+                var cellValue = parseFloat(parsedData[rowId][colIndex + '-' + rowId]) || 0;
+                totalSum += cellValue;
+            }
+        }
+        console.log(totalSum)
+  
+        // Update the nth cell in the total row with the calculated sum
+        var totalCell = totalRow.querySelector(`td#total-row-${colIndex}`);
+        console.log(`td#total-row-${colIndex}`)
+        if (totalCell) {
+            totalCell.textContent = totalSum.toFixed(2);
+        }
+    }
+    var budgetHeads = {{ budget_heads|safe }};
+    console.log(budgetHeads)
+    for (var i = 0; i < budgetHeads.length; i++) {
+      var budgetHead = budgetHeads[i];
+        var totalSum = 0;
+  
+        // Loop through each row in parsedData
+        for (var rowId in parsedData) {
+          console.log("rowid",rowId)
+            if (parsedData.hasOwnProperty(rowId)) {
+                var cellValue = parseFloat(parsedData[rowId][rowId + '-' + budgetHead]) || 0;
+                totalSum += cellValue;
+                console.log("cope")
+                console.log(totalSum)
+            }
+            else console.log("nope")
+        }
+        console.log(totalSum)
+  
+        // Update the nth cell in the total row with the calculated sum
+        var totalCell = totalRow.querySelector(`td#total-row-${budgetHead}`);
+        console.log(`td#total-row-${budgetHead}`)
+        if (totalCell) {
+            totalCell.textContent = totalSum.toFixed(2);
+        }
+    }
+    updateCellValue()
+
+  }
+  
+  // Example usage to update the total row with ID "total-row-1" using parsedData2
+  {% comment %} updateTotalRow(parsedData2); {% endcomment %}
+  
+  
+  </script>
+
 
 </body>
 </html>

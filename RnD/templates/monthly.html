@@ -126,12 +126,6 @@
         tr:nth-child(odd) input{
             background: transparent;
         } */
-        .negative-balance {
-            background-color: red;
-            color: white;
-            font-weight: bold;
-            border-color: #fff;
-        }
         .mtitle{
             display: flex;
             justify-content: center;
@@ -150,8 +144,23 @@
             background:#fff;
             text-align:center;
         }
+        .negative-balance {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+            border-color: #fff;
+        }
         td input{
             text-align: center;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+
+        input[type="number"] {
+        -moz-appearance: textfield;
         }
     </style>
 </head>
@@ -196,11 +205,30 @@
             
             <div><h4>{{title}}</h4></div>
         </div>
+        {% comment %} <form id="updateForm">
+            <div style="display: flex; align-items: center;">
+                <label for="rowNumber" style="margin-right: 10px; color: black;">Row Number:</label>
+                <input type="number" id="rowNumber" name="rowNumber" required style="width: 60px; color: black;"> <!-- Adjust the width as needed -->
+            </div>
+            
+            <div style="display: flex; align-items: center; margin-top: 10px;">
+                <label for="newValue" style="margin-right: 10px; color: black;">New Value:</label>
+                <input type="text" id="newValue" name="newValue" required style="width: 200px; color: black;"> <!-- Adjust the width as needed -->
+            </div>
+            
+            <button type="button" onclick="updateCellValue()" style="margin-top: 10px;">Update Cell Value</button>
+        </form>
+        
+            <a href="{% url 'mastersheet' project_id=fellowship_no  %}">
+                <button type="button">Marksheet</button>
+            </a>
+            <button type='button' onclick="addRow()">Add New Row</button>
+            <button onclick="deleteRow()">Delete Last  Row</button> {% endcomment %}
 <div class="tables">
     <div class="table">
         {% for i in context.period_range %}
         
-            <table id="table_{{ i|add:1 }}">
+            <table id="table_{{ i|add:1 }}" start-month="{{context.start_month}}" end-month="{{context.end_month}}">
             <input value={{i|add:1}} name="table_no" style='display:none'>
             <input value={{fellowship_no}} id="table_no" name="fellowship_no">
             {% if table_no == table_no %}
@@ -223,164 +251,480 @@
                 <th>Total Expenses</th>
                 <th>Closing Balances</th>
             </tr>
-            <tr>
-                <th>1</th>
-                <th>Non Recurring</th>
-                <td><input type='number' name='one_Grant_Amount' class="placeh" value={{sum_data.one_Grant_Amount}} ></td>
-                <td><input type='number' name='one_Apr' value={{sum_data.one_Apr}}></td>
-                <td><input type='number' name='one_May' value={{sum_data.one_May}}></td>
-                <td><input type='number' name='one_Jun' value={{sum_data.one_Jun}}></td>
-                <td><input type='number' name='one_Jul' value={{sum_data.one_Jul}}></td>
-                <td><input type='number' name='one_Aug' value={{sum_data.one_Aug}}></td>
-                <td><input type='number' name='one_Sep' value={{sum_data.one_Sep}}></td>
-                <td><input type='number' name='one_Oct' value={{sum_data.one_Oct}}></td>
-                <td><input type='number' name='one_Nov' value={{sum_data.one_Nov}}></td>
-                <td><input type='number' name='one_Dec' value={{sum_data.one_Dec}}></td>
-                <td><input type='number' name='one_Jan' value={{sum_data.one_Jan}}></td>
-                <td><input type='number' name='one_Feb' value={{sum_data.one_Feb}}></td>
-                <td><input type='number' name='one_Mar' value={{sum_data.one_Mar}}></td>
-                <td><input disabled name='one_expenses' class="placeh" placeholder={{sum_data.one_expenses}}></td>
-                <td name='one_closing' class="placeh">{{sum_data.one_closing}}</td>
+          {% comment %}  <tr>
+
+                 <th>1</th>
+                <th>Non_Recurring</th>
+                <td><input type='number' name='one_Grant_Amount' value={{sum_data.one_Grant_Amount}} ></td>
+                <td ><input class='4' type='number' name='one_Apr' value={{sum_data.one_Apr}} ></td>
+                <td ><input class='5' type='number' name='one_May' value={{sum_data.one_May}} ></td>
+                <td ><input class='6' type='number' name='one_Jun' value={{sum_data.one_Jun}} ></td>
+                <td ><input class='7' type='number' name='one_Jul' value={{sum_data.one_Jul}} ></td>
+                <td ><input class='8' type='number' name='one_Aug' value={{sum_data.one_Aug}} ></td>
+                <td ><input class='9' type='number' name='one_Sep' value={{sum_data.one_Sep}} ></td>
+                <td ><input class='10' type='number' name='one_Oct' value={{sum_data.one_Oct}} ></td>
+                <td ><input class='11' type='number' name='one_Nov' value={{sum_data.one_Nov}} ></td>
+                <td ><input class='12' type='number' name='one_Dec' value={{sum_data.one_Dec}} ></td>
+                <td ><input class='13' type='number' name='one_Jan' value={{sum_data.one_Jan}} ></td>
+                <td ><input class='14' type='number' name='one_Feb' value={{sum_data.one_Feb}} ></td>
+                <td ><input class='15' type='number' name='one_Mar' value={{sum_data.one_Mar}} ></td>
+                <td><input disabled class='placeh' name='one_expenses' placeholder={{sum_data.one_expenses}}></td>
+                <td class='placeh' name='one_closing'>{{sum_data.one_closing}}</td>
                 
             </tr>
             <tr>
                 <th>2</th>
                 <th>Manpower</th>
-                <td><input type='number' name='two_Grant_Amount' class="placeh" value={{sum_data.two_Grant_Amount}}></td>
-                <td><input type='number' name='two_Apr' value={{sum_data.two_Apr}}></td>
-                <td><input type='number' name='two_May' value={{sum_data.two_May}}></td>
-                <td><input type='number' name='two_Jun' value={{sum_data.two_Jun}}></td>
-                <td><input type='number' name='two_Jul' value={{sum_data.two_Jul}}></td>
-                <td><input type='number' name='two_Aug' value={{sum_data.two_Aug}}></td>
-                <td><input type='number' name='two_Sep' value={{sum_data.two_Sep}}></td>
-                <td><input type='number' name='two_Oct' value={{sum_data.two_Oct}}></td>
-                <td><input type='number' name='two_Nov' value={{sum_data.two_Nov}}></td>
-                <td><input type='number' name='two_Dec' value={{sum_data.two_Dec}}></td>
-                <td><input type='number' name='two_Jan' value={{sum_data.two_Jan}}></td>
-                <td><input type='number' name='two_Feb' value={{sum_data.two_Feb}}></td>
-                <td><input type='number' name='two_Mar' value={{sum_data.two_Mar}}></td>
-                <td><input disabled name='two_expenses' class="placeh" placeholder={{sum_data.two_expenses}}></td>
-                <td name='two_closing' class="placeh">{{sum_data.two_closing}}</td>
+                <td><input type='number' name='two_Grant_Amount' value={{sum_data.two_Grant_Amount}}></td>
+                <td><input class='4' type='number' name='two_Apr' value={{sum_data.two_Apr}} ></td>
+                <td><input class='5' type='number' name='two_May' value={{sum_data.two_May}} ></td>
+                <td><input class='6' type='number' name='two_Jun' value={{sum_data.two_Jun}} ></td>
+                <td><input class='7' type='number' name='two_Jul' value={{sum_data.two_Jul}} ></td>
+                <td><input class='8' type='number' name='two_Aug' value={{sum_data.two_Aug}} ></td>
+                <td><input class='9' type='number' name='two_Sep' value={{sum_data.two_Sep}} ></td>
+                <td><input class='10' type='number' name='two_Oct' value={{sum_data.two_Oct}} ></td>
+                <td><input class='11' type='number' name='two_Nov' value={{sum_data.two_Nov}} ></td>
+                <td><input class='12' type='number' name='two_Dec' value={{sum_data.two_Dec}} ></td>
+                <td><input class='13' type='number' name='two_Jan' value={{sum_data.two_Jan}} ></td>
+                <td><input class='14' type='number' name='two_Feb' value={{sum_data.two_Feb}} ></td>
+                <td><input class='15' type='number' name='two_Mar' value={{sum_data.two_Mar}} ></td>
+                <td><input disabled class='placeh' name='two_expenses' placeholder={{sum_data.two_expenses}}></td>
+                <td class='placeh' name='two_closing'>{{sum_data.two_closing}}</td>
             </tr>
             <tr>
                 <th>3</th>
                 <th>Contingency</th>
-                <td><input type='number' name='three_Grant_Amount' class="placeh" value={{sum_data.three_Grant_Amount}}></td>
-                <td><input type='number' name='three_Apr' value={{sum_data.three_Apr}}></td>
-                <td><input type='number' name='three_May' value={{sum_data.three_May}}></td>
-                <td><input type='number' name='three_Jun' value={{sum_data.three_Jun}}></td>
-                <td><input type='number' name='three_Jul' value={{sum_data.three_Jul}}></td>
-                <td><input type='number' name='three_Aug' value={{sum_data.three_Aug}}></td>
-                <td><input type='number' name='three_Sep' value={{sum_data.three_Sep}}></td>
-                <td><input type='number' name='three_Oct' value={{sum_data.three_Oct}}></td>
-                <td><input type='number' name='three_Nov' value={{sum_data.three_Nov}}></td>
-                <td><input type='number' name='three_Dec' value={{sum_data.three_Dec}}></td>
-                <td><input type='number' name='three_Jan' value={{sum_data.three_Jan}}></td>
-                <td><input type='number' name='three_Feb' value={{sum_data.three_Feb}}></td>
-                <td><input type='number' name='three_Mar' value={{sum_data.three_Mar}}></td>
-                <td><input disabled name='three_expenses' class="placeh" placeholder={{sum_data.three_expenses}}></td>
-                <td name='three_closing' class="placeh">{{sum_data.three_closing}}</td>
+                <td><input type='number' name='three_Grant_Amount' value={{sum_data.three_Grant_Amount}}></td>
+                <td><input class='4' type='number' name='three_Apr' value={{sum_data.three_Apr}} ></td>
+                <td><input class='5' type='number' name='three_May' value={{sum_data.three_May}}></td>
+                <td><input class='6' type='number' name='three_Jun' value={{sum_data.three_Jun}} ></td>
+                <td><input class='7' type='number' name='three_Jul' value={{sum_data.three_Jul}} ></td>
+                <td><input class='8' type='number' name='three_Aug' value={{sum_data.three_Aug}} ></td>
+                <td><input class='9' type='number' name='three_Sep' value={{sum_data.three_Sep}} ></td>
+                <td><input class='10' type='number' name='three_Oct' value={{sum_data.three_Oct}} ></td>
+                <td><input class='11' type='number' name='three_Nov' value={{sum_data.three_Nov}} ></td>
+                <td><input class='12' type='number' name='three_Dec' value={{sum_data.three_Dec}} ></td>
+                <td><input class='13' type='number' name='three_Jan' value={{sum_data.three_Jan}} ></td>
+                <td><input class='14' type='number' name='three_Feb' value={{sum_data.three_Feb}} ></td>
+                <td><input class='15' type='number' name='three_Mar' value={{sum_data.three_Mar}} ></td>
+                <td><input disabled class='placeh' name='three_expenses' placeholder={{sum_data.three_expenses}}></td>
+                <td class='placeh' name='three_closing'>{{sum_data.three_closing}}</td>
             </tr>
             <tr>
                 <th>4</th>
                 <th>Consumables</th>
-                <td><input type='number' name='four_Grant_Amount' class="placeh" value={{sum_data.four_Grant_Amount}}></td>
-                <td><input type='number' name='four_Apr' value={{sum_data.four_Apr}}></td>
-                <td><input type='number' name='four_May' value={{sum_data.four_May}}></td>
-                <td><input type='number' name='four_Jun' value={{sum_data.four_Jun}}></td>
-                <td><input type='number' name='four_Jul' value={{sum_data.four_Jul}}></td>
-                <td><input type='number' name='four_Aug' value={{sum_data.four_Aug}}></td>
-                <td><input type='number' name='four_Sep' value={{sum_data.four_Sep}}></td>
-                <td><input type='number' name='four_Oct' value={{sum_data.four_Oct}}></td>
-                <td><input type='number' name='four_Nov' value={{sum_data.four_Nov}}></td>
-                <td><input type='number' name='four_Dec' value={{sum_data.four_Dec}}></td>
-                <td><input type='number' name='four_Jan' value={{sum_data.four_Jan}}></td>
-                <td><input type='number' name='four_Feb' value={{sum_data.four_Feb}}></td>
-                <td><input type='number' name='four_Mar' value={{sum_data.four_Mar}}></td>
-                <td><input disabled name='four_expenses' class="placeh" placeholder={{sum_data.four_expenses}}></td>
-                <td name='four_closing' class="placeh" >{{sum_data.four_closing}}</td>
+                <td><input type='number' name='four_Grant_Amount' value={{sum_data.four_Grant_Amount}}></td>
+                <td><input class='4' type='number' name='four_Apr' value={{sum_data.four_Apr}} ></td>
+                <td><input class='5' type='number' name='four_May' value={{sum_data.four_May}} ></td>
+                <td><input class='6' type='number' name='four_Jun' value={{sum_data.four_Jun}} ></td>
+                <td><input class='7' type='number' name='four_Jul' value={{sum_data.four_Jul}} ></td>
+                <td><input class='8' type='number' name='four_Aug' value={{sum_data.four_Aug}} ></td>
+                <td><input class='9' type='number' name='four_Sep' value={{sum_data.four_Sep}} ></td>
+                <td><input class='10' type='number' name='four_Oct' value={{sum_data.four_Oct}} ></td>
+                <td><input class='11' type='number' name='four_Nov' value={{sum_data.four_Nov}} ></td>
+                <td><input class='12' type='number' name='four_Dec' value={{sum_data.four_Dec}} ></td>
+                <td><input class='13' type='number' name='four_Jan' value={{sum_data.four_Jan}} ></td>
+                <td><input class='14' type='number' name='four_Feb' value={{sum_data.four_Feb}} ></td>
+                <td><input class='15' type='number' name='four_Mar' value={{sum_data.four_Mar}} ></td>
+                <td><input disabled class='placeh' name='four_expenses' placeholder={{sum_data.four_expenses}}></td>
+                <td class='placeh' name='four_closing'>{{sum_data.four_closing}}</td>
             </tr>
             <tr>
                 <th>5</th>
                 <th>Travel</th>
-                <td><input type='number' name='five_Grant_Amount' class="placeh" value={{sum_data.five_Grant_Amount}}></td>
-                <td><input type='number' name='five_Apr' value={{sum_data.five_Apr}}></td>
-                <td><input type='number' name='five_May' value={{sum_data.five_May}}></td>
-                <td><input type='number' name='five_Jun' value={{sum_data.five_Jun}}></td>
-                <td><input type='number' name='five_Jul' value={{sum_data.five_Jul}}></td>
-                <td><input type='number' name='five_Aug' value={{sum_data.five_Aug}}></td>
-                <td><input type='number' name='five_Sep' value={{sum_data.five_Sep}}></td>
-                <td><input type='number' name='five_Oct' value={{sum_data.five_Oct}}></td>
-                <td><input type='number' name='five_Nov' value={{sum_data.five_Nov}}></td>
-                <td><input type='number' name='five_Dec' value={{sum_data.five_Dec}}></td>
-                <td><input type='number' name='five_Jan' value={{sum_data.five_Jan}}></td>
-                <td><input type='number' name='five_Feb' value={{sum_data.five_Feb}}></td>
-                <td><input type='number' name='five_Mar' value={{sum_data.five_Mar}}></td>
-                <td><input disabled name='five_expenses' class="placeh" placeholder={{sum_data.five_expenses}}></td>
-                <td name='five_closing' class="placeh">{{sum_data.five_closing}}</td>
+                <td><input type='number' name='five_Grant_Amount' value={{sum_data.five_Grant_Amount}}></td>
+                <td><input class='4' type='number' name='five_Apr' value={{sum_data.five_Apr}} ></td>
+                <td><input class='5' type='number' name='five_May' value={{sum_data.five_May}} ></td>
+                <td><input class='6' type='number' name='five_Jun' value={{sum_data.five_Jun}} ></td>
+                <td><input class='7' type='number' name='five_Jul' value={{sum_data.five_Jul}} ></td>
+                <td><input class='8' type='number' name='five_Aug' value={{sum_data.five_Aug}} ></td>
+                <td><input class='9' type='number' name='five_Sep' value={{sum_data.five_Sep}} ></td>
+                <td><input class='10' type='number' name='five_Oct' value={{sum_data.five_Oct}} ></td>
+                <td><input class='11' type='number' name='five_Nov' value={{sum_data.five_Nov}} ></td>
+                <td><input class='12' type='number' name='five_Dec' value={{sum_data.five_Dec}} ></td>
+                <td><input class='13' type='number' name='five_Jan' value={{sum_data.five_Jan}} ></td>
+                <td><input class='14' type='number' name='five_Feb' value={{sum_data.five_Feb}} ></td>
+                <td><input class='15' type='number' name='five_Mar' value={{sum_data.five_Mar}} ></td>
+                <td><input disabled class='placeh' name='five_expenses' placeholder={{sum_data.five_expenses}}></td>
+                <td class='placeh' name='five_closing'>{{sum_data.five_closing}}</td>
             </tr>
             <tr>
                 <th>6</th>
                 <th>Overhead</th>
-                <td><input type='number' name='six_Grant_Amount' class="placeh" value={{sum_data.six_Grant_Amount}}></td>
-                <td><input type='number' name='six_Apr' value={{sum_data.six_Apr}}></td>
-                <td><input type='number' name='six_May' value={{sum_data.six_May}}></td>
-                <td><input type='number' name='six_Jun' value={{sum_data.six_Jun}}></td>
-                <td><input type='number' name='six_Jul' value={{sum_data.six_Jul}}></td>
-                <td><input type='number' name='six_Aug' value={{sum_data.six_Aug}}></td>
-                <td><input type='number' name='six_Sep' value={{sum_data.six_Sep}}></td>
-                <td><input type='number' name='six_Oct' value={{sum_data.six_Oct}}></td>
-                <td><input type='number' name='six_Nov' value={{sum_data.six_Nov}}></td>
-                <td><input type='number' name='six_Dec' value={{sum_data.six_Dec}}></td>
-                <td><input type='number' name='six_Jan' value={{sum_data.six_Jan}}></td>
-                <td><input type='number' name='six_Feb' value={{sum_data.six_Feb}}></td>
-                <td><input type='number' name='six_Mar' value={{sum_data.six_Mar}}></td>
-                <td><input disabled name='six_expenses' class="placeh" placeholder={{sum_data.six_expenses}}></td>
-                <td name='six_closing' class="placeh" >{{sum_data.six_closing}}</td>
+                <td><input type='number' name='six_Grant_Amount' value={{sum_data.six_Grant_Amount}}></td>
+                <td><input class='4' type='number' name='six_Apr' value={{sum_data.six_Apr}} ></td>
+                <td><input class='5' type='number' name='six_May' value={{sum_data.six_May}} ></td>
+                <td><input class='6' type='number' name='six_Jun' value={{sum_data.six_Jun}} ></td>
+                <td><input class='7' type='number' name='six_Jul' value={{sum_data.six_Jul}} ></td>
+                <td><input class='8' type='number' name='six_Aug' value={{sum_data.six_Aug}} ></td>
+                <td><input class='9' type='number' name='six_Sep' value={{sum_data.six_Sep}} ></td>
+                <td><input class='10' type='number' name='six_Oct' value={{sum_data.six_Oct}} ></td>
+                <td><input class='11' type='number' name='six_Nov' value={{sum_data.six_Nov}} ></td>
+                <td><input class='12' type='number' name='six_Dec' value={{sum_data.six_Dec}} ></td>
+                <td><input class='13' type='number' name='six_Jan' value={{sum_data.six_Jan}} ></td>
+                <td><input class='14' type='number' name='six_Feb' value={{sum_data.six_Feb}} ></td>
+                <td><input class='15' type='number' name='six_Mar' value={{sum_data.six_Mar}} ></td>
+                <td><input disabled class='placeh' name='six_expenses' placeholder={{sum_data.six_expenses}}></td>
+                <td class='placeh' name='six_closing'>{{sum_data.six_closing}}</td>
             </tr>
             <tr>
                 <th>7</th>
                 <th>SSR</th>
-                <td><input type='number' name='seven_Grant_Amount' class="placeh" value={{sum_data.seven_Grant_Amount}}></td>
-                <td><input type='number' name='seven_Apr' value={{sum_data.seven_Apr}}></td>
-                <td><input type='number' name='seven_May' value={{sum_data.seven_May}}></td>
-                <td><input type='number' name='seven_Jun' value={{sum_data.seven_Jun}}></td>
-                <td><input type='number' name='seven_Jul' value={{sum_data.seven_Jul}}></td>
-                <td><input type='number' name='seven_Aug' value={{sum_data.seven_Aug}}></td>
-                <td><input type='number' name='seven_Sep' value={{sum_data.seven_Sep}}></td>
-                <td><input type='number' name='seven_Oct' value={{sum_data.seven_Oct}}></td>
-                <td><input type='number' name='seven_Nov' value={{sum_data.seven_Nov}}></td>
-                <td><input type='number' name='seven_Dec' value={{sum_data.seven_Dec}}></td>
-                <td><input type='number' name='seven_Jan' value={{sum_data.seven_Jan}}></td>
-                <td><input type='number' name='seven_Feb' value={{sum_data.seven_Feb}}></td>
-                <td><input type='number' name='seven_Mar' value={{sum_data.seven_Mar}}></td>
-                <td><input disabled name='seven_expenses' class="placeh" placeholder={{sum_data.seven_expenses}}></td>
-                <td name='seven_closing' class="placeh">{{sum_data.seven_closing}}</td>
+                <td><input type='number' name='seven_Grant_Amount' value={{sum_data.seven_Grant_Amount}}></td>
+                <td><input class='4' type='number' name='seven_Apr' value={{sum_data.seven_Apr}} ></td>
+                <td><input class='5' type='number' name='seven_May' value={{sum_data.seven_May}} ></td>
+                <td><input class='6' type='number' name='seven_Jun' value={{sum_data.seven_Jun}} ></td>
+                <td><input class='7' type='number' name='seven_Jul' value={{sum_data.seven_Jul}} ></td>
+                <td><input class='8' type='number' name='seven_Aug' value={{sum_data.seven_Aug}} ></td>
+                <td><input class='9' type='number' name='seven_Sep' value={{sum_data.seven_Sep}} ></td>
+                <td><input class='10' type='number' name='seven_Oct' value={{sum_data.seven_Oct}} ></td>
+                <td><input class='11' type='number' name='seven_Nov' value={{sum_data.seven_Nov}} ></td>
+                <td><input class='12' type='number' name='seven_Dec' value={{sum_data.seven_Dec}} ></td>
+                <td><input class='13' type='number' name='seven_Jan' value={{sum_data.seven_Jan}} ></td>
+                <td><input class='14' type='number' name='seven_Feb' value={{sum_data.seven_Feb}} ></td>
+                <td><input class='15' type='number' name='seven_Mar' value={{sum_data.seven_Mar}} ></td>
+                <td><input disabled class='placeh' name='seven_expenses' placeholder={{sum_data.seven_expenses}}></td>
+                <td class='placeh' name='seven_closing'>{{sum_data.seven_closing}}</td>
+            </tr> {% endcomment %}
+
+            {% comment %} <tr>
+                <td><input type='text' name='1_head' value="1"></td>
+                <td><input type='text' name='1_text' value="Non_Recurring"></td>
+                <td><input type='number' name='1_Grant_Amount' value="{{ sum_data.1_Grant_Amount }}"></td>
+                <td><input class='4' type='number' name='1_Apr' value="{{ sum_data.1_Apr }}"></td>
+                <td><input class='5' type='number' name='1_May' value="{{ sum_data.1_May }}"></td>
+                <td><input class='6' type='number' name='1_Jun' value="{{ sum_data.1_Jun }}"></td>
+                <td><input class='7' type='number' name='1_Jul' value="{{ sum_data.1_Jul }}"></td>
+                <td><input class='8' type='number' name='1_Aug' value="{{ sum_data.1_Aug }}"></td>
+                <td><input class='9' type='number' name='1_Sep' value="{{ sum_data.1_Sep }}"></td>
+                <td><input class='10' type='number' name='1_Oct' value="{{ sum_data.1_Oct }}"></td>
+                <td><input class='11' type='number' name='1_Nov' value="{{ sum_data.1_Nov }}"></td>
+                <td><input class='12' type='number' name='1_Dec' value="{{ sum_data.1_Dec }}"></td>
+                <td><input class='13' type='number' name='1_Jan' value="{{ sum_data.1_Jan }}"></td>
+                <td><input class='14' type='number' name='1_Feb' value="{{ sum_data.1_Feb }}"></td>
+                <td><input class='15' type='number' name='1_Mar' value="{{ sum_data.1_Mar }}"></td>
+                <td><input type='number' name='1_expenses' value={{sum_data.1_expenses}}></td>
+                <td name='1_closing'>{{ sum_data.1_closing }}</td>
             </tr>
+                
+                
+                
+                <tr>
+                    
+                    <td><input type='text' name='2_head' value="2"></td>
+                    <td><input type='text' name='2_text' value="Manpower"></td>
+                    
+                    <td><input type='number' name='2_Grant_Amount' value="{{ sum_data.2_Grant_Amount }}"></td>
+                    <td><input class='4' type='number' name='2_Apr' value="{{ sum_data.2_Apr }}"></td>
+                    <td><input class='5' type='number' name='2_May' value="{{ sum_data.2_May }}"></td>
+                    <td><input class='6' type='number' name='2_Jun' value="{{ sum_data.2_Jun }}"></td>
+                    <td><input class='7' type='number' name='2_Jul' value="{{ sum_data.2_Jul }}"></td>
+                    <td><input class='8' type='number' name='2_Aug' value="{{ sum_data.2_Aug }}"></td>
+                    <td><input class='9' type='number' name='2_Sep' value="{{ sum_data.2_Sep }}"></td>
+                    <td><input class='10' type='number' name='2_Oct' value="{{ sum_data.2_Oct }}"></td>
+                    <td><input class='11' type='number' name='2_Nov' value="{{ sum_data.2_Nov }}"></td>
+                    <td><input class='12' type='number' name='2_Dec' value="{{ sum_data.2_Dec }}"></td>
+                    <td><input class='13' type='number' name='2_Jan' value="{{ sum_data.2_Jan }}"></td>
+                    <td><input class='14' type='number' name='2_Feb' value="{{ sum_data.2_Feb }}"></td>
+                    <td><input class='15' type='number' name='2_Mar' value="{{ sum_data.2_Mar }}"></td>
+                    <td><input type='number' name='2_expenses' value={{sum_data.2_expenses}}></td>
+                    <td name='2_closing'>{{ sum_data.2_closing }}</td>
+                </tr>
+                
+                
+                <tr>
+               
+                    <td><input type='text' name='3_head' value="3"></td>
+                    <td><input type='text' name='3_text' value="Contingency"></td>
+                    <td><input type='number' name='3_Grant_Amount' value={{sum_data.3_Grant_Amount}}></td>
+                    <td><input class='4' type='number' name='3_Apr' value={{sum_data.3_Apr}}></td>
+                    <td><input class='5' type='number' name='3_May' value={{sum_data.3_May}}></td>
+                    <td><input class='6' type='number' name='3_Jun' value={{sum_data.3_Jun}}></td>
+                    <td><input class='7' type='number' name='3_Jul' value={{sum_data.3_Jul}}></td>
+                    <td><input class='8' type='number' name='3_Aug' value={{sum_data.3_Aug}}></td>
+                    <td><input class='9' type='number' name='3_Sep' value={{sum_data.3_Sep}}></td>
+                    <td><input class='10' type='number' name='3_Oct' value={{sum_data.3_Oct}}></td>
+                    <td><input class='11' type='number' name='3_Nov' value={{sum_data.3_Nov}}></td>
+                    <td><input class='12' type='number' name='3_Dec' value={{sum_data.3_Dec}}></td>
+                    <td><input class='13' type='number' name='3_Jan' value={{sum_data.3_Jan}}></td>
+                    <td><input class='14' type='number' name='3_Feb' value={{sum_data.3_Feb}}></td>
+                    <td><input class='15' type='number' name='3_Mar' value={{sum_data.3_Mar}}></td>
+                    <td><input type='number' name='3_expenses' value={{sum_data.3_expenses}}></td>
+                    <td name='3_closing'>{{sum_data.3_closing}}</td>
+                </tr>
+                <tr>
+                   
+                    <td><input type='text' name='4_head' value="4"></td>
+                    <td><input type='text' name='4_text' value="Consumables"></td>
+                    <td><input type='number' name='4_Grant_Amount' value={{sum_data.4_Grant_Amount}}></td>
+                    <td><input class='4' type='number' name='4_Apr' value={{sum_data.4_Apr}}></td>
+                    <td><input class='5' type='number' name='4_May' value={{sum_data.4_May}}></td>
+                    <td><input class='6' type='number' name='4_Jun' value={{sum_data.4_Jun}}></td>
+                    <td><input class='7' type='number' name='4_Jul' value={{sum_data.4_Jul}}></td>
+                    <td><input class='8' type='number' name='4_Aug' value={{sum_data.4_Aug}}></td>
+                    <td><input class='9' type='number' name='4_Sep' value={{sum_data.4_Sep}}></td>
+                    <td><input class='10' type='number' name='4_Oct' value={{sum_data.4_Oct}}></td>
+                    <td><input class='11' type='number' name='4_Nov' value={{sum_data.4_Nov}}></td>
+                    <td><input class='12' type='number' name='4_Dec' value={{sum_data.4_Dec}}></td>
+                    <td><input class='13' type='number' name='4_Jan' value={{sum_data.4_Jan}}></td>
+                    <td><input class='14' type='number' name='4_Feb' value={{sum_data.4_Feb}}></td>
+                    <td><input class='15' type='number' name='4_Mar' value={{sum_data.4_Mar}}></td>
+                    <td><input type='number' name='4_expenses' value={{sum_data.4_expenses}}></td>
+                    <td name='4_closing' >{{sum_data.4_closing}}</td>
+                </tr>
+                <tr>
+                    
+                    <td><input type='text' name='5_head' value="5"></td>
+                    <td><input type='text' name='5_text' value="Travel"></td>
+                    <td><input type='number' name='5_Grant_Amount' value={{sum_data.5_Grant_Amount}}></td>
+                    <td><input class='4' type='number' name='5_Apr' value={{sum_data.5_Apr}}></td>
+                    <td><input class='5' type='number' name='5_May' value={{sum_data.5_May}}></td>
+                    <td><input class='6' type='number' name='5_Jun' value={{sum_data.5_Jun}}></td>
+                    <td><input class='7' type='number' name='5_Jul' value={{sum_data.5_Jul}}></td>
+                    <td><input class='8' type='number' name='5_Aug' value={{sum_data.5_Aug}}></td>
+                    <td><input class='9' type='number' name='5_Sep' value={{sum_data.5_Sep}}></td>
+                    <td><input class='10' type='number' name='5_Oct' value={{sum_data.5_Oct}}></td>
+                    <td><input class='11' type='number' name='5_Nov' value={{sum_data.5_Nov}}></td>
+                    <td><input class='12' type='number' name='5_Dec' value={{sum_data.5_Dec}}></td>
+                    <td><input class='13' type='number' name='5_Jan' value={{sum_data.5_Jan}}></td>
+                    <td><input class='14' type='number' name='5_Feb' value={{sum_data.5_Feb}}></td>
+                    <td><input class='15' type='number' name='5_Mar' value={{sum_data.5_Mar}}></td>
+                    <td><input type='number' name='5_expenses' value={{sum_data.5_expenses}}></td>
+                    <td name='5_closing'>{{sum_data.5_closing}}</td>
+                </tr>
+                <tr>
+                    
+                    <td><input type='text' name='6_head' value="6"></td>
+                    <td><input type='text' name='6_text' value="Overhead"></td>
+                    <td><input type='number' name='6_Grant_Amount' value={{sum_data.6_Grant_Amount}}></td>
+                    <td><input class='4' type='number' name='6_Apr' value={{sum_data.6_Apr}}></td>
+                    <td><input class='5' type='number' name='6_May' value={{sum_data.6_May}}></td>
+                    <td><input class='6' type='number' name='6_Jun' value={{sum_data.6_Jun}}></td>
+                    <td><input class='7' type='number' name='6_Jul' value={{sum_data.6_Jul}}></td>
+                    <td><input class='8' type='number' name='6_Aug' value={{sum_data.6_Aug}}></td>
+                    <td><input class='9' type='number' name='6_Sep' value={{sum_data.6_Sep}}></td>
+                    <td><input class='10' type='number' name='6_Oct' value={{sum_data.6_Oct}}></td>
+                    <td><input class='11' type='number' name='6_Nov' value={{sum_data.6_Nov}}></td>
+                    <td><input class='12' type='number' name='6_Dec' value={{sum_data.6_Dec}}></td>
+                    <td><input class='13' type='number' name='6_Jan' value={{sum_data.6_Jan}}></td>
+                    <td><input class='14' type='number' name='6_Feb' value={{sum_data.6_Feb}}></td>
+                    <td><input class='15' type='number' name='6_Mar' value={{sum_data.6_Mar}}></td>
+                    <td><input type='number' name='6_expenses' value={{sum_data.6_expenses}}></td>
+                    <td name='6_closing' >{{sum_data.6_closing}}</td>
+                </tr>
+                <tr>
+                   
+                    <td><input type='text' name='7_head' value="7"></td>
+                    <td><input type='text' name='7_text' value="SSR"></td>
+                    <td><input type='number' name='7_Grant_Amount' value={{sum_data.7_Grant_Amount}}></td>
+                    <td><input class='4' type='number' name='7_Apr' value={{sum_data.7_Apr}}></td>
+                    <td><input class='5' type='number' name='7_May' value={{sum_data.7_May}}></td>
+                    <td><input class='6' type='number' name='7_Jun' value={{sum_data.7_Jun}}></td>
+                    <td><input class='7' type='number' name='7_Jul' value={{sum_data.7_Jul}}></td>
+                    <td><input class='8' type='number' name='7_Aug' value={{sum_data.7_Aug}}></td>
+                    <td><input class='9' type='number' name='7_Sep' value={{sum_data.7_Sep}}></td>
+                    <td><input class='10' type='number' name='7_Oct' value={{sum_data.7_Oct}}></td>
+                    <td><input class='11' type='number' name='7_Nov' value={{sum_data.7_Nov}}></td>
+                    <td><input class='12' type='number' name='7_Dec' value={{sum_data.7_Dec}}></td>
+                    <td><input class='13' type='number' name='7_Jan' value={{sum_data.7_Jan}}></td>
+                    <td><input class='14' type='number' name='7_Feb' value={{sum_data.7_Feb}}></td>
+                    <td><input class='15' type='number' name='7_Mar' value={{sum_data.7_Mar}}></td>
+                    <td><input type='number' name='7_expenses' value={{sum_data.7_expenses}}></td>
+                    <td name='7_closing'>{{sum_data.7_closing}}</td>
+                </tr>
             <tr name='total_amount'>
-                <th>8</th>
+                <th id='total_no'>8</th>
                 <th>Total Amount</th>
-                <td><input type='number' name='total_Grant_Amount' class="placeh" value={{sum_data.total_grant}}></td>
-                <td><input type='number' name='total_Apr' value={{sum_data.total_Apr}}></td>
-                <td><input type='number' name='total_May' value={{sum_data.total_May}}></td>
-                <td><input type='number' name='total_Jun' value={{sum_data.total_Jun}}></td>
-                <td><input type='number' name='total_Jul' value={{sum_data.total_Jul}}></td>
-                <td><input type='number' name='total_Aug' value={{sum_data.total_Aug}}></td>
-                <td><input type='number' name='total_Sep' value={{sum_data.total_Sep}}></td>
-                <td><input type='number' name='total_Oct' value={{sum_data.total_Oct}}></td>
-                <td><input type='number' name='total_Nov' value={{sum_data.total_Nov}}></td>
-                <td><input type='number' name='total_Dec' value={{sum_data.total_Dec}}></td>
-                <td><input type='number' name='total_Jan' value={{sum_data.total_Jan}}></td>
-                <td><input type='number' name='total_Feb' value={{sum_data.total_Feb}}></td>
-                <td><input type='number' name='total_Mar' value={{sum_data.total_Mar}}></td>
-                <td><input disabled name='total_expenses' class="placeh" placeholder={{sum_data.total_expenses}}></td>
-                <td name='total_balances_closing' class="placeh" value={{sum_data.total_closing_balances}}>{{sum_data.total_closing_balances}}</td>     
+                <td><input type='number' name='total_Grant_Amount' value={{sum_data.total_grant}}></td>
+                <td><input class='4' type='number' name='total_Apr' value={{sum_data.total_Apr}} ></td>
+                <td><input class='5' type='number' name='total_May' value={{sum_data.total_May}} ></td>
+                <td><input class='6' type='number' name='total_Jun' value={{sum_data.total_Jun}} ></td>
+                <td><input class='7' type='number' name='total_Jul' value={{sum_data.total_Jul}} ></td>
+                <td><input class='8' type='number' name='total_Aug' value={{sum_data.total_Aug}} ></td>
+                <td><input class='9' type='number' name='total_Sep' value={{sum_data.total_Sep}} ></td>
+                <td><input class='10' type='number' name='total_Oct' value={{sum_data.total_Oct}} ></td>
+                <td><input class='11' type='number' name='total_Nov' value={{sum_data.total_Nov}} ></td>
+                <td><input class='12' type='number' name='total_Dec' value={{sum_data.total_Dec}} ></td>
+                <td><input class='13' type='number' name='total_Jan' value={{sum_data.total_Jan}} ></td>
+                <td><input class='14' type='number' name='total_Feb' value={{sum_data.total_Feb}} ></td>
+                <td><input class='15' type='number' name='total_Mar' value={{sum_data.total_Mar}} ></td>
+                <td><input disabled class='placeh' name='total_expenses' placeholder={{sum_data.total_expenses}}></td>
+                <td class='placeh' name='total_balances_closing' value={{sum_data.total_closing_balances}}>{{sum_data.total_closing_balances}}</td>     
+            </tr> {% endcomment %}
+            <tr>
+                <td><input type='text' name='1_head' value="1"></td>
+                <td><input type='text' name='1_text' value="Non_Recurring"></td>
+                <td><input type='number' name='1_Grant_Amount' value="{{ sum_data.1_Grant_Amount }}"></td>
+                <td><input type='number' class='4' name='1_Apr' value="{{ sum_data.1_Apr }}"></td>
+                <td><input type='number' class='5' name='1_May' value="{{ sum_data.1_May }}"></td>
+                <td><input type='number' class='6' name='1_Jun' value="{{ sum_data.1_Jun }}"></td>
+                <td><input type='number' class='7' name='1_Jul' value="{{ sum_data.1_Jul }}"></td>
+                <td><input type='number' class='8' name='1_Aug' value="{{ sum_data.1_Aug }}"></td>
+                <td><input type='number' class='9' name='1_Sep' value="{{ sum_data.1_Sep }}"></td>
+                <td><input type='number' class='10' name='1_Oct' value="{{ sum_data.1_Oct }}"></td>
+                <td><input type='number' class='11' name='1_Nov' value="{{ sum_data.1_Nov }}"></td>
+                <td><input type='number' class='12' name='1_Dec' value="{{ sum_data.1_Dec }}"></td>
+                <td><input type='number' class='13' name='1_Jan' value="{{ sum_data.1_Jan }}"></td>
+                <td><input type='number' class='14' name='1_Feb' value="{{ sum_data.1_Feb }}"></td>
+                <td><input type='number' class='15' name='1_Mar' value="{{ sum_data.1_Mar }}"></td>
+                <td><input type='number' name='1_expenses' value={{sum_data.1_expenses}}></td>
+                <td name='1_closing'>{{ sum_data.1_closing }}</td>
             </tr>
+                
+                
+                
+                <tr>
+                    
+                    <td><input type='text' name='2_head' value="2"></td>
+                    <td><input type='text' name='2_text' value="Manpower"></td>
+                    
+                    <td><input type='number' name='2_Grant_Amount' value="{{ sum_data.2_Grant_Amount }}"></td>
+                    <td><input type='number' class='4' name='2_Apr' value="{{ sum_data.2_Apr }}"></td>
+                    <td><input type='number' class='5' name='2_May' value="{{ sum_data.2_May }}"></td>
+                    <td><input type='number' class='6' name='2_Jun' value="{{ sum_data.2_Jun }}"></td>
+                    <td><input type='number' class='7' name='2_Jul' value="{{ sum_data.2_Jul }}"></td>
+                    <td><input type='number' class='8' name='2_Aug' value="{{ sum_data.2_Aug }}"></td>
+                    <td><input type='number' class='9' name='2_Sep' value="{{ sum_data.2_Sep }}"></td>
+                    <td><input type='number' class='10' name='2_Oct' value="{{ sum_data.2_Oct }}"></td>
+                    <td><input type='number' class='11' name='2_Nov' value="{{ sum_data.2_Nov }}"></td>
+                    <td><input type='number' class='12' name='2_Dec' value="{{ sum_data.2_Dec }}"></td>
+                    <td><input type='number' class='13' name='2_Jan' value="{{ sum_data.2_Jan }}"></td>
+                    <td><input type='number' class='14' name='2_Feb' value="{{ sum_data.2_Feb }}"></td>
+                    <td><input type='number' class='15' name='2_Mar' value="{{ sum_data.2_Mar }}"></td>
+                    <td><input type='number' name='2_expenses' value={{sum_data.2_expenses}}></td>
+                    <td name='2_closing'>{{ sum_data.2_closing }}</td>
+                </tr>
+                
+                
+                <tr>
+               
+                    <td><input type='text' name='3_head' value="3"></td>
+                    <td><input type='text' name='3_text' value="Contingency"></td>
+                    <td><input type='number' name='3_Grant_Amount' value={{sum_data.3_Grant_Amount}}></td>
+                    <td><input type='number' class='4' name='3_Apr' value={{sum_data.3_Apr}}></td>
+                    <td><input type='number' class='5' name='3_May' value={{sum_data.3_May}}></td>
+                    <td><input type='number' class='6' name='3_Jun' value={{sum_data.3_Jun}}></td>
+                    <td><input type='number' class='7' name='3_Jul' value={{sum_data.3_Jul}}></td>
+                    <td><input type='number' class='8' name='3_Aug' value={{sum_data.3_Aug}}></td>
+                    <td><input type='number' class='9' name='3_Sep' value={{sum_data.3_Sep}}></td>
+                    <td><input type='number' class='10' name='3_Oct' value={{sum_data.3_Oct}}></td>
+                    <td><input type='number' class='11' name='3_Nov' value={{sum_data.3_Nov}}></td>
+                    <td><input type='number' class='12' name='3_Dec' value={{sum_data.3_Dec}}></td>
+                    <td><input type='number' class='13' name='3_Jan' value={{sum_data.3_Jan}}></td>
+                    <td><input type='number' class='14' name='3_Feb' value={{sum_data.3_Feb}}></td>
+                    <td><input type='number' class='15' name='3_Mar' value={{sum_data.3_Mar}}></td>
+                    <td><input type='number' name='3_expenses' value={{sum_data.3_expenses}}></td>
+                    <td name='3_closing'>{{sum_data.3_closing}}</td>
+                </tr>
+                <tr>
+                   
+                    <td><input type='text' name='4_head' value="4"></td>
+                    <td><input type='text' name='4_text' value="Consumables"></td>
+                    <td><input type='number' name='4_Grant_Amount' value={{sum_data.4_Grant_Amount}}></td>
+                    <td><input type='number' class='4' name='4_Apr' value={{sum_data.4_Apr}}></td>
+                    <td><input type='number' class='5' name='4_May' value={{sum_data.4_May}}></td>
+                    <td><input type='number' class='6' name='4_Jun' value={{sum_data.4_Jun}}></td>
+                    <td><input type='number' class='7' name='4_Jul' value={{sum_data.4_Jul}}></td>
+                    <td><input type='number' class='8' name='4_Aug' value={{sum_data.4_Aug}}></td>
+                    <td><input type='number' class='9' name='4_Sep' value={{sum_data.4_Sep}}></td>
+                    <td><input type='number' class='10' name='4_Oct' value={{sum_data.4_Oct}}></td>
+                    <td><input type='number' class='11' name='4_Nov' value={{sum_data.4_Nov}}></td>
+                    <td><input type='number' class='12' name='4_Dec' value={{sum_data.4_Dec}}></td>
+                    <td><input type='number' class='13' name='4_Jan' value={{sum_data.4_Jan}}></td>
+                    <td><input type='number' class='14' name='4_Feb' value={{sum_data.4_Feb}}></td>
+                    <td><input type='number' class='15' name='4_Mar' value={{sum_data.4_Mar}}></td>
+                    <td><input type='number' name='4_expenses' value={{sum_data.4_expenses}}></td>
+                    <td name='4_closing' >{{sum_data.4_closing}}</td>
+                </tr>
+                <tr>
+                    
+                    <td><input type='text' name='5_head' value="5"></td>
+                    <td><input type='text' name='5_text' value="Travel"></td>
+                    <td><input type='number' name='5_Grant_Amount' value={{sum_data.5_Grant_Amount}}></td>
+                    <td><input type='number' class='4' name='5_Apr' value={{sum_data.5_Apr}}></td>
+                    <td><input type='number' class='5' name='5_May' value={{sum_data.5_May}}></td>
+                    <td><input type='number' class='6' name='5_Jun' value={{sum_data.5_Jun}}></td>
+                    <td><input type='number' class='7' name='5_Jul' value={{sum_data.5_Jul}}></td>
+                    <td><input type='number' class='8' name='5_Aug' value={{sum_data.5_Aug}}></td>
+                    <td><input type='number' class='9' name='5_Sep' value={{sum_data.5_Sep}}></td>
+                    <td><input type='number' class='10' name='5_Oct' value={{sum_data.5_Oct}}></td>
+                    <td><input type='number' class='11' name='5_Nov' value={{sum_data.5_Nov}}></td>
+                    <td><input type='number' class='12' name='5_Dec' value={{sum_data.5_Dec}}></td>
+                    <td><input type='number' class='13' name='5_Jan' value={{sum_data.5_Jan}}></td>
+                    <td><input type='number' class='14' name='5_Feb' value={{sum_data.5_Feb}}></td>
+                    <td><input type='number' class='15' name='5_Mar' value={{sum_data.5_Mar}}></td>
+                    <td><input type='number' name='5_expenses' value={{sum_data.5_expenses}}></td>
+                    <td name='5_closing'>{{sum_data.5_closing}}</td>
+                </tr>
+                <tr>
+                    
+                    <td><input type='text' name='6_head' value="6"></td>
+                    <td><input type='text' name='6_text' value="Overhead"></td>
+                    <td><input type='number' name='6_Grant_Amount' value={{sum_data.6_Grant_Amount}}></td>
+                    <td><input type='number' class='4' name='6_Apr' value={{sum_data.6_Apr}}></td>
+                    <td><input type='number' class='5' name='6_May' value={{sum_data.6_May}}></td>
+                    <td><input type='number' class='6' name='6_Jun' value={{sum_data.6_Jun}}></td>
+                    <td><input type='number' class='7' name='6_Jul' value={{sum_data.6_Jul}}></td>
+                    <td><input type='number' class='8' name='6_Aug' value={{sum_data.6_Aug}}></td>
+                    <td><input type='number' class='9' name='6_Sep' value={{sum_data.6_Sep}}></td>
+                    <td><input type='number' class='10' name='6_Oct' value={{sum_data.6_Oct}}></td>
+                    <td><input type='number' class='11' name='6_Nov' value={{sum_data.6_Nov}}></td>
+                    <td><input type='number' class='12' name='6_Dec' value={{sum_data.6_Dec}}></td>
+                    <td><input type='number' class='13' name='6_Jan' value={{sum_data.6_Jan}}></td>
+                    <td><input type='number' class='14' name='6_Feb' value={{sum_data.6_Feb}}></td>
+                    <td><input type='number' class='15' name='6_Mar' value={{sum_data.6_Mar}}></td>
+                    <td><input type='number' name='6_expenses' value={{sum_data.6_expenses}}></td>
+                    <td name='6_closing' >{{sum_data.6_closing}}</td>
+                </tr>
+                <tr>
+                   
+                    <td><input type='text' name='7_head' value="7"></td>
+                    <td><input type='text' name='7_text' value="SSR"></td>
+                    <td><input type='number' name='7_Grant_Amount' value={{sum_data.7_Grant_Amount}}></td>
+                    <td><input type='number' class='4' name='7_Apr' value={{sum_data.7_Apr}}></td>
+                    <td><input type='number' class='5' name='7_May' value={{sum_data.7_May}}></td>
+                    <td><input type='number' class='6' name='7_Jun' value={{sum_data.7_Jun}}></td>
+                    <td><input type='number' class='7' name='7_Jul' value={{sum_data.7_Jul}}></td>
+                    <td><input type='number' class='8' name='7_Aug' value={{sum_data.7_Aug}}></td>
+                    <td><input type='number' class='9' name='7_Sep' value={{sum_data.7_Sep}}></td>
+                    <td><input type='number' class='10' name='7_Oct' value={{sum_data.7_Oct}}></td>
+                    <td><input type='number' class='11' name='7_Nov' value={{sum_data.7_Nov}}></td>
+                    <td><input type='number' class='12' name='7_Dec' value={{sum_data.7_Dec}}></td>
+                    <td><input type='number' class='13' name='7_Jan' value={{sum_data.7_Jan}}></td>
+                    <td><input type='number' class='14' name='7_Feb' value={{sum_data.7_Feb}}></td>
+                    <td><input type='number' class='15' name='7_Mar' value={{sum_data.7_Mar}}></td>
+                    <td><input type='number' name='7_expenses' value={{sum_data.7_expenses}}></td>
+                    <td name='7_closing'>{{sum_data.7_closing}}</td>
+                </tr>
+
+
+            <tr name='total_amount'>
+
+
+            <th id="total_no">8</th>
+            <th>Total Amount</th>
+            <td><input type='number' name='total_Grant_Amount' class="placeh" value={{sum_data.total_grant}}></td>
+            <td><input type='number' name='total_Apr' value={{sum_data.total_Apr}}></td>
+            <td><input type='number' name='total_May' value={{sum_data.total_May}}></td>
+            <td><input type='number' name='total_Jun' value={{sum_data.total_Jun}}></td>
+            <td><input type='number' name='total_Jul' value={{sum_data.total_Jul}}></td>
+            <td><input type='number' name='total_Aug' value={{sum_data.total_Aug}}></td>
+            <td><input type='number' name='total_Sep' value={{sum_data.total_Sep}}></td>
+            <td><input type='number' name='total_Oct' value={{sum_data.total_Oct}}></td>
+            <td><input type='number' name='total_Nov' value={{sum_data.total_Nov}}></td>
+            <td><input type='number' name='total_Dec' value={{sum_data.total_Dec}}></td>
+            <td><input type='number' name='total_Jan' value={{sum_data.total_Jan}}></td>
+            <td><input type='number' name='total_Feb' value={{sum_data.total_Feb}}></td>
+            <td><input type='number' name='total_Mar' value={{sum_data.total_Mar}}></td>
+            <td><input type='number' name='total_expenses'class="placeh" value={{sum_data.total_expenses}}></td>
+            <td name='total_balances_closing' class="placeh" value={{sum_data.total_closing_balances}}>{{sum_data.total_closing_balances}}</td>     
+        </tr>
             {% else %}
             {% endif %}
             
         </table>
         <br></br>
+        {% comment %} <button type='button' onclick="addRow()">Add New Row</button> {% endcomment %}
         <button type='button' onclick="updateTable('table_{{ i|add:1 }}')">Update</button>
         
         
@@ -417,17 +761,144 @@
 
     // Initialize tablesData with 2D array of 0 values for each table ID
     document.addEventListener('DOMContentLoaded', function () {
+        
         initializeTableValues();
         const tableIds = document.querySelectorAll('table[id^="table"]');
         tableIds.forEach(function (table) {
             const tableId = table.id;
             tablesData[tableId] = initializeTableData(table);
-            {% comment %} calculateAndDisplayTotalExpenses(tableId);
-            calculateAndDisplayClosingBalance(tableId); {% endcomment %}
+          console.log("update called")
+            updateTable(tableId);
+            console.log("update done")            
+            console.log(table.children[0].children)
+
+            if(tableId==='table_1'){
+                let allrows = table.children[0].children
+                console.log(allrows)
+    
+                let startMonth = table.getAttribute('start-month');
+    
+                for(let i=0;i<8;i++){
+                    let eachrow = allrows[i]
+                    /// console.log(eachrow.children.forEach(function (ele){
+                        /// console.log(ele)
+                    /// }))
+                    let childrenArray = Array.from(eachrow.children);
+    
+                    childrenArray.forEach(function (ele) {
+                        let inputElement = ele.children[0];
+            
+                        if (inputElement && inputElement.tagName === 'INPUT') {
+                            let inputClass = inputElement.getAttribute('class');
+                            console.log('Class:', inputClass);
+                            if(parseInt(startMonth,10)===1){
+                                if(parseInt(inputClass,10)<13){
+                                    inputElement.setAttribute('disabled','disabled');
+                                    inputElement.style.backgroundColor='#90bcdf'; 
+                                    ele.style.backgroundColor='#90bcdf'; 
+                                }
+                            }else if(parseInt(startMonth,10)===2){
+                                if(parseInt(inputClass,10)<14){
+                                    inputElement.setAttribute('disabled','disabled');
+                                    inputElement.style.backgroundColor='#90bcdf';
+                                    ele.style.backgroundColor='#90bcdf'; 
+                                }
+                            }else if(parseInt(startMonth,10)===3){
+                                if(parseInt(inputClass,10)<15){
+                                    inputElement.setAttribute('disabled','disabled');
+                                    inputElement.style.backgroundColor='#90bcdf';
+                                    ele.style.backgroundColor='#90bcdf'; 
+                                }
+                            }else if(parseInt(inputClass,10)<startMonth){
+                                inputElement.setAttribute('disabled','disabled');
+                                inputElement.style.backgroundColor='#90bcdf';
+                                ele.style.backgroundColor='#90bcdf';
+                            }    
+                        }
+                    });
+    
+                } 
+            }
+            
+            const lastTable = tableIds[tableIds.length-1];
+
+            if(table===lastTable){
+                let allrows = table.children[0].children
+                let endMonth = table.getAttribute('end-month');
+                for(let i=0;i<8;i++){
+                    let eachrow = allrows[i]
+                    let childrenArray = Array.from(eachrow.children);
+                    childrenArray.forEach(function(ele){
+                        let inputElement = ele.children[0];
+                        if(inputElement && inputElement.tagName === 'INPUT'){
+                            let inputClass = inputElement.getAttribute('class');
+                            if(parseInt(endMonth,10)===1){
+                                if(parseInt(inputClass,10)>13){
+                                    inputElement.setAttribute('disabled','disabled');
+                                    inputElement.style.backgroundColor='#90bcdf'; 
+                                    ele.style.backgroundColor='#90bcdf'; 
+                                }
+                            }else if(parseInt(endMonth,10)===2){
+                                if(parseInt(inputClass,10)>14){
+                                    inputElement.setAttribute('disabled','disabled');
+                                    inputElement.style.backgroundColor='#90bcdf'; 
+                                    ele.style.backgroundColor='#90bcdf'; 
+                                }
+                            }else if(parseInt(endMonth,10)!=3 && parseInt(inputClass,10)>endMonth){
+                                inputElement.setAttribute('disabled','disabled');
+                                inputElement.style.backgroundColor='#90bcdf'; 
+                                ele.style.backgroundColor='#90bcdf'; 
+                            }
+                        }
+                    })
+                }
+            }
+
         });
 
-        // Your existing DOMContentLoaded code (if any)
     });
+
+    function addRow() {
+        var tables = document.querySelectorAll('table');
+        tables.forEach(function (table) {
+            // Create a new row with the specified content
+            var newRowContent = `
+            <tr>
+                <td><input type='text' name='${table.rows.length - 1}_head' value='${table.rows.length - 1}'></td>
+                <td><input type='text' name='${table.rows.length - 1}_text' value='${table.rows.length - 1}_newRow'></td>
+                <td><input type='number' name='${table.rows.length - 1}_Grant_Amount' value='0'></td>
+                <td><input type='number' class='4' name='${table.rows.length - 1}_Apr' value='0'></td>
+                <td><input type='number' class='5' name='${table.rows.length - 1}_May' value='0'></td>
+                <td><input type='number' class='6' name='${table.rows.length - 1}_Jun' value='0'></td>
+                <td><input type='number' class='7' name='${table.rows.length - 1}_Jul' value='0'></td>
+                <td><input type='number' class='8' name='${table.rows.length - 1}_Aug' value='0'></td>
+                <td><input type='number' class='9' name='${table.rows.length - 1}_Sep' value='0'></td>
+                <td><input type='number' class='10' name='${table.rows.length - 1}_Oct' value='0'></td>
+                <td><input type='number' class='11' name='${table.rows.length - 1}_Nov' value='0'></td>
+                <td><input type='number' class='12' name='${table.rows.length - 1}_Dec' value='0'></td>
+                <td><input type='number' class='13' name='${table.rows.length - 1}_Jan' value='0'></td>
+                <td><input type='number' class='14' name='${table.rows.length - 1}_Feb' value='0'></td>
+                <td><input type='number' class='15' name='${table.rows.length - 1}_Mar' value='0'></td>
+                <td><input type='number' name='${table.rows.length - 1}_expenses' value='0'></td>
+                <td name='${table.rows.length - 1}_closing'>0</td>
+            </tr>
+            
+            `;
+    
+            // Append the new row HTML to the table
+            table.querySelector('[name="total_amount"]').insertAdjacentHTML('beforebegin', newRowContent);
+           // table.insertAdjacentHTML('beforeend', newRowContent);
+           var tableData = getTableData(table.id);
+           tablesData[table.id] = tableData;
+           console.log("hi")
+           console.log(tableData)
+           console.log("hi")
+        });
+        var fellowshipNo = "{{ id }}";
+        console.log(fellowshipNo)
+        saveTableDataToDjango(tablesData,fellowshipNo);
+        console.log(tablesData)
+    }
 
     function initializeTableData(table) {
         const inputFields = table.querySelectorAll('input[type="number"]');
@@ -467,7 +938,7 @@
 
     function getTableData(tableId) {
         const table = document.querySelector(`#${tableId}`);
-        const inputFields = table.querySelectorAll('input[type="number"]');
+        const inputFields = table.querySelectorAll('input[type="number"],input[type="text"]');
         const tableData = {};
 
         inputFields.forEach(function (input) {
@@ -478,8 +949,10 @@
     }
     function calculateAndDisplayTotalExpenses(tableId) {
         const table = document.querySelector(`#${tableId}`);
+        console.log(table)
         const rows = table.querySelectorAll('tr:not(.header-row)');
-
+        console.log(rows)
+ 
         rows.forEach(function (row) {
             const inputFields = row.querySelectorAll('input[type="number"]');
             let totalExpenses = 0;
@@ -527,6 +1000,24 @@
             }
         });
     }
+    function calculateGrantAmount(table, columnIndex) {
+        let totalGrantAmount = 0;
+        let n = {{ budget_heads|length }};
+         n = table.rows.length-2;
+       // var tables = document.querySelectorAll('table');
+        console.log(table.rows.length)
+        console.log(n)
+       // console.log(totalAmountRow)
+
+        for (let i = 1; i <= n; i++) {
+            const inputName = `${i}_Grant_Amount`;
+            const inputValue = parseInt(table.querySelector(`input[name$="${inputName}"]`).value) || 0;
+            totalGrantAmount += inputValue;
+        }
+        console.log(totalGrantAmount)
+    
+        return totalGrantAmount;
+    }
     function calculateAndDisplayTotalAmount(tableId) {
         const table = document.querySelector(`#${tableId}`);
         const headerRow = table.querySelector('.header-row');
@@ -535,27 +1026,15 @@
         // console.log(table)
         // console.log(headerRow)
         // console.log(totalAmountRow)
-        // console.log(totalAmountCells)
+         console.log(totalAmountCells)
     
         totalAmountCells.forEach(function (totalAmountCell, index) {
             if(index==2){
 
-                const grantAmountOne = parseInt(table.querySelector('input[name$="one_Grant_Amount"]').value) || 0;
-                // const grantAmountTwo = parseInt(table.querySelector('input[name$="two_Grant_Amount"]').value) || 0;
-                // const grantAmountThree = parseInt(table.querySelector('input[name$="three_Grant_Amount"]').textContent) || 0;
-                // const grantAmountFour = parseInt(table.querySelector('input[name$="four_Grant_Amount"]').textContent) || 0;
-                // const grantAmountFive = parseInt(table.querySelector('input[name$="five_Grant_Amount"]').textContent) || 0;
-                // const grantAmountSix = parseInt(table.querySelector('input[name$="six_Grant_Amount"]').textContent) || 0;
-                // const grantAmountSeven = parseInt(table.querySelector('input[name$="seven_Grant_Amount"]').textContent) || 0;
-                const grantAmountTwo = parseInt(table.querySelector('input[name$="two_Grant_Amount"]').value) || 0;
-                const grantAmountThree = parseInt(table.querySelector('input[name$="three_Grant_Amount"]').value) || 0;
-                const grantAmountFour = parseInt(table.querySelector('input[name$="four_Grant_Amount"]').value) || 0;
-                const grantAmountFive = parseInt(table.querySelector('input[name$="five_Grant_Amount"]').value) || 0;
-                const grantAmountSix = parseInt(table.querySelector('input[name$="six_Grant_Amount"]').value) || 0;
-                const grantAmountSeven = parseInt(table.querySelector('input[name$="seven_Grant_Amount"]').value) || 0;
+               
 
-
-                const totalGrantAmount = grantAmountOne + grantAmountTwo + grantAmountThree + grantAmountFour +grantAmountFive + grantAmountSix + grantAmountSeven;
+                const grantAmount = calculateGrantAmount(table, index);
+              //  const totalGrantAmount = grantAmountOne + grantAmountTwo + grantAmountThree + grantAmountFour +grantAmountFive + grantAmountSix + grantAmountSeven;
 
     // Update the content of the Total Grant Amount cell
     const correspondingTotalAmountCell = totalAmountRow.querySelector(`td:nth-child(${index + 1})`);
@@ -563,7 +1042,7 @@
     // console.log(totalGrantAmount)
     // console.log("hi")
     correspondingTotalAmountCell.innerHTML = `
-                    <input type='number' name='total_Grant_Amount' value='${totalGrantAmount}' >
+                    <input type='number' name='total_Grant_Amount' value='${grantAmount}' >
                 `;
             }
            
@@ -643,6 +1122,8 @@
         }
         return cookieValue;
     }
+
+    
 </script>
 </body>
 </html>

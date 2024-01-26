@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project List</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .table-container {
+            overflow-x: auto; /* Enable horizontal scrolling for the table container */
+            width: 90%; /* Set a maximum width for the container */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            min-width: 150px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .project-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .project-box {
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            min-width: 300px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-details {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .button {
+            margin-top: 5px;
+            padding: 5px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .create-project-button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #27ae60;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-bar {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Project List</h1>
+
+    <!-- Search bar -->
+    <form class="search-bar" method="GET" action="{% url 'project_search' %}">
+        <input type="text" name="q" placeholder="Search">
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="dropdown" style="position: absolute; top: 20px; right: 20px;">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Filter Projects
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#" onclick="showAllProjects()">All Projects</a>
+          <a class="dropdown-item" href="#" onclick="showOngoingProjects()">Ongoing Projects</a>
+          <a class="dropdown-item" href="#" onclick="showCompletedProjects()">Completed Projects</a>
+        </div>
+      </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th onclick="sortTable('Title_of_Project')">Project Title</th>
+                <th onclick="sortTable('Project_Fellowship_No')">Project ID</th>
+                <th >Catergory</th>
+                <th >Country</th>
+                <th >Status</th>
+                <th >Name Of PI</th>
+                <th >Name Of Co PI</th>
+                <th >Name Of Agency</th>
+                <th >department</th>
+                <th onclick="sortTable('Project_Start_Date')">Start Date</th>
+                <th onclick="sortTable('Project_Closure_Date')">End Date</th>
+                <th >Action</th>
+               
+                
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                    <tr>
+                        <td>{{ project.Title_of_Project }}</td>
+                        <td>{{ project.Project_Fellowship_No }}</td>
+                       
+                        <td>{{ project.Project_Start_Date }}</td>
+                        <td>{{ project.Project_Closure_Date }}</td>
+                        <td>{{ project.task }}</td>
+                        <td>{{ project.PI_of_Project }}</td>
+                        <td>{{ project.Co_PI_of_Project }}</td>
+                        
+                        <td>N.A</td>
+                        <td>N.A</td>
+                        
+                       
+                        <td>{{ project.funding_agency }}</td>
+                        <td>N.A</td>
+                      
+                        <!-- Repeat the pattern for other columns -->
+                        <td>
+                            <a href="{% url 'fill' project_id=project.id %}">
+                                <button class="button">Monthly Sheet</button>
+                            </a>
+                            <a href="{% url 'mastersheet' project_id=project.id %}">
+                                <button class="button">Mastersheet</button>
+                            </a>
+                            <a href="{% url 'complete_task' project_id=project.id %}">
+                                <button class="button">Complete Task</button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function sortTable(column) {
+            const url = new URL(window.location.href);
+            const sortOrder = url.searchParams.get('sortOrder') || 'asc';
+
+            url.searchParams.set('sortBy', column);
+            url.searchParams.set('sortOrder', sortOrder === 'asc' ? 'desc' : 'asc');
+
+            window.location.href = url.href;
+        }
+        function showAllProjects() {
+            // Redirect to the same page without any filter
+            window.location.href = "{% url 'project_listwise' %}";
+          }
+        
+          function showOngoingProjects() {
+            // Redirect to the same page with a filter for ongoing projects
+            window.location.href = "{% url 'project_listwise' %}?filter=ongoing";
+          }
+        
+          function showCompletedProjects() {
+            // Redirect to the same page with a filter for completed projects
+            window.location.href = "{% url 'project_listwise' %}?filter=completed";
+          }
+    </script>
+</body>
+</html>
