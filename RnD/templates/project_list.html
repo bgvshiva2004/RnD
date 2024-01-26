@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "style.css" %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>
     <title>Project List</title>
     <style>
@@ -158,6 +158,21 @@
             font-size: 22px;
             margin-bottom: 20px;
         }
+        #trash{
+            cursor: pointer;
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            border: none;
+            outline: none;
+            color: rgba(34,122,191,0.5);
+            font-size: 20px;
+            transition: 0.3s all ease-in-out;
+        }
+        #trash:hover{
+            color: red;
+            box-shadow: 0px 0px 10px red;
+        }
     </style>
 </head>
 <body>
@@ -206,6 +221,7 @@
         
         <div class="book">
             <div class="buttons">
+                <button id="trash"><i class="fa-solid fa-trash"></i></button>
                 <a href="{% url 'fill' project_id=project.id %}">
                     <button class="button">Monthly Sheet</button>
                 </a>
@@ -224,7 +240,27 @@
             </div>
            </div>
         {% endfor %}
-    </div>          
+    </div>     
+    <footer>
+        <div class="footer">
+          <div class="info">
+            <h4>IIT Indore</h4>
+          </div>
+          <div class="social">
+            <ul>
+              <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+            </ul>
+          </div>
+          <div class="rights">
+            <p><i class="fa-solid fa-copyright"></i> Copyrights reserved.</p>
+          </div>
+        </div>
+        
+      </footer>
+           
     <script src="{% static 'script.js' %}"></script>
 </body>
 </html>

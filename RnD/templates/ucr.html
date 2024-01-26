@@ -1,0 +1,428 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Grant Information</title>
+    <style>
+        :root{
+            --primary-color:#000;
+            --secondary-color: rgb(34,122,191);
+        }
+
+        table{
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px;
+        }
+
+        th{
+            background-color: var(--secondary-color);
+            color: #fff;
+            border: 1px solid #fff;
+            text-align: left;
+            padding: 8px;
+        }
+
+        td{
+            border: 1px solid var(--secondary-color);
+            text-align: left;
+            padding: 8px;
+        }
+
+        table + table {
+        margin-top: 20px;
+        }
+
+        .body{
+            padding: 3%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h2{
+            text-align: center;
+            margin-top: 30px;
+            position: relative;
+            font-size: 25px;
+        }
+
+        h2::before{
+            content: '';
+            position: absolute;
+            background-color: var(--secondary-color);
+            height: 3px;
+            bottom: -10px;
+            width: 30%;
+            left: 35%;
+        }
+
+        h3{
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .mtitle{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin: 30px 10%;
+        }
+        
+        .mtitle .mbtn a button{
+            height: 60px;
+            padding: 10px;
+            font-size: 20px;
+            outline: 0;
+            border: none;
+            cursor: pointer;
+            background-color: rgba(34,122,191,0.5);
+            color: #fff;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;border: 2px solid rgba(34,122,191,0.5);
+            background-color: #fff;
+            color: var(--secondary-color);
+        }
+
+        .mtitle .mbtn a button:hover{
+            box-shadow: 0px 10px 10px var(--secondary-color);
+        }
+
+        .row{
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .row div p:nth-child(1){
+            font-weight: 600;
+        }
+
+        .details{
+            padding: 20px 10%;
+            font-size: 18px;
+        }
+
+        .head-info{
+            text-align: center;
+        }
+
+        .head-info p{
+            font-weight: 600;
+        }
+
+        .head-info h6{
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="navbar1">
+        <div class="title">
+            <a href="{% url "homepage" %}" class="lo">
+              <img src="{% static "IITI_Logo.png" %}" class="logo">
+              <h3>IIT Indore</h3>
+            </a>
+        </div>
+        <div class="links">
+            <ul>
+                <li><a href="{% url "index" %}">New Project Deal</a></li>
+                <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
+                <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="navbar2">
+        <div class="ham">
+          <p><i class="fa-solid fa-bars"></i></p>
+        </div>
+        <div class="title">
+          <a href="{% url "index" %}" class="lo">
+            <img src="{% static "IITI_Logo.png" %}" class="logo">
+            <h3>IIT Indore</h3>
+          </a>
+      </div>
+    </div>
+    <div class="side-bar">
+        <div id="close"><i class="fa-solid fa-xmark"></i></div>
+        <ul>
+            <li><a href="{% url "index" %}">New Project Deal</a></li>
+            <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
+            <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+        </ul>
+    </div>
+    <div class="mtitle">
+        <div class="mbtn">
+            <a href="#">
+                <button type="button">Mastersheet</button>
+            </a> 
+        </div>
+         <div class="mbtn">
+         <a href="#">
+            <button type="button">Soe Copy</button>
+        </a>
+        </div>
+    </div>
+
+    <div class="body">
+        <div class="head-info">
+            <h6>GFR 12 – A</h3>
+            <p>[(SEE RULE 238 (1))]</p>
+
+            <h3>UTILIZATION CERTIFICATE FOR THE YEAR 2022-23</h3>
+            <p>In respect of RECURRING</p>
+            <p>As on 31-03-2023 to be submitted to SERB</p>
+
+            <h6>Is the UC 2022-23 (Provisional/Audited)</h3>
+
+            <p>(To be given separately for each financial year ending on 31st March)</p>
+        </div>
+
+        <h2>Grant Information</h2>
+
+        <table >
+            <tbody style=" text-align: center;">
+                <tr>
+                    <th>1. Name of the grant receiving Organization</th>
+                    <td>IIT Indore</td>
+                </tr>
+                <tr>
+                    <th>2. Name of Principal Investigator (PI)</th>
+                    <td>Dr. Rama</td>
+                </tr>
+                <tr>
+                    <th>3. SERB Sanction order no. & date</th>
+                    <td >CRG/2022/**** Dated: 04-01-2020</td>
+                </tr>
+                <tr>
+                    <th>4. Title of the Project</th>
+                    <td>"Thermal Management photoelectrodes for sustainable and clean solar-driven hydrogen fuel generation"</td>
+                </tr>
+                <tr>
+                    <th>5. Name of the SERB Scheme</th>
+                    <td>CRG</td>
+                </tr>
+                <tr>
+                    <th>6. Whether recurring or non-recurring grants</th>
+                    <td>Recurring</td>
+                </tr>
+                <tr>
+                    <th>7. Grants position at the beginning of the Financial year (Grants released by SERB)</th>   
+                    <td>-</td>
+                </tr>
+                <tr>
+                    
+                    <th>(i) Carry forward from the previous financial year</th>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    
+                    <th>(ii) Others, If any</th>
+                    <td>0</td>
+                </tr>
+                <tr>
+                
+                    <th>(iii) Total</th>
+                    <td>0</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Details of grants received, expenditure incurred and closing balances: (Actuals)</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="1">Unspent </th>
+                    <th rowspan="1">Interest</th>
+                    <th rowspan="1">Interest</th>
+                    <th colspan="3">Grant received during the year</th>
+                    <th rowspan="1">Total </th>
+                    <th rowspan="1">Expenditure </th>
+                    <th rowspan="1">Closing </th>
+                </tr>
+                <tr>
+                    <th rowspan="1">1</th>
+                    <th rowspan="1">2</th>
+                    <th rowspan="1">3</th>
+                    <th colspan="3">4</th>
+                    <th rowspan="1">5</th>
+                    <th rowspan="1">6</th>
+                    <th rowspan="1">7</th>
+                
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Sanction No.</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0</td>
+                    <td>3184</td>
+                    <td>0</td>
+                    <td>CRG/2022/****</td>
+                    <td>10-02-2023</td>
+                    <td>902000</td>
+                    <td>905184</td>
+                    <td>23,668</td>
+                    <td>881,516</td>
+                </tr>
+            </tbody>
+        </table>
+    
+
+        <h2>9. Component wise utilization of grants:</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Grant-in-aid General</th>
+                    <th>Grant-in-aid Creation of Capital Asset</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>23,668</td>
+                    <td>-</td>
+                    <td>23,668</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>10. Details of grants position at the end of the year</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <td>i) Balance available at the end of financial year</td>
+                    <th>881,516</th>
+                </tr>
+                <tr>
+                    <td>ii) Unspent balance refunded to SERB</td>
+                    <th>0</th>
+                </tr>
+                <tr>
+                    <td>iii) Balance carried forward to the next financial year</td>
+                    <th>881,516</th>
+                </tr>
+            </thead>
+        </table>
+
+        <div class="details">
+            <p>Certified that I have satisfied myself that the conditions on which grants were sanctioned have been duly fulfilled/are being fulfilled and that I have exercised following checks to see that the money has been actually utilized for the purpose which it was sanctioned:</p>
+
+            <p>1. The main accounts and other subsidiary accounts and registers (including assets registers) are maintained as prescribed in the relevant Act/Rules/Standing instructions (mention the act/Rules) and have been duly audited by designated auditors. The figures depicted above tally with the audited figures mentioned in financial statements/accounts.</p>
+
+            <p>2. There exist internal controls for safeguarding public funds/assets, watching outcomes and achievements of physical targets against the financial inputs, ensuring quality in asset creation etc. & the periodic evaluation of internal controls is exercised to ensure their effectiveness.</p>
+
+            <p>3. To the best of our knowledge and belief, no transactions have been entered that are in violation of relevant Act/Rules/standing instructions and scheme guidelines.</p>
+
+            <p>4. The responsibilities among the key functionaries for execution of the scheme have been assigned in clear terms and are not general in nature.</p>
+
+            <p>5. The benefits were extended to the intended beneficiaries and only such areas/districts were covered where the scheme was intended to operate.</p>
+
+            <p>6. The expenditure on various components of the scheme was in the proportions authorized as per the scheme guidelines and terms and conditions of the grants-in-aid.</p>
+
+            <p>7. It has been ensured that the physical and financial performance under CRG has been according to the requirements, as prescribed in the guidelines issued by Govt. of India and the performance/targets achieved statement for the year to which the utilization of the fund resulted in outcomes given at Annexures.</p>
+
+            <p>8. The utilization of the fund resulted in outcomes given at Annexure duly enclosed (to be formulated by the Ministry/Department concerned as per their requirements/specifications).</p>
+
+            <p>9. Details of various schemes executed by the agency through grants-in-aid received from the same Ministry or from other Ministries are enclosed at Annexure (to be formulated by the Ministry/Department concerned as per their requirements/specifications).</p>
+        </div>
+
+        <div class="row">
+            <div>
+                <div>
+                <p>
+                    Principal Investigator:			
+                </p>
+                <p>
+                    Name & Signature		
+            
+                </p>
+                </div>
+            </div>
+            <div>
+                <div>
+                <p>
+                    Assistant Registrar ( R & D )		
+            
+                </p>
+                <p>
+                    Name & Signature		
+                
+                </p>
+                </div>
+            </div>
+            <div>
+                <div>
+                <p>
+                    Head of the Organization/Registrar		
+            
+            
+                </p>
+                <p>
+                    Name & Signature		
+            
+                </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+   
+    <footer>
+        <div class="footer">
+          <div class="info">
+            <h4>IIT Indore</h4>
+          </div>
+          <div class="social">
+            <ul>
+              <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+            </ul>
+          </div>
+          <div class="rights">
+            <p><i class="fa-solid fa-copyright"></i> Copyrights reserved.</p>
+          </div>
+        </div>
+        
+      </footer>
+           
+    <script src="{% static 'script.js' %}"></script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

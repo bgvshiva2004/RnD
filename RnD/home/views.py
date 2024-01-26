@@ -238,11 +238,19 @@ def login(request):
             messages.error(request,'Invalid Credentials')
     return render(request, "login.html")         
 
-@login_required
+# @login_required
 def project_list(request):
     projects = project_details.objects.all()
     context = {'projects': projects}
     return render(request, 'project_list.html', context)
+
+# @login_required
+def soe(request):
+    return render(request, "soe_copy.html")
+
+# @login_required
+def ucr(request):
+    return render(request, "ucr.html")
 
 @login_required
 def monthly(request):
