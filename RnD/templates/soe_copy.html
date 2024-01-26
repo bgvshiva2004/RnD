@@ -185,7 +185,7 @@
             </tr>
             <tr>
                 <th>4</th>
-                <th>Total Project Cost (Rs.)</th>
+                <th>Total Project Cost</th>
                 <td>Total Project Cost (Rs.)</td>
             </tr>
             <tr>
@@ -208,7 +208,7 @@
                     <th>Month & Year</th>
                     <th>Expenditure incurred</th>
                     <th>Month & Year</th>
-                    <th>Expenditure incurred/committed (Rs.)</th>
+                    <th>Expenditure incurred/committed</th>
                 </tr>
             </thead>
             <tbody>
@@ -261,7 +261,7 @@
             <thead>
                 <tr>
                     <th>Category</th>
-                    <th>Grant received in each year (Rs.)</th>
+                    <th>Grant received in each year</th>
                 </tr>
             </thead>
             <tbody>
@@ -293,25 +293,25 @@
         <table>
             <thead>
                 <tr>
-                    <th rowspan="2">Sr. No.</th>
+                    <th rowspan="2">SNo.</th>
                     <th rowspan="2">Sanctioned Heads</th>
                     <th rowspan="2">Funds Allocated (sanctioned)</th>
-                    <th colspan="3">Expenditure Incurred ( Rs.)</th>
+                    <th colspan="3">Expenditure Incurred</th>
                     <th rowspan="2">Total Expenditure</th>
                     <th rowspan="2">Balance as on date</th>
-                    <th rowspan="2">Remarks if any</th>
+                    {% comment %} <th rowspan="2">Remarks if any</th> {% endcomment %}
                 </tr>
                 <tr>
-                        <th>1st F.Y. Year 10-02-2023 31-03-2023</td>
-                        <th>2nd F.Y. Year 01-04-2023 31-03-2024</td>
-                        <th>3rd F.Y. Year 01-04-2024 31-03-2025</td>
+                        <th>2022-23</td>
+                        <th>2023-24</td>
+                        <th>2024-25</td>
                         
                 </tr>
             
             </thead>
             <tbody>
             
-                <tr>
+                {% comment %} <tr>
                     <td>(I)</td>
                     <td>(II)</td>
                     <td>(III)</td>
@@ -321,7 +321,7 @@
                     <td>(VII) = (IV+V+VI)</td>
                     <td>(VIII=III-VII)</td>
                     <td></td>
-                </tr>
+                </tr> {% endcomment %}
                 <tr>
                     <td>1</td>
                     <td>Equipment</td>
@@ -331,7 +331,7 @@
                     <td>0</td>
                     <td>0</td>
                     <td>2,400,000</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
                     <td>2</td>
@@ -342,7 +342,7 @@
                     <td>0</td>
                     <td>176,700</td>
                     <td>1,173,540</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
                     <td>3</td>
@@ -353,7 +353,7 @@
                     <td>0</td>
                     <td>0</td>
                     <td>600,000</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
                     <td>4</td>
@@ -364,7 +364,7 @@
                     <td>0</td>
                     <td>0</td>
                     <td>150,000</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
                     <td>5</td>
@@ -375,7 +375,7 @@
                     <td>0</td>
                     <td>2,100</td>
                     <td>147,900</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
                     <td>6</td>
@@ -386,7 +386,7 @@
                     <td>0</td>
                     <td>0</td>
                     <td>30,000</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
                     <td>7</td>
@@ -397,10 +397,10 @@
                     <td>0</td>
                     <td>23,668</td>
                     <td>402,356</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
-                    <td></td>
+                    <td>*</td>
                     <td>Total (Rs.)</td>
                     <td>5,106,264</td>
                     <td>23,668</td>
@@ -408,28 +408,20 @@
                     <td>0</td>
                     <td>202,468</td>
                     <td>4,903,796</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Amount to be Refunded/Received</td>
-                    <td>2,709,966</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
             </tbody>
         </table>
-
+        <tr>
+            <td>Amount to be Refunded/Received: </td>
+            <td>2,709,966</td>
+        </tr>
         <h2>Project Information</h2>
 
         <table>
             <tbody>
                 <tr>
-                    <th>Date of Start –</th>
+                    <th>Date of Start</th>
                     <td>04-15-2020</td>
                 </tr>
             </tbody>
