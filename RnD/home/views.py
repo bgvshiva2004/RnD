@@ -432,6 +432,90 @@ def mastersheet(request,project_id):
     # print("zipped data",new_parsed_data)
     return render(request,'mastersheet.html',data)
 
+def soe(request,project_id):
+    # print("mastersheet called")
+    existing_project = project_details.objects.get(id=project_id)
+    start_year1 = existing_project.financial_year_start_index
+    end_year1 = existing_project.financial_year_end_index
+
+    financial_years = [f"{year}-{year+1}" for year in range(start_year1, end_year1)]
+    budget_heads = [
+    'Equipment',
+    'Manpower',
+    'Contingency',
+    'Consumables',
+    'Travel',
+    'Overhead',
+    'SSR',
+
+]
+    file_path = os.path.join('project_files', f'{existing_project.Project_file_name}.txt')
+    file_path1 = os.path.join('commited', f'{existing_project.id}.txt')
+    print(file_path1)
+    with open(file_path, 'r') as file:
+        table_data1 = file.read()
+    # print((table_data1))
+    parsed_data = json.loads(table_data1)
+    table_1_data = parsed_data["table_1"]
+    # print(table_1_data)
+    # print(len(parsed_data))
+    table_data={
+        '1':table_1_data,
+        '0':table_1_data
+    }
+    your_data=parsed_data
+    text_values_set = set()
+    
+# Loop through the outer dictionary
+    for key, inner_dict in your_data.items():
+        # Loop through the inner dictionary
+        for inner_key, value in inner_dict.items():
+            # Check if the key ends with "_text"
+            if inner_key.endswith('_text'):
+                # Add the value to the set
+                text_values_set.add(value)
+
+    # Print the resulting set
+    print(type(text_values_set))
+    print(type(budget_heads))
+    text_values_list = list(text_values_set)
+    budget_heads=text_values_list
+    # print(parsed_data)
+    # for table_key, table_data in parsed_data.items():
+    #     print(table_key)
+
+    # years = {'start_year':2023, 'closure_year':2027}
+    new_parsed_data = {int(key.split('_')[1]): value for key, value in parsed_data.items()}
+
+    # print(new_parsed_data)
+    parsed_data_json = json.dumps(parsed_data)
+
+    period_range =range(1,len(text_values_set)+1)
+    zipped_data = zip(period_range, budget_heads)
+    # zipped_data1 = zip(range(1,len(financial_years)+1), financial_years)
+    if os.path.exists(file_path1):
+        with open(file_path1, 'r') as file:
+         table_data2 = file.read()
+        parsed_data2 = json.loads(table_data2)
+    else:
+        parsed_data2 = "null"
+    data={
+        'financial_years':financial_years,
+        'period_range' :period_range,
+        'period_range1' :range(0,7),
+        'budget_heads':budget_heads,
+        'zipped_data':zipped_data,
+        'zipped_data1':zipped_data,
+        'l':len(financial_years)+1,
+        'tablesdata':new_parsed_data,
+        'tablesdata1':new_parsed_data,
+        'existing_project':existing_project,
+        'parsed_data2':parsed_data2,
+        'project_id':project_id
+        }
+    # print("zipped data",new_parsed_data)
+    return render(request,'soe_copy.html',data)
+
 
 import json
 from django.http import JsonResponse
@@ -692,3 +776,9 @@ def project_listwise(request):
     # Pass the list of sorted projects to the template
     context = {'projects': projects}
     return render(request, 'project_listwise.html', context)
+
+
+
+
+def ucr(request):
+    return render(request,'ucr.html')

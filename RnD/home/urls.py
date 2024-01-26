@@ -18,4 +18,6 @@ urlpatterns = [
     path('logout/',views.logout,name='logout'),
     path('project_search/', views.project_search, name='project_search'),
     path('complete_task/<int:project_id>/', views.complete_task, name='complete_task'),
+    path('soe/<int:project_id>/',views.soe,name='soe'),
+    path('ucr/',views.ucr,name='ucr')
 ]

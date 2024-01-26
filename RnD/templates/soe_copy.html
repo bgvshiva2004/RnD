@@ -8,9 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script href="{% static 'jsPDF.js' %}"></script>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+   
     <title>Soe Copy</title>
     <style>
         :root{
@@ -115,8 +119,10 @@
         }
 
     </style>
+    {% comment %} <script src="{% static 'script.js' %}"></script>     {% endcomment %}
   </head>
   <body>
+
     <div class="navbar1">
         <div class="title">
             <a href="{% url "homepage" %}" class="lo">
@@ -164,48 +170,43 @@
         </a>
         </div>
     </div>
-
+<div id='print'>
     <div class="body">
-        <h3>REQUEST FOR ANNUAL INSTALMENT WITH UP-TO-DATE STATEMENT OF EXPENDITURE</h3>
+        <h2  style='font-size:25px'>REQUEST FOR ANNUAL INSTALMENT WITH UP-TO-DATE STATEMENT OF EXPENDITURE</h2>
         <table>
             <tr>
                 <th>1</th>
-                <th>SERB Sanction Order No and date:</th>
-                <td>SERB Sanction Order No and date</td>
+                <th>Dated</th>
+                <td>Dated</td>
             </tr>
             <tr>
                 <th>2</th>
-                <th>Name of the PI:</th>
-                <td>Name of the PI</td>
+                <th>SERB Sanction Order No</th>
+                <td>SERB Sanction Order No and date</td>
             </tr>
             <tr>
                 <th>3</th>
-                <th>Total Project Cost (Rs.):</th>
+                <th>Name of the PI</th>
+                <td>Name of the PI</td>
+            </tr>
+            <tr>
+                <th>4</th>
+                <th>Total Project Cost</th>
                 <td>Total Project Cost (Rs.)</td>
             </tr>
             <tr>
                 <th>4</th>
-                <th>Revised Project Cost:</th>
+                <th>Revised Project Cost (if applicable)</th>
                 <td>Revised Project Cost</td>
             </tr>
             <tr>
                 <th>5</th>
-                <th>Date of Commencement:</th>
+                <th>Date of Commencement</th>
                 <td>Date of Commencement</td>
-            </tr>
-            <tr>
-                <th>6</th>
-                <th>Statement of Expenditure:</th>
-                <td>Statement of Expenditure</td>
-            </tr>
-            <tr>
-                <th>7</th>
-                <th>Dated:</th>
-                <td>Dated</td>
             </tr>
         </table>
 
-        <h2>Expenditure Table</h2>
+        <h2 style='font-size:27px'>Statement of Expenditure (during current financial year)</h2>
 
         <table>
             <thead>
@@ -213,7 +214,7 @@
                     <th>Month & Year</th>
                     <th>Expenditure incurred</th>
                     <th>Month & Year</th>
-                    <th>Expenditure incurred/committed (Rs.)</th>
+                    <th>Expenditure incurred/committed</th>
                 </tr>
             </thead>
             <tbody>
@@ -266,28 +267,28 @@
             <thead>
                 <tr>
                     <th>Category</th>
-                    <th>Grant received in each year (Rs.)</th>
+                    <th>Grant received in each year</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>a. 1st Year</td>
+                    <td>1st Year</td>
                     <td>2902000</td>
                 </tr>
                 <tr>
-                    <td>b. 2nd Year</td>
+                    <td>2nd Year</td>
                     <td>0</td>
                 </tr>
                 <tr>
-                    <td>c. 3rd Year</td>
+                    <td>3rd Year</td>
                     <td>0</td>
                 </tr>
                 <tr>
-                    <td>d. Interest, if any 22-23</td>
+                    <td>Interest, if any 22-23</td>
                     <td>10,434</td>
                 </tr>
                 <tr>
-                    <td>e. Total (a+b+c+d)</td>
+                    <td>Total</td>
                     <td><strong>2912434</strong></td>
                 </tr>
             </tbody>
@@ -298,25 +299,25 @@
         <table>
             <thead>
                 <tr>
-                    <th rowspan="2">Sr. No.</th>
+                    <th rowspan="2">SNo.</th>
                     <th rowspan="2">Sanctioned Heads</th>
                     <th rowspan="2">Funds Allocated (sanctioned)</th>
-                    <th colspan="3">Expenditure Incurred ( Rs.)</th>
+                    <th colspan="3">Expenditure Incurred</th>
                     <th rowspan="2">Total Expenditure</th>
                     <th rowspan="2">Balance as on date</th>
-                    <th rowspan="2">Remarks if any</th>
+                    {% comment %} <th rowspan="2">Remarks if any</th> {% endcomment %}
                 </tr>
                 <tr>
-                        <th>"1st F.Y. Year 10-02-2023 31-03-2023"</td>
-                        <th>"2nd F.Y. Year 01-04-2023 31-03-2024"</td>
-                        <th>"3rd F.Y. Year 01-04-2024 31-03-2025"</td>
+                        <th>2022-23</td>
+                        <th>2023-24</td>
+                        <th>2024-25</td>
                         
                 </tr>
             
             </thead>
             <tbody>
             
-                <tr>
+                {% comment %} <tr>
                     <td>(I)</td>
                     <td>(II)</td>
                     <td>(III)</td>
@@ -326,7 +327,7 @@
                     <td>(VII) = (IV+V+VI)</td>
                     <td>(VIII=III-VII)</td>
                     <td></td>
-                </tr>
+                </tr> {% endcomment %}
                 <tr>
                     <td>1</td>
                     <td>Equipment</td>
@@ -336,7 +337,7 @@
                     <td>0</td>
                     <td>0</td>
                     <td>2,400,000</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
                     <td>2</td>
@@ -347,7 +348,7 @@
                     <td>0</td>
                     <td>176,700</td>
                     <td>1,173,540</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
                     <td>3</td>
@@ -358,7 +359,7 @@
                     <td>0</td>
                     <td>0</td>
                     <td>600,000</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
                     <td>4</td>
@@ -369,7 +370,7 @@
                     <td>0</td>
                     <td>0</td>
                     <td>150,000</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
                     <td>5</td>
@@ -380,7 +381,7 @@
                     <td>0</td>
                     <td>2,100</td>
                     <td>147,900</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
                     <td>6</td>
@@ -391,7 +392,7 @@
                     <td>0</td>
                     <td>0</td>
                     <td>30,000</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
                     <td>7</td>
@@ -402,10 +403,10 @@
                     <td>0</td>
                     <td>23,668</td>
                     <td>402,356</td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
                 <tr>
-                    <td></td>
+                    <td>*</td>
                     <td>Total (Rs.)</td>
                     <td>5,106,264</td>
                     <td>23,668</td>
@@ -413,28 +414,20 @@
                     <td>0</td>
                     <td>202,468</td>
                     <td>4,903,796</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Amount to be Refunded/Received</td>
-                    <td>2,709,966</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    {% comment %} <td></td> {% endcomment %}
                 </tr>
             </tbody>
         </table>
-
+        <tr>
+            <td>Amount to be Refunded/Received: </td>
+            <td>2,709,966</td>
+        </tr>
         <h2>Project Information</h2>
 
         <table>
             <tbody>
                 <tr>
-                    <th>Date of Start –</th>
+                    <th>Date of Start</th>
                     <td>04-15-2020</td>
                 </tr>
             </tbody>
@@ -448,6 +441,10 @@
             </ol>
         </div>
     </div>
+</div>
+<button id='print-btn'>Convert to PDF</button>
+<button onclick="convertToImageAndSave()">Convert to Image and Save</button>
+
     <footer>
         <div class="footer">
           <div class="info">
@@ -468,11 +465,76 @@
         
       </footer>
            
-    <script src="{% static 'script.js' %}"></script>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script href="{% static 'script.js' %}"></script>
+
+    <script>
+        function convertToImageAndSave() {
+            html2canvas(document.getElementById('print')).then(function(canvas) {
+                // Convert canvas to data URL
+                var imgData = canvas.toDataURL('image/png');
+
+                // Create a link element
+                var link = document.createElement('a');
+
+                // Set the href attribute with the data URL
+                link.href = imgData;
+
+                // Set the download attribute with a desired file name
+                link.download = 'myDivImage.png';
+
+                // Append the link to the document
+                document.body.appendChild(link);
+
+                // Trigger a click on the link to start the download
+                link.click();
+
+                // Remove the link from the document
+                document.body.removeChild(link);
+            });
+        }
+        
+    </script>
+    <script src="{% static 'jsPDF.js' %}"></script>
+    
+    <script>
+        document.getElementById('print-btn').addEventListener('click', function () {
+            console.log('Start converting to image...');
+
+            // Create a new image element
+            
+
+            // Set the source of the image to the data URL of the captured content (image)
+            const img = new Image();
+            html2canvas(document.getElementById('print')).then(function (canvas) {
+                console.log('Captured HTML to Canvas...');
+                const imgData = canvas.toDataURL('image/png');
+                img.src = imgData;
+                img.onload = function () {
+                    console.log('Image loaded...');
+                    const newWindow = window.open();
+                    newWindow.document.write('<img src="' + imgData + '" width="100%">');
+
+                    newWindow.document.addEventListener('DOMContentLoaded', function () {
+                        // Your code to handle the DOMContentLoaded event in the new window
+                        console.log('DOMContentLoaded in the new window...');
+                    });
+
+                    // Introduce a delay before triggering the print action (e.g., 500 milliseconds)
+                    setTimeout(function () {
+                        newWindow.print();
+                        console.log('Printed...');
+                    }, 1000);
+                };
+            });
+
+            
+            
+        });
+    </script>
+
   </body>
 </html>
