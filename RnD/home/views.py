@@ -431,7 +431,7 @@ def mastersheet(request,project_id):
         }
     # print("zipped data",new_parsed_data)
     return render(request,'mastersheet.html',data)
-    return render(request,'soe_copy.html',data)
+
 def soe(request,project_id):
     # print("mastersheet called")
     existing_project = project_details.objects.get(id=project_id)
@@ -515,7 +515,6 @@ def soe(request,project_id):
         }
     # print("zipped data",new_parsed_data)
     return render(request,'soe_copy.html',data)
-    return render(request,'mastersheet.html',data)
 
 
 import json
