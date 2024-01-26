@@ -113,6 +113,44 @@
         .mtitle .mbtn a button:hover{
             box-shadow: 0px 10px 10px var(--secondary-color);
         }
+        .side-by-side{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+          }
+    
+          .side-by-side table{
+              width: 40vw;
+              margin-right: 0px;
+              margin-left: 0px;
+              height: 60vh;
+              max-height:200px;
+          }
+    
+          .side-by-side table{
+              border-collapse: collapse;
+          }
+    
+          .side-by-side table tr th{
+              font-size: 17px;
+              font-weight: 400;
+              border: 1px solid #fff;
+              background-color: var(--secondary-color);
+              color: #fff;  
+              text-align: center;
+          }
+          
+          .side-by-side table tr td{
+              padding: 10px;
+              font-size: 17px;
+              text-align: center;
+              border: 1px solid var(--secondary-color);
+          }
+          
+          .side-by-side table tr th, .side-by-side table tr td{
+              width: 7vw;
+          }
 
     </style>
   </head>
@@ -290,133 +328,138 @@
 
         <h2>Statement of Expenditure</h2>
 
-        <table>
-            <thead>
-                <tr>
-                    <th rowspan="2">SNo.</th>
-                    <th rowspan="2">Sanctioned Heads</th>
-                    <th rowspan="2">Funds Allocated (sanctioned)</th>
-                    <th colspan="3">Expenditure Incurred</th>
-                    <th rowspan="2">Total Expenditure</th>
-                    <th rowspan="2">Balance as on date</th>
-                    {% comment %} <th rowspan="2">Remarks if any</th> {% endcomment %}
-                </tr>
-                <tr>
-                        <th>2022-23</td>
-                        <th>2023-24</td>
-                        <th>2024-25</td>
-                        
-                </tr>
-            
-            </thead>
-            <tbody>
-            
-                {% comment %} <tr>
-                    <td>(I)</td>
-                    <td>(II)</td>
-                    <td>(III)</td>
-                    <td>(IV)</td>
-                    <td>(V)</td>
-                    <td>(VI)</td>
-                    <td>(VII) = (IV+V+VI)</td>
-                    <td>(VIII=III-VII)</td>
-                    <td></td>
-                </tr> {% endcomment %}
-                <tr>
-                    <td>1</td>
-                    <td>Equipment</td>
-                    <td>2,400,000</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>2,400,000</td>
-                    {% comment %} <td></td> {% endcomment %}
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Manpower</td>
-                    <td>1,350,240</td>
-                    <td>0</td>
-                    <td>176,700</td>
-                    <td>0</td>
-                    <td>176,700</td>
-                    <td>1,173,540</td>
-                    {% comment %} <td></td> {% endcomment %}
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Consumables</td>
-                    <td>600,000</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>600,000</td>
-                    {% comment %} <td></td> {% endcomment %}
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Travel</td>
-                    <td>150,000</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>150,000</td>
-                    {% comment %} <td></td> {% endcomment %}
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Contingency</td>
-                    <td>150,000</td>
-                    <td>0</td>
-                    <td>2,100</td>
-                    <td>0</td>
-                    <td>2,100</td>
-                    <td>147,900</td>
-                    {% comment %} <td></td> {% endcomment %}
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>Scientific Social Responsibility</td>
-                    <td>30,000</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>30,000</td>
-                    {% comment %} <td></td> {% endcomment %}
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>Overhead</td>
-                    <td>426,024</td>
-                    <td>23,668</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>23,668</td>
-                    <td>402,356</td>
-                    {% comment %} <td></td> {% endcomment %}
-                </tr>
-                <tr>
-                    <td>*</td>
-                    <td>Total (Rs.)</td>
-                    <td>5,106,264</td>
-                    <td>23,668</td>
-                    <td>178,800</td>
-                    <td>0</td>
-                    <td>202,468</td>
-                    <td>4,903,796</td>
-                    {% comment %} <td></td> {% endcomment %}
-                </tr>
-            </tbody>
-        </table>
+        
         <tr>
             <td>Amount to be Refunded/Received: </td>
             <td>2,709,966</td>
         </tr>
         <h2>Project Information</h2>
+        <div class="side-by-side">
+
+
+            <table class="table1" id="data-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2">S.No.</th>
+                        <th rowspan="2">Budget Head</th>
+                        <th colspan="{{ financial_years|length|add:1 }}">Sanctioned Amount Rs.</th>
+                       
+                    </tr>
+                    <tr>
+                      {% for year in financial_years %}
+                        <th  style="display: none;" class="column-names" id='years'>{{ year }}</th>
+                      {% endfor %}
+                      <th   class="column-names">Funds Sanctioned</th>
+                    </tr>
+                  </thead>
+                <tbody>
+                    {% for period, budget_head in zipped_data %}
+                    <tr>
+                      <td>{{ period }}</td>
+                      <td contenteditable="true" id="text-{{period}}"> {{ budget_head }}</td>
+                      
+                      
+                      {% for table_key, sum_data in tablesdata.items %}
+            
+                      <td  style="display: none;" contenteditable="false" id="1-row-{{ period }}-col-{{table_key}}" class="1-row-{{ period }}">{{sum_data.period_Grant_Amount}}</td>
+                      
+                      
+                      {% endfor %}
+                      <td contenteditable="false" id="total-{{ period }}">0</td>
+                    </tr>
+                  {% endfor %}
+                
+                  <td id="total_no">*</td>
+                    <td>Total</td>
+                    {% for table_key, sum_data in tablesdata.items %}
+                      <td  style="display: none;" id="total-grant-{{forloop.counter}}"></td>
+                    {% endfor %}
+                    <td id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
+                  </tr>
+                </tbody>
+              </table>
+            
+            
+            
+              <table class="table2" id="data-table1">
+                <thead>
+                    <!-- Parent row for "Sanctioned Amount Rs." -->
+                    
+                    <tr>
+                        
+                      <th colspan="{{ financial_years|length|add:1 }}"  >Expenditure Amount Rs.</th>
+                      <th rowspan="2"  style="display: none;"  >Committed Expenditure</th>
+                      <th rowspan="2"  >Balance Amount</th>
+                    </tr>
+                    <!-- Subheader row for S.No., Budget Head, and financial years -->
+                    <tr>
+                     
+                      <!-- Display financial years -->
+                      {% for year in financial_years %}
+                        <th  class="column-names">{{ year }}</th>
+                      {% endfor %}
+                      <th  class="column-names">Total Expenditure</th>
+            
+                    </tr>
+                  </thead>
+                 
+                <tbody>
+                  {% for period in period_range %}
+                  <tr>
+                  
+                    
+                    <!-- Add dynamic cells for each financial year -->
+                    {% for table_key, sum_data in tablesdata1.items %}
+            
+                    <td contenteditable="false" id="2-row-{{ period }}-col-{{table_key}}" class="row-{{ period }}"></td>
+                  
+                  
+                    
+                    {% endfor %}
+                    <td contenteditable="true" id="2-row-{{period}}" class="2-row-{{period}}"></td>
+                    <td  style="display: none;"  contenteditable="true" id="2-row-{{period}}-col-com" class="2-row1-{{period}}"></td>
+                    {% comment %} <td contenteditable="true" id="2-row-{{period}}-col-{{l|add:2}}" class="2-row2-{{period}}"></td> {% endcomment %}
+                    <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' name='2-row-{{period}}-col-101-{{project_id}}' value={{2_row_1_col_101}}></td>
+                  
+            
+                  </tr>
+                {% endfor %}
+              </tbody>
+              <tbody>
+              {% for table_key, sum_data in tablesdata.items %}
+                      <td  id="total-expense-{{forloop.counter}}"></td>
+                  {% endfor %}
+                  <td  id="total_expenditure_all_years" name="total_expenditure_all_years">{{total_expenditure_all_years}}</td>
+                    <td   style="display: none;" id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
+                    <td id='total_balance_amount_all_domains' name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
+                </tbody>
+              </table>
+            
+            
+              
+              
+              
+            </div>
+             
+            
+            <footer>
+              <div class="footer">
+                <div class="info">
+                  <h4>IIT Indore</h4>
+                </div>
+                <div class="social">
+                  <ul>
+                    <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+                    <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+                  </ul>
+                </div>
+                <div class="rights">
+                  <p><i class="fa-solid fa-copyright"></i> Copyrights reserved.</p>
+                </div>
+              </div>
+              
 
         <table>
             <tbody>
@@ -454,12 +497,469 @@
         </div>
         
       </footer>
-           
+
+      {{ project_id|json_script:"room-name"}}   
+
     <script src="{% static 'script.js' %}"></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        var project_id = {{ existing_project.id }};
+        var tablesData = {{ tablesdata|safe }};
+        console.log(tablesData)
+        console.log("1")
+      
+        // console.log(zipped_data)
+         console.log(tablesData[1]['1_Grant_Amount'])
+       
+         // Function to get the value of a cell based on its id
+         function getCellValue(cellId) {
+           var parts = cellId.split('-');
+           var tableKey = parts[0];
+           var row = parts[2];
+           var col = parts[4];
+           console.log(row+"+"+col+"+"+tableKey)
+           
+           if (tablesData[col] && tablesData[col][row + '_Grant_Amount']) {
+             return tablesData[col][row + '_Grant_Amount'];
+           } else {
+             return 'Not Found';
+           }
+         }
+       
+         // Function to fill the cells with data
+         function fillCells() {
+           var tableBody = document.getElementById('data-table');
+           var rows = tableBody.getElementsByTagName('tr');
+          
+       
+           for (var i = 0; i < rows.length; i++) {
+             var cells = rows[i].getElementsByTagName('td');
+       
+             for (var j = 2; j < cells.length - 1; j++) {
+               var cellId = cells[j].id;
+               cells[j].textContent = getCellValue(cellId);
+             }
+           }
+         }
+         function getCellValue1(cellId) {
+          var parts = cellId.split('-');
+          var tableKey = parts[0];
+          var row = parts[2];
+          var col = parts[4];
+          //   console.log(row+"+"+col)
+         
+        
+        if (tablesData[col] && tablesData[col][row + '_expenses']) {
+          return tablesData[col][row + '_expenses'];
+        } else {
+          return 'Not found';
+        }
+      }
+      
+      // Function to fill the cells with data
+      function fillCells1() {
+        var tableBody = document.getElementById('data-table1');
+        var rows = tableBody.getElementsByTagName('tr');
+        
+        
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+          
+      
+          for (var j = 0; j < cells.length - 3; j++) {
+            var cellId = cells[j].id;
+            cells[j].textContent = getCellValue1(cellId);
+          }
+        }
+      }
+         // Function to fill the cells with data
+      
+      // Function to fill the cells with data
+      
+      function fillCells2() {
+        console.log(tablesData[1])
+      var tableBody = document.getElementById('data-table');
+      var rows = tableBody.getElementsByTagName('tr');
+      console.log(rows)
+      
+      for (var i = 2; i < rows.length; i++) {
+        var cells = rows[i].getElementsByTagName('td');
+        
+      
+       for (var j = 1; j < cells.length - 1; j++) {
+         var cellId = cells[j].id;
+      
+         // Check if the ID starts with "text-"
+         if (cellId.startsWith('text-')) {
+             var rowNumber = cellId.replace('text-', '');
+             console.log(rowNumber)
+      
+           cells[j].textContent = tablesData[1][rowNumber + '_text'] || 'Not found';
+         }
+       }
+      }
+      }
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+        
+      
+      
+        
+        
+      
+      
+      
+        
+      
+      document.addEventListener('DOMContentLoaded', function() {
+      
+        console.log("hi")
+        console.log("hi")
+        fillCells1();
+        fillCells2();
+        fillCells();
+       
+      
+        var updateButton = document.getElementById('update-button');
+        var tableData = Array.from({ length: 7 }, () => Array(3).fill(0));  // Initialize as a 6x3 matrix of zeros
+        console.log("called")
+        updateTotalCell();
+        console.log("called")
+      
+        });
+       
+        function sendToServer(data, project_id) {
+          console.log(JSON.stringify(data));
+          fetch(`/save_tables_to_file/${project_id}/`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': getCookie('csrftoken')
+              },
+              body: JSON.stringify(data)
+          })
+          .then(response => response.json())
+          .then(result => {
+              console.log(result);
+              // Handle success or error as needed
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+        }   
+      
+      
+      
+      
+        
+      
+        let n = {{ budget_heads|length }};
+        console.log("n",n)
+        function updateTotalCell() {
+          for(let j=1;j<=n;j++){
+          var totalCell = document.getElementById(`total-${j}`);
+          
+      
+          var totalCell1 = document.getElementById(`2-row-${j}`);
+        
+          if (totalCell) {
+            // Get the values from cells with the 'sum-cell' class and calculate the sum
+            var sumCells = document.getElementsByClassName(`1-row-${j}`); 
+            var sum = 0;
+      
+            for (var i = 0; i < sumCells.length; i++) {
+              var cellValue = parseFloat(sumCells[i].textContent) || 0;
+              sum += cellValue;
+            }
+      
+            // Update the "Total" cell
+            totalCell.textContent = sum;
+          }
+          console.log(totalCell1)
+          if (totalCell1) {
+            // Get the values from cells with the 'sum-cell' class and calculate the sum
+            var sumCells = document.getElementsByClassName(`row-${j}`);
+           
+            var sum = 0;
+      
+            for (var i = 0; i < sumCells.length; i++) {
+              var cellValue = parseFloat(sumCells[i].textContent) || 0;
+              sum += cellValue;
+            }
+           console.log(sum)
+            // Update the "Total" cell
+            totalCell1.textContent = sum;
+          }
+        }
+        }
+        // Function to get CSRF token from cookies
+        function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
+            }
+          }
+          return cookieValue;
+        }
+      
+      
+      </script>
+      
+      <script>
+      
+       // const project_id = JSON.parse(document.getElementById('room-name').textContent);
+        // alert('project_id',project_id);
+      
+          document.addEventListener('DOMContentLoaded',function(){
+      
+            let n = {{ budget_heads|length }};
+            console.log('n start',n);
+                  
+            var columns = document.getElementById('years');
+            console.log('columns length',years.length,",",columns);
+            var values={};
+            var expenses={};
+            var sum_yearwise = 0;
+            var expense_sum_yearwise = 0;
+            for(let j=1;j<years.length+1;j++){
+              values[`values${j}`] = [];
+              expenses[`expenses${j}`]=[];
+              for(let i=1;i<=n;i++){
+                var domaingrants = document.getElementById(`1-row-${i}-col-${j}`);
+                var domainexpenses = document.getElementById(`2-row-${i}-col-${j}`);
+                if(domaingrants){
+                  var value = domaingrants.textContent;
+                  values[`values${j}`].push(value);
+                }
+                if(domainexpenses){
+                  var expense = domainexpenses.textContent;
+                  expenses[`expenses${j}`].push(expense);
+                }
+              }
+      
+              var total_grants_yearwise = document.getElementById(`total-grant-${j}`);
+              var total_expenses_yearwise = document.getElementById(`total-expense-${j}`);
+              var sum = 0;var expense_sum = 0;
+              
+              for(var i=1;i<values[`values${j}`].length+1;i++){
+                var num = parseFloat(values[`values${j}`][i-1])||0;
+                sum+=num;
+      
+                var expense_num = parseFloat(expenses[`expenses${j}`][i-1])||0;
+                expense_sum += expense_num;
+              }
+              total_grants_yearwise.textContent = sum;
+              sum_yearwise += sum;
+      
+              total_expenses_yearwise.textContent = expense_sum;
+              expense_sum_yearwise += expense_sum;
+            }
+      
+             var total_funds_sanctioned_all_years = document.getElementById('total_funds_sanctioned_all_years');
+             total_funds_sanctioned_all_years.textContent = sum_yearwise;
+              
+             var total_expenditure_all_years = document.getElementById('total_expenditure_all_years');
+             total_expenditure_all_years.textContent = expense_sum_yearwise;
+      
+      
+            initializeZero(project_id);
+      
+             loadValues(project_id);
+      
+             var total_balance_amount = 0;
+             for(let i=1;i<=n;i++){
+              var balance_amount_row = 0;
+              var totalFundsEle = document.getElementById(`total-${i}`);
+              var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
+      
+             console.log('totalFunds',totalFunds);
+      
+              var totalExpEle = document.getElementById(`2-row-${i}`);
+              var totalExp = parseInt(totalExpEle.innerHTML)||0;
+      
+              console.log('totalEXp',totalExp);
+      
+             {% comment %} console.log('before committed_expenditure');
+              var committedExpEle = document.getElementById(`2-row-${i}-col-com`);
+              var committedExp = committedExpEle ? parseInt(committedExpEle.textContent) || 0 : 0;
+              console.log('after committed_expenditure',committedExp);
+      
+              console.log('committedExp',committedExp); {% endcomment %}
+      
+            //  balance_amount_row = totalFunds-totalExp-committedExp;
+              balance_amount_row = totalFunds-totalExp;
+      
+              console.log('balance',balance_amount_row);
+      
+              var inputField = document.querySelector(`input[name$="2-row-${i}-col-101-${project_id}"]`);
+      
+              if(inputField){
+                inputField.value = balance_amount_row || '0';
+              }
+      
+              total_balance_amount+=balance_amount_row;
+            }
+      
+            var total_balance_amount_all_domains = document.getElementById('total_balance_amount_all_domains');
+            total_balance_amount_all_domains.textContent = total_balance_amount;
+      
+          //   calculateTotalBalance();
+      
+          });
+      
+          {% comment %} function updation(projectId){
+      
+            let n = {{ budget_heads|length }};
+      
+             var committed_expenditure_sum = 0;
+             // console.log('updation called')
+              for(let i=1;i<=n;i++){
+                 var committed_expenditure = document.querySelector(`input[name$="2-row-${i}-col-100-${projectId}"]`);
+                 if(committed_expenditure){
+                   var num= parseInt(committed_expenditure.value)||0;
+                   committed_expenditure_sum += num; 
+                   localStorage.setItem(`committed_expenditure_${projectId}_${i}`,num);
+                   //console.log('value',num);
+                   // console.log('commited sum',committed_expenditure_sum);
+                 }
+              }
+            
+              var total_committed_expenditure_all_domains=document.getElementById('total_committed_expenditure_all_domains');
+              total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
+      
+      
+              for(let i=1;i<=n;i++){
+                var balance_amount_row = 0;
+                var totalFundsEle = document.getElementById(`total-${i}`);
+                var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
+      
+               console.log('totalFunds',totalFunds);
+      
+                var totalExpEle = document.getElementById(`2-row-${i}`);
+                var totalExp = parseInt(totalExpEle.innerHTML)||0;
+      
+                console.log('totalEXp',totalExp);
+      
+                console.log('projectId', projectId);
+                var committedExpEle = document.querySelector(`input[name$="2-row-${i}-col-100-${projectId}"]`);
+                
+                console.log('committedExpEle',committedExpEle);
+      
+                var committedExp = parseInt(committedExpEle.value)||0;
+      
+                console.log('committedExp',committedExp);
+      
+                balance_amount_row = totalFunds-totalExp-committedExp;
+      
+                console.log('balance',balance_amount_row);
+      
+                var inputField = document.querySelector(`input[name$="2-row-${i}-col-101-${projectId}"]`);
+              
+                if(inputField){
+                  inputField.value = balance_amount_row || '0';
+                }
+      
+              }
+      
+              calculateTotalBalance();
+              
+           } {% endcomment %}
+      
+          function calculateTotalBalance(){
+            let n = {{ budget_heads|length }};
+            var total_balance_amount = 0;
+            for(let i=1;i<=n;i++){
+             var balance_amount_row = 0;
+             var totalFundsEle = document.getElementById(`total-${i}`);
+             var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
+      
+            console.log('totalFunds',totalFunds);
+      
+             var totalExpEle = document.getElementById(`2-row-${i}`);
+             var totalExp = parseInt(totalExpEle.innerHTML)||0;
+      
+             console.log('totalEXp',totalExp);
+      
+            //  console.log('before committed_expenditure');
+             var committedExpEle = document.getElementById(`2-row-${i}-col-com`);
+             var committedExp = committedExpEle ? parseInt(committedExpEle.textContent) || 0 : 0;
+            //  console.log('after committed_expenditure');
+      
+             console.log('committedExp',committedExp);
+      
+             balance_amount_row = totalFunds-totalExp-committedExp;
+      
+             console.log('balance',balance_amount_row);
+      
+             var inputField = document.querySelector(`input[name$="2-row-${i}-col-101-${project_id}"]`);
+      
+             if(inputField){
+               inputField.value = balance_amount_row || '0';
+             }
+      
+             total_balance_amount+=balance_amount_row;
+           }
+      
+           var total_balance_amount_all_domains = document.getElementById('total_balance_amount_all_domains');
+           total_balance_amount_all_domains.textContent = total_balance_amount;
+          }
+            
+            
+          function initializeZero(project_id){
+            var zero = '0';
+            for(let i=0;i<7;i++){
+              var inputField = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
+              if(inputField){
+                inputField.value=zero;
+              }
+              // console.log('intitalised..');
+            }
+          }
+      
+          function loadValues(project_id){
+            var committed_expenditure_sum = 0;
+            for(let i=1;i<=n;i++){
+              var storedValue = localStorage.getItem(`committed_expenditure_${project_id}_${i}`);
+              var inputField = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
+              console.log()
+              console.log('before inputfield');
+              if(inputField){
+                // Check if the stored value is not null or undefined
+                var storedValueIsDefined = storedValue !== null && storedValue !== undefined;
+      
+                // Set the input value to the stored value if defined, otherwise set it to '0'
+                inputField.value = storedValueIsDefined ? storedValue.trim() : '0';
+                console.log('near inputField', inputField.value);
+              }
+              console.log('near inputField 2');
+              if(storedValue){
+                committed_expenditure_sum += parseInt(storedValue);
+              }
+            }
+      
+            var total_committed_expenditure_all_domains = document.getElementById('total_committed_expenditure_all_domains');
+            total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
+          }
+      
+      </script>
+      
   </body>
 </html>
