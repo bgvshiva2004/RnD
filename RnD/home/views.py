@@ -782,3 +782,68 @@ def project_listwise(request):
 
 def ucr(request):
     return render(request,'ucr.html')
+
+
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render
+from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from django.core.files.base import ContentFile
+# from django.templatetags.static import static
+import json
+import base64
+import os
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from django.urls import reverse
+
+def save_as_pdf(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            image_data = data.get('imageData')
+
+            # Convert base64 image data to binary
+            binary_data = base64.b64decode(image_data.split(',')[1])
+
+            # Save the image temporarily
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT)
+            image_path = fs.save('temp_image.png', ContentFile(binary_data))
+
+            # Generate PDF
+            pdf_buffer = BytesIO()
+            pdf = canvas.Canvas(pdf_buffer, pagesize=letter)
+            pdf.drawInlineImage(image_path, 0, 0, width=letter[0], height=letter[1])
+            pdf.showPage()
+            pdf.save()
+
+            # Remove the temporary image
+            fs.delete(image_path)
+
+            # Save the generated PDF temporarily
+            pdf_path = fs.save('temp_pdf.pdf', ContentFile(pdf_buffer.getvalue()))
+            pdf_buffer.close()
+
+            # Provide the download link using reverse
+            download_link = reverse('download_pdf') + f'?path={pdf_path}'
+
+            return JsonResponse({'downloadLink': download_link})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+def download_pdf(request):
+    pdf_path = request.GET.get('path')
+
+    # Serve the generated PDF for download
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
+
+    with open(pdf_path, 'rb') as pdf_file:
+        response.write(pdf_file.read())
+
+    return response
