@@ -251,9 +251,9 @@
             <button type="button" onclick="updateCellValue()" style="margin-top: 10px;">Update Cell Value</button>
         </form>
         
-            <a href="{% url 'mastersheet' project_id=fellowship_no  %}">
+            {% comment %} <a href="{% url 'mastersheet' project_id=fellowship_no  %}">
                 <button type="button">Marksheet</button>
-            </a>
+            </a> {% endcomment %}
             <button type='button' onclick="addRow()">Add New Row</button>
             <button onclick="deleteRow()">Delete Last  Row</button>
         

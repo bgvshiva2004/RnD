@@ -692,3 +692,11 @@ def project_listwise(request):
     # Pass the list of sorted projects to the template
     context = {'projects': projects}
     return render(request, 'project_listwise.html', context)
+
+
+
+def soe(request):
+    return render(request,'soe_copy.html')
+
+def ucr(request):
+    return render(request,'ucr.html')
