@@ -156,6 +156,22 @@
           .side-by-side table tr th, .side-by-side table tr td{
               width: 7vw;
           }
+          input[type='date'] {
+            border: none; /* Remove border */
+        }
+        input[type='number'] {
+          border: none; /* Remove border */
+      }
+      input[type='number']::-webkit-inner-spin-button,
+    input[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none; /* Remove default appearance */
+        margin: 0; /* Remove default margin */
+    }
+
+    input[type='number'] {
+        -moz-appearance: textfield; /* Firefox */
+    }
+
 
     </style>
   </head>
@@ -214,17 +230,17 @@
             <tr>
                 <th>1</th>
                 <th>Dated</th>
-                <td>Dated</td>
+                <td><input type='date' name='soe_dated'></td>
             </tr>
             <tr>
                 <th>2</th>
                 <th>SERB Sanction Order No</th>
-                <td>SERB Sanction Order No and date</td>
+                <td>{{existing_project.Project_Fellowship_No}}</td>
             </tr>
             <tr>
                 <th>3</th>
                 <th>Name of the PI</th>
-                <td>Name of the PI</td>
+                <td>{{existing_project.PI_of_Project}}</td>
             </tr>
             <tr>
                 <th>4</th>
@@ -233,13 +249,13 @@
             </tr>
             <tr>
                 <th>4</th>
-                <th>Revised Project Cost (if applicable)</th>
-                <td>Revised Project Cost</td>
+                <th>Revised Project Cost</th>
+                <td><input name='revised_project_cost' type='number' placeholder='(specify if applicable)'></td>
             </tr>
             <tr>
                 <th>5</th>
                 <th>Date of Commencement</th>
-                <td>Date of Commencement</td>
+                <td>{{existing_project.Project_Start_Date}}</td>
             </tr>
         </table>
 
@@ -457,9 +473,9 @@
             </ol>
         </div>
     </div>
+  </div>
 </div>
-</div>
-<button onclick="saveAsPdf()">Save as PDF</button>
+<button onclick="saveAsPdf()" class='btn'>Save as PDF</button>
 {% comment %} <button onclick="convertToImageAndSave()">Convert to Image and Save</button> {% endcomment %}
 
     <footer>
