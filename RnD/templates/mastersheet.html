@@ -228,6 +228,8 @@
       border: 2px solid rgba(34,122,191,0.5);
       background-color: #fff;
       color: var(--secondary-color);
+      margin: 0px 20px;
+      width: 150px;
   }
 
   .mbtn a button:hover{
@@ -259,6 +261,11 @@
 
         input[type="number"] {
         -moz-appearance: textfield;
+        }
+
+        .overflow{
+          overflow-x: auto;
+          width: 95%;
         }
   </style>
    
@@ -342,6 +349,12 @@
         <a href="{% url 'fill' project_id=project_id %}">
           <button type="button">Monthlysheet</button>
       </a>
+      <a href="{% url 'soe' project_id=project_id  %}">
+        <button type="button">SOE</button>
+    </a>
+    <a href="{% url 'ucr' project_id=project_id  %}">
+      <button type="button">UCR</button>
+  </a>
       </div>
 <div class="side-by-side">
 
@@ -517,7 +530,7 @@
         <td contenteditable="true" id="2-row-{{period}}" class="2-row-{{period}}"></td>
         <td contenteditable="true" id="2-row-{{period}}-col-com" class="2-row1-{{period}}"></td>
         {% comment %} <td contenteditable="true" id="2-row-{{period}}-col-{{l|add:2}}" class="2-row2-{{period}}"></td> {% endcomment %}
-        <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' name='2-row-{{period}}-col-101-{{project_id}}' value={{2_row_1_col_101}}></td>
+        <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' style="width: 100%; text-align: center; font-weight: 600; font-size: 15px;" name='2-row-{{period}}-col-101-{{project_id}}' value={{2_row_1_col_101}}></td>
       
 
       </tr>
@@ -542,77 +555,79 @@
 
   <br>
   <h2 class="table3h2">Details of Committed Expenditure</h2>
-  <table class="table3" id="data-table3">
-    <thead>
-        <!-- Parent row for "Sanctioned Amount Rs." -->
-        
-        <tr>
-            <th rowspan="2">S.No.</th>
-            <th rowspan="2">Particulars</th>
-            <th rowspan="2">Indent No</th>
-            <th rowspan="2">Indent DATE</th>
-            <th  colspan="{{budget_heads|length}}" style="text-align:center;">Budget Head & Indent/Advance/Fellowship Amount</th>
-            <th rowspan="2">Indent/Advance/Fellowship</th>
-            <th rowspan="2">Status of Indent</th>
+  <div class="overflow">
+    <table class="table3" id="data-table3">
+      <thead>
+          <!-- Parent row for "Sanctioned Amount Rs." -->
           
-        </tr>
-        <!-- Subheader row for S.No., Budget Head, and financial years -->
-        <tr>
-        
-            {% comment %} <th  class="column-names">Equipment</th>
-            <th  class="column-names">Manpower</th>
-            <th  class="column-names">Consumables</th>
-            <th  class="column-names">Contingecy</th>
-            <th  class="column-names">Travel</th>
-         {% endcomment %}
-         {% for  budget_head in  budget_heads %}
-         <th  class="column-names">{{budget_head}}</th>
-       
-       {% endfor %}
-        </tr>
-      </thead>
-    <tbody>
-        
-        <tr id="1">
+          <tr>
+              <th rowspan="2">S.No.</th>
+              <th rowspan="2">Particulars</th>
+              <th rowspan="2">Indent No</th>
+              <th rowspan="2">Indent DATE</th>
+              <th  colspan="{{budget_heads|length}}" style="text-align:center;">Budget Head & Indent/Advance/Fellowship Amount</th>
+              <th rowspan="2">Indent/Advance/Fellowship</th>
+              <th rowspan="2">Status of Indent</th>
+            
+          </tr>
+          <!-- Subheader row for S.No., Budget Head, and financial years -->
+          <tr>
           
-          <td contenteditable="true" id="1-1"> 1</td>
-          <td contenteditable="true" id="2-1"> 0</td>
-          <td contenteditable="true" id="3-1"> 0</td>
-          <td contenteditable="true" ><input type="date" id="4-1" name="date"></td>
+              {% comment %} <th  class="column-names">Equipment</th>
+              <th  class="column-names">Manpower</th>
+              <th  class="column-names">Consumables</th>
+              <th  class="column-names">Contingecy</th>
+              <th  class="column-names">Travel</th>
+          {% endcomment %}
           {% for  budget_head in  budget_heads %}
-        <td contenteditable="true" id="1-{{ budget_head }}"> 0</td>
-      {% endfor %}
-          <td contenteditable="true" id="5-1"> 0</td>
-          <td contenteditable="true" id="6-1"> 0</td>
-         
+          <th  class="column-names">{{budget_head}}</th>
+        
+        {% endfor %}
+          </tr>
+        </thead>
+      <tbody>
+          
+          <tr id="1">
+            
+            <td contenteditable="true" id="1-1"> 1</td>
+            <td contenteditable="true" id="2-1"> 0</td>
+            <td contenteditable="true" id="3-1"> 0</td>
+            <td contenteditable="true" ><input type="date" id="4-1" name="date"></td>
+            {% for  budget_head in  budget_heads %}
+          <td contenteditable="true" id="1-{{ budget_head }}"> 0</td>
+        {% endfor %}
+            <td contenteditable="true" id="5-1"> 0</td>
+            <td contenteditable="true" id="6-1"> 0</td>
+          
 
-        </tr>
-        <tr id="total-row">
+          </tr>
+          <tr id="total-row">
+          
+            <td contenteditable="true" id="total-row-1" colspan="4" style="text-align: center;"> TOTAL</td>
+            <!-- <td contenteditable="true" id="total-row-2"> 0</td>
+            <td contenteditable="true" id="total-row-3"> 0</td>
+            <td contenteditable="true" id="total-row-4"> 0</td> -->
+            {% for  budget_head in  budget_heads %}
+            
+            <td contenteditable="true" id="total-row-{{ budget_head }}"> 0</td>
+            {% endfor %}
+            <td contenteditable="true" id="total-row-5"> 0</td>
+            <td contenteditable="true" id="total-row-6"> 0</td>
+            
+            
+    
+          </tr>
         
-          <td contenteditable="true" id="total-row-1" colspan="4" style="text-align: center;"> TOTAL</td>
-          <!-- <td contenteditable="true" id="total-row-2"> 0</td>
-          <td contenteditable="true" id="total-row-3"> 0</td>
-          <td contenteditable="true" id="total-row-4"> 0</td> -->
-          {% for  budget_head in  budget_heads %}
-          
-          <td contenteditable="true" id="total-row-{{ budget_head }}"> 0</td>
-          {% endfor %}
-          <td contenteditable="true" id="total-row-5"> 0</td>
-          <td contenteditable="true" id="total-row-6"> 0</td>
-          
-          
-  
-        </tr>
-      
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
   <div class="btn-row">
     {% comment %} <button onclick="addRow()" class="btn">Add Row</button>
     <button class="btn" onclick="updateData()">Update Data</button>
     <button class="btn" id="updateDataBtn" class="btn" onclick="updateData()">Update Data</button> {% endcomment %}
     <button class="btn" onclick="addRow()">Add Row</button>
   <button class="btn" onclick="updateFile()">Update</button>
-  <button class="btn lastrow" onclick="deleteLastRow()">Delete Last Row</button>
+  <button class="btn lastrow" style="width: 200px;" onclick="deleteLastRow()">Delete Last Row</button>
 </div>
 
 <footer>

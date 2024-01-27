@@ -25,6 +25,7 @@
         table {
             border-collapse: collapse;
             margin: 30px auto;
+            text-align: center;
         }
 
         input{
@@ -36,14 +37,15 @@
 
         th, td {
             border: 1px solid var(--secondary-color);
-            text-align: left;
             height: 50px;
             width: 5vw;
+            text-align: center;
         }
 
         th {
             background-color: #fff;
             padding: 5px;
+            text-align: center;
         }
 
         th, .header-row {
@@ -140,10 +142,6 @@
             margin-bottom: 8px;
             font-size: 23px;
         }
-        .placeh{
-            background:#fff;
-            text-align:center;
-        }
         .negative-balance {
             background-color: red;
             color: white;
@@ -159,8 +157,8 @@
         margin: 0;
         }
 
-        input[type="number"] {
-        -moz-appearance: textfield;
+        input[type="number"]{
+            -moz-appearance: textfield;
         }
     </style>
 </head>
@@ -269,7 +267,7 @@
                 <td ><input class='14' type='number' name='one_Feb' value={{sum_data.one_Feb}} ></td>
                 <td ><input class='15' type='number' name='one_Mar' value={{sum_data.one_Mar}} ></td>
                 <td><input disabled class='placeh' name='one_expenses' placeholder={{sum_data.one_expenses}}></td>
-                <td class='placeh' name='one_closing'>{{sum_data.one_closing}}</td>
+                <td><input disabled class='placeh' name='one_closing' placeholder='{{sum_data.one_closing}}'></td>
                 
             </tr>
             <tr>
@@ -552,8 +550,8 @@
                 <td class='placeh' name='total_balances_closing' value={{sum_data.total_closing_balances}}>{{sum_data.total_closing_balances}}</td>     
             </tr> {% endcomment %}
             <tr>
-                <td><input type='text' name='1_head' value="1"></td>
-                <td><input type='text' name='1_text' value="Non_Recurring"></td>
+                <td><input type='text' name='1_head' style="font-weight: 600" value="1"></td>
+                <td><input type='text' name='1_text' value="Non_Recurring" style="width: 10vw; font-weight: 600"></td>
                 <td><input type='number' name='1_Grant_Amount' value="{{ sum_data.1_Grant_Amount }}"></td>
                 <td><input type='number' class='4' name='1_Apr' value="{{ sum_data.1_Apr }}"></td>
                 <td><input type='number' class='5' name='1_May' value="{{ sum_data.1_May }}"></td>
@@ -575,8 +573,8 @@
                 
                 <tr>
                     
-                    <td><input type='text' name='2_head' value="2"></td>
-                    <td><input type='text' name='2_text' value="Manpower"></td>
+                    <td><input type='text' name='2_head' style="font-weight: 600" value="2"></td>
+                    <td><input type='text' name='2_text' style="width: 10vw; font-weight: 600" value="Manpower"></td>
                     
                     <td><input type='number' name='2_Grant_Amount' value="{{ sum_data.2_Grant_Amount }}"></td>
                     <td><input type='number' class='4' name='2_Apr' value="{{ sum_data.2_Apr }}"></td>
@@ -598,8 +596,8 @@
                 
                 <tr>
                
-                    <td><input type='text' name='3_head' value="3"></td>
-                    <td><input type='text' name='3_text' value="Contingency"></td>
+                    <td><input type='text' name='3_head' style="font-weight: 600" value="3"></td>
+                    <td><input type='text' name='3_text' style="width: 10vw; font-weight: 600" value="Contingency"></td>
                     <td><input type='number' name='3_Grant_Amount' value={{sum_data.3_Grant_Amount}}></td>
                     <td><input type='number' class='4' name='3_Apr' value={{sum_data.3_Apr}}></td>
                     <td><input type='number' class='5' name='3_May' value={{sum_data.3_May}}></td>
@@ -618,8 +616,8 @@
                 </tr>
                 <tr>
                    
-                    <td><input type='text' name='4_head' value="4"></td>
-                    <td><input type='text' name='4_text' value="Consumables"></td>
+                    <td><input type='text' name='4_head' style="font-weight: 600" value="4"></td>
+                    <td><input type='text' name='4_text' style="width: 10vw; font-weight: 600" value="Consumables"></td>
                     <td><input type='number' name='4_Grant_Amount' value={{sum_data.4_Grant_Amount}}></td>
                     <td><input type='number' class='4' name='4_Apr' value={{sum_data.4_Apr}}></td>
                     <td><input type='number' class='5' name='4_May' value={{sum_data.4_May}}></td>
@@ -638,8 +636,8 @@
                 </tr>
                 <tr>
                     
-                    <td><input type='text' name='5_head' value="5"></td>
-                    <td><input type='text' name='5_text' value="Travel"></td>
+                    <td><input type='text' name='5_head' style="font-weight: 600" value="5"></td>
+                    <td><input type='text' name='5_text' style="width: 10vw; font-weight: 600" value="Travel"></td>
                     <td><input type='number' name='5_Grant_Amount' value={{sum_data.5_Grant_Amount}}></td>
                     <td><input type='number' class='4' name='5_Apr' value={{sum_data.5_Apr}}></td>
                     <td><input type='number' class='5' name='5_May' value={{sum_data.5_May}}></td>
@@ -658,8 +656,8 @@
                 </tr>
                 <tr>
                     
-                    <td><input type='text' name='6_head' value="6"></td>
-                    <td><input type='text' name='6_text' value="Overhead"></td>
+                    <td><input type='text' name='6_head' style="font-weight: 600" value="6"></td>
+                    <td><input type='text' name='6_text' style="width: 10vw; font-weight: 600" value="Overhead"></td>
                     <td><input type='number' name='6_Grant_Amount' value={{sum_data.6_Grant_Amount}}></td>
                     <td><input type='number' class='4' name='6_Apr' value={{sum_data.6_Apr}}></td>
                     <td><input type='number' class='5' name='6_May' value={{sum_data.6_May}}></td>
@@ -678,8 +676,8 @@
                 </tr>
                 <tr>
                    
-                    <td><input type='text' name='7_head' value="7"></td>
-                    <td><input type='text' name='7_text' value="SSR"></td>
+                    <td><input type='text' name='7_head' style="font-weight: 600" value="7"></td>
+                    <td><input type='text' name='7_text' style="width: 10vw; font-weight: 600" value="SSR"></td>
                     <td><input type='number' name='7_Grant_Amount' value={{sum_data.7_Grant_Amount}}></td>
                     <td><input type='number' class='4' name='7_Apr' value={{sum_data.7_Apr}}></td>
                     <td><input type='number' class='5' name='7_May' value={{sum_data.7_May}}></td>
@@ -701,8 +699,8 @@
             <tr name='total_amount'>
 
 
-            <th id="total_no">8</th>
-            <th>Total Amount</th>
+            <th id="total_no" style="font-weight: 600">8</th>
+            <th style="width: 10vw; font-weight: 600">Total Amount</th>
             <td><input type='number' name='total_Grant_Amount' class="placeh" value={{sum_data.total_grant}}></td>
             <td><input type='number' name='total_Apr' value={{sum_data.total_Apr}}></td>
             <td><input type='number' name='total_May' value={{sum_data.total_May}}></td>
@@ -898,7 +896,7 @@
         console.log(fellowshipNo)
         saveTableDataToDjango(tablesData,fellowshipNo);
         console.log(tablesData)
-    }
+    } 
 
     function initializeTableData(table) {
         const inputFields = table.querySelectorAll('input[type="number"]');
