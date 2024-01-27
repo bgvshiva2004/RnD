@@ -308,60 +308,96 @@
     </div>
 
     <div class="table-container">
-        <table>
-            <thead>
-                <tr>
+      <table>
+        <thead>
+            <tr>
                 <th onclick="sortTable('Title_of_Project')">Project Title</th>
                 <th onclick="sortTable('Project_Fellowship_No')">Project ID</th>
-                <th >Catergory</th>
-                <th >Country</th>
-                <th >Status</th>
-                <th >Name Of PI</th>
-                <th >Name Of Co PI</th>
-                <th >Name Of Agency</th>
-                <th >department</th>
+                <th>Catergory</th>
+                <th>Country</th>
+                <th>Status</th>
+                <th>Name Of PI</th>
+                <th>Name Of Co PI</th>
+                <th>Name Of Agency</th>
+                <th>Department</th>
                 <th onclick="sortTable('Project_Start_Date')">Start Date</th>
                 <th onclick="sortTable('Project_Closure_Date')">End Date</th>
-                <th >Action</th>
-               
-                
+                <th>Action</th>
+                <!-- Add table headers for new attributes -->
+                <th>Sanctioned Date</th>
+                <th>Project File Name</th>
+                <th>Project Duration</th>
+                <th>Financial Year Start Index</th>
+                <th>Financial Year End Index</th>
+                <th>Start Month</th>
+                <th>End Month</th>
+                <th>Funding Agency</th>
+                <th>Country Involved</th>
+                <th>Details of Donors</th>
+                <th>Remark</th>
+                <th>Scheme Name</th>
+                <th>Scheme Code</th>
+                <th>Received Amount</th>
+                <th>Date of Receipt Amount</th>
+                <th>Provisional UC</th>
+                <th>Audited UC</th>
+                <th>Link UC</th>
+                <th>Sanction Letters Link</th>
+                <th>Total Project Cost (TPC)</th>
+                <th>Fellowship Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+                <tr>
+                    <td>{{ project.Title_of_Project }}</td>
+                    <td>{{ project.Project_Fellowship_No }}</td>
+                    <td>{{ project.Category }}</td>
+                    <td>{{ project.Country_Involved }}</td>
+                    <td>{{ project.task }}</td>
+                    <td>{{ project.PI_of_Project }}</td>
+                    <td>{{ project.Co_PI_of_Project }}</td>
+                    <td>N.A</td>
+                    <td>N.A</td>
+                    <td>{{ project.Project_Start_Date }}</td>
+                    <td>{{ project.Project_Closure_Date }}</td>
+                    <td>
+                        <a style="text-decoration: none;" href="{% url 'fill' project_id=project.id %}">
+                            <button class="button">Monthly Sheet</button>
+                        </a>
+                        <a style="text-decoration: none;" href="{% url 'mastersheet' project_id=project.id %}">
+                            <button class="button">Mastersheet</button>
+                        </a>
+                        <a style="text-decoration: none;" href="{% url 'complete_task' project_id=project.id %}">
+                            <button class="button">Complete Task</button>
+                        </a>
+                    </td>
+                    <!-- Add table data cells for new attributes -->
+                    <td>{{ project.Sanctioned_Date }}</td>
+                    <td>{{ project.Project_file_name }}</td>
+                    <td>{{ project.project_duration }}</td>
+                    <td>{{ project.financial_year_start_index }}</td>
+                    <td>{{ project.financial_year_end_index }}</td>
+                    <td>{{ project.start_month }}</td>
+                    <td>{{ project.end_month }}</td>
+                    <td>{{ project.funding_agency }}</td>
+                    <td>{{ project.Details_of_Donors }}</td>
+                    <td>{{ project.remark }}</td>
+                    <td>{{ project.scheme_name }}</td>
+                    <td>{{ project.scheme_code }}</td>
+                    <td>{{ project.received_amount }}</td>
+                    <td>{{ project.date_of_receipt_amount }}</td>
+                    <td>{{ project.provisional_uc }}</td>
+                    <td>{{ project.audited_uc }}</td>
+                    <td>{{ project.link_uc }}</td>
+                    <td>{{ project.sanction_letters_link }}</td>
+                    <td>{{ project.total_project_cost }}</td>
+                    <td>{{ project.fellowship_type }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for project in projects %}
-                    <tr>
-                        <td>{{ project.Title_of_Project }}</td>
-                        <td>{{ project.Project_Fellowship_No }}</td>
-                       
-                        <td>{{ project.Project_Start_Date }}</td>
-                        <td>{{ project.Project_Closure_Date }}</td>
-                        <td>{{ project.task }}</td>
-                        <td>{{ project.PI_of_Project }}</td>
-                        <td>{{ project.Co_PI_of_Project }}</td>
-                        
-                        <td>N.A</td>
-                        <td>N.A</td>
-                        
-                       
-                        <td>{{ project.funding_agency }}</td>
-                        <td>N.A</td>
-                      
-                        <!-- Repeat the pattern for other columns -->
-                        <td>
-                            <a style="text-decoration: none;" href="{% url 'fill' project_id=project.id %}">
-                                <button class="button">Monthly Sheet</button>
-                            </a>
-                            <a style="text-decoration: none;" href="{% url 'mastersheet' project_id=project.id %}">
-                                <button class="button">Mastersheet</button>
-                            </a>
-                            <a style="text-decoration: none;" href="{% url 'complete_task' project_id=project.id %}">
-                                <button class="button">Complete Task</button>
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            {% endfor %}
+        </tbody>
+    </table>
+    
     </div>
 
     <footer>

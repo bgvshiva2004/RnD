@@ -148,6 +148,20 @@ class project_details(models.Model):
     end_month = models.IntegerField(null=True)
     funding_agency = models.CharField(max_length=100,blank=True,null=True)
     Co_PI_of_Project = models.CharField(max_length=100,blank=True,null=True)
+    Country_Involved = models.CharField(max_length=100,blank=True,null=True)
+    Category = models.CharField(max_length=100,blank=True,null=True)
+    Details_of_Donors= models.CharField(max_length=100,blank=True,null=True)
+    remark = models.TextField(null=True, blank=True)
+    scheme_name = models.CharField(max_length=255, null=True, blank=True)
+    scheme_code = models.CharField(max_length=50, null=True, blank=True)
+    received_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    date_of_receipt_amount = models.DateField(null=True, blank=True)
+    provisional_uc = models.TextField(null=True, blank=True)
+    audited_uc = models.TextField(null=True, blank=True)
+    link_uc = models.URLField(null=True, blank=True)
+    sanction_letters_link = models.URLField(null=True, blank=True)
+    total_project_cost = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    fellowship_type = models.CharField(max_length=100, null=True, blank=True)
     TASK_CHOICES = [
         ('ongoing', 'Ongoing'),
         ('completed', 'Completed'),
