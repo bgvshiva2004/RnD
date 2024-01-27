@@ -22,4 +22,5 @@ urlpatterns = [
     path('ucr/<int:project_id>/',views.ucr,name='ucr'),
     path('save-as-pdf/', views.save_as_pdf, name='save_as_pdf'),
     path('download-pdf/', views.download_pdf, name='download_pdf'),
+    path('submit_project_data/<int:project_id>/', views.submit_project_data, name='submit_project_data'),
 ]
