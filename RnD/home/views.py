@@ -265,13 +265,13 @@ def project_list(request):
 
     return render(request, 'project_list.html', context)
 
-# @login_required
-def soe(request):
-    return render(request, "soe_copy.html")
+
 
 # @login_required
-def ucr(request):
-    return render(request, "ucr.html")
+def ucr(request,project_id):
+    # existing_project = project_details.objects.get(id=project_id)
+    
+    return render(request, "ucr.html",{'project_id':project_id})
 
 @login_required
 def monthly(request):
@@ -779,9 +779,6 @@ def project_listwise(request):
 
 
 
-
-def ucr(request):
-    return render(request,'ucr.html')
 
 
 from django.http import JsonResponse, HttpResponse

@@ -8,14 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>
-<<<<<<< Updated upstream
 
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     
     <script href="{% static 'jsPDF.js' %}"></script>
 
-=======
->>>>>>> Stashed changes
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -200,17 +197,17 @@
     </div>
     <div class="mtitle">
         <div class="mbtn">
-            <a href="#">
+          <a href="{% url 'mastersheet' project_id=existing_project.id  %}">
                 <button type="button">Mastersheet</button>
             </a> 
         </div>
          <div class="mbtn">
-         <a href="#">
+          <a href="{% url 'ucr' project_id=existing_project.id  %}">
             <button type="button">UCR</button>
         </a>
         </div>
     </div>
-
+<div id='print'>
     <div class="body">
         <h2  style='font-size:25px'>REQUEST FOR ANNUAL INSTALMENT WITH UP-TO-DATE STATEMENT OF EXPENDITURE</h2>
         <table>
@@ -336,12 +333,7 @@
 
         <h2>Statement of Expenditure</h2>
 
-        
-        <tr>
-            <td>Amount to be Refunded/Received: </td>
-            <td>2,709,966</td>
-        </tr>
-        <h2>Project Information</h2>
+        {% comment %} <h2>Project Information</h2> {% endcomment %}
         <div class="side-by-side">
 
 
@@ -442,34 +434,12 @@
                     <td   style="display: none;" id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
                     <td id='total_balance_amount_all_domains' name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
                 </tbody>
-              </table>
-            
-            
-              
-              
-              
+              </table>              
             </div>
-             
-            
-            <footer>
-              <div class="footer">
-                <div class="info">
-                  <h4>IIT Indore</h4>
-                </div>
-                <div class="social">
-                  <ul>
-                    <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                    <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
-                    <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-                  </ul>
-                </div>
-                <div class="rights">
-                  <p><i class="fa-solid fa-copyright"></i> Copyrights reserved.</p>
-                </div>
-              </div>
-              
-
+            <tr>
+              <td>Amount to be Refunded/Received: </td>
+              <td>2,709,966</td>
+          </tr>
         <table>
             <tbody>
                 <tr>
@@ -487,13 +457,11 @@
             </ol>
         </div>
     </div>
-<<<<<<< Updated upstream
+</div>
 </div>
 <button onclick="saveAsPdf()">Save as PDF</button>
 {% comment %} <button onclick="convertToImageAndSave()">Convert to Image and Save</button> {% endcomment %}
 
-=======
->>>>>>> Stashed changes
     <footer>
         <div class="footer">
           <div class="info">
@@ -514,16 +482,15 @@
         
       </footer>
 
-      {{ project_id|json_script:"room-name"}}   
+       
 
     <script src="{% static 'script.js' %}"></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    {% comment %} <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<<<<<<< Updated upstream
-    <script href="{% static 'script.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> {% endcomment %}
+    {% comment %} <script href="{% static 'script.js' %}"></script> {% endcomment %}
     <script>
         function saveAsPdf() {
             html2canvas(document.getElementById('print')).then(function (canvas) {
@@ -563,10 +530,9 @@
             return cookieValue;
         }
     </script>
-
-=======
->>>>>>> Stashed changes
+    {% comment %} {{ project_id|json_script:"room-name"}}  {% endcomment %}
     <script>
+      
         var project_id = {{ existing_project.id }};
         var tablesData = {{ tablesdata|safe }};
         console.log(tablesData)
@@ -612,48 +578,7 @@
           var col = parts[4];
           //   console.log(row+"+"+col)
          
-        
-<<<<<<< Updated upstream
-    </script>
-    <script src="{% static 'jsPDF.js' %}"></script>
     
-    {% comment %} <script>
-        document.getElementById('print-btn').addEventListener('click', function () {
-            console.log('Start converting to image...');
-
-            // Create a new image element
-            
-
-            // Set the source of the image to the data URL of the captured content (image)
-            const img = new Image();
-            html2canvas(document.getElementById('print')).then(function (canvas) {
-                console.log('Captured HTML to Canvas...');
-                const imgData = canvas.toDataURL('image/png');
-                img.src = imgData;
-                img.onload = function () {
-                    console.log('Image loaded...');
-                    const newWindow = window.open();
-                    newWindow.document.write('<img src="' + imgData + '" width="100%">');
-
-                    newWindow.document.addEventListener('DOMContentLoaded', function () {
-                        // Your code to handle the DOMContentLoaded event in the new window
-                        console.log('DOMContentLoaded in the new window...');
-                    });
-
-                    // Introduce a delay before triggering the print action (e.g., 500 milliseconds)
-                    setTimeout(function () {
-                        newWindow.print();
-                        console.log('Printed...');
-                    }, 1000);
-                };
-            });
-
-            
-            
-        });
-    </script> {% endcomment %}
-
-=======
         if (tablesData[col] && tablesData[col][row + '_expenses']) {
           return tablesData[col][row + '_expenses'];
         } else {
@@ -704,26 +629,7 @@
        }
       }
       }
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-        
-      
-      
-        
-        
-      
-      
-      
-        
-      
+         
       document.addEventListener('DOMContentLoaded', function() {
       
         console.log("hi")
@@ -760,11 +666,6 @@
               console.error('Error:', error);
           });
         }   
-      
-      
-      
-      
-        
       
         let n = {{ budget_heads|length }};
         console.log("n",n)
@@ -1062,9 +963,7 @@
             var total_committed_expenditure_all_domains = document.getElementById('total_committed_expenditure_all_domains');
             total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
           }
-      
-      </script>
-      
->>>>>>> Stashed changes
+    
+    </script>
   </body>
 </html>
