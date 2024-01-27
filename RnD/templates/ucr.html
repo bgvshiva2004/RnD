@@ -115,7 +115,11 @@
 
         .details{
             padding: 20px 10%;
-            font-size: 18px;
+            margin-bottom: 50px;
+        }
+
+        .details p{
+            font-size: 15px;
         }
 
         .head-info{
@@ -130,6 +134,62 @@
             font-weight: 600;
             font-size: 18px;
         }
+
+        button.btn{
+            display: block;
+            height: 50px;
+            font-size: 20px;
+            padding: 10px;
+            margin: 30px auto;
+            width: 150px;
+            cursor: pointer;
+            border: 0;
+            outline: none;
+            border-radius: 30px;
+            background-color: #fff;
+            color: var(--secondary-color);
+            font-weight: 400;
+            transition: 0.3s ease-in-out;
+            position: relative;
+            box-shadow: 6px 6px 1px -1px rgba(0, 0, 0, 0.15),
+                        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);  
+            z-index: 3;      
+      }
+
+        button.btn:hover{
+            color: #fff;
+            box-shadow: 6px 6px 1px -1px rgba(72,68,163,0.2),
+                        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+            z-index: 4;
+        }
+    
+        button.btn:hover::before{
+            content: '';
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            left: 0px;
+            top: 0px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            animation: btn 0.3s linear forwards;
+            border-radius: 30px;
+            opacity: 1;
+            z-index: -2;
+        }
+    
+        @keyframes btn{
+            0%{
+                width: 0%;
+            }
+            50%{
+                width: 50%;
+            }
+            100%{
+                width: 100%;
+            }
+        }
+
 
     </style>
 </head>
@@ -177,7 +237,7 @@
         </div>
          <div class="mbtn">
             <a href="{% url 'soe' project_id=project_id  %}">
-            <button type="button">Soe Copy</button>
+            <button type="button">SOE</button>
         </a>
         </div>
     </div>
@@ -399,7 +459,7 @@
         </div>
     </div>
 </div>
-<button onclick="saveAsPdf()">Save as PDF</button>
+<button class="btn" onclick="saveAsPdf()">Save as PDF</button>
    
     <footer>
         <div class="footer">

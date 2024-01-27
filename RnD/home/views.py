@@ -844,3 +844,55 @@ def download_pdf(request):
         response.write(pdf_file.read())
 
     return response
+
+
+def submit_project_data(request, project_id):
+    print(project_id)
+    if request.method == 'POST':
+        try:
+        # Retrieve the project object using project_id
+            project = project_details.objects.get(id=project_id)
+            
+            project.Title_of_Project = request.POST.get('Title_of_Project')
+            project.Project_Fellowship_No = request.POST.get('Project_Fellowship_No')
+            project.Category = request.POST.get('Category')
+            project.Country_Involved = request.POST.get('Country_Involved')
+            project.task = request.POST.get('task')
+            project.PI_of_Project = request.POST.get('PI_of_Project')
+            project.Co_PI_of_Project = request.POST.get('Co_PI_of_Project')
+            project.Department = request.POST.get('Department')
+            # project.Project_Start_Date = request.POST.get('Project_Start_Date')
+            # project.Project_Closure_Date = request.POST.get('Project_Closure_Date')
+            # project.Sanctioned_Date = request.POST.get('Sanctioned_Date')
+            project.Project_file_name = request.POST.get('Project_file_name')
+            project.project_duration = request.POST.get('project_duration')
+            project.financial_year_start_index = request.POST.get('financial_year_start_index')
+            project.financial_year_end_index = request.POST.get('financial_year_end_index')
+            project.start_month = request.POST.get('start_month')
+            project.end_month = request.POST.get('end_month')
+            project.funding_agency = request.POST.get('funding_agency')
+            project.Details_of_Donors = request.POST.get('Details_of_Donors')
+            project.remark = request.POST.get('remark')
+            project.scheme_name = request.POST.get('scheme_name')
+            project.scheme_code = request.POST.get('scheme_code')
+            project.received_amount = request.POST.get('received_amount')
+            # project.date_of_receipt_amount = request.POST.get('date_of_receipt_amount')
+            project.provisional_uc = request.POST.get('provisional_uc')
+            project.audited_uc = request.POST.get('audited_uc')
+            project.link_uc = request.POST.get('link_uc')
+            project.sanction_letters_link = request.POST.get('sanction_letters_link')
+            project.total_project_cost = request.POST.get('total_project_cost')
+            project.fellowship_type = request.POST.get('fellowship_type')
+            
+            print(project.Category)
+            # Save the updated project object
+            project.save()
+        
+        # Redirect to a success page or to another URL
+            return redirect('project_listwise')  # Replace 'success_page' with the name of your success page URL pattern
+        except Exception as e:
+            # Return an HTTP response indicating failure
+            return HttpResponse("Failed to submit form. Error: " + str(e), status=500)
+
+    # If the request method is not POST, redirect to some error page or handle accordingly
+    return redirect('project_list')  # Replace 'error_page' with the name of your error page URL pattern
