@@ -6,6 +6,7 @@ from datetime import datetime
 from django.contrib.auth import authenticate,login as auth_login , logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import pandas as pd
 # Create your views here.
 period=0
 
@@ -44,6 +45,7 @@ def duration(date1,date2):
 import pickle
 # @login_required
 def createfile(Project_file_name,period_range):
+    print('called create file')
     file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{Project_file_name}.txt'))
 
     data={}
@@ -147,7 +149,7 @@ def createfile(Project_file_name,period_range):
             "seven_Feb": "0",
             "seven_Mar": "0",
         }
-    
+
     for table_name in data:
         data[table_name]["total_Grant_Amount"]="0"
         data[table_name]["total_Apr"] = "0"
@@ -163,10 +165,8 @@ def createfile(Project_file_name,period_range):
         data[table_name]["total_Feb"] = "0"
         data[table_name]["total_Mar"] = "0"
 
-    # print(data)
-
     with open(file_path, 'w') as file:
-        json_data = json.dumps(data, indent=2,sort_keys=True)
+        json_data = json.dumps(data)
         file.write(json_data)
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -227,7 +227,6 @@ def index(request):
 
             years_dict = {'context':context, 'years':years, 'fellowship_no':Project_Fellowship_No,'title':Title_of_Project ,'id':details.id}
 
-            # save_table_data(request,details.id)
 
             return render(request,'monthly.html',years_dict)
         
@@ -401,6 +400,9 @@ def mastersheet(request,project_id):
     #     print(table_key)
 
     # years = {'start_year':2023, 'closure_year':2027}
+    for i in parsed_data.items():
+        print('parsed data',i)
+        
     new_parsed_data = {int(key.split('_')[1]): value for key, value in parsed_data.items()}
 
     # print(new_parsed_data)
@@ -429,6 +431,11 @@ def mastersheet(request,project_id):
         'parsed_data2':parsed_data2,
         'project_id':project_id
         }
+    
+    for table_key,total_sum in new_parsed_data.items():
+        print('table key',table_key)
+        print('total sum',total_sum)
+    
     # print("zipped data",new_parsed_data)
     return render(request,'mastersheet.html',data)
 
@@ -612,7 +619,7 @@ def fill(request, project_id):
             'end_month':end_month
         }
 
-        print(start_year)
+        # print('tablesdata',new_parsed_data)
     
         parsed_data_json = json.dumps(parsed_data)
     

@@ -762,11 +762,13 @@
         
         initializeTableValues();
         const tableIds = document.querySelectorAll('table[id^="table"]');
+       
+        
         tableIds.forEach(function (table) {
             const tableId = table.id;
             tablesData[tableId] = initializeTableData(table);
           console.log("update called")
-            updateTable(tableId);
+         
             console.log("update done")            
             console.log(table.children[0].children)
 
@@ -854,6 +856,8 @@
 
         });
 
+        updateTable(tableIds);
+
     });
 
     function addRow() {
@@ -916,21 +920,27 @@
         });
     }
 
-    function updateTable(tableId) {
-        var tableData = getTableData(tableId);
-        tablesData[tableId] = tableData;
+    function updateTable(tableIds) {
+        
+        tableIds.forEach(function (table) {
+            let tableId = table.id
+            // alert(tableId)
+            var tableData = getTableData(tableId);
+            tablesData[tableId] = tableData;
 
-        // Implement the logic to update the table with the retrieved data
-        calculateAndDisplayTotalAmount(tableId);
-        calculateAndDisplayTotalExpenses(tableId);
-        calculateAndDisplayClosingBalance(tableId);
-         tableData = getTableData(tableId);
-        tablesData[tableId] = tableData;
-        // console.log(tableId);
-         console.log(tablesData);
-         console.log(JSON.stringify(tableData));
-         var project_id = "{{ id }}";
-        saveTableDataToDjango(tablesData,project_id);
+            // Implement the logic to update the table with the retrieved data
+            calculateAndDisplayTotalAmount(tableId);
+            calculateAndDisplayTotalExpenses(tableId);
+            calculateAndDisplayClosingBalance(tableId);
+            tableData = getTableData(tableId);
+            tablesData[tableId] = tableData;
+            // console.log(tableId);
+            console.log(tablesData);
+            console.log(JSON.stringify(tableData));
+            
+    1       });
+            var project_id = "{{ id }}";
+            saveTableDataToDjango(tablesData,project_id);
      //   alert(`Table ${tableId} updated: ${JSON.stringify(tableData)}`);
     }
 
@@ -945,6 +955,7 @@
 
         return tableData;
     }
+
     function calculateAndDisplayTotalExpenses(tableId) {
         const table = document.querySelector(`#${tableId}`);
         console.log(table)
@@ -1086,9 +1097,9 @@
     }
     
     // JavaScript code
-    function saveTableDataToDjango(data, project_id) {
+    async function saveTableDataToDjango(data, project_id) {
         console.log(JSON.stringify(data));
-        fetch(`/save_table_data/${project_id}/`, {
+        await fetch(`/save_table_data/${project_id}/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
