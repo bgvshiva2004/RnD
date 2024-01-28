@@ -81,13 +81,17 @@
             font-size: 18px;
             text-align: left;
             padding: 0px 10%;
-            padding-top: 5%;
+            margin-bottom: 0px;
         }
 
         .note p{
             font-size: 20px;
             color: var(--secondary-color);
             text-align: left;
+        }
+
+        .note ol li{
+          font-size: 15px;
         }
 
         .mtitle{
@@ -102,6 +106,7 @@
         
         .mtitle .mbtn a button{
             height: 60px;
+            width: 150px;
             padding: 10px;
             font-size: 20px;
             outline: 0;
@@ -178,6 +183,96 @@
         -moz-appearance: textfield; /* Firefox */
     }
 
+    button.btn{
+
+      display: block;
+      height: 50px;
+      font-size: 20px;
+      padding: 10px;
+      margin: 30px auto;
+      width: 150px;
+      cursor: pointer;
+      border: 0.5px solid var(--secondary-color);
+      outline: none;
+      border-radius: 30px;
+      background-color: #fff;
+      color: var(--secondary-color);
+      font-weight: 400;
+      transition: 0.3s ease-in-out;
+      position: relative;
+      box-shadow: 3px 3px 1px -1px rgba(0, 0, 0, 0.15),
+                  -3px -3px 5px -1px rgba(255, 255, 255, 0.7);  
+      z-index: 3;      
+}
+
+  button.btn:hover{
+      color: #fff;
+      box-shadow: 6px 6px 1px -1px rgba(72,68,163,0.2),
+                  -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+      z-index: 4;
+  }
+
+  button.btn:hover::before{
+      content: '';
+      height: 100%;
+      position: absolute;
+      width: 100%;
+      left: 0px;
+      top: 0px;
+      background-color: var(--secondary-color);
+      color: #fff;
+      animation: btn 0.3s linear forwards;
+      border-radius: 30px;
+      opacity: 1;
+      z-index: -2;
+  }
+
+  @keyframes btn{
+      0%{
+          width: 0%;
+      }
+      50%{
+          width: 50%;
+      }
+      100%{
+          width: 100%;
+      }
+  }
+
+
+  .last{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .last h3{
+    margin-right: 20px;
+  }
+
+  .row{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 130px;
+}
+
+.row div p:nth-child(1){
+    font-weight: 600;
+}
+
+.lastdate{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.lastdate h3{
+  font-size: 15px;
+  margin-right: 20px;
+}
 
     </style>
   </head>
@@ -449,21 +544,54 @@
                 </tbody>
               </table>              
             </div>
-            <table>
-            <tr>
-              <td style='text-align:center;'>Amount to be Refunded/Received: </td>
-              <td class='total_balance_amount_all_domains' name='total_balance_amount_all_domains'></td>
-          </tr>
-        </table>
-        <table>
-            <tbody>
-                <tr>
-                    <th>Date of Start</th>
-                    <td>04-15-2020</td>
-                </tr>
-            </tbody>
-        </table>
-
+            
+            <div class="last">
+              <h3>Amount to be Refunded/Received: </h3>
+              <h3 class='total_balance_amount_all_domains' name='total_balance_amount_all_domains'></h3>
+            </div>
+            <div class="row">
+              <div>
+                  <div>
+                  <p>
+                    Name and Signature of Principal Investigator		
+                  </p>
+                  <p>
+                    Date:		
+              
+                  </p>
+                  </div>
+              </div>
+              <div>
+                  <div>
+                  <p>
+                    Name and Signature of Competent Financial Authority		
+              
+                  </p>
+                  <p>
+                    Date:		
+                  
+                  </p>
+                  </div>
+              </div>
+              <div>
+                  <div>
+                  <p>
+                    Signature of Accounts Officer / AR / JR	
+              
+              
+                  </p>
+                  <p>
+                      {% comment %} Name & Signature		 {% endcomment %}
+              
+                  </p>
+                  </div>
+              </div>
+  
+          </div>
+                  <div class="lastdate">
+                    <h3>Date of Start:</h3>
+                    <h3>{{existing_project.Project_Start_Date}}</h3>
+                  </div>
         <div class="note">
             <p><strong>Note:</strong></p>
             <ol>
