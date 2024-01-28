@@ -78,13 +78,14 @@
 
         .note{
             line-height: 30px;
-            font-size: 15px;
+            font-size: 18px;
             text-align: left;
             padding: 0px 10%;
+            padding-top: 5%;
         }
 
         .note p{
-            font-size: 17px;
+            font-size: 20px;
             color: var(--secondary-color);
             text-align: left;
         }
@@ -155,89 +156,22 @@
           .side-by-side table tr th, .side-by-side table tr td{
               width: 7vw;
           }
-
-          button.btn{
-            display: block;
-            height: 50px;
-            font-size: 20px;
-            padding: 10px;
-            margin: 30px auto;
-            width: 150px;
-            cursor: pointer;
-            border: 0;
-            outline: none;
-            border-radius: 30px;
-            background-color: #fff;
-            color: var(--secondary-color);
-            font-weight: 400;
-            transition: 0.3s ease-in-out;
-            position: relative;
-            box-shadow: 6px 6px 1px -1px rgba(0, 0, 0, 0.15),
-                        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);  
-            z-index: 3;      
+          input[type='date'] {
+            border: none; /* Remove border */
+        }
+        input[type='number'] {
+          border: none; /* Remove border */
       }
+      input[type='number']::-webkit-inner-spin-button,
+    input[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none; /* Remove default appearance */
+        margin: 0; /* Remove default margin */
+    }
 
-        button.btn:hover{
-            color: #fff;
-            box-shadow: 6px 6px 1px -1px rgba(72,68,163,0.2),
-                        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
-            z-index: 4;
-        }
-    
-        button.btn:hover::before{
-            content: '';
-            height: 100%;
-            position: absolute;
-            width: 100%;
-            left: 0px;
-            top: 0px;
-            background-color: var(--secondary-color);
-            color: #fff;
-            animation: btn 0.3s linear forwards;
-            border-radius: 30px;
-            opacity: 1;
-            z-index: -2;
-        }
-    
-        @keyframes btn{
-            0%{
-                width: 0%;
-            }
-            50%{
-                width: 50%;
-            }
-            100%{
-                width: 100%;
-            }
-        }
+    input[type='number'] {
+        -moz-appearance: textfield; /* Firefox */
+    }
 
-        .sign{
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-top: 7%;
-        }
-
-        .date{
-          display: flex;
-          justify-content: space-around;
-          align-items: center;
-          margin-top: 30px;
-        }
-
-        .date h3{
-          font-size: 15px;
-          margin-right: 20px;
-        }
-
-        .sign div h3{
-          font-size: 13px;
-          font-weight: 600;
-        }
-
-        .sign div{
-          margin-right: 70px;
-        }
 
     </style>
   </head>
@@ -296,17 +230,17 @@
             <tr>
                 <th>1</th>
                 <th>Dated</th>
-                <td>Dated</td>
+                <td><input type='date' name='soe_dated'></td>
             </tr>
             <tr>
                 <th>2</th>
                 <th>SERB Sanction Order No</th>
-                <td>SERB Sanction Order No and date</td>
+                <td>{{existing_project.Project_Fellowship_No}}</td>
             </tr>
             <tr>
                 <th>3</th>
                 <th>Name of the PI</th>
-                <td>Name of the PI</td>
+                <td>{{existing_project.PI_of_Project}}</td>
             </tr>
             <tr>
                 <th>4</th>
@@ -315,13 +249,13 @@
             </tr>
             <tr>
                 <th>4</th>
-                <th>Revised Project Cost (if applicable)</th>
-                <td>Revised Project Cost</td>
+                <th>Revised Project Cost</th>
+                <td><input name='revised_project_cost' type='number' placeholder='(specify if applicable)'></td>
             </tr>
             <tr>
                 <th>5</th>
                 <th>Date of Commencement</th>
-                <td>Date of Commencement</td>
+                <td>{{existing_project.Project_Start_Date}}</td>
             </tr>
         </table>
 
@@ -374,7 +308,9 @@
                     <td>23,668</td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="text-align: center;"><strong>TOTAL</strong></td>
+                    <td><strong>TOTAL</strong></td>
+                    <td></td>
+                    <td></td>
                     <td><strong>23,668</strong></td>
                 </tr>
             </tbody>
@@ -511,32 +447,23 @@
                       <td  id="total-expense-{{forloop.counter}}"></td>
                   {% endfor %}
                   <td  id="total_expenditure_all_years" name="total_expenditure_all_years">{{total_expenditure_all_years}}</td>
-                    <td style="display: none;" id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
+                    <td   style="display: none;" id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
                     <td id='total_balance_amount_all_domains' name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
                 </tbody>
               </table>              
             </div>
-            <div class="date" style="margin-top: 0px">
-              <h3 style="font-weight: 600;">Amount to be Refunded/Received: </h3>
-              <h3 style="font-weight: 600;">2,709,966</h3>
-            </div>
-          <div class="sign">
-            <div>
-              <h3>Name and Signature of Principal Investigator</h3>
-              <h3>Date:</h3>
-            </div>
-            <div>
-              <h3>Name and Signature of Competent Financial Authority</h3>
-              <h3>Date:</h3>
-            </div>
-            <div>
-              <h3>Signature of Accounts Officer / AR / JR</h3>
-            </div>
-          </div>
-              <div class="date">
-                    <h3>Date of Start:</h3>
-                    <h3>04-15-2020</h3>
-              </div>
+            <tr>
+              <td>Amount to be Refunded/Received: </td>
+              <td>2,709,966</td>
+          </tr>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Date of Start</th>
+                    <td>04-15-2020</td>
+                </tr>
+            </tbody>
+        </table>
 
         <div class="note">
             <p><strong>Note:</strong></p>
@@ -546,9 +473,9 @@
             </ol>
         </div>
     </div>
+  </div>
 </div>
-</div>
-<button class="btn" onclick="saveAsPdf()">Save as PDF</button>
+<button onclick="saveAsPdf()" class='btn'>Save as PDF</button>
 {% comment %} <button onclick="convertToImageAndSave()">Convert to Image and Save</button> {% endcomment %}
 
     <footer>
