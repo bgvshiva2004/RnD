@@ -523,9 +523,7 @@
         {% for table_key, sum_data in tablesdata1.items %}
 
         <td contenteditable="false" id="2-row-{{ period }}-col-{{table_key}}" class="row-{{ period }}"></td>
-      
-      
-        
+
         {% endfor %}
         <td contenteditable="true" id="2-row-{{period}}" class="2-row-{{period}}"></td>
         <td contenteditable="true" id="2-row-{{period}}-col-com" class="2-row1-{{period}}"></td>
@@ -1135,7 +1133,7 @@ document.addEventListener('DOMContentLoaded', function() {
           // cell.textContent = cellContent;
   
           // Access the cell using its ID
-          var cellId = `2-row-${i }-col-${j+1}`;
+          var cellId = `2-row-${i}-col-${j+1}`;
           var cellElement = document.getElementById(cellId);
   
           if (cellElement) {

@@ -45,7 +45,7 @@ def duration(date1,date2):
 import pickle
 # @login_required
 def createfile(Project_file_name,period_range):
-    print('called create file')
+    # print('called create file')
     file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{Project_file_name}.txt'))
 
     data={}
@@ -366,7 +366,8 @@ def mastersheet(request,project_id):
 ]
     file_path = os.path.join('project_files', f'{existing_project.Project_file_name}.txt')
     file_path1 = os.path.join('commited', f'{existing_project.id}.txt')
-    print(file_path1)
+    # print(file_path1)
+
     with open(file_path, 'r') as file:
         table_data1 = file.read()
     # print((table_data1))
@@ -391,8 +392,8 @@ def mastersheet(request,project_id):
                 text_values_set.add(value)
 
     # Print the resulting set
-    print(type(text_values_set))
-    print(type(budget_heads))
+    # print(type(text_values_set))
+    # print(type(budget_heads))
     text_values_list = list(text_values_set)
     budget_heads=text_values_list
     # print(parsed_data)
@@ -400,8 +401,8 @@ def mastersheet(request,project_id):
     #     print(table_key)
 
     # years = {'start_year':2023, 'closure_year':2027}
-    for i in parsed_data.items():
-        print('parsed data',i)
+    # for i in parsed_data.items():
+    #     print('parsed data',i)
         
     new_parsed_data = {int(key.split('_')[1]): value for key, value in parsed_data.items()}
 
@@ -432,15 +433,87 @@ def mastersheet(request,project_id):
         'project_id':project_id
         }
     
-    for table_key,total_sum in new_parsed_data.items():
-        print('table key',table_key)
-        print('total sum',total_sum)
+    # for table_key,total_sum in new_parsed_data.items():
+    #     print('table key',table_key)
+    #     print('total sum',total_sum)
     
     # print("zipped data",new_parsed_data)
     return render(request,'mastersheet.html',data)
 
+
+def get_monthewise_exp(project_id,financialYearStartYear,start_year1):
+    try:
+        project = project_details.objects.get(id=project_id)
+
+        file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{project.Project_file_name}.txt'))
+        with open(file_path,'r') as file:
+            data = json.load(file)
+
+        table_1_data = data.get(f'table_{financialYearStartYear-start_year1 +1}',{})
+        total_Apr = table_1_data.get('total_Apr','')
+        total_May = table_1_data.get('total_May','')
+        total_Jun = table_1_data.get('total_Jun','')
+        total_Jul = table_1_data.get('total_Jul','')
+        total_Aug = table_1_data.get('total_Aug','')
+        total_Sep = table_1_data.get('total_Sep','')
+        total_Oct = table_1_data.get('total_Oct','')
+        total_Nov = table_1_data.get('total_Nov','')
+        total_Dec = table_1_data.get('total_Dec','')
+        total_Jan = table_1_data.get('total_Jan','')
+        total_Feb = table_1_data.get('total_Feb','')
+        total_Mar = table_1_data.get('total_Mar','')
+        total_expenses = table_1_data.get('total_expenses','')
+
+        monthwise_exp ={
+            'total_Apr':total_Apr,
+            'total_May':total_May,
+            'total_Jun':total_Jun,
+            'total_Jul':total_Jul,
+            'total_Aug':total_Aug,
+            'total_Sep':total_Sep,
+            'total_Oct':total_Oct,
+            'total_Nov':total_Nov,
+            'total_Dec':total_Dec,
+            'total_Jan':total_Jan,
+            'total_Feb':total_Feb,
+            'total_Mar':total_Mar,
+            'total_expenses':total_expenses
+        }
+
+        return monthwise_exp
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)})
+
+
+def get_grants(project_id):
+    try:
+        project = project_details.objects.get(id=project_id)
+        duration = project.project_duration
+        # print('duration',duration)
+        file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{project.Project_file_name}.txt'))
+        with open(file_path,'r') as file:
+            data = json.load(file)
+        
+
+        total_grants = []
+
+        
+        for i in range(1,duration+1):
+            table_data = data.get(f'table_{i}',{})
+            total_Grant_Amount = table_data.get('total_Grant_Amount','')
+
+            total_grants.append(total_Grant_Amount)
+
+        return total_grants
+        
+
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)})
+
+
 def soe(request,project_id):
-    # print("mastersheet called")
+
     existing_project = project_details.objects.get(id=project_id)
     start_year1 = existing_project.financial_year_start_index
     end_year1 = existing_project.financial_year_end_index
@@ -458,7 +531,7 @@ def soe(request,project_id):
 ]
     file_path = os.path.join('project_files', f'{existing_project.Project_file_name}.txt')
     file_path1 = os.path.join('commited', f'{existing_project.id}.txt')
-    print(file_path1)
+    # print(file_path1)
     with open(file_path, 'r') as file:
         table_data1 = file.read()
     # print((table_data1))
@@ -483,8 +556,8 @@ def soe(request,project_id):
                 text_values_set.add(value)
 
     # Print the resulting set
-    print(type(text_values_set))
-    print(type(budget_heads))
+    # print(type(text_values_set))
+    # print(type(budget_heads))
     text_values_list = list(text_values_set)
     budget_heads=text_values_list
     # print(parsed_data)
@@ -506,8 +579,28 @@ def soe(request,project_id):
         parsed_data2 = json.loads(table_data2)
     else:
         parsed_data2 = "null"
+
+    current_month = datetime.now().month
+    current_year = datetime.now().year
+
+    if(current_month >=3):
+        financialYearStartYear = current_year
+    else:
+        financialYearStartYear = current_year-1
+
+    monthwise_exp = {}
+    monthwise_exp = get_monthewise_exp(project_id,financialYearStartYear,start_year1)
+
+    total_grants = []
+    total_grants = get_grants(project_id)
+
+    # for i in total_grants:
+    #     print(i)
+
+    zipped_data_2 = zip(financial_years,total_grants)
+
     data={
-        'financial_years':financial_years,
+        'financial_years':financial_years,  
         'period_range' :period_range,
         'period_range1' :range(0,7),
         'budget_heads':budget_heads,
@@ -518,9 +611,15 @@ def soe(request,project_id):
         'tablesdata1':new_parsed_data,
         'existing_project':existing_project,
         'parsed_data2':parsed_data2,
-        'project_id':project_id
-        }
+        'project_id':project_id,
+        'financialYearStartYear':financialYearStartYear,
+        'monthwise_exp':monthwise_exp,
+        # 'total_grants':total_grants
+        'zipped_data_2':zipped_data_2
+    }
     # print("zipped data",new_parsed_data)
+
+
     return render(request,'soe_copy.html',data)
 
 
@@ -553,7 +652,7 @@ from django.conf import settings
 def save_table_data(request, project_id):
     try:
         project = project_details.objects.get(id=project_id)
-        print(f"project id: ",project_id)
+        # print(f"project id: ",project_id)
         file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{project.Project_file_name}.txt'))
         # Decode and save the JSON data to the file
         with open(file_path, 'w') as file:
@@ -592,7 +691,7 @@ def fill(request, project_id):
                         # Add the value to the set
                         text_values_set.add(value)
     # Print the resulting set
-        print(text_values_set)
+        # print(text_values_set)
         budget_heads = list(text_values_set)
     
         table_data={
@@ -625,7 +724,7 @@ def fill(request, project_id):
     
         return render(request, 'filling.html', {'budget_heads':budget_heads,'fellowship_no':project_id,'tablesdata': new_parsed_data,'range':range(0,5),'table_1_data':table_1_data,'parsed_data_json': parsed_data_json,'display':display})
     except Exception as e:
-        print(e)
+        # print(e)
         return HttpResponse(e)
 
 def count_keys(d):
@@ -668,7 +767,7 @@ def save_table_data_to_file(request):
 
         return JsonResponse({'success': True})
     except Exception as e:
-        print(f'Error saving file: {e}')
+        # print(f'Error saving file: {e}')
         return JsonResponse({'success': False, 'error': str(e)})
     
 # @login_required
@@ -734,7 +833,7 @@ def project_search(request):
     else:
      projects = project_details.objects.filter(task='ongoing')
  
-    print(projects)    
+    # print(projects)    
 
     context = {
         'projects': projects,
@@ -854,7 +953,7 @@ def download_pdf(request):
 
 
 def submit_project_data(request, project_id):
-    print(project_id)
+    # print(project_id)
     if request.method == 'POST':
         try:
         # Retrieve the project object using project_id
@@ -891,7 +990,7 @@ def submit_project_data(request, project_id):
             project.total_project_cost = request.POST.get('total_project_cost')
             project.fellowship_type = request.POST.get('fellowship_type')
             
-            print(project.Category)
+            # print(project.Category)
             # Save the updated project object
             project.save()
         
