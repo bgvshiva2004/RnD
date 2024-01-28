@@ -426,7 +426,7 @@
               {% for year,grant in zipped_data_2 %}
                 <tr>
                   <td>{{year}}</td>
-                  <td>{{grant}}</td>
+                  <td class="grant">{{grant}}</td>
                 </tr>
               {% endfor %}
                     <td>Interest, if any</td>
@@ -434,7 +434,7 @@
                 </tr>
                 <tr>
                     <td>Total</td>
-                    <td class="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
+                    <td id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
                 </tr>
             </tbody>
         </table>
@@ -1134,6 +1134,48 @@
             total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
           }
     
-    </script>
+    
+      // Function to calculate total funds
+      function calculateTotalFunds() {
+          // Get all grant elements
+          var grantElements = document.querySelectorAll('.grant');
+          var total = 0;
+  
+          // Iterate through each grant element and add its value to the total
+          grantElements.forEach(function(grantElement) {
+              total += parseFloat(grantElement.textContent || grantElement.innerText);
+          });
+  
+          // Get the interest element
+          var interestElement = document.getElementById('interest_if_any');
+  
+          // Add interest, if any
+          if (interestElement.value !== "") {
+              total += parseFloat(interestElement.value);
+          }
+  
+          // Set the total to the total_funds_sanctioned_all_years element
+          var totalElement = document.getElementById('total_funds_sanctioned_all_years');
+          totalElement.textContent = total;
+          console.log("called")
+          console.log(total)
+      }
+      //setInterval(calculateTotalFunds, 1000);
+  
+      // Get the interest input field
+      var interestElement = document.getElementById('interest_if_any');
+  
+      // Add keydown event listener to the interest input field
+      interestElement.addEventListener('keydown', function(event) {
+          // Check if the pressed key is Enter key (key code 13)
+          if (event.keyCode === 13) {
+              // Prevent the default form submission behavior
+              event.preventDefault();
+              // Calculate total funds when Enter key is pressed
+              calculateTotalFunds();
+          }
+      });
+  </script>
+  
   </body>
 </html>
