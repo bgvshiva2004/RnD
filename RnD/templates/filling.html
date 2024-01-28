@@ -591,8 +591,8 @@
         for (let i = 1; i <= numRows; i++) {
             const row = document.createElement('tr');
             row.innerHTML = `
-            <td><input style="font-weight: 600;" type='text' name='${i}_head' value='${tablesData[tableId][`${i}_head`] || i}'></td>
-            <td><input style="font-weight: 600;" type='text' name='${i}_text' value='${tablesData[tableId][`${i}_text`] || `new_data_${i}`}'></td>
+            <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='${i}_head' value='${tablesData[tableId][`${i}_head`] || i}'></td>
+            <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='${i}_text' value='${tablesData[tableId][`${i}_text`] || `new_data_${i}`}'></td>
             
             <td><input type='number' name='${i}_Grant_Amount' value='${tablesData[tableId][`${i}_Grant_Amount`] || '0'}'></td>
             <td><input type='number' class='4' name='${i}_Apr' value='${tablesData[tableId][`${i}_Apr`] || '0'}'></td>

@@ -156,8 +156,14 @@
           .side-by-side table tr th, .side-by-side table tr td{
               width: 7vw;
           }
-          input[type='date'] {
-            border: none; /* Remove border */
+          input[type="date"] {
+            border: none;
+            /* Optional: Additional styling */
+            background-color: transparent;
+            color: #333; /* Text color */
+            font-size: 16px;
+            padding: 5px;
+            outline: none; /* Remove outline */
         }
         input[type='number'] {
           border: none; /* Remove border */
@@ -230,7 +236,7 @@
             <tr>
                 <th>1</th>
                 <th>Dated</th>
-                <td><input type='date' name='soe_dated'></td>
+                <td><input type='date' name='soe_dated' id='soe_dated'></td>
             </tr>
             <tr>
                 <th>2</th>
@@ -245,7 +251,7 @@
             <tr>
                 <th>4</th>
                 <th>Total Project Cost</th>
-                <td>Total Project Cost (Rs.)</td>
+                <td class="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
             </tr>
             <tr>
                 <th>4</th>
@@ -261,7 +267,7 @@
 
         <h2 style='font-size:27px'>Statement of Expenditure (during current financial year)</h2>
 
-        <table>
+        <table id="expenditureTable">
             <thead>
                 <tr>
                     <th>Month & Year</th>
@@ -272,46 +278,44 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Apr-22</td>
-                    <td>0</td>
-                    <td>Oct-22</td>
-                    <td>0</td>
+                    <td>Apr-{{financialYearStartYear}}</td>
+                    <td>{{monthwise_exp.total_Apr}}</td>
+                    <td>Oct-{{financialYearStartYear}}</td>
+                    <td>{{monthwise_exp.total_Oct}}</td>
                 </tr>
                 <tr>
-                    <td>May-22</td>
-                    <td>0</td>
-                    <td>Nov-22</td>
-                    <td>0</td>
+                    <td>May-{{financialYearStartYear}}</td>
+                    <td>{{monthwise_exp.total_May}}</td>
+                    <td>Nov-{{financialYearStartYear}}</td>
+                    <td>{{monthwise_exp.total_Nov}}</td>
                 </tr>
                 <tr>
-                    <td>Jun-22</td>
-                    <td>0</td>
-                    <td>Dec-22</td>
-                    <td>0</td>
+                    <td>Jun-{{financialYearStartYear}}</td>
+                    <td>{{monthwise_exp.total_Jun}}</td>
+                    <td>Dec-{{financialYearStartYear}}</td>
+                    <td>{{monthwise_exp.total_Dec}}</td>
                 </tr>
                 <tr>
-                    <td>Jul-22</td>
-                    <td>0</td>
-                    <td>Jan-23</td>
-                    <td>0</td>
+                    <td>Jul-{{financialYearStartYear}}</td>
+                    <td>{{monthwise_exp.total_Jul}}</td>
+                    <td>Jan-{{financialYearStartYear|add:1}}</td>
+                    <td>{{monthwise_exp.total_Jan}}</td>
                 </tr>
                 <tr>
-                    <td>Aug-22</td>
-                    <td>0</td>
-                    <td>Feb-23</td>
-                    <td>0</td>
+                    <td>Aug-{{financialYearStartYear}}</td>
+                    <td>{{monthwise_exp.total_Aug}}</td>
+                    <td>Feb-{{financialYearStartYear|add:1}}</td>
+                    <td>{{monthwise_exp.total_Feb}}</td>
                 </tr>
                 <tr>
-                    <td>Sep-22</td>
-                    <td>0</td>
-                    <td>Mar-23</td>
-                    <td>23,668</td>
+                    <td>Sep-{{financialYearStartYear}}</td>
+                    <td>{{monthwise_exp.total_Sep}}</td>
+                    <td>Mar-{{financialYearStartYear|add:1}}</td>
+                    <td>{{monthwise_exp.total_Mar}}</td>
                 </tr>
                 <tr>
-                    <td><strong>TOTAL</strong></td>
-                    <td></td>
-                    <td></td>
-                    <td><strong>23,668</strong></td>
+                    <td colspan="3" style="text-align:center;"><strong>TOTAL</strong></td>
+                    <td><strong>{{monthwise_exp.total_expenses}}</strong></td>
                 </tr>
             </tbody>
         </table>
@@ -319,30 +323,23 @@
         <table>
             <thead>
                 <tr>
-                    <th>Category</th>
+                    <th>Financial Years</th>
                     <th>Grant received in each year</th>
                 </tr>
             </thead>
             <tbody>
+              {% for year,grant in zipped_data_2 %}
                 <tr>
-                    <td>1st Year</td>
-                    <td>2902000</td>
+                  <td>{{year}}</td>
+                  <td>{{grant}}</td>
                 </tr>
-                <tr>
-                    <td>2nd Year</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>3rd Year</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>Interest, if any 22-23</td>
-                    <td>10,434</td>
+              {% endfor %}
+                    <td>Interest, if any</td>
+                    <td><input type='number' name='interest_if_any' id='interest_if_any'></td>
                 </tr>
                 <tr>
                     <td>Total</td>
-                    <td><strong>2912434</strong></td>
+                    <td class="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
                 </tr>
             </tbody>
         </table>
@@ -390,7 +387,7 @@
                     {% for table_key, sum_data in tablesdata.items %}
                       <td  style="display: none;" id="total-grant-{{forloop.counter}}"></td>
                     {% endfor %}
-                    <td id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
+                    <td class="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
                   </tr>
                 </tbody>
               </table>
@@ -448,14 +445,16 @@
                   {% endfor %}
                   <td  id="total_expenditure_all_years" name="total_expenditure_all_years">{{total_expenditure_all_years}}</td>
                     <td   style="display: none;" id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
-                    <td id='total_balance_amount_all_domains' name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
+                    <td class='total_balance_amount_all_domains' name='total_balance_amount_all_domains'></td>
                 </tbody>
               </table>              
             </div>
+            <table>
             <tr>
-              <td>Amount to be Refunded/Received: </td>
-              <td>2,709,966</td>
+              <td style='text-align:center;'>Amount to be Refunded/Received: </td>
+              <td class='total_balance_amount_all_domains' name='total_balance_amount_all_domains'></td>
           </tr>
+        </table>
         <table>
             <tbody>
                 <tr>
@@ -508,6 +507,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> {% endcomment %}
     {% comment %} <script href="{% static 'script.js' %}"></script> {% endcomment %}
     <script>
+
+        function saveInput(){
+          var inputDate = document.getElementById('soe_dated').value;
+          sessionStorage.setItem('soe_dated_input',inputDate);
+        }
+
+        function loadInput(){
+          var savedInput = sessionStorage.getItem('soe_dated_input');
+          if(savedInput){
+            document.getElementById('soe_dated').value = savedInput;
+          }
+        }
+
+        window.addEventListener('load',loadInput);
+
+
+        document.getElementById('soe_dated').addEventListener('change',saveInput);
+
+
         function saveAsPdf() {
             html2canvas(document.getElementById('print')).then(function (canvas) {
                 var imgData = canvas.toDataURL('image/png');
@@ -791,8 +809,11 @@
               expense_sum_yearwise += expense_sum;
             }
       
-             var total_funds_sanctioned_all_years = document.getElementById('total_funds_sanctioned_all_years');
-             total_funds_sanctioned_all_years.textContent = sum_yearwise;
+             var total_funds_sanctioned_all_years = document.getElementsByClassName('total_funds_sanctioned_all_years');
+             for(var i=0;i<total_funds_sanctioned_all_years.length;i++){
+              total_funds_sanctioned_all_years[i].textContent = sum_yearwise;
+             }
+             
               
              var total_expenditure_all_years = document.getElementById('total_expenditure_all_years');
              total_expenditure_all_years.textContent = expense_sum_yearwise;
@@ -839,8 +860,13 @@
               total_balance_amount+=balance_amount_row;
             }
       
-            var total_balance_amount_all_domains = document.getElementById('total_balance_amount_all_domains');
-            total_balance_amount_all_domains.textContent = total_balance_amount;
+            var total_balance_amount_all_domains = document.getElementsByClassName('total_balance_amount_all_domains');
+            console.log(total_balance_amount_all_domains.length)
+            for(var i=0;i<total_balance_amount_all_domains.length;i++){
+              console.log('i',i)
+              total_balance_amount_all_domains[i].textContent = total_balance_amount;
+            }
+            
       
           //   calculateTotalBalance();
       
