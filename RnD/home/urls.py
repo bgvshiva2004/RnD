@@ -23,4 +23,5 @@ urlpatterns = [
     path('save-as-pdf/', views.save_as_pdf, name='save_as_pdf'),
     path('download-pdf/', views.download_pdf, name='download_pdf'),
     path('submit_project_data/<int:project_id>/', views.submit_project_data, name='submit_project_data'),
+    path('delete_project/<int:project_id>/',views.delete_project,name='delete_project'),
 ]

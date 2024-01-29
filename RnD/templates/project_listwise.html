@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>
     <style>
+    
         .table-container {
             overflow-x: auto; /* Enable horizontal scrolling for the table container */
             width: 98%; /* Set a maximum width for the container */
@@ -352,12 +353,12 @@
                 
                 <!-- Add table headers for new attributes -->
                 <th>Sanctioned Date</th>
-                <th>Project File Name</th>
-                <th>Project Duration</th>
-                <th>Financial Year Start Index</th>
+                {% comment %} <th>Project File Name</th> {% endcomment %}
+                {% comment %} <th>Project Duration</th> {% endcomment %}
+                {% comment %} <th>Financial Year Start Index</th>
                 <th>Financial Year End Index</th>
                 <th>Start Month</th>
-                <th>End Month</th>
+                <th>End Month</th> {% endcomment %}
                 <th>Funding Agency</th>
                 <th>Country Involved</th>
                 <th>Details of Donors</th>
@@ -380,7 +381,6 @@
                   <form method="post" action="{% url 'submit_project_data' project_id=project.id %}">
                     {% csrf_token %}
                     <td>
-                      {% comment %} <button type="button" class="button" onclick="confirmSubmission('{{ project.id }}')">Submit</button> {% endcomment %}
                       <button type="submit" class="button">Submit</button>
                       <a style="text-decoration: none;" href="{% url 'complete_task' project_id=project.id %}">
                         <button class="button">Complete Task</button>
@@ -395,8 +395,8 @@
                     </a>
                   
                 </td>
-                  <td><input type="text" name="Title_of_Project" value="{{ project.Title_of_Project }}"></td>
-                  <td><input type="text" name="Project_Fellowship_No" value="{{ project.Project_Fellowship_No }}"></td>
+                  <td><input disabled type="text" name="Title_of_Project" value="{{ project.Title_of_Project }}"></td>
+                  <td><input disabled type="text" name="Project_Fellowship_No" value="{{ project.Project_Fellowship_No }}"></td>
                   <td><input type="text" name="Category" value="{{ project.Category }}"></td>
                   <td><input type="text" name="Country_Involved" value="{{ project.Country_Involved }}"></td>
                   <td><input type="text" name="task" value="{{ project.task }}"></td>
@@ -409,12 +409,12 @@
                 
                     <!-- Add table data cells for new attributes -->
                     <td><input type="text" name="Sanctioned_Date" value="{{ project.Sanctioned_Date }}"></td>
-                    <td><input type="text" name="Project_file_name" value="{{ project.Project_file_name }}"></td>
-                    <td><input type="text" name="project_duration" value="{{ project.project_duration }}"></td>
+                    {% comment %} <td><input type="text" name="Project_file_name" value="{{ project.Project_file_name }}"></td> {% endcomment %}
+                    {% comment %} <td><input type="text" name="project_duration" value="{{ project.project_duration }}"></td>
                     <td><input type="text" name="financial_year_start_index" value="{{ project.financial_year_start_index }}"></td>
                     <td><input type="text" name="financial_year_end_index" value="{{ project.financial_year_end_index }}"></td>
                     <td><input type="text" name="start_month" value="{{ project.start_month }}"></td>
-                    <td><input type="text" name="end_month" value="{{ project.end_month }}"></td>
+                    <td><input type="text" name="end_month" value="{{ project.end_month }}"></td> {% endcomment %}
                     <td><input type="text" name="funding_agency" value="{{ project.funding_agency }}"></td>
                     <td><input type="text" name="Country_Involved" value="{{ project.Country_Involved }}"></td>
                     <td><input type="text" name="Details_of_Donors" value="{{ project.Details_of_Donors }}"></td>

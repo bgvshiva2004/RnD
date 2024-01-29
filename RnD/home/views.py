@@ -1002,3 +1002,23 @@ def submit_project_data(request, project_id):
 
     # If the request method is not POST, redirect to some error page or handle accordingly
     return redirect('project_list')  # Replace 'error_page' with the name of your error page URL pattern
+
+# @require_POST
+def delete_project(request,project_id):
+    print(project_id)
+    existing_project = project_details.objects.get(id=project_id)
+    print(existing_project.Title_of_Project)
+    existing_project.delete()
+    print('deleted')
+
+    projects = project_details.objects.all()
+    filter_option = request.GET.get('filter')
+    
+    # Apply filtering if a filter option is selected
+    if filter_option == 'ongoing':
+        projects = projects.filter(task='ongoing')
+    elif filter_option == 'completed':
+        projects = projects.filter(task='completed')
+    context = {'projects': projects}
+
+    return render(request,'project_list.html', context)
