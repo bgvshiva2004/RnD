@@ -73,10 +73,13 @@
         periods.forEach(function(period) {
             var option = document.createElement("a");
             option.textContent = period;
+        
             option.href = "{% url 'soe' project_id=project_id %}&period=" + encodeURIComponent(period); // Modify URL as needed
             option.classList.add("dropdown-item");
+
             soeDropdown.appendChild(option);
         });
+
 
         // Show/hide dropdown content
         soeDropdownButton.addEventListener("click", function() {
