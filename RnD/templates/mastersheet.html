@@ -9,6 +9,9 @@
     <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>    <title>Home</title>
     {% csrf_token %}
     <style>
+      body {
+        overflow-x: auto; /* Add horizontal scrollbar to the entire page */
+      }
       :root{
           --primary-color:#000;
           --secondary-color: rgb(34,122,191);
@@ -349,7 +352,7 @@
         <a href="{% url 'fill' project_id=project_id %}">
           <button type="button">Monthlysheet</button>
       </a>
-      <a href="{% url 'SOE_navigation' project_id=project_id  %}">
+      <a href="{% url 'soe' project_id=project_id  %}">
         <button type="button">SOE</button>
     </a>
     <a href="{% url 'ucr' project_id=project_id  %}">
@@ -358,21 +361,19 @@
       </div>
 <div class="side-by-side">
 
-
-
-<table class="table1" id="data-table">
+  <table class="table1" id="data-table">
     <thead>
         <tr>
             <th rowspan="2">S.No.</th>
             <th rowspan="2">Budget Head</th>
-            <th colspan="{{ financial_years|length|add:1 }}">Sanctioned Amount Rs.</th>
+            <th colspan="{{ financial_years|length|add:1 }}">Grant Amount Rs.</th>
            
         </tr>
         <tr>
           {% for year in financial_years %}
             <th  class="column-names" id='years'>{{ year }}</th>
           {% endfor %}
-          <th   class="column-names">Funds Sanctioned</th>
+          <th   class="column-names">Funds Grant</th>
         </tr>
       </thead>
     <tbody>
@@ -380,26 +381,7 @@
         <tr>
           <td>{{ period }}</td>
           <td contenteditable="true" id="text-{{period}}"> {{ budget_head }}</td>
-          <!-- Add dynamic cells for each financial year -->
-          {% comment %} {% for table_key, sum_data in tablesdata.items %}
-
-          {% if budget_head == "Manpower" %}
-          <td contenteditable="false" id="1-row-{{ period }}-col-{{forloop.counter}}" class="1-row-{{ period }}">{{sum_data.two_Grant_Amount}}</td>
-          {% elif  budget_head == "Equipment" %}
-          <td contenteditable="false" id="1-row-{{ period }}-col-{{forloop.counter}}" class="1-row-{{ period }}">{{sum_data.one_Grant_Amount}}</td>
-          {% elif  budget_head == "Contingency" %}
-          <td contenteditable="false" id="1-row-{{ period }}-col-{{forloop.counter}}" class="1-row-{{ period }}">{{sum_data.three_Grant_Amount}}</td>
-          {% elif  budget_head == "Consumables" %}
-          <td contenteditable="false" id="1-row-{{ period }}-col-{{forloop.counter}}" class="1-row-{{ period }}">{{sum_data.four_Grant_Amount}}</td>
-          {% elif  budget_head == "Travel" %}
-          <td contenteditable="false" id="1-row-{{ period }}-col-{{forloop.counter}}" class="1-row-{{ period }}">{{sum_data.five_Grant_Amount}}</td>
-          {% elif  budget_head == "Overhead" %}
-          <td contenteditable="false" id="1-row-{{ period }}-col-{{forloop.counter}}" class="1-row-{{ period }}">{{sum_data.six_Grant_Amount}}</td>
-          {% elif  budget_head == "SSR" %}
-          <td contenteditable="false" id="1-row-{{ period }}-col-{{forloop.counter}}" class="1-row-{{ period }}">{{sum_data.seven_Grant_Amount}}</td>
-          {% endif %}
-          
-          {% endfor %} {% endcomment %}
+   
           {% for table_key, sum_data in tablesdata.items %}
 
           <td contenteditable="false" id="1-row-{{ period }}-col-{{table_key}}" class="1-row-{{ period }}">{{sum_data.period_Grant_Amount}}</td>
@@ -409,14 +391,7 @@
           <td contenteditable="false" id="total-{{ period }}">0</td>
         </tr>
       {% endfor %}
-      {% comment %} <tr>
-        <td id="total_no">8</td>
-        <td>Total</td>
-        {% for table_key, sum_data in tablesdata.items %}
-          <td id="total-grant-{{forloop.counter}}"></td>
-        {% endfor %}
-        <td id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years">1</td>
-      </tr> {% endcomment %}
+     
       <td id="total_no">*</td>
         <td>Total</td>
         {% for table_key, sum_data in tablesdata.items %}
@@ -429,7 +404,15 @@
 
 
 
-  <table class="table2" id="data-table1">
+  
+
+
+
+
+
+
+
+<table class="table2" id="data-table1">
     <thead>
         <!-- Parent row for "Sanctioned Amount Rs." -->
         
@@ -450,70 +433,7 @@
 
         </tr>
       </thead>
-      {% comment %} <tbody>
-        {% for budget_head in budget_heads %}
-        <tr>
-      <!-- Add dynamic cells for each financial year -->
-          {% for table_key, sum_data in tablesdata.items %}
 
-          {% if  budget_head == "Equipment" %}
-            <td contenteditable="false" id="2-row-0-col-{{forloop.counter}}" class="row-0">{{sum_data.one_expenses}}</td>
-          {% elif budget_head == "Manpower" %}
-          <td contenteditable="false" id="2-row-1-col-{{forloop.counter}}" class="row-1">{{sum_data.two_expenses}}</td>
-        {% elif  budget_head == "Contingency" %}
-          <td contenteditable="false" id="2-row-2-col-{{forloop.counter}}" class="row-2">{{sum_data.three_expenses}}</td>
-        {% elif  budget_head == "Consumables" %}
-          <td contenteditable="false" id="2-row-3-col-{{forloop.counter}}" class="row-3">{{sum_data.four_expenses}}</td>
-        {% elif  budget_head == "Travel" %}
-          <td contenteditable="false" id="2-row-4-col-{{forloop.counter}}" class="row-4">{{sum_data.five_expenses}}</td>
-        {% elif  budget_head == "Overhead" %}
-          <td contenteditable="false" id="2-row-5-col-{{forloop.counter}}" class="row-5">{{sum_data.six_expenses}}</td>
-        {% elif  budget_head == "SSR" %}
-          <td contenteditable="false" id="2-row-6-col-{{forloop.counter}}" class="row-6">{{sum_data.seven_expenses}}</td>
-        {% endif %}
-        
-          
-          {% endfor %}
-          {% if  budget_head == "Equipment" %}
-          <td contenteditable="true" id="2-row-0" class="2-row-0"></td>
-          <td id="2-row-0-col-{{l|add:1}}" class="2-row1-0"><input type='number' name='2-row-0-col-100-{{project_id}}' value={{2_row_0_col_100}}></td>
-          <td id="2-row-0-col-{{l|add:2}}" class="2-row2-0"><input type='number' name='2-row-0-col-101-{{project_id}}' value={{2_row_0_col_101}}></td>
-        {% elif budget_head == "Manpower" %}
-          <td contenteditable="true" id="2-row-1" class="2-row-1"></td>
-          <td id="2-row-1-col-{{l|add:1 }}" class="2-row1-1"><input type='number' name='2-row-1-col-100-{{project_id}}' value={{2_row_1_col_100}}></td>
-          <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' name='2-row-1-col-101-{{project_id}}' value={{2_row_1_col_101}}></td>
-        {% elif  budget_head == "Contingency" %}
-          <td contenteditable="true" id="2-row-2" class="2-row-2"></td>
-          <td id="2-row-2-col-{{l|add:1 }}" class="2-row1-2"><input type='number' name='2-row-2-col-100-{{project_id}}' value={{2_row_2_col_100}}></td>
-          <td id="2-row-2-col-{{l|add:2}}" class="2-row2-2"><input type='number' name='2-row-2-col-101-{{project_id}}' value={{2_row_2_col_101}}></td>
-        {% elif  budget_head == "Consumables" %}
-          <td contenteditable="true" id="2-row-3" class="2-row-3"></td>
-          <td id="2-row-3-col-{{l|add:1 }}" class="2-row1-3"><input type='number' name='2-row-3-col-100-{{project_id}}' value={{2_row_3_col_100}}></td>
-          <td id="2-row-3-col-{{l|add:2}}" class="2-row-3"><input type='number' name='2-row-3-col-101-{{project_id}}' value={{2_row_3_col_101}}></td>
-        {% elif  budget_head == "Travel" %}
-          <td contenteditable="true" id="2-row-4" class="2-row-4"></td>
-          <td id="2-row-4-col-{{l|add:1 }}" class="2-row1-4"><input type='number' name='2-row-4-col-100-{{project_id}}' value={{2_row_4_col_100}}></td>
-          <td id="2-row-4-col-{{l|add:2}}" class="2-row2-4"><input type='number' name='2-row-4-col-101-{{project_id}}' value={{2_row_4_col_101}}></td>
-        {% elif  budget_head == "Overhead" %}
-          <td contenteditable="true" id="2-row-5" class="2-row-5"></td>
-          <td id="2-row-5-col-{{l|add:1 }}" class="2-row1-5"><input type='number' name='2-row-5-col-100-{{project_id}}' value={{2_row_5_col_100}}></td>
-          <td id="2-row-5-col-{{l|add:2}}" class="2-row2-5"><input type='number' name='2-row-5-col-101-{{project_id}}' value={{2_row_5_col_101}}></td>
-        {% elif  budget_head == "SSR" %}
-          <td contenteditable="true" id="2-row-6" class="2-row-6"></td>
-          <td id="2-row-6-col-{{l|add:1 }}" class="2-row1-6"><input type='number' name='2-row-6-col-100-{{project_id}}' value={{2_row_6_col_100}}></td>
-          <td id="2-row-6-col-{{l|add:2}}" class="2-row2-6"><input type='number' name='2-row-6-col-101-{{project_id}}' value={{2_row_6_col_101}}></td>
-        {% endif %}
-        
-
-        </tr>
-      {% endfor %}
-      {% for table_key, sum_data in tablesdata.items %}
-          <td id="total-expense-{{forloop.counter}}"></td>
-      {% endfor %}
-      <td id="total_expenditure_all_years" name="total_expenditure_all_years">{{total_expenditure_all_years}}</td>
-        <td id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
-        <td id='total_balance_amount_all_domains' name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
-    </tbody> {% endcomment %}
     <tbody>
       {% for period in period_range %}
       <tr>
@@ -542,14 +462,66 @@
         <td id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
         <td id='total_balance_amount_all_domains' name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
     </tbody>
-  </table>
+</table>
+
+<table class="table0" id="data-table0">
+    <thead>
+        <!-- Parent row for "Sanctioned Amount Rs." -->
+        
+        <tr>
+            
+          <th colspan="{{ financial_years|length|add:1 }}"  >Expenditure Amount Rs.</th>
+          {% comment %} <th rowspan="2"  >Committed Expenditure</th>
+          <th rowspan="2"  >Balance Amount</th> {% endcomment %}
+        </tr>
+        <!-- Subheader row for S.No., Budget Head, and financial years -->
+        <tr>
+         
+          <!-- Display financial years -->
+          {% for year in financial_years %}
+            <th  class="column-names">{{ year }}</th>
+          {% endfor %}
+          <th  class="column-names">Total Expenditure</th>
+
+        </tr>
+      </thead>
+
+    <tbody>
+      {% for period in period_range %}
+      <tr>
+      
+        
+        <!-- Add dynamic cells for each financial year -->
+        {% for table_key, sum_data in tablesdata1.items %}
+
+        <td contenteditable="false" id="0-row-{{ period }}-col-{{table_key}}" class="row-{{ period }}">0</td>
+
+        {% endfor %}
+        {% comment %} <td contenteditable="true" id="2-row-{{period}}" class="2-row-{{period}}"></td> {% endcomment %}
+        <td contenteditable="true" id="0-row-{{period}}-col-com" class="0-row1-{{period}}">1</td>
+        {% comment %} <td contenteditable="true" id="2-row-{{period}}-col-{{l|add:2}}" class="2-row2-{{period}}"></td> {% endcomment %}
+        {% comment %} <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' style="width: 100%; text-align: center; font-weight: 600; font-size: 15px;" name='2-row-{{period}}-col-101-{{project_id}}' value={{2_row_1_col_101}}></td> {% endcomment %}
+      
+
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tbody>
+  {% for table_key, sum_data in tablesdata.items %}
+          <td id="total-expense0-{{forloop.counter}}"></td>
+      {% endfor %}
+      <td id="total_expenditure_all_years0" name="total_expenditure_all_years0">{{total_expenditure_all_years}}</td>
+        {% comment %} <td id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
+        <td id='total_balance_amount_all_domains' name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td> {% endcomment %}
+    </tbody>
+</table>
 
 
   
   
   
 </div>
-  {% comment %} <button class="btn" id="update-button" onclick="updation('{{project_id}}')">Update</button> {% endcomment %}
+  <button class="btn" id="update-button" onclick="updation('{{project_id}}')">Update</button>
 
   <br>
   <h2 class="table3h2">Details of Committed Expenditure</h2>
@@ -673,8 +645,35 @@
        return 'Not found';
      }
    }
+   function getCellValue0(cellId) {
+     var parts = cellId.split('-');
+     var tableKey = parts[0];
+     var row = parts[2];
+     var col = parts[4];
+     console.log(row+"+"+col+"+"+tableKey)
+     
+     if (tablesData[col] && tablesData[col][row + '_Sanctioned_Amount']) {
+       return tablesData[col][row + '_Sanctioned_Amount'];
+     } else {
+       return 'Not found';
+     }
+   }
  
    // Function to fill the cells with data
+   function fillCells0() {
+     var tableBody = document.getElementById('data-table0');
+     var rows = tableBody.getElementsByTagName('tr');
+    
+ 
+     for (var i = 0; i < rows.length; i++) {
+       var cells = rows[i].getElementsByTagName('td');
+ 
+       for (var j = 0; j < cells.length - 3; j++) {
+         var cellId = cells[j].id;
+         cells[j].textContent = getCellValue0(cellId);
+       }
+     }
+   }
    function fillCells() {
      var tableBody = document.getElementById('data-table');
      var rows = tableBody.getElementsByTagName('tr');
@@ -1053,6 +1052,7 @@ document.addEventListener('DOMContentLoaded', function() {
   fillCells1();
   fillCells2();
   fillCells();
+  fillCells0();
   console.log("fill")
   fillTableWithData();
   fillTableWithData();
@@ -1258,10 +1258,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('DOMContentLoaded',function(){
 
       let n = {{ budget_heads|length }};
+      let years={{financial_years|safe}}
       console.log('n start',n);
             
       var columns = document.getElementById('years');
-      console.log('columns length',years.length,",",columns);
+     // console.log('columns length',years.length,",",columns);
       var values={};
       var expenses={};
       var sum_yearwise = 0;
@@ -1272,6 +1273,7 @@ document.addEventListener('DOMContentLoaded', function() {
         expenses[`expenses${j}`]=[];
         for(let i=1;i<=n;i++){
           var domaingrants = document.getElementById(`1-row-${i}-col-${j}`);
+          var domaingrants0 = document.getElementById(`0-row-${i}-col-${j}`);
           var domainexpenses = document.getElementById(`2-row-${i}-col-${j}`);
           if(domaingrants){
             var value = domaingrants.textContent;
@@ -1284,7 +1286,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         var total_grants_yearwise = document.getElementById(`total-grant-${j}`);
+        //var total_grants0_yearwise = document.getElementById(`total-grant0-${j}`);
         var total_expenses_yearwise = document.getElementById(`total-expense-${j}`);
+        var total_expenses_yearwise0 = document.getElementById(`total-expense0-${j}`);
         var sum = 0;var expense_sum = 0;
         
         for(var i=1;i<values[`values${j}`].length+1;i++){
