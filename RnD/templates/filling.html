@@ -366,6 +366,7 @@
         <th>S.No</th>
         <th style="width: 10vw;">Budget Head</th>
         <th>Grant Amount</th>
+        <th>Sanctioned Amount</th>
         <th>Apr-{{ display.start_year|add:table_key|add:-1 }}</th>
         <th>May-{{ display.start_year|add:table_key|add:-1 }}</th>
         <th>Jun-{{ display.start_year|add:table_key|add:-1 }}</th>
@@ -519,6 +520,7 @@
         <th>*</th>
         <th style="font-weight: 600;">Total Amount</th>
         <td name='total_grant'>{{sum_data.total_grant}}</td>
+        <td name='total_sanctioned'>{{sum_data.total_sanctioned}}</td>   
         <td name='total_Apr' class="placeh" >{{sum_data.total_Apr}}</td>
         <td name='total_May'  class="placeh">{{sum_data.total_May}}</td>
         <td name='total_Jun' class="placeh" >{{sum_data.total_Jun}}</td>
@@ -595,6 +597,7 @@
             <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='${i}_text' value='${tablesData[tableId][`${i}_text`] || `new_data_${i}`}'></td>
             
             <td><input type='number' name='${i}_Grant_Amount' value='${tablesData[tableId][`${i}_Grant_Amount`] || '0'}'></td>
+            <td><input type='number' name='${i}_Sanctioned_Amount' value='${tablesData[tableId][`${i}_Sanctioned_Amount`] || '0'}'></td>
             <td><input type='number' class='4' name='${i}_Apr' value='${tablesData[tableId][`${i}_Apr`] || '0'}'></td>
             <td><input type='number' class='5' name='${i}_May' value='${tablesData[tableId][`${i}_May`] || '0'}'></td>
             <td><input type='number' class='6' name='${i}_Jun' value='${tablesData[tableId][`${i}_Jun`] || '0'}'></td>
@@ -919,6 +922,17 @@
     
         return totalGrantAmount;
     }
+    function calculateSanctionedAmount(table, columnIndex) {
+        let totalSanctionedAmount = 0;
+        let n = {{ budget_heads|length }};
+        for (let i = 1; i <= n; i++) {
+            const inputName = `${i}_Sanctioned_Amount`;
+            const inputValue = parseInt(table.querySelector(`input[name$="${inputName}"]`).value) || 0;
+            totalSanctionedAmount += inputValue;
+        }
+    
+        return totalSanctionedAmount;
+    }
     function calculateAndDisplayTotalAmount(tableId) {
         const table = document.querySelector(`#${tableId}`);
         const headerRow = table.querySelector('.header-row');
@@ -960,7 +974,25 @@
                 `;
             }
            
-            if (index > 2) {  // Exclude S.No and Budget Head columns
+            if(index==3){
+
+               
+
+
+               // const totalGrantAmount = grantAmountOne + grantAmountTwo + grantAmountThree + grantAmountFour +grantAmountFive + grantAmountSix + grantAmountSeven;
+               const SanctionedAmount = calculateSanctionedAmount(table, index);
+
+    // Update the content of the Total Grant Amount cell
+    const correspondingTotalAmountCell = totalAmountRow.querySelector(`td:nth-child(${index + 1})`);
+    // console.log("hi")
+    // console.log(totalGrantAmount)
+   // console.log("hi")
+    correspondingTotalAmountCell.innerHTML = `
+                    <input type='number' name='total_Sanctioned_Amount' value='${SanctionedAmount}' >
+                `;
+            }
+           
+            if (index > 3) {  // Exclude S.No and Budget Head columns
                 let totalAmount = 0;
                 let month;
                 // Iterate through rows (excluding header and total amount rows)

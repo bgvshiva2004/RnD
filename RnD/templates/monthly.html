@@ -234,6 +234,7 @@
                 <th>S.No</th>
                 <th>Budget Head</th>
                 <th>Grant Amount</th>
+                <th>Sanctioned Amount</th>
                 <th>Apr-{{years.start_year|add:i}}</th>
                 <th>May-{{years.start_year|add:i}}</th>
                 <th>Jun-{{years.start_year|add:i}}</th>
@@ -254,6 +255,7 @@
                 <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='1_head' style="font-weight: 600" value="1"></td>
                 <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='1_text' value="Non_Recurring" style="width: 10vw; font-weight: 600"></td>
                 <td><input type='number' name='1_Grant_Amount' value="{{ sum_data.1_Grant_Amount }}"></td>
+                <td><input type='number' name='1_Sanctioned_Amount' value="{{ sum_data.1_Sanctioned_Amount }}"></td>
                 <td><input type='number' class='4' name='1_Apr' value="{{ sum_data.1_Apr }}"></td>
                 <td><input type='number' class='5' name='1_May' value="{{ sum_data.1_May }}"></td>
                 <td><input type='number' class='6' name='1_Jun' value="{{ sum_data.1_Jun }}"></td>
@@ -278,6 +280,7 @@
                     <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='2_text' style="width: 10vw; font-weight: 600" value="Manpower"></td>
                     
                     <td><input type='number' name='2_Grant_Amount' value="{{ sum_data.2_Grant_Amount }}"></td>
+                    <td><input type='number' name='2_Sanctioned_Amount' value="{{ sum_data.2_Sanctioned_Amount }}"></td>
                     <td><input type='number' class='4' name='2_Apr' value="{{ sum_data.2_Apr }}"></td>
                     <td><input type='number' class='5' name='2_May' value="{{ sum_data.2_May }}"></td>
                     <td><input type='number' class='6' name='2_Jun' value="{{ sum_data.2_Jun }}"></td>
@@ -300,6 +303,7 @@
                     <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='3_head' style="font-weight: 600" value="3"></td>
                     <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='3_text' style="width: 10vw; font-weight: 600" value="Contingency"></td>
                     <td><input type='number' name='3_Grant_Amount' value={{sum_data.3_Grant_Amount}}></td>
+                    <td><input type='number' name='3_Sanctioned_Amount' value={{ sum_data.3__Sanctioned_Amount }}></td>
                     <td><input type='number' class='4' name='3_Apr' value={{sum_data.3_Apr}}></td>
                     <td><input type='number' class='5' name='3_May' value={{sum_data.3_May}}></td>
                     <td><input type='number' class='6' name='3_Jun' value={{sum_data.3_Jun}}></td>
@@ -320,6 +324,7 @@
                     <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='4_head' style="font-weight: 600" value="4"></td>
                     <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='4_text' style="width: 10vw; font-weight: 600" value="Consumables"></td>
                     <td><input type='number' name='4_Grant_Amount' value={{sum_data.4_Grant_Amount}}></td>
+                    <td><input type='number' name='4_Sanctioned_Amount' value={{ sum_data.4_Sanctioned_Amount }}></td>
                     <td><input type='number' class='4' name='4_Apr' value={{sum_data.4_Apr}}></td>
                     <td><input type='number' class='5' name='4_May' value={{sum_data.4_May}}></td>
                     <td><input type='number' class='6' name='4_Jun' value={{sum_data.4_Jun}}></td>
@@ -340,6 +345,7 @@
                     <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='5_head' style="font-weight: 600" value="5"></td>
                     <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='5_text' style="width: 10vw; font-weight: 600" value="Travel"></td>
                     <td><input type='number' name='5_Grant_Amount' value={{sum_data.5_Grant_Amount}}></td>
+                    <td><input type='number' name='5_Sanctioned_Amount' value={{ sum_data.5_Sanctioned_Amount }}></td>
                     <td><input type='number' class='4' name='5_Apr' value={{sum_data.5_Apr}}></td>
                     <td><input type='number' class='5' name='5_May' value={{sum_data.5_May}}></td>
                     <td><input type='number' class='6' name='5_Jun' value={{sum_data.5_Jun}}></td>
@@ -360,6 +366,7 @@
                     <td><input disabled type='text' style="font-weight: 600; background-color: #fff;" name='6_head' style="font-weight: 600" value="6"></td>
                     <td><input disabled type='text' style="font-weight: 600; background-color: #fff;" name='6_text' style="width: 10vw; font-weight: 600" value="Overhead"></td>
                     <td><input type='number' name='6_Grant_Amount' value={{sum_data.6_Grant_Amount}}></td>
+                    <td><input type='number' name='6_Sanctioned_Amount' value={{ sum_data.6_Sanctioned_Amount }}></td>
                     <td><input type='number' class='4' name='6_Apr' value={{sum_data.6_Apr}}></td>
                     <td><input type='number' class='5' name='6_May' value={{sum_data.6_May}}></td>
                     <td><input type='number' class='6' name='6_Jun' value={{sum_data.6_Jun}}></td>
@@ -380,6 +387,7 @@
                     <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='7_head' style="font-weight: 600" value="7"></td>
                     <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='7_text' style="width: 10vw; font-weight: 600" value="SSR"></td>
                     <td><input type='number' name='7_Grant_Amount' value={{sum_data.7_Grant_Amount}}></td>
+                    <td><input type='number' name='7_Sanctioned_Amount' value={{ sum_data.7_Sanctioned_Amount }}></td>
                     <td><input type='number' class='4' name='7_Apr' value={{sum_data.7_Apr}}></td>
                     <td><input type='number' class='5' name='7_May' value={{sum_data.7_May}}></td>
                     <td><input type='number' class='6' name='7_Jun' value={{sum_data.7_Jun}}></td>
@@ -403,6 +411,7 @@
             <th id="total_no" style="font-weight: 600">*</th>
             <th style="width: 10vw; font-weight: 600">Total Amount</th>
             <td><input type='number' name='total_Grant_Amount' class="placeh" value={{sum_data.total_grant}}></td>
+            <td><input type='number' name='total_Sanctioned_Amount' class="placeh" value={{sum_data.total_sanctioned}}></td>
             <td><input type='number' name='total_Apr' value={{sum_data.total_Apr}}></td>
             <td><input type='number' name='total_May' value={{sum_data.total_May}}></td>
             <td><input type='number' name='total_Jun' value={{sum_data.total_Jun}}></td>
@@ -424,7 +433,7 @@
         </table>
         <br></br>
         {% comment %} <button type='button' onclick="addRow()">Add New Row</button> {% endcomment %}
-        {% comment %} <button type='button' onclick="updateTable('table_{{ i|add:1 }}')">Update</button> {% endcomment %}
+        <button type='button' onclick="updateTable('table_{{ i|add:1 }}')">Update</button>
         
         
         <br></br>
@@ -570,6 +579,7 @@
                 <td><input type='text' name='${table.rows.length - 1}_head' value='${table.rows.length - 1}'></td>
                 <td><input type='text' name='${table.rows.length - 1}_text' value='${table.rows.length - 1}_newRow'></td>
                 <td><input type='number' name='${table.rows.length - 1}_Grant_Amount' value='0'></td>
+                <td><input type='number' name='${table.rows.length - 1}_Sanctioned_Amount' value='0'></td>
                 <td><input type='number' class='4' name='${table.rows.length - 1}_Apr' value='0'></td>
                 <td><input type='number' class='5' name='${table.rows.length - 1}_May' value='0'></td>
                 <td><input type='number' class='6' name='${table.rows.length - 1}_Jun' value='0'></td>
