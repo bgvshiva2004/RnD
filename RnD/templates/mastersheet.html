@@ -144,7 +144,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        
       }
 
       .side-by-side table{
@@ -366,14 +365,14 @@
         <tr>
             <th rowspan="2">S.No.</th>
             <th rowspan="2">Budget Head</th>
-            <th colspan="{{ financial_years|length|add:1 }}">Grant Amount Rs.</th>
+            <th colspan="{{ financial_years|length|add:1 }}">Grant Amount</th>
            
         </tr>
         <tr>
           {% for year in financial_years %}
             <th  class="column-names" id='years'>{{ year }}</th>
           {% endfor %}
-          <th   class="column-names">Funds Grant</th>
+          <th   class="column-names">Funds Granted</th>
         </tr>
       </thead>
     <tbody>
@@ -384,7 +383,7 @@
    
           {% for table_key, sum_data in tablesdata.items %}
 
-          <td contenteditable="false" id="1-row-{{ period }}-col-{{table_key}}" class="1-row-{{ period }}">{{sum_data.period_Grant_Amount}}</td>
+          <td contenteditable="false" id="1-row-{{ period }}-col-{{table_key}}" class="1-row-{{ period }}">0</td>
           
           
           {% endfor %}
@@ -397,13 +396,54 @@
         {% for table_key, sum_data in tablesdata.items %}
           <td id="total-grant-{{forloop.counter}}"></td>
         {% endfor %}
-        <td id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
+        <td id="total_funds_granted_all_years" name="total_funds_granted_all_years"></td>
       </tr>
     </tbody>
   </table>
 
 
+  <table class="table0" id="data-table0">
+    <thead>
+        <tr>
+            
+          <th colspan="{{ financial_years|length|add:1 }}"  >Sanction Amount</th>
+          
+        </tr>
+       
+        <tr>
+         
+          {% for year in financial_years %}
+            <th  class="column-names">{{ year }}</th>
+          {% endfor %}
+          <th  class="column-names">Funds Sanctioned</th>
 
+        </tr>
+      </thead>
+
+    <tbody>
+      {% for period in period_range %}
+      <tr>
+
+        {% for table_key, sum_data in tablesdata1.items %}
+
+        <td contenteditable="false" id="0-row-{{ period }}-col-{{table_key}}" class="0-row-{{ period }}">0</td>
+
+        {% endfor %}
+       
+        <td contenteditable="false" id="sanction-total-{{ period }}">0</td>
+      
+
+      </tr>
+    {% endfor %}
+  </tbody>
+  <tbody>
+  {% for table_key, sum_data in tablesdata.items %}
+          {% comment %} <td id="total-expense0-{{forloop.counter}}"></td> {% endcomment %}
+          <td id="total-sanction-{{forloop.counter}}"></td>
+      {% endfor %}
+      {% comment %} <td id="total_expenditure_all_years0" name="total_expenditure_all_years0">{{total_expenditure_all_years}}</td> {% endcomment %}
+      <td id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
+</table>
   
 
 
@@ -464,57 +504,7 @@
     </tbody>
 </table>
 
-<table class="table0" id="data-table0">
-    <thead>
-        <!-- Parent row for "Sanctioned Amount Rs." -->
-        
-        <tr>
-            
-          <th colspan="{{ financial_years|length|add:1 }}"  >Expenditure Amount Rs.</th>
-          {% comment %} <th rowspan="2"  >Committed Expenditure</th>
-          <th rowspan="2"  >Balance Amount</th> {% endcomment %}
-        </tr>
-        <!-- Subheader row for S.No., Budget Head, and financial years -->
-        <tr>
-         
-          <!-- Display financial years -->
-          {% for year in financial_years %}
-            <th  class="column-names">{{ year }}</th>
-          {% endfor %}
-          <th  class="column-names">Total Expenditure</th>
 
-        </tr>
-      </thead>
-
-    <tbody>
-      {% for period in period_range %}
-      <tr>
-      
-        
-        <!-- Add dynamic cells for each financial year -->
-        {% for table_key, sum_data in tablesdata1.items %}
-
-        <td contenteditable="false" id="0-row-{{ period }}-col-{{table_key}}" class="row-{{ period }}">0</td>
-
-        {% endfor %}
-        {% comment %} <td contenteditable="true" id="2-row-{{period}}" class="2-row-{{period}}"></td> {% endcomment %}
-        <td contenteditable="true" id="0-row-{{period}}-col-com" class="0-row1-{{period}}">1</td>
-        {% comment %} <td contenteditable="true" id="2-row-{{period}}-col-{{l|add:2}}" class="2-row2-{{period}}"></td> {% endcomment %}
-        {% comment %} <td id="2-row-1-col-{{l|add:2}}" class="2-row2-1"><input type='number' style="width: 100%; text-align: center; font-weight: 600; font-size: 15px;" name='2-row-{{period}}-col-101-{{project_id}}' value={{2_row_1_col_101}}></td> {% endcomment %}
-      
-
-      </tr>
-    {% endfor %}
-  </tbody>
-  <tbody>
-  {% for table_key, sum_data in tablesdata.items %}
-          <td id="total-expense0-{{forloop.counter}}"></td>
-      {% endfor %}
-      <td id="total_expenditure_all_years0" name="total_expenditure_all_years0">{{total_expenditure_all_years}}</td>
-        {% comment %} <td id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
-        <td id='total_balance_amount_all_domains' name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td> {% endcomment %}
-    </tbody>
-</table>
 
 
   
@@ -1197,6 +1187,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateTotalCell() {
     for(let j=1;j<=n;j++){
     var totalCell = document.getElementById(`total-${j}`);
+    var totalCell_sanction = document.getElementById(`sanction-total-${j}`);
     
 
     var totalCell1 = document.getElementById(`2-row-${j}`);
@@ -1214,6 +1205,22 @@ document.addEventListener('DOMContentLoaded', function() {
       // Update the "Total" cell
       totalCell.textContent = sum;
     }
+
+    if (totalCell_sanction) {
+      // Get the values from cells with the 'sum-cell' class and calculate the sum
+      var sumCells_sanction = document.getElementsByClassName(`0-row-${j}`); 
+      var sum_sanction = 0;
+
+      for (var i = 0; i < sumCells.length; i++) {
+        var cellValue_sanction = parseFloat(sumCells_sanction[i].textContent) || 0;
+        sum_sanction += cellValue_sanction;
+      }
+
+      // Update the "Total" cell
+      totalCell_sanction.textContent = sum_sanction;
+    }
+
+
     console.log(totalCell1)
     if (totalCell1) {
       // Get the values from cells with the 'sum-cell' class and calculate the sum
@@ -1264,20 +1271,28 @@ document.addEventListener('DOMContentLoaded', function() {
       var columns = document.getElementById('years');
      // console.log('columns length',years.length,",",columns);
       var values={};
+      var sanctions = {};
       var expenses={};
       var sum_yearwise = 0;
+      var sanction_sum_yearwise = 0;
       var expense_sum_yearwise = 0;
       for(let j=1;j<years.length+1;j++){
 
         values[`values${j}`] = [];
+        sanctions[`sanctions${j}`] = [];
         expenses[`expenses${j}`]=[];
         for(let i=1;i<=n;i++){
           var domaingrants = document.getElementById(`1-row-${i}-col-${j}`);
-          var domaingrants0 = document.getElementById(`0-row-${i}-col-${j}`);
+       //   var domaingrants0 = document.getElementById(`0-row-${i}-col-${j}`);
+          var domainsanctions = document.getElementById(`0-row-${i}-col-${j}`);
           var domainexpenses = document.getElementById(`2-row-${i}-col-${j}`);
           if(domaingrants){
             var value = domaingrants.textContent;
             values[`values${j}`].push(value);
+          }
+          if(domainsanctions){
+            var sanction = domainsanctions.textContent;
+            sanctions[`sanctions${j}`].push(sanction);
           }
           if(domainexpenses){
             var expense = domainexpenses.textContent;
@@ -1288,12 +1303,16 @@ document.addEventListener('DOMContentLoaded', function() {
         var total_grants_yearwise = document.getElementById(`total-grant-${j}`);
         //var total_grants0_yearwise = document.getElementById(`total-grant0-${j}`);
         var total_expenses_yearwise = document.getElementById(`total-expense-${j}`);
-        var total_expenses_yearwise0 = document.getElementById(`total-expense0-${j}`);
-        var sum = 0;var expense_sum = 0;
+       // var total_expenses_yearwise0 = document.getElementById(`total-expense0-${j}`);
+        var total_sanctions_yearwise = document.getElementById(`total-sanction-${j}`);
+        var sum = 0;var expense_sum = 0;var sanction_sum = 0;
         
         for(var i=1;i<values[`values${j}`].length+1;i++){
           var num = parseFloat(values[`values${j}`][i-1])||0;
           sum+=num;
+
+          var sanction_num = parseFloat(sanctions[`sanctions${j}`][i-1])||0;
+          sanction_sum += sanction_num;
 
           var expense_num = parseFloat(expenses[`expenses${j}`][i-1])||0;
           expense_sum += expense_num;
@@ -1301,12 +1320,18 @@ document.addEventListener('DOMContentLoaded', function() {
         total_grants_yearwise.textContent = sum;
         sum_yearwise += sum;
 
+        total_sanctions_yearwise.textContent = sanction_sum;
+        sanction_sum_yearwise += sanction_sum;
+
         total_expenses_yearwise.textContent = expense_sum;
         expense_sum_yearwise += expense_sum;
       }
 
+       var total_funds_granted_all_years = document.getElementById('total_funds_granted_all_years');
+       total_funds_granted_all_years.textContent = sum_yearwise;
+
        var total_funds_sanctioned_all_years = document.getElementById('total_funds_sanctioned_all_years');
-       total_funds_sanctioned_all_years.textContent = sum_yearwise;
+       total_funds_sanctioned_all_years.textContent = sanction_sum_yearwise;
         
        var total_expenditure_all_years = document.getElementById('total_expenditure_all_years');
        total_expenditure_all_years.textContent = expense_sum_yearwise;
@@ -1319,7 +1344,7 @@ document.addEventListener('DOMContentLoaded', function() {
        var total_balance_amount = 0;
        for(let i=1;i<=n;i++){
         var balance_amount_row = 0;
-        var totalFundsEle = document.getElementById(`total-${i}`);
+        var totalFundsEle = document.getElementById(`sanction-total-${i}`);
         var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
 
        console.log('totalFunds',totalFunds);
