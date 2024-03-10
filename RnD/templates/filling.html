@@ -894,6 +894,33 @@
             //     return;
             // }
     
+            const sanctionedAmount = parseInt(row.querySelector('input[name$="_Sanctioned_Amount"]').value) || 0;
+            const totalExpenses = parseInt(row.querySelector('td input[name$="expenses"]').value) || 0;
+    
+            // Use the correct name attribute for closing balance
+            const closingBalanceElement = row.querySelector('td[name$="_closing"]');
+            
+            if (closingBalanceElement) {
+                const closingBalance = sanctionedAmount - totalExpenses;
+                closingBalanceElement.textContent = closingBalance;
+                if (closingBalance < 0) {
+                    closingBalanceElement.classList.add('negative-balance');
+                } else {
+                    closingBalanceElement.classList.remove('negative-balance');
+                }
+            }
+        });
+    }
+    {% comment %} function calculateAndDisplayClosingBalance(tableId) {
+        const table = document.querySelector(`#${tableId}`);
+        const rows = table.querySelectorAll('tr:not(.header-row)');
+    
+        rows.forEach(function (row) {
+            // Skip the calculation for the "Total Amount" row
+            // if (row.querySelector('th').textContent.trim() === 'Total Amount') {
+            //     return;
+            // }
+    
             const grantAmount = parseInt(row.querySelector('input[name$="_Grant_Amount"]').value) || 0;
             const totalExpenses = parseInt(row.querySelector('td input[name$="expenses"]').value) || 0;
     
@@ -910,7 +937,7 @@
                 }
             }
         });
-    }
+    } {% endcomment %}
     function calculateGrantAmount(table, columnIndex) {
         let totalGrantAmount = 0;
         let n = {{ budget_heads|length }};
