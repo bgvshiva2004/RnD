@@ -159,54 +159,56 @@
           <h3>IIT Indore</h3>
         </a>
     </div>
-        <div class="links">
-            <ul>
-                <li><a href='{% url "homepage" %}' class="active">Home</a></li>
-                {% if user.is_authenticated %}
-                  <li><a href="{% url "project_list" %}">Collaborations</a></li>
-                  <li><a href='{% url "logout" %}'>Logout</a></li>
-                {% else %}
-                <li><a href="{% url "login" %}">Collaborations</a></li>
-                <li><a href='{% url "login" %}'>Login</a></li>
-                {% endif %}
-              
-                
-            </ul>
-        </div>  
-    </div>
 
-    <div class="navbar2">
-        <div class="ham">
-          <p><i class="fa-solid fa-bars"></i></p>
+      <div class="links">
+              <ul>
+                  <li><a href='{% url "homepage" %}' class="active">Home</a></li>
+                  {% if user.is_authenticated %}
+                    <li><a href="{% url "project_list" %}">Collaborations</a></li>
+                    <li><a href='{% url "logout" %}'>Logout</a></li>
+                  {% else %}
+                  <li><a href="{% url "login" %}">Collaborations</a></li>
+                  <li><a href='{% url "login" %}'>Login</a></li>
+                  {% endif %}
+                
+                  
+              </ul>
+          </div>  
+      </div>
+
+      <div class="navbar2">
+          <div class="ham">
+            <p><i class="fa-solid fa-bars"></i></p>
+          </div>
+          <div class="title">
+            <a href='{% url "homepage" %}' class="lo">
+              <img src="{% static 'IITI_Logo.png' %}" class="logo">
+              <h3>IIT Indore</h3>
+            </a>
         </div>
-        <div class="title">
-          <a href='{% url "homepage" %}' class="lo">
-            <img src="{% static 'IITI_Logo.png' %}" class="logo">
-            <h3>IIT Indore</h3>
-          </a>
       </div>
-      </div>
-      <div class="side-bar">
-        <div id="close"><i class="fa-solid fa-xmark"></i></div>
-        <ul>
-          <li><a href='{% url "homepage" %}' class="active">Home</a></li>
-          <li><a href="{% url "project_list" %}">Projects</a></li>
-          <li><a href='{% url "login" %}'>Login</a></li>
-        </ul>
-      </div>
+      
+        <div class="side-bar">
+          <div id="close"><i class="fa-solid fa-xmark"></i></div>
+          <ul>
+            <li><a href='{% url "homepage" %}' class="active">Home</a></li>
+            <li><a href="{% url "project_list" %}">Projects</a></li>
+            <li><a href='{% url "login" %}'>Login</a></li>
+          </ul>
+        </div>
 
       <div class="body">
-        <div class="d1">
-          <img src="{% static 'IITI_Logo.png' %}">
-          <h2>IIT Indore Research & Development Department</h2>
-        </div>
-        <div classs="d2">
-          {% if user.is_authenticated %}
-          <a href='{% url "logout" %}'><button> <i class="fa-solid fa-user"></i> Logout</button></a>
-          {% else %}
-          <a href='{% url "login" %}'><button> <i class="fa-solid fa-user"></i> Login</button></a>
-          {% endif %}
-        </div>
+              <div class="d1">
+                <img src="{% static 'IITI_Logo.png' %}">
+                <h2>IIT Indore Research & Development Department</h2>
+              </div>
+              <div classs="d2">
+                {% if user.is_authenticated %}
+                <a href='{% url "logout" %}'><button> <i class="fa-solid fa-user"></i> Logout</button></a>
+                {% else %}
+                <a href='{% url "login" %}'><button> <i class="fa-solid fa-user"></i> Login</button></a>
+                {% endif %}
+              </div>
 
       </div>
 
@@ -231,8 +233,6 @@
       </footer>
 
       <script src="{% static 'script.js' %}"></script>
-
-
 
 </body>
 </html>

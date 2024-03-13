@@ -162,7 +162,9 @@
         }
     </style>
 </head>
+
 <body>
+
     <div class="navbar1">
         <div class="title">
           <a href='{% url "homepage" %}' class="lo">
@@ -197,302 +199,272 @@
             <li><a href="{% url "project_list" %}">Project Deals</a></li>
             <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
           </ul>
-        </div>
-        <div class="mtitle">
-            <div><h4>{{fellowship_no}}</h4></div>
-            
-            <div><h4>{{title}}</h4></div>
-        </div>
-        {% comment %} <form id="updateForm">
-            <div style="display: flex; align-items: center;">
-                <label for="rowNumber" style="margin-right: 10px; color: black;">Row Number:</label>
-                <input type="number" id="rowNumber" name="rowNumber" required style="width: 60px; color: black;"> <!-- Adjust the width as needed -->
-            </div>
-            
-            <div style="display: flex; align-items: center; margin-top: 10px;">
-                <label for="newValue" style="margin-right: 10px; color: black;">New Value:</label>
-                <input type="text" id="newValue" name="newValue" required style="width: 200px; color: black;"> <!-- Adjust the width as needed -->
-            </div>
-            
-            <button type="button" onclick="updateCellValue()" style="margin-top: 10px;">Update Cell Value</button>
-        </form>
-        
-            <a href="{% url 'mastersheet' project_id=fellowship_no  %}">
-                <button type="button">Marksheet</button>
-            </a>
-            <button type='button' onclick="addRow()">Add New Row</button>
-            <button onclick="deleteRow()">Delete Last  Row</button> {% endcomment %}
-<div class="tables">
-    <div class="table">
-        {% for i in context.period_range %}
-        
-            <table id="table_{{ i|add:1 }}" start-month="{{context.start_month}}" end-month="{{context.end_month}}">
-            <input value={{i|add:1}} name="table_no" style='display:none'>
-            <input value={{fellowship_no}} id="table_no" name="fellowship_no">
-            {% if table_no == table_no %}
-            <tr class="header-row">
-                <th>S.No</th>
-                <th>Budget Head</th>
-                <th>Grant Amount</th>
-                <th>Sanctioned Amount</th>
-                <th>Apr-{{years.start_year|add:i}}</th>
-                <th>May-{{years.start_year|add:i}}</th>
-                <th>Jun-{{years.start_year|add:i}}</th>
-                <th>Jul-{{years.start_year|add:i}}</th>
-                <th>Aug-{{years.start_year|add:i}}</th>
-                <th>Sep-{{years.start_year|add:i}}</th>
-                <th>Oct-{{years.start_year|add:i}}</th>
-                <th>Nov-{{years.start_year|add:i}}</th>
-                <th>Dec-{{years.start_year|add:i}}</th>
-                <th>Jan-{{years.start_year|add:i|add:1}}</th>
-                <th>Feb-{{years.start_year|add:i|add:1}}</th>
-                <th>Mar-{{years.start_year|add:i|add:1}}</th>
-                <th>Total Expenses</th>
-                <th>Closing Balances</th>
-            </tr>
-         
-            <tr>
-                <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='1_head' style="font-weight: 600" value="1"></td>
-                <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='1_text' value="Non_Recurring" style="width: 10vw; font-weight: 600"></td>
-                <td><input type='number' name='1_Grant_Amount' value="{{ sum_data.1_Grant_Amount }}"></td>
-                <td><input type='number' name='1_Sanctioned_Amount' value="{{ sum_data.1_Sanctioned_Amount }}"></td>
-                <td><input type='number' class='4' name='1_Apr' value="{{ sum_data.1_Apr }}"></td>
-                <td><input type='number' class='5' name='1_May' value="{{ sum_data.1_May }}"></td>
-                <td><input type='number' class='6' name='1_Jun' value="{{ sum_data.1_Jun }}"></td>
-                <td><input type='number' class='7' name='1_Jul' value="{{ sum_data.1_Jul }}"></td>
-                <td><input type='number' class='8' name='1_Aug' value="{{ sum_data.1_Aug }}"></td>
-                <td><input type='number' class='9' name='1_Sep' value="{{ sum_data.1_Sep }}"></td>
-                <td><input type='number' class='10' name='1_Oct' value="{{ sum_data.1_Oct }}"></td>
-                <td><input type='number' class='11' name='1_Nov' value="{{ sum_data.1_Nov }}"></td>
-                <td><input type='number' class='12' name='1_Dec' value="{{ sum_data.1_Dec }}"></td>
-                <td><input type='number' class='13' name='1_Jan' value="{{ sum_data.1_Jan }}"></td>
-                <td><input type='number' class='14' name='1_Feb' value="{{ sum_data.1_Feb }}"></td>
-                <td><input type='number' class='15' name='1_Mar' value="{{ sum_data.1_Mar }}"></td>
-                <td><input type='number' name='1_expenses' value={{sum_data.1_expenses}}></td>
-                <td name='1_closing'>{{ sum_data.1_closing }}</td>
-            </tr>
-                
-                
-                
-                <tr>
-                    
-                    <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='2_head' style="font-weight: 600" value="2"></td>
-                    <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='2_text' style="width: 10vw; font-weight: 600" value="Manpower"></td>
-                    
-                    <td><input type='number' name='2_Grant_Amount' value="{{ sum_data.2_Grant_Amount }}"></td>
-                    <td><input type='number' name='2_Sanctioned_Amount' value="{{ sum_data.2_Sanctioned_Amount }}"></td>
-                    <td><input type='number' class='4' name='2_Apr' value="{{ sum_data.2_Apr }}"></td>
-                    <td><input type='number' class='5' name='2_May' value="{{ sum_data.2_May }}"></td>
-                    <td><input type='number' class='6' name='2_Jun' value="{{ sum_data.2_Jun }}"></td>
-                    <td><input type='number' class='7' name='2_Jul' value="{{ sum_data.2_Jul }}"></td>
-                    <td><input type='number' class='8' name='2_Aug' value="{{ sum_data.2_Aug }}"></td>
-                    <td><input type='number' class='9' name='2_Sep' value="{{ sum_data.2_Sep }}"></td>
-                    <td><input type='number' class='10' name='2_Oct' value="{{ sum_data.2_Oct }}"></td>
-                    <td><input type='number' class='11' name='2_Nov' value="{{ sum_data.2_Nov }}"></td>
-                    <td><input type='number' class='12' name='2_Dec' value="{{ sum_data.2_Dec }}"></td>
-                    <td><input type='number' class='13' name='2_Jan' value="{{ sum_data.2_Jan }}"></td>
-                    <td><input type='number' class='14' name='2_Feb' value="{{ sum_data.2_Feb }}"></td>
-                    <td><input type='number' class='15' name='2_Mar' value="{{ sum_data.2_Mar }}"></td>
-                    <td><input type='number' name='2_expenses' value={{sum_data.2_expenses}}></td>
-                    <td name='2_closing'>{{ sum_data.2_closing }}</td>
-                </tr>
-                
-                
-                <tr>
-               
-                    <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='3_head' style="font-weight: 600" value="3"></td>
-                    <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='3_text' style="width: 10vw; font-weight: 600" value="Contingency"></td>
-                    <td><input type='number' name='3_Grant_Amount' value={{sum_data.3_Grant_Amount}}></td>
-                    <td><input type='number' name='3_Sanctioned_Amount' value={{ sum_data.3__Sanctioned_Amount }}></td>
-                    <td><input type='number' class='4' name='3_Apr' value={{sum_data.3_Apr}}></td>
-                    <td><input type='number' class='5' name='3_May' value={{sum_data.3_May}}></td>
-                    <td><input type='number' class='6' name='3_Jun' value={{sum_data.3_Jun}}></td>
-                    <td><input type='number' class='7' name='3_Jul' value={{sum_data.3_Jul}}></td>
-                    <td><input type='number' class='8' name='3_Aug' value={{sum_data.3_Aug}}></td>
-                    <td><input type='number' class='9' name='3_Sep' value={{sum_data.3_Sep}}></td>
-                    <td><input type='number' class='10' name='3_Oct' value={{sum_data.3_Oct}}></td>
-                    <td><input type='number' class='11' name='3_Nov' value={{sum_data.3_Nov}}></td>
-                    <td><input type='number' class='12' name='3_Dec' value={{sum_data.3_Dec}}></td>
-                    <td><input type='number' class='13' name='3_Jan' value={{sum_data.3_Jan}}></td>
-                    <td><input type='number' class='14' name='3_Feb' value={{sum_data.3_Feb}}></td>
-                    <td><input type='number' class='15' name='3_Mar' value={{sum_data.3_Mar}}></td>
-                    <td><input type='number' name='3_expenses' value={{sum_data.3_expenses}}></td>
-                    <td name='3_closing'>{{sum_data.3_closing}}</td>
-                </tr>
-                <tr>
-                   
-                    <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='4_head' style="font-weight: 600" value="4"></td>
-                    <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='4_text' style="width: 10vw; font-weight: 600" value="Consumables"></td>
-                    <td><input type='number' name='4_Grant_Amount' value={{sum_data.4_Grant_Amount}}></td>
-                    <td><input type='number' name='4_Sanctioned_Amount' value={{ sum_data.4_Sanctioned_Amount }}></td>
-                    <td><input type='number' class='4' name='4_Apr' value={{sum_data.4_Apr}}></td>
-                    <td><input type='number' class='5' name='4_May' value={{sum_data.4_May}}></td>
-                    <td><input type='number' class='6' name='4_Jun' value={{sum_data.4_Jun}}></td>
-                    <td><input type='number' class='7' name='4_Jul' value={{sum_data.4_Jul}}></td>
-                    <td><input type='number' class='8' name='4_Aug' value={{sum_data.4_Aug}}></td>
-                    <td><input type='number' class='9' name='4_Sep' value={{sum_data.4_Sep}}></td>
-                    <td><input type='number' class='10' name='4_Oct' value={{sum_data.4_Oct}}></td>
-                    <td><input type='number' class='11' name='4_Nov' value={{sum_data.4_Nov}}></td>
-                    <td><input type='number' class='12' name='4_Dec' value={{sum_data.4_Dec}}></td>
-                    <td><input type='number' class='13' name='4_Jan' value={{sum_data.4_Jan}}></td>
-                    <td><input type='number' class='14' name='4_Feb' value={{sum_data.4_Feb}}></td>
-                    <td><input type='number' class='15' name='4_Mar' value={{sum_data.4_Mar}}></td>
-                    <td><input type='number' name='4_expenses' value={{sum_data.4_expenses}}></td>
-                    <td name='4_closing' >{{sum_data.4_closing}}</td>
-                </tr>
-                <tr>
-                    
-                    <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='5_head' style="font-weight: 600" value="5"></td>
-                    <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='5_text' style="width: 10vw; font-weight: 600" value="Travel"></td>
-                    <td><input type='number' name='5_Grant_Amount' value={{sum_data.5_Grant_Amount}}></td>
-                    <td><input type='number' name='5_Sanctioned_Amount' value={{ sum_data.5_Sanctioned_Amount }}></td>
-                    <td><input type='number' class='4' name='5_Apr' value={{sum_data.5_Apr}}></td>
-                    <td><input type='number' class='5' name='5_May' value={{sum_data.5_May}}></td>
-                    <td><input type='number' class='6' name='5_Jun' value={{sum_data.5_Jun}}></td>
-                    <td><input type='number' class='7' name='5_Jul' value={{sum_data.5_Jul}}></td>
-                    <td><input type='number' class='8' name='5_Aug' value={{sum_data.5_Aug}}></td>
-                    <td><input type='number' class='9' name='5_Sep' value={{sum_data.5_Sep}}></td>
-                    <td><input type='number' class='10' name='5_Oct' value={{sum_data.5_Oct}}></td>
-                    <td><input type='number' class='11' name='5_Nov' value={{sum_data.5_Nov}}></td>
-                    <td><input type='number' class='12' name='5_Dec' value={{sum_data.5_Dec}}></td>
-                    <td><input type='number' class='13' name='5_Jan' value={{sum_data.5_Jan}}></td>
-                    <td><input type='number' class='14' name='5_Feb' value={{sum_data.5_Feb}}></td>
-                    <td><input type='number' class='15' name='5_Mar' value={{sum_data.5_Mar}}></td>
-                    <td><input type='number' name='5_expenses' value={{sum_data.5_expenses}}></td>
-                    <td name='5_closing'>{{sum_data.5_closing}}</td>
-                </tr>
-                <tr>
-                    
-                    <td><input disabled type='text' style="font-weight: 600; background-color: #fff;" name='6_head' style="font-weight: 600" value="6"></td>
-                    <td><input disabled type='text' style="font-weight: 600; background-color: #fff;" name='6_text' style="width: 10vw; font-weight: 600" value="Overhead"></td>
-                    <td><input type='number' name='6_Grant_Amount' value={{sum_data.6_Grant_Amount}}></td>
-                    <td><input type='number' name='6_Sanctioned_Amount' value={{ sum_data.6_Sanctioned_Amount }}></td>
-                    <td><input type='number' class='4' name='6_Apr' value={{sum_data.6_Apr}}></td>
-                    <td><input type='number' class='5' name='6_May' value={{sum_data.6_May}}></td>
-                    <td><input type='number' class='6' name='6_Jun' value={{sum_data.6_Jun}}></td>
-                    <td><input type='number' class='7' name='6_Jul' value={{sum_data.6_Jul}}></td>
-                    <td><input type='number' class='8' name='6_Aug' value={{sum_data.6_Aug}}></td>
-                    <td><input type='number' class='9' name='6_Sep' value={{sum_data.6_Sep}}></td>
-                    <td><input type='number' class='10' name='6_Oct' value={{sum_data.6_Oct}}></td>
-                    <td><input type='number' class='11' name='6_Nov' value={{sum_data.6_Nov}}></td>
-                    <td><input type='number' class='12' name='6_Dec' value={{sum_data.6_Dec}}></td>
-                    <td><input type='number' class='13' name='6_Jan' value={{sum_data.6_Jan}}></td>
-                    <td><input type='number' class='14' name='6_Feb' value={{sum_data.6_Feb}}></td>
-                    <td><input type='number' class='15' name='6_Mar' value={{sum_data.6_Mar}}></td>
-                    <td><input type='number' name='6_expenses' value={{sum_data.6_expenses}}></td>
-                    <td name='6_closing' >{{sum_data.6_closing}}</td>
-                </tr>
-                <tr>
-                   
-                    <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='7_head' style="font-weight: 600" value="7"></td>
-                    <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='7_text' style="width: 10vw; font-weight: 600" value="SSR"></td>
-                    <td><input type='number' name='7_Grant_Amount' value={{sum_data.7_Grant_Amount}}></td>
-                    <td><input type='number' name='7_Sanctioned_Amount' value={{ sum_data.7_Sanctioned_Amount }}></td>
-                    <td><input type='number' class='4' name='7_Apr' value={{sum_data.7_Apr}}></td>
-                    <td><input type='number' class='5' name='7_May' value={{sum_data.7_May}}></td>
-                    <td><input type='number' class='6' name='7_Jun' value={{sum_data.7_Jun}}></td>
-                    <td><input type='number' class='7' name='7_Jul' value={{sum_data.7_Jul}}></td>
-                    <td><input type='number' class='8' name='7_Aug' value={{sum_data.7_Aug}}></td>
-                    <td><input type='number' class='9' name='7_Sep' value={{sum_data.7_Sep}}></td>
-                    <td><input type='number' class='10' name='7_Oct' value={{sum_data.7_Oct}}></td>
-                    <td><input type='number' class='11' name='7_Nov' value={{sum_data.7_Nov}}></td>
-                    <td><input type='number' class='12' name='7_Dec' value={{sum_data.7_Dec}}></td>
-                    <td><input type='number' class='13' name='7_Jan' value={{sum_data.7_Jan}}></td>
-                    <td><input type='number' class='14' name='7_Feb' value={{sum_data.7_Feb}}></td>
-                    <td><input type='number' class='15' name='7_Mar' value={{sum_data.7_Mar}}></td>
-                    <td><input type='number' name='7_expenses' value={{sum_data.7_expenses}}></td>
-                    <td name='7_closing'>{{sum_data.7_closing}}</td>
-                </tr>
-
-
-            <tr name='total_amount'>
-
-
-            <th id="total_no" style="font-weight: 600">*</th>
-            <th style="width: 10vw; font-weight: 600">Total Amount</th>
-            <td><input type='number' name='total_Grant_Amount' class="placeh" value={{sum_data.total_grant}}></td>
-            <td><input type='number' name='total_Sanctioned_Amount' class="placeh" value={{sum_data.total_sanctioned}}></td>
-            <td><input type='number' name='total_Apr' value={{sum_data.total_Apr}}></td>
-            <td><input type='number' name='total_May' value={{sum_data.total_May}}></td>
-            <td><input type='number' name='total_Jun' value={{sum_data.total_Jun}}></td>
-            <td><input type='number' name='total_Jul' value={{sum_data.total_Jul}}></td>
-            <td><input type='number' name='total_Aug' value={{sum_data.total_Aug}}></td>
-            <td><input type='number' name='total_Sep' value={{sum_data.total_Sep}}></td>
-            <td><input type='number' name='total_Oct' value={{sum_data.total_Oct}}></td>
-            <td><input type='number' name='total_Nov' value={{sum_data.total_Nov}}></td>
-            <td><input type='number' name='total_Dec' value={{sum_data.total_Dec}}></td>
-            <td><input type='number' name='total_Jan' value={{sum_data.total_Jan}}></td>
-            <td><input type='number' name='total_Feb' value={{sum_data.total_Feb}}></td>
-            <td><input type='number' name='total_Mar' value={{sum_data.total_Mar}}></td>
-            <td><input type='number' name='total_expenses'class="placeh" value={{sum_data.total_expenses}}></td>
-            <td name='total_balances_closing' class="placeh" value={{sum_data.total_closing_balances}}>{{sum_data.total_closing_balances}}</td>     
-        </tr>
-            {% else %}
-            {% endif %}
-            
-        </table>
-        <br></br>
-        {% comment %} <button type='button' onclick="addRow()">Add New Row</button> {% endcomment %}
-        {% comment %} <button type='button' onclick="updateTable('table_{{ i|add:1 }}')">Update</button> {% endcomment %}
-        
-        
-        <br></br>
-        {% endfor %}
     </div>
-</div>
 
-<footer>
-    <div class="footer">
-      <div class="info">
-        <h4>IIT Indore</h4>
-      </div>
-      <div class="social">
-        <ul>
-          <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-          <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
-          <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-          <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
-        </ul>
-      </div>
-      <div class="rights">
-        <p><i class="fa-solid fa-copyright"></i> Copyrights reserved.</p>
-      </div>
-    </div>
-    
-</footer>
+            <div class="mtitle">
+                <div><h4>{{fellowship_no}}</h4></div>
+                
+                <div><h4>{{title}}</h4></div>
+            </div>
+        
+                    <div class="tables">
+                        <div class="table">
+
+                            {% for i in context.period_range %}
+                            
+                            <table id="table_{{ i|add:1 }}" start-month="{{context.start_month}}" end-month="{{context.end_month}}">
+                                <input value={{i|add:1}} name="table_no" style='display:none'>
+                                <input value={{fellowship_no}} id="table_no" name="fellowship_no">
+
+                                {% if table_no == table_no %}
+
+                                    <tr class="header-row">
+                                        <th>S.No</th>
+                                        <th>Budget Head</th>
+                                        <th>Grant Amount</th>
+                                        <th>Sanctioned Amount</th>
+                                        <th>Apr-{{years.start_year|add:i}}</th>
+                                        <th>May-{{years.start_year|add:i}}</th>
+                                        <th>Jun-{{years.start_year|add:i}}</th>
+                                        <th>Jul-{{years.start_year|add:i}}</th>
+                                        <th>Aug-{{years.start_year|add:i}}</th>
+                                        <th>Sep-{{years.start_year|add:i}}</th>
+                                        <th>Oct-{{years.start_year|add:i}}</th>
+                                        <th>Nov-{{years.start_year|add:i}}</th>
+                                        <th>Dec-{{years.start_year|add:i}}</th>
+                                        <th>Jan-{{years.start_year|add:i|add:1}}</th>
+                                        <th>Feb-{{years.start_year|add:i|add:1}}</th>
+                                        <th>Mar-{{years.start_year|add:i|add:1}}</th>
+                                        <th>Total Expenses</th>
+                                        <th>Closing Balances</th>
+                                    </tr>
+                                
+                                    <tr>
+                                        <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='1_head' style="font-weight: 600" value="1"></td>
+                                        <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='1_text' value="Non_Recurring" style="width: 10vw; font-weight: 600"></td>
+                                        <td><input type='number' name='1_Grant_Amount' value="{{ sum_data.1_Grant_Amount }}"></td>
+                                        <td><input type='number' name='1_Sanctioned_Amount' value="{{ sum_data.1_Sanctioned_Amount }}"></td>
+                                        <td><input type='number' class='4' name='1_Apr' value="{{ sum_data.1_Apr }}"></td>
+                                        <td><input type='number' class='5' name='1_May' value="{{ sum_data.1_May }}"></td>
+                                        <td><input type='number' class='6' name='1_Jun' value="{{ sum_data.1_Jun }}"></td>
+                                        <td><input type='number' class='7' name='1_Jul' value="{{ sum_data.1_Jul }}"></td>
+                                        <td><input type='number' class='8' name='1_Aug' value="{{ sum_data.1_Aug }}"></td>
+                                        <td><input type='number' class='9' name='1_Sep' value="{{ sum_data.1_Sep }}"></td>
+                                        <td><input type='number' class='10' name='1_Oct' value="{{ sum_data.1_Oct }}"></td>
+                                        <td><input type='number' class='11' name='1_Nov' value="{{ sum_data.1_Nov }}"></td>
+                                        <td><input type='number' class='12' name='1_Dec' value="{{ sum_data.1_Dec }}"></td>
+                                        <td><input type='number' class='13' name='1_Jan' value="{{ sum_data.1_Jan }}"></td>
+                                        <td><input type='number' class='14' name='1_Feb' value="{{ sum_data.1_Feb }}"></td>
+                                        <td><input type='number' class='15' name='1_Mar' value="{{ sum_data.1_Mar }}"></td>
+                                        <td><input type='number' name='1_expenses' value={{sum_data.1_expenses}}></td>
+                                        <td name='1_closing'>{{ sum_data.1_closing }}</td>
+                                    </tr>
+                                                
+                                    <tr>              
+                                        <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='2_head' style="font-weight: 600" value="2"></td>
+                                        <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='2_text' style="width: 10vw; font-weight: 600" value="Manpower"></td>
+                                        
+                                        <td><input type='number' name='2_Grant_Amount' value="{{ sum_data.2_Grant_Amount }}"></td>
+                                        <td><input type='number' name='2_Sanctioned_Amount' value="{{ sum_data.2_Sanctioned_Amount }}"></td>
+                                        <td><input type='number' class='4' name='2_Apr' value="{{ sum_data.2_Apr }}"></td>
+                                        <td><input type='number' class='5' name='2_May' value="{{ sum_data.2_May }}"></td>
+                                        <td><input type='number' class='6' name='2_Jun' value="{{ sum_data.2_Jun }}"></td>
+                                        <td><input type='number' class='7' name='2_Jul' value="{{ sum_data.2_Jul }}"></td>
+                                        <td><input type='number' class='8' name='2_Aug' value="{{ sum_data.2_Aug }}"></td>
+                                        <td><input type='number' class='9' name='2_Sep' value="{{ sum_data.2_Sep }}"></td>
+                                        <td><input type='number' class='10' name='2_Oct' value="{{ sum_data.2_Oct }}"></td>
+                                        <td><input type='number' class='11' name='2_Nov' value="{{ sum_data.2_Nov }}"></td>
+                                        <td><input type='number' class='12' name='2_Dec' value="{{ sum_data.2_Dec }}"></td>
+                                        <td><input type='number' class='13' name='2_Jan' value="{{ sum_data.2_Jan }}"></td>
+                                        <td><input type='number' class='14' name='2_Feb' value="{{ sum_data.2_Feb }}"></td>
+                                        <td><input type='number' class='15' name='2_Mar' value="{{ sum_data.2_Mar }}"></td>
+                                        <td><input type='number' name='2_expenses' value={{sum_data.2_expenses}}></td>
+                                        <td name='2_closing'>{{ sum_data.2_closing }}</td>
+
+                                    </tr>
+                
+                                    <tr>
+                                        <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='3_head' style="font-weight: 600" value="3"></td>
+                                        <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='3_text' style="width: 10vw; font-weight: 600" value="Contingency"></td>
+                                        <td><input type='number' name='3_Grant_Amount' value={{sum_data.3_Grant_Amount}}></td>
+                                        <td><input type='number' name='3_Sanctioned_Amount' value={{ sum_data.3_Sanctioned_Amount }}></td>
+                                        <td><input type='number' class='4' name='3_Apr' value={{sum_data.3_Apr}}></td>
+                                        <td><input type='number' class='5' name='3_May' value={{sum_data.3_May}}></td>
+                                        <td><input type='number' class='6' name='3_Jun' value={{sum_data.3_Jun}}></td>
+                                        <td><input type='number' class='7' name='3_Jul' value={{sum_data.3_Jul}}></td>
+                                        <td><input type='number' class='8' name='3_Aug' value={{sum_data.3_Aug}}></td>
+                                        <td><input type='number' class='9' name='3_Sep' value={{sum_data.3_Sep}}></td>
+                                        <td><input type='number' class='10' name='3_Oct' value={{sum_data.3_Oct}}></td>
+                                        <td><input type='number' class='11' name='3_Nov' value={{sum_data.3_Nov}}></td>
+                                        <td><input type='number' class='12' name='3_Dec' value={{sum_data.3_Dec}}></td>
+                                        <td><input type='number' class='13' name='3_Jan' value={{sum_data.3_Jan}}></td>
+                                        <td><input type='number' class='14' name='3_Feb' value={{sum_data.3_Feb}}></td>
+                                        <td><input type='number' class='15' name='3_Mar' value={{sum_data.3_Mar}}></td>
+                                        <td><input type='number' name='3_expenses' value={{sum_data.3_expenses}}></td>
+                                        <td name='3_closing'>{{sum_data.3_closing}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='4_head' style="font-weight: 600" value="4"></td>
+                                        <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='4_text' style="width: 10vw; font-weight: 600" value="Consumables"></td>
+                                        <td><input type='number' name='4_Grant_Amount' value={{sum_data.4_Grant_Amount}}></td>
+                                        <td><input type='number' name='4_Sanctioned_Amount' value={{ sum_data.4_Sanctioned_Amount }}></td>
+                                        <td><input type='number' class='4' name='4_Apr' value={{sum_data.4_Apr}}></td>
+                                        <td><input type='number' class='5' name='4_May' value={{sum_data.4_May}}></td>
+                                        <td><input type='number' class='6' name='4_Jun' value={{sum_data.4_Jun}}></td>
+                                        <td><input type='number' class='7' name='4_Jul' value={{sum_data.4_Jul}}></td>
+                                        <td><input type='number' class='8' name='4_Aug' value={{sum_data.4_Aug}}></td>
+                                        <td><input type='number' class='9' name='4_Sep' value={{sum_data.4_Sep}}></td>
+                                        <td><input type='number' class='10' name='4_Oct' value={{sum_data.4_Oct}}></td>
+                                        <td><input type='number' class='11' name='4_Nov' value={{sum_data.4_Nov}}></td>
+                                        <td><input type='number' class='12' name='4_Dec' value={{sum_data.4_Dec}}></td>
+                                        <td><input type='number' class='13' name='4_Jan' value={{sum_data.4_Jan}}></td>
+                                        <td><input type='number' class='14' name='4_Feb' value={{sum_data.4_Feb}}></td>
+                                        <td><input type='number' class='15' name='4_Mar' value={{sum_data.4_Mar}}></td>
+                                        <td><input type='number' name='4_expenses' value={{sum_data.4_expenses}}></td>
+                                        <td name='4_closing' >{{sum_data.4_closing}}</td>
+                                    </tr>
+
+                                    <tr>                                        
+                                        <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='5_head' style="font-weight: 600" value="5"></td>
+                                        <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='5_text' style="width: 10vw; font-weight: 600" value="Travel"></td>
+                                        <td><input type='number' name='5_Grant_Amount' value={{sum_data.5_Grant_Amount}}></td>
+                                        <td><input type='number' name='5_Sanctioned_Amount' value={{ sum_data.5_Sanctioned_Amount }}></td>
+                                        <td><input type='number' class='4' name='5_Apr' value={{sum_data.5_Apr}}></td>
+                                        <td><input type='number' class='5' name='5_May' value={{sum_data.5_May}}></td>
+                                        <td><input type='number' class='6' name='5_Jun' value={{sum_data.5_Jun}}></td>
+                                        <td><input type='number' class='7' name='5_Jul' value={{sum_data.5_Jul}}></td>
+                                        <td><input type='number' class='8' name='5_Aug' value={{sum_data.5_Aug}}></td>
+                                        <td><input type='number' class='9' name='5_Sep' value={{sum_data.5_Sep}}></td>
+                                        <td><input type='number' class='10' name='5_Oct' value={{sum_data.5_Oct}}></td>
+                                        <td><input type='number' class='11' name='5_Nov' value={{sum_data.5_Nov}}></td>
+                                        <td><input type='number' class='12' name='5_Dec' value={{sum_data.5_Dec}}></td>
+                                        <td><input type='number' class='13' name='5_Jan' value={{sum_data.5_Jan}}></td>
+                                        <td><input type='number' class='14' name='5_Feb' value={{sum_data.5_Feb}}></td>
+                                        <td><input type='number' class='15' name='5_Mar' value={{sum_data.5_Mar}}></td>
+                                        <td><input type='number' name='5_expenses' value={{sum_data.5_expenses}}></td>
+                                        <td name='5_closing'>{{sum_data.5_closing}}</td>
+                                    </tr>
+
+                                    <tr>                                        
+                                        <td><input disabled type='text' style="font-weight: 600; background-color: #fff;" name='6_head' style="font-weight: 600" value="6"></td>
+                                        <td><input disabled type='text' style="font-weight: 600; background-color: #fff;" name='6_text' style="width: 10vw; font-weight: 600" value="Overhead"></td>
+                                        <td><input type='number' name='6_Grant_Amount' value={{sum_data.6_Grant_Amount}}></td>
+                                        <td><input type='number' name='6_Sanctioned_Amount' value={{ sum_data.6_Sanctioned_Amount }}></td>
+                                        <td><input type='number' class='4' name='6_Apr' value={{sum_data.6_Apr}}></td>
+                                        <td><input type='number' class='5' name='6_May' value={{sum_data.6_May}}></td>
+                                        <td><input type='number' class='6' name='6_Jun' value={{sum_data.6_Jun}}></td>
+                                        <td><input type='number' class='7' name='6_Jul' value={{sum_data.6_Jul}}></td>
+                                        <td><input type='number' class='8' name='6_Aug' value={{sum_data.6_Aug}}></td>
+                                        <td><input type='number' class='9' name='6_Sep' value={{sum_data.6_Sep}}></td>
+                                        <td><input type='number' class='10' name='6_Oct' value={{sum_data.6_Oct}}></td>
+                                        <td><input type='number' class='11' name='6_Nov' value={{sum_data.6_Nov}}></td>
+                                        <td><input type='number' class='12' name='6_Dec' value={{sum_data.6_Dec}}></td>
+                                        <td><input type='number' class='13' name='6_Jan' value={{sum_data.6_Jan}}></td>
+                                        <td><input type='number' class='14' name='6_Feb' value={{sum_data.6_Feb}}></td>
+                                        <td><input type='number' class='15' name='6_Mar' value={{sum_data.6_Mar}}></td>
+                                        <td><input type='number' name='6_expenses' value={{sum_data.6_expenses}}></td>
+                                        <td name='6_closing' >{{sum_data.6_closing}}</td>
+                                    </tr>
+
+                                    <tr>                                    
+                                            <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='7_head' style="font-weight: 600" value="7"></td>
+                                            <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='7_text' style="width: 10vw; font-weight: 600" value="SSR"></td>
+                                            <td><input type='number' name='7_Grant_Amount' value={{sum_data.7_Grant_Amount}}></td>
+                                            <td><input type='number' name='7_Sanctioned_Amount' value={{ sum_data.7_Sanctioned_Amount }}></td>
+                                            <td><input type='number' class='4' name='7_Apr' value={{sum_data.7_Apr}}></td>
+                                            <td><input type='number' class='5' name='7_May' value={{sum_data.7_May}}></td>
+                                            <td><input type='number' class='6' name='7_Jun' value={{sum_data.7_Jun}}></td>
+                                            <td><input type='number' class='7' name='7_Jul' value={{sum_data.7_Jul}}></td>
+                                            <td><input type='number' class='8' name='7_Aug' value={{sum_data.7_Aug}}></td>
+                                            <td><input type='number' class='9' name='7_Sep' value={{sum_data.7_Sep}}></td>
+                                            <td><input type='number' class='10' name='7_Oct' value={{sum_data.7_Oct}}></td>
+                                            <td><input type='number' class='11' name='7_Nov' value={{sum_data.7_Nov}}></td>
+                                            <td><input type='number' class='12' name='7_Dec' value={{sum_data.7_Dec}}></td>
+                                            <td><input type='number' class='13' name='7_Jan' value={{sum_data.7_Jan}}></td>
+                                            <td><input type='number' class='14' name='7_Feb' value={{sum_data.7_Feb}}></td>
+                                            <td><input type='number' class='15' name='7_Mar' value={{sum_data.7_Mar}}></td>
+                                            <td><input type='number' name='7_expenses' value={{sum_data.7_expenses}}></td>
+                                            <td name='7_closing'>{{sum_data.7_closing}}</td>
+                                    </tr>
+
+                                    <tr name='total_amount'>
+                                        <th id="total_no" style="font-weight: 600">*</th>
+                                        <th style="width: 10vw; font-weight: 600">Total Amount</th>
+                                        <td><input type='number' name='total_Grant_Amount' class="placeh" value={{sum_data.total_grant}}></td>
+                                        <td><input type='number' name='total_Sanctioned_Amount' class="placeh" value={{sum_data.total_sanctioned}}></td>
+                                        <td><input type='number' name='total_Apr' value={{sum_data.total_Apr}}></td>
+                                        <td><input type='number' name='total_May' value={{sum_data.total_May}}></td>
+                                        <td><input type='number' name='total_Jun' value={{sum_data.total_Jun}}></td>
+                                        <td><input type='number' name='total_Jul' value={{sum_data.total_Jul}}></td>
+                                        <td><input type='number' name='total_Aug' value={{sum_data.total_Aug}}></td>
+                                        <td><input type='number' name='total_Sep' value={{sum_data.total_Sep}}></td>
+                                        <td><input type='number' name='total_Oct' value={{sum_data.total_Oct}}></td>
+                                        <td><input type='number' name='total_Nov' value={{sum_data.total_Nov}}></td>
+                                        <td><input type='number' name='total_Dec' value={{sum_data.total_Dec}}></td>
+                                        <td><input type='number' name='total_Jan' value={{sum_data.total_Jan}}></td>
+                                        <td><input type='number' name='total_Feb' value={{sum_data.total_Feb}}></td>
+                                        <td><input type='number' name='total_Mar' value={{sum_data.total_Mar}}></td>
+                                        <td><input type='number' name='total_expenses'class="placeh" value={{sum_data.total_expenses}}></td>
+                                        <td name='total_balances_closing' class="placeh" value={{sum_data.total_closing_balances}}>{{sum_data.total_closing_balances}}</td>     
+                                    </tr>
+                
+                                {% endif %}
+                                
+                            </table>
+
+                            <br></br>
+                            <br></br>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+    <footer>
+        <div class="footer">
+        <div class="info">
+            <h4>IIT Indore</h4>
+        </div>
+        <div class="social">
+            <ul>
+            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+            </ul>
+        </div>
+        <div class="rights">
+            <p><i class="fa-solid fa-copyright"></i> Copyrights reserved.</p>
+        </div>
+        </div>
+        
+    </footer>
 
 <script src="{% static 'script.js' %}"></script>
 
-
 <script>
+
     const tablesData = {};
 
-    // Initialize tablesData with 2D array of 0 values for each table ID
     document.addEventListener('DOMContentLoaded', function () {
         
+        // Intialising the input fields with 0 values
         initializeTableValues();
         const tableIds = document.querySelectorAll('table[id^="table"]');
-       
         
         tableIds.forEach(function (table) {
             const tableId = table.id;
             tablesData[tableId] = initializeTableData(table);
-          console.log("update called")
-         
-            console.log("update done")            
-            console.log(table.children[0].children)
+
+            // Disabling the input fields that fall out of the specified range of the project tenure
 
             if(tableId==='table_1'){
                 let allrows = table.children[0].children
-                console.log(allrows)
     
                 let startMonth = table.getAttribute('start-month');
     
                 for(let i=0;i<8;i++){
                     let eachrow = allrows[i]
-                    /// console.log(eachrow.children.forEach(function (ele){
-                        /// console.log(ele)
-                    /// }))
+        
                     let childrenArray = Array.from(eachrow.children);
     
                     childrenArray.forEach(function (ele) {
@@ -500,7 +472,7 @@
             
                         if (inputElement && inputElement.tagName === 'INPUT') {
                             let inputClass = inputElement.getAttribute('class');
-                            console.log('Class:', inputClass);
+                
                             if(parseInt(startMonth,10)===1){
                                 if(parseInt(inputClass,10)<13){
                                     inputElement.setAttribute('disabled','disabled');
@@ -570,49 +542,6 @@
 
     });
 
-    function addRow() {
-        var tables = document.querySelectorAll('table');
-        tables.forEach(function (table) {
-            // Create a new row with the specified content
-            var newRowContent = `
-            <tr>
-                <td><input type='text' name='${table.rows.length - 1}_head' value='${table.rows.length - 1}'></td>
-                <td><input type='text' name='${table.rows.length - 1}_text' value='${table.rows.length - 1}_newRow'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Grant_Amount' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Sanctioned_Amount' value='0'></td>
-                <td><input type='number' class='4' name='${table.rows.length - 1}_Apr' value='0'></td>
-                <td><input type='number' class='5' name='${table.rows.length - 1}_May' value='0'></td>
-                <td><input type='number' class='6' name='${table.rows.length - 1}_Jun' value='0'></td>
-                <td><input type='number' class='7' name='${table.rows.length - 1}_Jul' value='0'></td>
-                <td><input type='number' class='8' name='${table.rows.length - 1}_Aug' value='0'></td>
-                <td><input type='number' class='9' name='${table.rows.length - 1}_Sep' value='0'></td>
-                <td><input type='number' class='10' name='${table.rows.length - 1}_Oct' value='0'></td>
-                <td><input type='number' class='11' name='${table.rows.length - 1}_Nov' value='0'></td>
-                <td><input type='number' class='12' name='${table.rows.length - 1}_Dec' value='0'></td>
-                <td><input type='number' class='13' name='${table.rows.length - 1}_Jan' value='0'></td>
-                <td><input type='number' class='14' name='${table.rows.length - 1}_Feb' value='0'></td>
-                <td><input type='number' class='15' name='${table.rows.length - 1}_Mar' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_expenses' value='0'></td>
-                <td name='${table.rows.length - 1}_closing'>0</td>
-            </tr>
-            
-            `;
-    
-            // Append the new row HTML to the table
-            table.querySelector('[name="total_amount"]').insertAdjacentHTML('beforebegin', newRowContent);
-           // table.insertAdjacentHTML('beforeend', newRowContent);
-           var tableData = getTableData(table.id);
-           tablesData[table.id] = tableData;
-           console.log("hi")
-           console.log(tableData)
-           console.log("hi")
-        });
-        var fellowshipNo = "{{ id }}";
-        console.log(fellowshipNo)
-        saveTableDataToDjango(tablesData,fellowshipNo);
-        console.log(tablesData)
-    } 
-
     function initializeTableData(table) {
         const inputFields = table.querySelectorAll('input[type="number"]');
         const tableData = {};
@@ -631,6 +560,7 @@
         });
     }
 
+
     function updateTable(tableIds) {
         
         tableIds.forEach(function (table) {
@@ -639,20 +569,18 @@
             var tableData = getTableData(tableId);
             tablesData[tableId] = tableData;
 
-            // Implement the logic to update the table with the retrieved data
             calculateAndDisplayTotalAmount(tableId);
             calculateAndDisplayTotalExpenses(tableId);
             calculateAndDisplayClosingBalance(tableId);
             tableData = getTableData(tableId);
             tablesData[tableId] = tableData;
             // console.log(tableId);
-            console.log(tablesData);
-            console.log(JSON.stringify(tableData));
             
-    1       });
+           });
             var project_id = "{{ id }}";
             saveTableDataToDjango(tablesData,project_id);
-     //   alert(`Table ${tableId} updated: ${JSON.stringify(tableData)}`);
+        //   alert(`Table ${tableId} updated: ${JSON.stringify(tableData)}`);
+
     }
 
     function getTableData(tableId) {
@@ -668,10 +596,9 @@
     }
 
     function calculateAndDisplayTotalExpenses(tableId) {
+
         const table = document.querySelector(`#${tableId}`);
-        console.log(table)
         const rows = table.querySelectorAll('tr:not(.header-row)');
-        console.log(rows)
  
         rows.forEach(function (row) {
             const inputFields = row.querySelectorAll('input[type="number"]');
@@ -685,28 +612,22 @@
                     totalExpenses += parseInt(input.value) || 0;
                 }
             });
-             console.log("ho")
-             console.log(totalExpenses)
-             console.log(row.querySelector('td input[name$="expenses"]'))
              
-             row.querySelector('td input[name$="expenses"]').value = totalExpenses;
-
+            // console.log(row.querySelector('td input[name$="expenses"]'))
+             
+            row.querySelector('td input[name$="expenses"]').value = totalExpenses;
         });
     }
+
     function calculateAndDisplayClosingBalance(tableId) {
         const table = document.querySelector(`#${tableId}`);
         const rows = table.querySelectorAll('tr:not(.header-row)');
     
         rows.forEach(function (row) {
-            // Skip the calculation for the "Total Amount" row
-            // if (row.querySelector('th').textContent.trim() === 'Total Amount') {
-            //     return;
-            // }
-    
+
             const grantAmount = parseInt(row.querySelector('input[name$="_Grant_Amount"]').value) || 0;
             const totalExpenses = parseInt(row.querySelector('td input[name$="expenses"]').value) || 0;
     
-            // Use the correct name attribute for closing balance
             const closingBalanceElement = row.querySelector('td[name$="_closing"]');
             
             if (closingBalanceElement) {
@@ -720,77 +641,63 @@
             }
         });
     }
+
+
     function calculateGrantAmount(table, columnIndex) {
         let totalGrantAmount = 0;
         let n = {{ budget_heads|length }};
-         n = table.rows.length-2;
-       // var tables = document.querySelectorAll('table');
-        console.log(table.rows.length)
-        console.log(n)
-       // console.log(totalAmountRow)
+        n = table.rows.length-2;
 
         for (let i = 1; i <= n; i++) {
             const inputName = `${i}_Grant_Amount`;
             const inputValue = parseInt(table.querySelector(`input[name$="${inputName}"]`).value) || 0;
             totalGrantAmount += inputValue;
         }
-        console.log(totalGrantAmount)
-    
+
         return totalGrantAmount;
     }
+
     function calculateAndDisplayTotalAmount(tableId) {
+
         const table = document.querySelector(`#${tableId}`);
         const headerRow = table.querySelector('.header-row');
         const totalAmountRow = table.querySelector('tr[name="total_amount"]');
-        const totalAmountCells = totalAmountRow.querySelectorAll('td'); // Use 'td' instead of 'input'
-        // console.log(table)
-        // console.log(headerRow)
-        // console.log(totalAmountRow)
-         console.log(totalAmountCells)
+        const totalAmountCells = totalAmountRow.querySelectorAll('td');
+        
+        // console.log(totalAmountCells)
     
         totalAmountCells.forEach(function (totalAmountCell, index) {
             if(index==2){
-
-               
-
                 const grantAmount = calculateGrantAmount(table, index);
-              //  const totalGrantAmount = grantAmountOne + grantAmountTwo + grantAmountThree + grantAmountFour +grantAmountFive + grantAmountSix + grantAmountSeven;
-
-    // Update the content of the Total Grant Amount cell
-    const correspondingTotalAmountCell = totalAmountRow.querySelector(`td:nth-child(${index + 1})`);
-    // console.log("hi")
-    // console.log(totalGrantAmount)
-    // console.log("hi")
-    correspondingTotalAmountCell.innerHTML = `
-                    <input type='number' name='total_Grant_Amount' value='${grantAmount}' >
-                `;
-            }
+                // Updating the content of the Total Grant Amount cell
+                const correspondingTotalAmountCell = totalAmountRow.querySelector(`td:nth-child(${index + 1})`);
+                
+                correspondingTotalAmountCell.innerHTML = `
+                                <input type='number' name='total_Grant_Amount' value='${grantAmount}' >
+                            `;
+                }
            
             if (index > 2) {  // Exclude S.No and Budget Head columns
                 let totalAmount = 0;
                 let month;
                 // Iterate through rows (excluding header and total amount rows)
                 const rows = table.querySelectorAll('tr:not(.header-row):not([name="total_amount"])');
-                // console.log(rows)
+    
                 rows.forEach(function (row) {
-                  //  const inputField = row.querySelector(`input[name$="_${headerRow.cells[index].textContent.trim()}"]`);
-                   month = convertToInputFieldName(headerRow.cells[index].textContent.trim());
+                  
+                   month = convertToInputFieldName(headerRow.cells[index].textContent.trim());  
                     const inputField = row.querySelector(`input[name*="_${convertToInputFieldName(headerRow.cells[index].textContent.trim())}"]`);
-                    // console.log(inputField)
-                    // console.log(headerRow.cells[index].textContent.trim())
-                    // console.log(convertToInputFieldName(headerRow.cells[index].textContent.trim()))
+                    
                     if (inputField) {
                         totalAmount += parseInt(inputField.value) || 0;
                     }
-                    // console.log(totalAmount)
+                    
                 });
-                // console.log("end")
-                // console.log(totalAmountCell)
+                
                 const correspondingTotalAmountCell = totalAmountRow.querySelector(`td:nth-child(${index + 1})`);
-                // console.log(correspondingTotalAmountCell)
-                //totalAmountCell.textContent = totalAmount;
+                
                 if (correspondingTotalAmountCell) {
-                // Update the content of the total amount cell
+                // Updating the content of the total amount cell
                 correspondingTotalAmountCell.innerHTML = `
                     <input type='number' name='total_${month}' value='${totalAmount}'>
                 `;
@@ -799,17 +706,14 @@
         });
     }
    
-   
+    // Retrieving the month name alone from the label : month-year
     function convertToInputFieldName(monthText) {
-        // Add logic here to convert "Nov-2023" to "Nov"
-        // You may need to adjust this based on your specific requirements
         const monthAbbreviation = monthText.split('-')[0];
         return monthAbbreviation;
     }
     
-    // JavaScript code
     async function saveTableDataToDjango(data, project_id) {
-        console.log(JSON.stringify(data));
+
         await fetch(`/save_table_data/${project_id}/`, {
             method: 'POST',
             headers: {
@@ -821,19 +725,19 @@
         .then(response => response.json())
         .then(result => {
             console.log(result);
-            // Handle success or error as needed
         })
         .catch(error => {
             console.error('Error:', error);
         });
     }
+
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].trim();
-                // Check if the cookie name matches the desired name
+                // Checking if the cookie name matches the desired name
                 if (cookie.substring(0, name.length + 1) === (name + '=')) {
                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;
@@ -845,5 +749,6 @@
 
     
 </script>
+
 </body>
 </html>
