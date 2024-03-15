@@ -344,7 +344,8 @@
                 <th>Save Changes</th>
                 <th>Action</th>
                 <th onclick="sortTable('Title_of_Project')">Project Title</th>
-                <th onclick="sortTable('Project_Fellowship_No')">Project ID</th>
+                <th onclick="sortTable('Project_Fellowship_No')">Project_Fellowship_No</th>
+                <th >Project ID</th>
                 <th>Catergory</th>
                 <th>Country</th>
                 <th>Status</th>
@@ -399,8 +400,9 @@
                     </a>
                   
                 </td>
-                  <td><input disabled type="text" name="Title_of_Project" value="{{ project.Title_of_Project }}"></td>
-                  <td><input disabled type="text" name="Project_Fellowship_No" value="{{ project.Project_Fellowship_No }}"></td>
+                  <td><input  type="text" name="Title_of_Project" value="{{ project.Title_of_Project }}"></td>
+                  <td><input  type="text" name="Project_Fellowship_No" value="{{ project.Project_Fellowship_No }}"></td>
+                  <td><input disabled type="text" name="Project_id" value="{{ project.id }}"></td>
                   <td><input type="text" name="Category" value="{{ project.Category }}"></td>
                   <td><input type="text" name="Country_Involved" value="{{ project.Country_Involved }}"></td>
                   <td><input type="text" name="task" value="{{ project.task }}"></td>

@@ -687,6 +687,7 @@ def fill(request, project_id):
         # project_id = project_id.replace('/','_')
         project = project_details.objects.get(id = project_id)
         project_file_name = project.Project_file_name
+        print(project_file_name)
         # project_fellowship_no = project.Project_Fellowship_No
         file_path = f'project_files/{project_file_name}.txt'
         with open(file_path, 'r') as file:
@@ -973,10 +974,15 @@ def submit_project_data(request, project_id):
         try:
         # Retrieve the project object using project_id
             project = project_details.objects.get(id=project_id)
+            print(project)
+            print(project.Project_Fellowship_No)
+            print(project_id)
             
             project.Title_of_Project = request.POST.get('Title_of_Project')
-            project.Project_Fellowship_No = request.POST.get('Project_Fellowship_No')
+            # project.Project_Fellowship_No = request.POST.get('Project_Fellowship_No')
             project.Category = request.POST.get('Category')
+            print(project.Category)
+            print(project.Title_of_Project)
             project.Country_Involved = request.POST.get('Country_Involved')
             project.task = request.POST.get('task')
             project.PI_of_Project = request.POST.get('PI_of_Project')
@@ -985,7 +991,7 @@ def submit_project_data(request, project_id):
             # project.Project_Start_Date = request.POST.get('Project_Start_Date')
             # project.Project_Closure_Date = request.POST.get('Project_Closure_Date')
             # project.Sanctioned_Date = request.POST.get('Sanctioned_Date')
-            project.Project_file_name = request.POST.get('Project_file_name')
+            # project.Project_file_name = request.POST.get('Project_file_name')
             project.project_duration = request.POST.get('project_duration')
             project.financial_year_start_index = request.POST.get('financial_year_start_index')
             project.financial_year_end_index = request.POST.get('financial_year_end_index')
@@ -1007,6 +1013,7 @@ def submit_project_data(request, project_id):
             
             # print(project.Category)
             # Save the updated project object
+
             project.save()
         
         # Redirect to a success page or to another URL
