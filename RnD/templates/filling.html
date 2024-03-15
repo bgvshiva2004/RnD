@@ -294,255 +294,123 @@
             <img src="{% static 'IITI_Logo.png' %}"class="logo">
             <h3>IIT Indore</h3>
           </a>
-      </div>
-          <div class="links">
-              <ul>
-                <li><a href="{% url "index" %}">New Project Deal</a></li>
-                <li><a href="{% url "project_list" %}">Project Deals</a></li>
-                <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
-              </ul>
-          </div>
-      </div>
+    </div>
+
+        <div class="links">
+                <ul>
+                    <li><a href="{% url "index" %}">New Project Deal</a></li>
+                    <li><a href="{% url "project_list" %}">Project Deals</a></li>
+                    <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+                </ul>
+            </div>
+        </div>
   
-      <div class="navbar2">
-          <div class="ham">
-            <p><i class="fa-solid fa-bars"></i></p>
-          </div>
-          <div class="title">
-            <a href='{% url "homepage" %}' class="lo">
-              <img src="{% static 'IITI_Logo.png' %}" class="logo">
-              <h3>IIT Indore</h3>
-            </a>
-        </div>
-        </div>
-        <div class="side-bar">
-          <div id="close"><i class="fa-solid fa-xmark"></i></div>
-          <ul>
-            <li><a href="{% url "index" %}">New Project Deal</a></li>
-            <li><a href="{% url "project_list" %}">Project Deals</a></li>
-            <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
-          </ul>
-        </div>
+            <div class="navbar2">
+                <div class="ham">
+                    <p><i class="fa-solid fa-bars"></i></p>
+                </div>
+                <div class="title">
+                    <a href='{% url "homepage" %}' class="lo">
+                    <img src="{% static 'IITI_Logo.png' %}" class="logo">
+                    <h3>IIT Indore</h3>
+                    </a>
+                </div>
+            </div>
+
+                    <div class="side-bar">
+                    <div id="close"><i class="fa-solid fa-xmark"></i></div>
+                    <ul>
+                        <li><a href="{% url "index" %}">New Project Deal</a></li>
+                        <li><a href="{% url "project_list" %}">Project Deals</a></li>
+                        <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+                    </ul>
+                    </div>
+
         <div class="mtitle">
-        <div>
-         <h4>{{display.display_id}}</h4>   
-         <h4>{{display.display_name}}</h4> 
-        </div>
-         <div class="mbtn">
-         <a href="{% url 'mastersheet' project_id=fellowship_no  %}">
-            <button type="button">Mastersheet</button>
-        </a>
-        </div>
+            <div>
+                <h4>{{display.display_id}}</h4>   
+                <h4>{{display.display_name}}</h4> 
+            </div>
+            <div class="mbtn">
+                <a href="{% url 'mastersheet' project_id=fellowship_no  %}">
+                    <button type="button">Mastersheet</button>
+                </a>
+            </div>
         </div>
 
         <div class="titles">
             <div>
                 <form id="updateForm">
                     <div>
-                        <input type="number" id="rowNumber" name="rowNumber" required placeholder="Row Number"> <!-- Adjust the width as needed -->
-                        <input type="text" id="newValue" name="newValue" required placeholder="Cell Name"> <!-- Adjust the width as needed -->  
+                        <input type="number" id="rowNumber" name="rowNumber" required placeholder="Row Number">
+                        <input type="text" id="newValue" name="newValue" required placeholder="Cell Name">  
                     </div>     
                     <div>         
                         <button type="button" onclick="updateCellValue()" class="btn-1">Update Cell Name</button>
                     </div>
                 </form>
-            </div>
-            <!-- <a href="{% url 'mastersheet' project_id=fellowship_no  %}">
-                    <button type="button">Marksheet</button>
-        </a> -->
+            </div> 
+
             <div>
                 <button type='button' onclick="addRow()" class="btn-1">Add New Row</button>
                 <button onclick="deleteRow()" class="btn-1">Delete Last Row</button>
             </div>
         </div>     
 
-<div class="tables">
-    <div class="table">
+        <div class="tables">
+            <div class="table">
 
-    {% for table_key, sum_data in tablesdata.items %}
+            {% for table_key, sum_data in tablesdata.items %}
 
-    <table id="table_{{ table_key}}" start-month="{{display.start_month}}" end-month="{{display.end_month}}">
-    <tr class="header-row">
-        <th>S.No</th>
-        <th style="width: 10vw;">Budget Head</th>
-        <th>Grant Amount</th>
-        <th>Sanctioned Amount</th>
-        <th>Apr-{{ display.start_year|add:table_key|add:-1 }}</th>
-        <th>May-{{ display.start_year|add:table_key|add:-1 }}</th>
-        <th>Jun-{{ display.start_year|add:table_key|add:-1 }}</th>
-        <th>Jul-{{ display.start_year|add:table_key|add:-1 }}</th>
-        <th>Aug-{{ display.start_year|add:table_key|add:-1 }}</th>
-        <th>Sep-{{ display.start_year|add:table_key|add:-1 }}</th>
-        <th>Oct-{{ display.start_year|add:table_key|add:-1 }}</th>
-        <th>Nov-{{ display.start_year|add:table_key|add:-1 }}</th>
-        <th>Dec-{{ display.start_year|add:table_key|add:-1 }}</th>
-        <th>Jan-{{ display.start_year|add:table_key|add:0 }}</th>
-        <th>Feb-{{ display.start_year|add:table_key|add:0 }}</th>
-        <th>Mar-{{ display.start_year|add:table_key|add:0 }}</th>
-        <th>Total Expenses</th>
-        <th>Closing Balances</th>
-    </tr>
-    {% comment %} <tr>
-        <th>1</th>
-        <th>Non_Recurring</th>
-        <td><input type='number' name='one_Grant_Amount' value={{sum_data.one_Grant_Amount}}></td>
-        <td><input type='number' class='4' name='one_Apr' value={{sum_data.one_Apr}}></td>
-        <td><input type='number' class='5' name='one_May' value={{sum_data.one_May}}></td>
-        <td><input type='number' class='6' name='one_Jun' value={{sum_data.one_Jun}}></td>
-        <td><input type='number' class='7' name='one_Jul' value={{sum_data.one_Jul}}></td>
-        <td><input type='number' class='8' name='one_Aug' value={{sum_data.one_Aug}}></td>
-        <td><input type='number' class='9' name='one_Sep' value={{sum_data.one_Sep}}></td>
-        <td><input type='number' class='10' name='one_Oct' value={{sum_data.one_Oct}}></td>
-        <td><input type='number' class='11' name='one_Nov' value={{sum_data.one_Nov}}></td>
-        <td><input type='number' class='12' name='one_Dec' value={{sum_data.one_Dec}}></td>
-        <td><input type='number' class='13' name='one_Jan' value={{sum_data.one_Jan}}></td>
-        <td><input type='number' class='14' name='one_Feb' value={{sum_data.one_Feb}}></td>
-        <td><input type='number' class='15' name='one_Mar' value={{sum_data.one_Mar}}></td>
-        <td><input type='number' name='one_expenses' value={{sum_data.one_expenses}}></td>
-        <td name='one_closing' class="placeh">{{sum_data.one_closing}}</td>
-        
-    </tr>
-    <tr>
-        <th>2</th>
-        <th>Manpower</th>
-        <td><input type='number' name='two_Grant_Amount' value={{sum_data.two_Grant_Amount}}></td>
-        <td><input type='number' class='4' name='two_Apr' value={{sum_data.two_Apr}}></td>
-        <td><input type='number' class='5' name='two_May' value={{sum_data.two_May}}></td>
-        <td><input type='number' class='6' name='two_Jun' value={{sum_data.two_Jun}}></td>
-        <td><input type='number' class='7' name='two_Jul' value={{sum_data.two_Jul}}></td>
-        <td><input type='number' class='8' name='two_Aug' value={{sum_data.two_Aug}}></td>
-        <td><input type='number' class='9' name='two_Sep' value={{sum_data.two_Sep}}></td>
-        <td><input type='number' class='10' name='two_Oct' value={{sum_data.two_Oct}}></td>
-        <td><input type='number' class='11' name='two_Nov' value={{sum_data.two_Nov}}></td>
-        <td><input type='number' class='12' name='two_Dec' value={{sum_data.two_Dec}}></td>
-        <td><input type='number' class='13' name='two_Jan' value={{sum_data.two_Jan}}></td>
-        <td><input type='number' class='14' name='two_Feb' value={{sum_data.two_Feb}}></td>
-        <td><input type='number' class='15' name='two_Mar' value={{sum_data.two_Mar}}></td>
-        <td><input type='number' name='two_expenses'  class="placeh" value="{{sum_data.two_expenses}}"></td>
-        <td name='two_closing' class="placeh">{{sum_data.two_closing}}</td>
-    </tr>
-    <tr>
-        <th>3</th>
-        <th>Contingency</th>
-        <td><input type='number' name='three_Grant_Amount' class="placeh" value={{sum_data.three_Grant_Amount}}></td>
-        <td><input type='number' class='4' name='three_Apr' value={{sum_data.three_Apr}}></td>
-        <td><input type='number' class='5' name='three_May' value={{sum_data.three_May}}></td>
-        <td><input type='number' class='6' name='three_Jun' value={{sum_data.three_Jun}}></td>
-        <td><input type='number' class='7' name='three_Jul' value={{sum_data.three_Jul}}></td>
-        <td><input type='number' class='8' name='three_Aug' value={{sum_data.three_Aug}}></td>
-        <td><input type='number' class='9' name='three_Sep' value={{sum_data.three_Sep}}></td>
-        <td><input type='number' class='10' name='three_Oct' value={{sum_data.three_Oct}}></td>
-        <td><input type='number' class='11' name='three_Nov' value={{sum_data.three_Nov}}></td>
-        <td><input type='number' class='12' name='three_Dec' value={{sum_data.three_Dec}}></td>
-        <td><input type='number' class='13' name='three_Jan' value={{sum_data.three_Jan}}></td>
-        <td><input type='number' class='14' name='three_Feb' value={{sum_data.three_Feb}}></td>
-        <td><input type='number' class='15' name='three_Mar' value={{sum_data.three_Mar}}></td>
-        <td><input type='number' name='three_expenses' class="placeh" value={{sum_data.three_expenses}}></td>
-        <td name='three_closing' class="placeh">{{sum_data.three_closing}}</td>
-    </tr>
-    <tr>
-        <th>4</th>
-        <th>Consumables</th>
-        <td><input type='number' name='four_Grant_Amount' class="placeh" value={{sum_data.four_Grant_Amount}}></td>
-        <td><input type='number' class='4' name='four_Apr' value={{sum_data.four_Apr}}></td>
-        <td><input type='number' class='5' name='four_May' value={{sum_data.four_May}}></td>
-        <td><input type='number' class='6' name='four_Jun' value={{sum_data.four_Jun}}></td>
-        <td><input type='number' class='7' name='four_Jul' value={{sum_data.four_Jul}}></td>
-        <td><input type='number' class='8' name='four_Aug' value={{sum_data.four_Aug}}></td>
-        <td><input type='number' class='9' name='four_Sep' value={{sum_data.four_Sep}}></td>
-        <td><input type='number' class='10' name='four_Oct' value={{sum_data.four_Oct}}></td>
-        <td><input type='number' class='11' name='four_Nov' value={{sum_data.four_Nov}}></td>
-        <td><input type='number' class='12' name='four_Dec' value={{sum_data.four_Dec}}></td>
-        <td><input type='number' class='13' name='four_Jan' value={{sum_data.four_Jan}}></td>
-        <td><input type='number' class='14' name='four_Feb' value={{sum_data.four_Feb}}></td>
-        <td><input type='number' class='15' name='four_Mar' value={{sum_data.four_Mar}}></td>
-        <td><input type='number' name='four_expenses' class="placeh" value={{sum_data.four_expenses}}></td>
-        <td name='four_closing' class="placeh" >{{sum_data.four_closing}}</td>
-    </tr>
-    <tr>
-        <th>5</th>
-        <th>Travel</th>
-        <td><input type='number' name='five_Grant_Amount' class="placeh" value={{sum_data.five_Grant_Amount}}></td>
-        <td><input type='number' class='4' name='five_Apr' value={{sum_data.five_Apr}}></td>
-        <td><input type='number' class='5' name='five_May' value={{sum_data.five_May}}></td>
-        <td><input type='number' class='6' name='five_Jun' value={{sum_data.five_Jun}}></td>
-        <td><input type='number' class='7' name='five_Jul' value={{sum_data.five_Jul}}></td>
-        <td><input type='number' class='8' name='five_Aug' value={{sum_data.five_Aug}}></td>
-        <td><input type='number' class='9' name='five_Sep' value={{sum_data.five_Sep}}></td>
-        <td><input type='number' class='10' name='five_Oct' value={{sum_data.five_Oct}}></td>
-        <td><input type='number' class='11' name='five_Nov' value={{sum_data.five_Nov}}></td>
-        <td><input type='number' class='12' name='five_Dec' value={{sum_data.five_Dec}}></td>
-        <td><input type='number' class='13' name='five_Jan' value={{sum_data.five_Jan}}></td>
-        <td><input type='number' class='14' name='five_Feb' value={{sum_data.five_Feb}}></td>
-        <td><input type='number' class='15' name='five_Mar' value={{sum_data.five_Mar}}></td>
-        <td><input type='number' name='five_expenses' class="placeh" value={{sum_data.five_expenses}}></td>
-        <td name='five_closing' class="placeh">{{sum_data.five_closing}}</td>
-    </tr>
-    <tr>
-        <th>6</th>
-        <th>Overhead</th>
-        <td><input type='number' name='six_Grant_Amount' class="placeh" value={{sum_data.six_Grant_Amount}}></td>
-        <td><input type='number' class='4' name='six_Apr' value={{sum_data.six_Apr}}></td>
-        <td><input type='number' class='5' name='six_May' value={{sum_data.six_May}}></td>
-        <td><input type='number' class='6' name='six_Jun' value={{sum_data.six_Jun}}></td>
-        <td><input type='number' class='7' name='six_Jul' value={{sum_data.six_Jul}}></td>
-        <td><input type='number' class='8' name='six_Aug' value={{sum_data.six_Aug}}></td>
-        <td><input type='number' class='9' name='six_Sep' value={{sum_data.six_Sep}}></td>
-        <td><input type='number' class='10' name='six_Oct' value={{sum_data.six_Oct}}></td>
-        <td><input type='number' class='11' name='six_Nov' value={{sum_data.six_Nov}}></td>
-        <td><input type='number' class='12' name='six_Dec' value={{sum_data.six_Dec}}></td>
-        <td><input type='number' class='13' name='six_Jan' value={{sum_data.six_Jan}}></td>
-        <td><input type='number' class='14' name='six_Feb' value={{sum_data.six_Feb}}></td>
-        <td><input type='number' class='15' name='six_Mar' value={{sum_data.six_Mar}}></td>
-        <td><input type='number' name='six_expenses' class="placeh" value={{sum_data.six_expenses}}></td>
-        <td name='six_closing' class="placeh" >{{sum_data.six_closing}}</td>
-    </tr>
-    <tr>
-        <th>7</th>
-        <th>SSR</th>
-        <td><input type='number' name='seven_Grant_Amount' class="placeh" value={{sum_data.seven_Grant_Amount}}></td>
-        <td><input type='number' class='4' name='seven_Apr' value={{sum_data.seven_Apr}}></td>
-        <td><input type='number' class='5' name='seven_May' value={{sum_data.seven_May}}></td>
-        <td><input type='number' class='6' name='seven_Jun' value={{sum_data.seven_Jun}}></td>
-        <td><input type='number' class='7' name='seven_Jul' value={{sum_data.seven_Jul}}></td>
-        <td><input type='number' class='8' name='seven_Aug' value={{sum_data.seven_Aug}}></td>
-        <td><input type='number' class='9' name='seven_Sep' value={{sum_data.seven_Sep}}></td>
-        <td><input type='number' class='10' name='seven_Oct' value={{sum_data.seven_Oct}}></td>
-        <td><input type='number' class='11' name='seven_Nov' value={{sum_data.seven_Nov}}></td>
-        <td><input type='number' class='12' name='seven_Dec' value={{sum_data.seven_Dec}}></td>
-        <td><input type='number' class='13' name='seven_Jan' value={{sum_data.seven_Jan}}></td>
-        <td><input type='number' class='14' name='seven_Feb' value={{sum_data.seven_Feb}}></td>
-        <td><input type='number' class='15' name='seven_Mar' value={{sum_data.seven_Mar}}></td>
-        <td><input type='number' name='seven_expenses' class="placeh" value={{sum_data.seven_expenses}}></td>
-        <td name='seven_closing' class="placeh">{{sum_data.seven_closing}}</td>
-    </tr> {% endcomment %}
-    <tr name='total_amount'>
-        <th>*</th>
-        <th style="font-weight: 600;">Total Amount</th>
-        <td name='total_grant'>{{sum_data.total_grant}}</td>
-        <td name='total_sanctioned'>{{sum_data.total_sanctioned}}</td>   
-        <td name='total_Apr' class="placeh" >{{sum_data.total_Apr}}</td>
-        <td name='total_May'  class="placeh">{{sum_data.total_May}}</td>
-        <td name='total_Jun' class="placeh" >{{sum_data.total_Jun}}</td>
-        <td name='total_Jul' class="placeh" >{{sum_data.total_Jul}}</td>
-        <td name='total_Aug' class="placeh" >{{sum_data.total_Aug}}</td>
-        <td name='total_Sep' class="placeh" >{{sum_data.total_Sep}}</td>
-        <td name='total_Oct' class="placeh" >{{sum_data.total_Oct}}</td>
-        <td name='total_Nov' class="placeh" >{{sum_data.total_Nov}}</td>
-        <td name='total_Dec' class="placeh" >{{sum_data.total_Dec}}</td>
-        <td name='total_Jan' class="placeh" >{{sum_data.total_Jan}}</td>
-        <td name='total_Feb'  class="placeh">{{sum_data.total_Feb}}</td>
-        <td name='total_Mar'  class="placeh">{{sum_data.total_Mar}}</td>
-        <td><input type='number' name='total_expenses' class="placeh" value={{sum_data.total_expenses}}></td>
-        <td name='total_balances_closing' class="placeh" value={{sum_data.total_closing_balances}}>{{sum_data.total_closing_balances}}</td>          
-    </tr>
-    
-</table>
-<button type='button' class="btn" onclick="updateTable('table_{{ table_key}}')">Update</button>
+            <table id="table_{{ table_key}}" start-month="{{display.start_month}}" end-month="{{display.end_month}}">
+                <tr class="header-row">
+                    <th>S.No</th>
+                    <th style="width: 10vw;">Budget Head</th>
+                    <th>Grant Amount</th>
+                    <th>Sanctioned Amount</th>
+                    <th>Apr-{{ display.start_year|add:table_key|add:-1 }}</th>
+                    <th>May-{{ display.start_year|add:table_key|add:-1 }}</th>
+                    <th>Jun-{{ display.start_year|add:table_key|add:-1 }}</th>
+                    <th>Jul-{{ display.start_year|add:table_key|add:-1 }}</th>
+                    <th>Aug-{{ display.start_year|add:table_key|add:-1 }}</th>
+                    <th>Sep-{{ display.start_year|add:table_key|add:-1 }}</th>
+                    <th>Oct-{{ display.start_year|add:table_key|add:-1 }}</th>
+                    <th>Nov-{{ display.start_year|add:table_key|add:-1 }}</th>
+                    <th>Dec-{{ display.start_year|add:table_key|add:-1 }}</th>
+                    <th>Jan-{{ display.start_year|add:table_key|add:0 }}</th>
+                    <th>Feb-{{ display.start_year|add:table_key|add:0 }}</th>
+                    <th>Mar-{{ display.start_year|add:table_key|add:0 }}</th>
+                    <th>Total Expenses</th>
+                    <th>Closing Balances</th>
+                </tr>
+            
+                <tr name='total_amount'>
+                    <th>*</th>
+                    <th style="font-weight: 600;">Total Amount</th>
+                    <td name='total_grant'>{{sum_data.total_grant}}</td>
+                    <td name='total_sanctioned'>{{sum_data.total_sanctioned}}</td>   
+                    <td name='total_Apr' class="placeh" >{{sum_data.total_Apr}}</td>
+                    <td name='total_May'  class="placeh">{{sum_data.total_May}}</td>
+                    <td name='total_Jun' class="placeh" >{{sum_data.total_Jun}}</td>
+                    <td name='total_Jul' class="placeh" >{{sum_data.total_Jul}}</td>
+                    <td name='total_Aug' class="placeh" >{{sum_data.total_Aug}}</td>
+                    <td name='total_Sep' class="placeh" >{{sum_data.total_Sep}}</td>
+                    <td name='total_Oct' class="placeh" >{{sum_data.total_Oct}}</td>
+                    <td name='total_Nov' class="placeh" >{{sum_data.total_Nov}}</td>
+                    <td name='total_Dec' class="placeh" >{{sum_data.total_Dec}}</td>
+                    <td name='total_Jan' class="placeh" >{{sum_data.total_Jan}}</td>
+                    <td name='total_Feb'  class="placeh">{{sum_data.total_Feb}}</td>
+                    <td name='total_Mar'  class="placeh">{{sum_data.total_Mar}}</td>
+                    <td><input type='number' name='total_expenses' class="placeh" value={{sum_data.total_expenses}}></td>
+                    <td name='total_balances_closing' class="placeh" value={{sum_data.total_closing_balances}}>{{sum_data.total_closing_balances}}</td>          
+                </tr>
+            </table>
 
-{% endfor %}
-    </div>
-</div>
+            <button type='button' class="btn" onclick="updateTable('table_{{ table_key}}')">Update</button>
+
+            {% endfor %}
+            </div>
+        </div>
 
 <footer>
     <div class="footer">
@@ -565,537 +433,441 @@
 </footer>
 
 
-<script src="{% static 'script.js' %}"></script>
-<script >
+    <script src="{% static 'script.js' %}"></script>
 
-
-    var parsed_data_str = {{ parsed_data_json|safe }};
-
-    var tablesData = parsed_data_str;
-    console.log(parsed_data_str)
-    function addRows(tableId, numRows) {
-        const table = document.getElementById(tableId);
-        if (!table) {
-            console.error(`Table with ID '${tableId}' not found.`);
-            return;
-        }
-        const tbody = table.querySelector('tbody');
-        console.log(tbody);
-        const totalAmountRow = table.querySelector('tr[name="total_amount"]');
+    <script >
     
-        // Check if the totalAmountRow is found
-        if (!totalAmountRow) {
-            console.error(`Row with name 'total_amount' not found in table '${tableId}'.`);
-            return;
+        document.addEventListener('DOMContentLoaded', function () {
+            let n = {{ budget_heads|length }};
+            const tableIds = document.querySelectorAll('table[id^="table_"]');
+            tableIds.forEach(function (table) {
+                const tableId = table.id;
+
+                addRows(tableId, n); 
+
+                calculateAndDisplayTotalAmount(tableId);
+                calculateAndDisplayTotalExpenses(tableId);
+                calculateAndDisplayClosingBalance(tableId);
+
+                if(tableId==='table_1'){
+                    let allrows = table.children[0].children 
+                    console.log(allrows)
+                    let startMonth = table.getAttribute('start-month');
+
+                    for(let i=0;i<=n;i++){
+                        let eachrow = allrows[i]
+                        let childrenArray = Array.from(eachrow.children);
+                        childrenArray.forEach(function(ele){
+                            let inputElement = ele.children[0];
+                            if(inputElement && inputElement.tagName==='INPUT'){
+                                let inputClass = inputElement.getAttribute('class');
+                                console.log('class: ',inputClass);
+                                if(parseInt(startMonth,10)===1){
+                                    if(parseInt(inputClass,10)<13){
+                                        inputElement.setAttribute('disabled','disabled');
+                                        inputElement.style.backgroundColor='#90bcdf'; 
+                                        ele.style.backgroundColor='#90bcdf'; 
+                                    }
+                                }else if(parseInt(startMonth,10)===2){
+                                    if(parseInt(inputClass,10)<14){
+                                        inputElement.setAttribute('disabled','disabled');
+                                        inputElement.style.backgroundColor='#90bcdf';
+                                        ele.style.backgroundColor='#90bcdf'; 
+                                    }
+                                }else if(parseInt(startMonth,10)===3){
+                                    if(parseInt(inputClass,10)<15){
+                                        inputElement.setAttribute('disabled','disabled');
+                                        inputElement.style.backgroundColor='#90bcdf';
+                                        ele.style.backgroundColor='#90bcdf'; 
+                                    }
+                                }else if(parseInt(inputClass,10)<startMonth){
+                                    inputElement.setAttribute('disabled','disabled');
+                                    inputElement.style.backgroundColor='#90bcdf';
+                                    ele.style.backgroundColor='#90bcdf';
+                                }    
+                            }
+                        });
+                    }
+                }
+
+                const lastTable = tableIds[tableIds.length-1];
+
+                if(table===lastTable){
+                    let allrows = table.children[0].children
+                    let endMonth = table.getAttribute('end-month');
+                    for(let i=0;i<=n;i++){
+                        let eachrow = allrows[i]
+                        let childrenArray = Array.from(eachrow.children);
+                        childrenArray.forEach(function(ele){
+                            let inputElement = ele.children[0];
+                            if(inputElement && inputElement.tagName === 'INPUT'){
+                                let inputClass = inputElement.getAttribute('class');
+                                if(parseInt(endMonth,10)===1){
+                                    if(parseInt(inputClass,10)>13){
+                                        inputElement.setAttribute('disabled','disabled');
+                                        inputElement.style.backgroundColor='#90bcdf'; 
+                                        ele.style.backgroundColor='#90bcdf'; 
+                                    }
+                                }else if(parseInt(endMonth,10)===2){
+                                    if(parseInt(inputClass,10)>14){
+                                        inputElement.setAttribute('disabled','disabled');
+                                        inputElement.style.backgroundColor='#90bcdf'; 
+                                        ele.style.backgroundColor='#90bcdf'; 
+                                    }
+                                }else if(parseInt(endMonth,10)!=3 && parseInt(inputClass,10)>endMonth){
+                                    inputElement.setAttribute('disabled','disabled');
+                                    inputElement.style.backgroundColor='#90bcdf'; 
+                                    ele.style.backgroundColor='#90bcdf'; 
+                                }
+                            }
+                        })
+                    }
+                }
+
+            }); 
+        });
+
+        function initializeTableData(table) {
+            const inputFields = table.querySelectorAll('input[type="number"]');
+            const tableData = {};
+
+            inputFields.forEach(function (input) {
+                tableData[input.name] = 0;
+            });
+
+            return tableData;
+        }
+
+        function initializeTableValues() {
+            const inputFields = document.querySelectorAll('input[type="number"]');
+            inputFields.forEach(function (input) {
+                input.value = 0;
+            });
+        }
+
+        var parsed_data_str = {{ parsed_data_json|safe }};
+        var tablesData = parsed_data_str;
+        
+        function addRows(tableId, numRows) {
+            const table = document.getElementById(tableId);
+            if (!table) {
+                console.error(`Table with ID '${tableId}' not found.`);
+                return;
+            }
+            const tbody = table.querySelector('tbody');
+            const totalAmountRow = table.querySelector('tr[name="total_amount"]');
+        
+            if (!totalAmountRow) {
+                console.error(`Row with name 'total_amount' not found in table '${tableId}'.`);
+                return;
+            }
+            
+            for (let i = 1; i <= numRows; i++) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='${i}_head' value='${tablesData[tableId][`${i}_head`] || i}'></td>
+                    <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='${i}_text' value='${tablesData[tableId][`${i}_text`] || `new_data_${i}`}'></td>
+                    
+                    <td><input type='number' name='${i}_Grant_Amount' value='${tablesData[tableId][`${i}_Grant_Amount`] || '0'}'></td>
+                    <td><input type='number' name='${i}_Sanctioned_Amount' value='${tablesData[tableId][`${i}_Sanctioned_Amount`] || '0'}'></td>
+                    <td><input type='number' class='4' name='${i}_Apr' value='${tablesData[tableId][`${i}_Apr`] || '0'}'></td>
+                    <td><input type='number' class='5' name='${i}_May' value='${tablesData[tableId][`${i}_May`] || '0'}'></td>
+                    <td><input type='number' class='6' name='${i}_Jun' value='${tablesData[tableId][`${i}_Jun`] || '0'}'></td>
+                    <td><input type='number' class='7' name='${i}_Jul' value='${tablesData[tableId][`${i}_Jul`] || '0'}'></td>
+                    <td><input type='number' class='8' name='${i}_Aug' value='${tablesData[tableId][`${i}_Aug`] || '0'}'></td>
+                    <td><input type='number' class='9' name='${i}_Sep' value='${tablesData[tableId][`${i}_Sep`] || '0'}'></td>
+                    <td><input type='number' class='10' name='${i}_Oct' value='${tablesData[tableId][`${i}_Oct`] || '0'}'></td>
+                    <td><input type='number' class='11' name='${i}_Nov' value='${tablesData[tableId][`${i}_Nov`] || '0'}'></td>
+                    <td><input type='number' class='12' name='${i}_Dec' value='${tablesData[tableId][`${i}_Dec`] || '0'}'></td>
+                    <td><input type='number' class='13' name='${i}_Jan' value='${tablesData[tableId][`${i}_Jan`] || '0'}'></td>
+                    <td><input type='number' class='14' name='${i}_Feb' value='${tablesData[tableId][`${i}_Feb`] || '0'}'></td>
+                    <td><input type='number' class='15' name='${i}_Mar' value='${tablesData[tableId][`${i}_Mar`] || '0'}'></td>
+                    <td><input type='number' name='${i}_expenses' value='${tablesData[tableId][`${i}_expenses`] || '0'}'></td>
+                    <td name='${i}_closing'></td>
+                
+                `;
+                tbody.insertBefore(row, totalAmountRow);
+            }
+
+        }
+            
+        function updateCellValue() {
+            // Getting hold of user input values
+            const rowNumber = document.getElementById('rowNumber').value;
+            const newValue = document.getElementById('newValue').value;
+        
+            if (isNaN(rowNumber) || rowNumber <= 0) {
+                alert('Please enter a valid row number.');
+                return;
+            }
+        
+            var tables = document.querySelectorAll('table');
+            tables.forEach(function (table) {
+                const cellToUpdate = table.querySelector(`[name="${rowNumber}_text"]`);
+                if (cellToUpdate) {
+                    cellToUpdate.value = newValue;
+                // alert(`Cell value updated for row ${rowNumber} in table ${table.id}.`);
+                } else {
+                    alert(`Cell with name '${rowNumber}_text' not found in table ${table.id}.`);
+                }
+                var tableData = getTableData(table.id);
+                tablesData[table.id] = tableData;
+            });
+
+            var fellowshipNo = "{{ fellowship_no }}";
+            saveTableDataToDjango(tablesData,fellowshipNo);
         }
         
-    
-        for (let i = 1; i <= numRows; i++) {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-            <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='${i}_head' value='${tablesData[tableId][`${i}_head`] || i}'></td>
-            <td><input disabled style="font-weight: 600; background-color: #fff;" type='text' name='${i}_text' value='${tablesData[tableId][`${i}_text`] || `new_data_${i}`}'></td>
-            
-            <td><input type='number' name='${i}_Grant_Amount' value='${tablesData[tableId][`${i}_Grant_Amount`] || '0'}'></td>
-            <td><input type='number' name='${i}_Sanctioned_Amount' value='${tablesData[tableId][`${i}_Sanctioned_Amount`] || '0'}'></td>
-            <td><input type='number' class='4' name='${i}_Apr' value='${tablesData[tableId][`${i}_Apr`] || '0'}'></td>
-            <td><input type='number' class='5' name='${i}_May' value='${tablesData[tableId][`${i}_May`] || '0'}'></td>
-            <td><input type='number' class='6' name='${i}_Jun' value='${tablesData[tableId][`${i}_Jun`] || '0'}'></td>
-            <td><input type='number' class='7' name='${i}_Jul' value='${tablesData[tableId][`${i}_Jul`] || '0'}'></td>
-            <td><input type='number' class='8' name='${i}_Aug' value='${tablesData[tableId][`${i}_Aug`] || '0'}'></td>
-            <td><input type='number' class='9' name='${i}_Sep' value='${tablesData[tableId][`${i}_Sep`] || '0'}'></td>
-            <td><input type='number' class='10' name='${i}_Oct' value='${tablesData[tableId][`${i}_Oct`] || '0'}'></td>
-            <td><input type='number' class='11' name='${i}_Nov' value='${tablesData[tableId][`${i}_Nov`] || '0'}'></td>
-            <td><input type='number' class='12' name='${i}_Dec' value='${tablesData[tableId][`${i}_Dec`] || '0'}'></td>
-            <td><input type='number' class='13' name='${i}_Jan' value='${tablesData[tableId][`${i}_Jan`] || '0'}'></td>
-            <td><input type='number' class='14' name='${i}_Feb' value='${tablesData[tableId][`${i}_Feb`] || '0'}'></td>
-            <td><input type='number' class='15' name='${i}_Mar' value='${tablesData[tableId][`${i}_Mar`] || '0'}'></td>
-            <td><input type='number' name='${i}_expenses' value='${tablesData[tableId][`${i}_expenses`] || '0'}'></td>
-            <td name='${i}_closing'></td>
-            
-            
-            `;
-            
-            tbody.insertBefore(row, totalAmountRow);
-        }
-    }
-      
-    {% comment %} console.log(tablesData) {% endcomment %}
+        function deleteRow() {
+            var tables = document.querySelectorAll('table');
+            tables.forEach(function (table) {
+                var rows = table.rows;
+                var lastButOneRowIndex = rows.length - 2;
+        
+                if (lastButOneRowIndex >= 0) {
+                    // Removing the last but one row
+                    rows[lastButOneRowIndex].remove();
+                    // Updating the data
+                    var tableData = getTableData(table.id);
+                    tablesData[table.id] = tableData; 
+                } else {
+                    alert('No rows to delete!');
+                }
+            });
 
-   // Initialize tablesData with 2D array of 0 values for each table ID
-    document.addEventListener('DOMContentLoaded', function () {
-        // initializeTableValues();
-        let n = {{ budget_heads|length }};
-        const tableIds = document.querySelectorAll('table[id^="table_"]');
-        console.log(tableIds)
-        tableIds.forEach(function (table) {
-            const tableId = table.id;
-            addRows(tableId, n); 
-            console.log("id",tableId)
-            // tablesData[tableId] = initializeTableData(table);
+            var fellowshipNo = "{{ fellowship_no }}";
+            saveTableDataToDjango(tablesData,fellowshipNo);
+        }
+        
+
+        function addRow() {
+            var tables = document.querySelectorAll('table');
+            tables.forEach(function (table) {
+                var newRowContent = `
+                <tr>
+                    <td><input type='text' name='${table.rows.length - 1}_head' value='${table.rows.length - 1}'></td>
+                    <td><input type='text' name='${table.rows.length - 1}_text' value='${table.rows.length - 1}_NewRow'></td>
+                    <td><input type='number' name='${table.rows.length - 1}_Grant_Amount' value='0'></td>
+                    <td><input type='number' name='${table.rows.length - 1}_Sanctioned_Amount' value='0'></td>
+                    <td><input type='number' class='4' name='${table.rows.length - 1}_Apr' value='0'></td>
+                    <td><input type='number' class='5' name='${table.rows.length - 1}_May' value='0'></td>
+                    <td><input type='number' class='6' name='${table.rows.length - 1}_Jun' value='0'></td>
+                    <td><input type='number' class='7' name='${table.rows.length - 1}_Jul' value='0'></td>
+                    <td><input type='number' class='8' name='${table.rows.length - 1}_Aug' value='0'></td>
+                    <td><input type='number' class='9' name='${table.rows.length - 1}_Sep' value='0'></td>
+                    <td><input type='number' class='10' name='${table.rows.length - 1}_Oct' value='0'></td>
+                    <td><input type='number' class='11' name='${table.rows.length - 1}_Nov' value='0'></td>
+                    <td><input type='number' class='12' name='${table.rows.length - 1}_Dec' value='0'></td>
+                    <td><input type='number' class='13' name='${table.rows.length - 1}_Jan' value='0'></td>
+                    <td><input type='number' class='14' name='${table.rows.length - 1}_Feb' value='0'></td>
+                    <td><input type='number' class='15' name='${table.rows.length - 1}_Mar' value='0'></td>
+                    <td><input type='number' name='${table.rows.length - 1}_expenses' value='0'></td>
+                    <td name='${table.rows.length - 1}_closing'>0</td>
+                </tr>
+                
+                `;
+        
+                // Append the new row HTML to the table
+                table.querySelector('[name="total_amount"]').insertAdjacentHTML('beforebegin', newRowContent);
+
+                var tableData = getTableData(table.id);
+                tablesData[table.id] = tableData;
+
+            });
+            
+            var fellowshipNo = "{{ fellowship_no }}";
+            saveTableDataToDjango(tablesData,fellowshipNo);
+        }
+        
+        function updateTable(tableId) {
+            var tableData = getTableData(tableId);
+            tablesData[tableId] = tableData;
+
             calculateAndDisplayTotalAmount(tableId);
             calculateAndDisplayTotalExpenses(tableId);
             calculateAndDisplayClosingBalance(tableId);
 
-           // console.log(table.children[0].children)
-           if(tableId==='table_1'){
-                let allrows = table.children[0].children 
-                console.log(allrows)
-                let startMonth = table.getAttribute('start-month');
-
-                for(let i=0;i<=n;i++){
-                    let eachrow = allrows[i]
-                    let childrenArray = Array.from(eachrow.children);
-                    childrenArray.forEach(function(ele){
-                        let inputElement = ele.children[0];
-                        if(inputElement && inputElement.tagName==='INPUT'){
-                            let inputClass = inputElement.getAttribute('class');
-                            console.log('class: ',inputClass);
-                            if(parseInt(startMonth,10)===1){
-                                if(parseInt(inputClass,10)<13){
-                                    inputElement.setAttribute('disabled','disabled');
-                                    inputElement.style.backgroundColor='#90bcdf'; 
-                                    ele.style.backgroundColor='#90bcdf'; 
-                                }
-                            }else if(parseInt(startMonth,10)===2){
-                                if(parseInt(inputClass,10)<14){
-                                    inputElement.setAttribute('disabled','disabled');
-                                    inputElement.style.backgroundColor='#90bcdf';
-                                    ele.style.backgroundColor='#90bcdf'; 
-                                }
-                            }else if(parseInt(startMonth,10)===3){
-                                if(parseInt(inputClass,10)<15){
-                                    inputElement.setAttribute('disabled','disabled');
-                                    inputElement.style.backgroundColor='#90bcdf';
-                                    ele.style.backgroundColor='#90bcdf'; 
-                                }
-                            }else if(parseInt(inputClass,10)<startMonth){
-                                inputElement.setAttribute('disabled','disabled');
-                                inputElement.style.backgroundColor='#90bcdf';
-                                ele.style.backgroundColor='#90bcdf';
-                            }    
-                        }
-                    });
-                }
-            }
-            const lastTable = tableIds[tableIds.length-1];
-
-            if(table===lastTable){
-                let allrows = table.children[0].children
-                let endMonth = table.getAttribute('end-month');
-                for(let i=0;i<=n;i++){
-                    let eachrow = allrows[i]
-                    let childrenArray = Array.from(eachrow.children);
-                    childrenArray.forEach(function(ele){
-                        let inputElement = ele.children[0];
-                        if(inputElement && inputElement.tagName === 'INPUT'){
-                            let inputClass = inputElement.getAttribute('class');
-                            if(parseInt(endMonth,10)===1){
-                                if(parseInt(inputClass,10)>13){
-                                    inputElement.setAttribute('disabled','disabled');
-                                    inputElement.style.backgroundColor='#90bcdf'; 
-                                    ele.style.backgroundColor='#90bcdf'; 
-                                }
-                            }else if(parseInt(endMonth,10)===2){
-                                if(parseInt(inputClass,10)>14){
-                                    inputElement.setAttribute('disabled','disabled');
-                                    inputElement.style.backgroundColor='#90bcdf'; 
-                                    ele.style.backgroundColor='#90bcdf'; 
-                                }
-                            }else if(parseInt(endMonth,10)!=3 && parseInt(inputClass,10)>endMonth){
-                                inputElement.setAttribute('disabled','disabled');
-                                inputElement.style.backgroundColor='#90bcdf'; 
-                                ele.style.backgroundColor='#90bcdf'; 
-                            }
-                        }
-                    })
-                }
-            }
-        });
-
-        
-    });
-    function updateCellValue() {
-        // Get user input values
-        const rowNumber = document.getElementById('rowNumber').value;
-        const newValue = document.getElementById('newValue').value;
-    
-        // Validate input
-        if (isNaN(rowNumber) || rowNumber <= 0) {
-            alert('Please enter a valid row number.');
-            return;
+            var tableData = getTableData(tableId);
+            tablesData[tableId] = tableData;
+                
+            var fellowshipNo = "{{ fellowship_no }}";
+            saveTableDataToDjango(tablesData,fellowshipNo);
         }
-    
-        // Loop through each table
-        var tables = document.querySelectorAll('table');
-        tables.forEach(function (table) {
-            // Find the corresponding cell and update its value
-            const cellToUpdate = table.querySelector(`[name="${rowNumber}_text"]`);
-            console.log(cellToUpdate)
-            if (cellToUpdate) {
-                cellToUpdate.value = newValue;
-                
-               // alert(`Cell value updated for row ${rowNumber} in table ${table.id}.`);
-            } else {
-                alert(`Cell with name '${rowNumber}_text' not found in table ${table.id}.`);
-            }
-            var tableData = getTableData(table.id);
-            tablesData[table.id] = tableData;
-        });
-        var fellowshipNo = "{{ fellowship_no }}";
-        saveTableDataToDjango(tablesData,fellowshipNo);
-    }
-    
-    function deleteRow() {
-        var tables = document.querySelectorAll('table');
-        tables.forEach(function (table) {
-            var rows = table.rows;
-            var lastButOneRowIndex = rows.length - 2; // index of the last but one row
-    
-            if (lastButOneRowIndex >= 0) {
-                // Remove the last but one row
-                rows[lastButOneRowIndex].remove();
-    
-                // Update the data
-                var tableData = getTableData(table.id);
-                tablesData[table.id] = tableData;
-                
-            } else {
-                console.log("No rows to delete.");
-            }
-        });
-        var fellowshipNo = "{{ fellowship_no }}";
-        saveTableDataToDjango(tablesData,fellowshipNo);
-    }
-    
 
-    function addRow() {
-        var tables = document.querySelectorAll('table');
-        tables.forEach(function (table) {
-            // Create a new row with the specified content
-            var newRowContent = `
-            <tr>
-                <td><input type='text' name='${table.rows.length - 1}_head' value='${table.rows.length - 1}'></td>
-                <td><input type='text' name='${table.rows.length - 1}_text' value='${table.rows.length - 1}_newRow'></td>
-                <td><input type='number' name='${table.rows.length - 1}_Grant_Amount' value='0'></td>
-                <td><input type='number' class='4' name='${table.rows.length - 1}_Apr' value='0'></td>
-                <td><input type='number' class='5' name='${table.rows.length - 1}_May' value='0'></td>
-                <td><input type='number' class='6' name='${table.rows.length - 1}_Jun' value='0'></td>
-                <td><input type='number' class='7' name='${table.rows.length - 1}_Jul' value='0'></td>
-                <td><input type='number' class='8' name='${table.rows.length - 1}_Aug' value='0'></td>
-                <td><input type='number' class='9' name='${table.rows.length - 1}_Sep' value='0'></td>
-                <td><input type='number' class='10' name='${table.rows.length - 1}_Oct' value='0'></td>
-                <td><input type='number' class='11' name='${table.rows.length - 1}_Nov' value='0'></td>
-                <td><input type='number' class='12' name='${table.rows.length - 1}_Dec' value='0'></td>
-                <td><input type='number' class='13' name='${table.rows.length - 1}_Jan' value='0'></td>
-                <td><input type='number' class='14' name='${table.rows.length - 1}_Feb' value='0'></td>
-                <td><input type='number' class='15' name='${table.rows.length - 1}_Mar' value='0'></td>
-                <td><input type='number' name='${table.rows.length - 1}_expenses' value='0'></td>
-                <td name='${table.rows.length - 1}_closing'>0</td>
-            </tr>
-            
-            `;
-    
-            // Append the new row HTML to the table
-            table.querySelector('[name="total_amount"]').insertAdjacentHTML('beforebegin', newRowContent);
-           // table.insertAdjacentHTML('beforeend', newRowContent);
-           var tableData = getTableData(table.id);
-           tablesData[table.id] = tableData;
-           // console.log("hi")
-           console.log(tableData)
-           // console.log("hi")
-
-        });
-        
-        var fellowshipNo = "{{ fellowship_no }}";
-        saveTableDataToDjango(tablesData,fellowshipNo);
-        console.log(tablesData)
-    }
-    
-
-    function initializeTableData(table) {
-        const inputFields = table.querySelectorAll('input[type="number"]');
-        const tableData = {};
-
-        inputFields.forEach(function (input) {
-            tableData[input.name] = 0;
-        });
-
-        return tableData;
-    }
-
-    function initializeTableValues() {
-        const inputFields = document.querySelectorAll('input[type="number"]');
-        inputFields.forEach(function (input) {
-            input.value = 0;
-        });
-    }
-
-    function updateTable(tableId) {
-      //  console.log(tableId);
-        var tableData = getTableData(tableId);
-        tablesData[tableId] = tableData;
-
-        // Implement the logic to update the table with the retrieved data
-        calculateAndDisplayTotalAmount(tableId);
-        calculateAndDisplayTotalExpenses(tableId);
-        calculateAndDisplayClosingBalance(tableId);
-
-        var tableData = getTableData(tableId);
-        tablesData[tableId] = tableData;
-            
-        //console.log(tableId);
-        //console.log(tablesData);
-        //console.log(JSON.stringify(tableData));
-        var fellowshipNo = "{{ fellowship_no }}";
-        saveTableDataToDjango(tablesData,fellowshipNo);
-    //    saveTableDataToDjango(tablesData,);
-     //   alert(`Table ${tableId} updated: ${JSON.stringify(tableData)}`);
-    }
-
-    function getTableData(tableId) {
-        const table = document.querySelector(`#${tableId}`);
-        const inputFields = table.querySelectorAll('input[type="number"], input[type="text"]');
-        const tableData = {};
-
-        inputFields.forEach(function (input) {
-            tableData[input.name] = input.value;
-        });
-
-        return tableData;
-    }
-    function calculateAndDisplayTotalExpenses(tableId) {
-        const table = document.querySelector(`#${tableId}`);
-        const rows = table.querySelectorAll('tr:not(.header-row)');
-
-        rows.forEach(function (row) {
-            const inputFields = row.querySelectorAll('input[type="number"]');
-            let totalExpenses = 0;
+        function getTableData(tableId) {
+            const table = document.querySelector(`#${tableId}`);
+            const inputFields = table.querySelectorAll('input[type="number"], input[type="text"]');
+            const tableData = {};
 
             inputFields.forEach(function (input) {
-                if (input.name.endsWith('_Apr') || input.name.endsWith('_May') || input.name.endsWith('_Jun') ||
-                    input.name.endsWith('_Jul') || input.name.endsWith('_Aug') || input.name.endsWith('_Sep') ||
-                    input.name.endsWith('_Oct') || input.name.endsWith('_Nov') || input.name.endsWith('_Dec') ||
-                    input.name.endsWith('_Jan') || input.name.endsWith('_Feb') || input.name.endsWith('_Mar')) {
-                    totalExpenses += parseInt(input.value) || 0;
-                }
+                tableData[input.name] = input.value;
             });
 
-            row.querySelector('td input[name$="expenses"]').value = totalExpenses;
-        });
-    }
-    function calculateAndDisplayClosingBalance(tableId) {
-        const table = document.querySelector(`#${tableId}`);
-        const rows = table.querySelectorAll('tr:not(.header-row)');
-    
-        rows.forEach(function (row) {
-            // Skip the calculation for the "Total Amount" row
-            // if (row.querySelector('th').textContent.trim() === 'Total Amount') {
-            //     return;
-            // }
-    
-            const sanctionedAmount = parseInt(row.querySelector('input[name$="_Sanctioned_Amount"]').value) || 0;
-            const totalExpenses = parseInt(row.querySelector('td input[name$="expenses"]').value) || 0;
-    
-            // Use the correct name attribute for closing balance
-            const closingBalanceElement = row.querySelector('td[name$="_closing"]');
-            
-            if (closingBalanceElement) {
-                const closingBalance = sanctionedAmount - totalExpenses;
-                closingBalanceElement.textContent = closingBalance;
-                if (closingBalance < 0) {
-                    closingBalanceElement.classList.add('negative-balance');
-                } else {
-                    closingBalanceElement.classList.remove('negative-balance');
-                }
-            }
-        });
-    }
-    {% comment %} function calculateAndDisplayClosingBalance(tableId) {
-        const table = document.querySelector(`#${tableId}`);
-        const rows = table.querySelectorAll('tr:not(.header-row)');
-    
-        rows.forEach(function (row) {
-            // Skip the calculation for the "Total Amount" row
-            // if (row.querySelector('th').textContent.trim() === 'Total Amount') {
-            //     return;
-            // }
-    
-            const grantAmount = parseInt(row.querySelector('input[name$="_Grant_Amount"]').value) || 0;
-            const totalExpenses = parseInt(row.querySelector('td input[name$="expenses"]').value) || 0;
-    
-            // Use the correct name attribute for closing balance
-            const closingBalanceElement = row.querySelector('td[name$="_closing"]');
-            
-            if (closingBalanceElement) {
-                const closingBalance = grantAmount - totalExpenses;
-                closingBalanceElement.textContent = closingBalance;
-                if (closingBalance < 0) {
-                    closingBalanceElement.classList.add('negative-balance');
-                } else {
-                    closingBalanceElement.classList.remove('negative-balance');
-                }
-            }
-        });
-    } {% endcomment %}
-    function calculateGrantAmount(table, columnIndex) {
-        let totalGrantAmount = 0;
-        let n = {{ budget_heads|length }};
-        for (let i = 1; i <= n; i++) {
-            const inputName = `${i}_Grant_Amount`;
-            const inputValue = parseInt(table.querySelector(`input[name$="${inputName}"]`).value) || 0;
-            totalGrantAmount += inputValue;
+            return tableData;
         }
-    
-        return totalGrantAmount;
-    }
-    function calculateSanctionedAmount(table, columnIndex) {
-        let totalSanctionedAmount = 0;
-        let n = {{ budget_heads|length }};
-        for (let i = 1; i <= n; i++) {
-            const inputName = `${i}_Sanctioned_Amount`;
-            const inputValue = parseInt(table.querySelector(`input[name$="${inputName}"]`).value) || 0;
-            totalSanctionedAmount += inputValue;
-        }
-    
-        return totalSanctionedAmount;
-    }
-    function calculateAndDisplayTotalAmount(tableId) {
-        const table = document.querySelector(`#${tableId}`);
-        const headerRow = table.querySelector('.header-row');
-        const totalAmountRow = table.querySelector('tr[name="total_amount"]');
-        const totalAmountCells = totalAmountRow.querySelectorAll('td'); // Use 'td' instead of 'input'
-        // console.log(table)
-        // console.log(headerRow)
-        // console.log(totalAmountRow)
-        // console.log(totalAmountCells)
-    
-        totalAmountCells.forEach(function (totalAmountCell, index) {
-            if(index==2){
 
-                {% comment %} const grantAmountOne = parseInt(table.querySelector('input[name$="one_Grant_Amount"]').value) || 0;
-                // const grantAmountTwo = parseInt(table.querySelector('input[name$="two_Grant_Amount"]').value) || 0;
-                // const grantAmountThree = parseInt(table.querySelector('input[name$="three_Grant_Amount"]').textContent) || 0;
-                // const grantAmountFour = parseInt(table.querySelector('input[name$="four_Grant_Amount"]').textContent) || 0;
-                // const grantAmountFive = parseInt(table.querySelector('input[name$="five_Grant_Amount"]').textContent) || 0;
-                // const grantAmountSix = parseInt(table.querySelector('input[name$="six_Grant_Amount"]').textContent) || 0;
-                // const grantAmountSeven = parseInt(table.querySelector('input[name$="seven_Grant_Amount"]').textContent) || 0;
-                const grantAmountTwo = parseInt(table.querySelector('input[name$="two_Grant_Amount"]').value) || 0;
-                const grantAmountThree = parseInt(table.querySelector('input[name$="three_Grant_Amount"]').value) || 0;
-                const grantAmountFour = parseInt(table.querySelector('input[name$="four_Grant_Amount"]').value) || 0;
-                const grantAmountFive = parseInt(table.querySelector('input[name$="five_Grant_Amount"]').value) || 0;
-                const grantAmountSix = parseInt(table.querySelector('input[name$="six_Grant_Amount"]').value) || 0;
-                const grantAmountSeven = parseInt(table.querySelector('input[name$="seven_Grant_Amount"]').value) || 0; {% endcomment %}
+        function calculateAndDisplayTotalExpenses(tableId) {
+            const table = document.querySelector(`#${tableId}`);
+            const rows = table.querySelectorAll('tr:not(.header-row)');
 
+            rows.forEach(function (row) {
+                const inputFields = row.querySelectorAll('input[type="number"]');
+                let totalExpenses = 0;
 
-               // const totalGrantAmount = grantAmountOne + grantAmountTwo + grantAmountThree + grantAmountFour +grantAmountFive + grantAmountSix + grantAmountSeven;
-               const grantAmount = calculateGrantAmount(table, index);
-
-    // Update the content of the Total Grant Amount cell
-    const correspondingTotalAmountCell = totalAmountRow.querySelector(`td:nth-child(${index + 1})`);
-    // console.log("hi")
-    // console.log(totalGrantAmount)
-   // console.log("hi")
-    correspondingTotalAmountCell.innerHTML = `
-                    <input type='number' name='total_Grant_Amount' value='${grantAmount}' >
-                `;
-            }
-           
-            if(index==3){
-
-               
-
-
-               // const totalGrantAmount = grantAmountOne + grantAmountTwo + grantAmountThree + grantAmountFour +grantAmountFive + grantAmountSix + grantAmountSeven;
-               const SanctionedAmount = calculateSanctionedAmount(table, index);
-
-    // Update the content of the Total Grant Amount cell
-    const correspondingTotalAmountCell = totalAmountRow.querySelector(`td:nth-child(${index + 1})`);
-    // console.log("hi")
-    // console.log(totalGrantAmount)
-   // console.log("hi")
-    correspondingTotalAmountCell.innerHTML = `
-                    <input type='number' name='total_Sanctioned_Amount' value='${SanctionedAmount}' >
-                `;
-            }
-           
-            if (index > 3) {  // Exclude S.No and Budget Head columns
-                let totalAmount = 0;
-                let month;
-                // Iterate through rows (excluding header and total amount rows)
-                const rows = table.querySelectorAll('tr:not(.header-row):not([name="total_amount"])');
-                // console.log(rows)
-                rows.forEach(function (row) {
-                  //  const inputField = row.querySelector(`input[name$="_${headerRow.cells[index].textContent.trim()}"]`);
-                   month = convertToInputFieldName(headerRow.cells[index].textContent.trim());
-                    const inputField = row.querySelector(`input[name*="_${convertToInputFieldName(headerRow.cells[index].textContent.trim())}"]`);
-                    // console.log(inputField)
-                    // console.log(headerRow.cells[index].textContent.trim())
-                    // console.log(convertToInputFieldName(headerRow.cells[index].textContent.trim()))
-                    if (inputField) {
-                        totalAmount += parseInt(inputField.value) || 0;
+                inputFields.forEach(function (input) {
+                    if (input.name.endsWith('_Apr') || input.name.endsWith('_May') || input.name.endsWith('_Jun') ||
+                        input.name.endsWith('_Jul') || input.name.endsWith('_Aug') || input.name.endsWith('_Sep') ||
+                        input.name.endsWith('_Oct') || input.name.endsWith('_Nov') || input.name.endsWith('_Dec') ||
+                        input.name.endsWith('_Jan') || input.name.endsWith('_Feb') || input.name.endsWith('_Mar')) {
+                        totalExpenses += parseInt(input.value) || 0;
                     }
-                    // console.log(totalAmount)
                 });
-                // console.log("end")
-                // console.log(totalAmountCell)
-                const correspondingTotalAmountCell = totalAmountRow.querySelector(`td:nth-child(${index + 1})`);
-                // console.log(correspondingTotalAmountCell)
-                //totalAmountCell.textContent = totalAmount;
-                if (correspondingTotalAmountCell) {
-                // Update the content of the total amount cell
-                correspondingTotalAmountCell.innerHTML = `
-                    <input type='number' name='total_${month}' value='${totalAmount}'>
-                `;
+
+                row.querySelector('td input[name$="expenses"]').value = totalExpenses;
+            });
+        }
+
+        function calculateAndDisplayClosingBalance(tableId) {
+            const table = document.querySelector(`#${tableId}`);
+            const rows = table.querySelectorAll('tr:not(.header-row)');
+        
+            rows.forEach(function (row) {
+
+                const sanctionedAmount = parseInt(row.querySelector('input[name$="_Sanctioned_Amount"]').value) || 0;
+                const totalExpenses = parseInt(row.querySelector('td input[name$="expenses"]').value) || 0;
+        
+                const closingBalanceElement = row.querySelector('td[name$="_closing"]');
+                
+                if (closingBalanceElement) {
+                    const closingBalance = sanctionedAmount - totalExpenses;
+                    closingBalanceElement.textContent = closingBalance;
+                    if (closingBalance < 0) {
+                        closingBalanceElement.classList.add('negative-balance');
+                    } else {
+                        closingBalanceElement.classList.remove('negative-balance');
+                    }
+                }
+            });
+        }
+        
+        function calculateGrantAmount(table, columnIndex) {
+            let totalGrantAmount = 0;
+            let n = {{ budget_heads|length }};
+            for (let i = 1; i <= n; i++) {
+                const inputName = `${i}_Grant_Amount`;
+                const inputValue = parseInt(table.querySelector(`input[name$="${inputName}"]`).value) || 0;
+                totalGrantAmount += inputValue;
             }
+        
+            return totalGrantAmount;
+        }
+
+        function calculateSanctionedAmount(table, columnIndex) {
+            let totalSanctionedAmount = 0;
+            let n = {{ budget_heads|length }};
+            for (let i = 1; i <= n; i++) {
+                const inputName = `${i}_Sanctioned_Amount`;
+                const inputValue = parseInt(table.querySelector(`input[name$="${inputName}"]`).value) || 0;
+                totalSanctionedAmount += inputValue;
             }
-        });
-    }
-   
-   
-    function convertToInputFieldName(monthText) {
-        // Add logic here to convert "Nov-2023" to "Nov"
-        // You may need to adjust this based on your specific requirements
-        const monthAbbreviation = monthText.split('-')[0];
-        return monthAbbreviation;
-    }
+        
+            return totalSanctionedAmount;
+        }
+
+        function calculateAndDisplayTotalAmount(tableId) {
+            const table = document.querySelector(`#${tableId}`);
+            const headerRow = table.querySelector('.header-row');
+            const totalAmountRow = table.querySelector('tr[name="total_amount"]');
+            const totalAmountCells = totalAmountRow.querySelectorAll('td');
+        
+            totalAmountCells.forEach(function (totalAmountCell, index) {
+
+                if(index==2){
+                    const grantAmount = calculateGrantAmount(table, index);
+                    const correspondingTotalAmountCell = totalAmountRow.querySelector(`td:nth-child(${index + 1})`);
+    
+                    correspondingTotalAmountCell.innerHTML = `
+                                    <input type='number' name='total_Grant_Amount' value='${grantAmount}' >
+                                `;
+                }
+            
+                if(index==3){
+                    const SanctionedAmount = calculateSanctionedAmount(table, index);
+
+                    const correspondingTotalAmountCell = totalAmountRow.querySelector(`td:nth-child(${index + 1})`);
+        
+                    correspondingTotalAmountCell.innerHTML = `
+                                    <input type='number' name='total_Sanctioned_Amount' value='${SanctionedAmount}' >
+                                `;
+                }
+            
+                if (index > 3) {
+                    let totalAmount = 0;
+                    let month;
+                    const rows = table.querySelectorAll('tr:not(.header-row):not([name="total_amount"])');
+                    rows.forEach(function (row) {
+                        month = convertToInputFieldName(headerRow.cells[index].textContent.trim());
+                        const inputField = row.querySelector(`input[name*="_${convertToInputFieldName(headerRow.cells[index].textContent.trim())}"]`);
+                    
+                        if (inputField) {
+                            totalAmount += parseInt(inputField.value) || 0;
+                        }
+                    });
+                    
+                    const correspondingTotalAmountCell = totalAmountRow.querySelector(`td:nth-child(${index + 1})`);
+                    
+                    if (correspondingTotalAmountCell) {
+                        correspondingTotalAmountCell.innerHTML = `
+                            <input type='number' name='total_${month}' value='${totalAmount}'>
+                        `;
+                    }
+                }
+            });
+        }
     
     
-    function saveTableDataToDjango(data, project_id) {
-        //console.log(JSON.stringify(data));
-        fetch(`/save_table_data/${project_id}/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(result => {
-            //console.log(result);
-            // Handle success or error as needed
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Check if the cookie name matches the desired name
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
+        function convertToInputFieldName(monthText) {
+            const monthAbbreviation = monthText.split('-')[0];
+            return monthAbbreviation;
+        }
+        
+        
+        function saveTableDataToDjango(data, project_id) {
+            fetch(`/save_table_data/${project_id}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Check if the cookie name matches the desired name
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
                 }
             }
+            return cookieValue;
         }
-        return cookieValue;
-    }
-</script>
+
+    </script>
+    
 </body>
 
 </html>
