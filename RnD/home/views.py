@@ -22,7 +22,7 @@ import base64
 
 period=0
 
-# @login_required
+# @login_required(login_url='/login/')
 def duration(date1,date2):
     date1 = datetime.strptime(date1,"%Y-%m-%d")
     date2 = datetime.strptime(date2,"%Y-%m-%d")
@@ -55,7 +55,7 @@ def duration(date1,date2):
     return result
 
 # import pickle
-# @login_required
+# @login_required(login_url='/login/')
 # def createfile(Project_file_name,period_range):
 #     # print('called create file')
 #     file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{Project_file_name}.txt'))
@@ -182,7 +182,7 @@ def duration(date1,date2):
 #         file.write(json_data)
 
 from django.core.exceptions import ObjectDoesNotExist
-@login_required
+@login_required(login_url='/login/')
 def index(request):
     if request.method == "POST":
         Project_Fellowship_No =request.POST.get('Project_Fellowship_No')
@@ -267,7 +267,7 @@ def login(request):
     return render(request, "login.html")         
 
 
-
+@login_required(login_url='/login/')
 def project_list(request):
     projects = project_details.objects.all()
     filter_option = request.GET.get('filter')
@@ -279,7 +279,7 @@ def project_list(request):
     return render(request, 'project_list.html', context)
 
 
-@login_required
+@login_required(login_url='/login/')
 def fill(request, project_id):
     try:
         project = project_details.objects.get(id = project_id)
@@ -344,7 +344,7 @@ def ucr(request,project_id):
 
 
 
-# @login_required
+# @login_required(login_url='/login/')
 # def monthly(request):
     
 #     if request.method == "POST":
@@ -418,7 +418,7 @@ def ucr(request,project_id):
 
 
 from datetime import datetime
-@login_required
+@login_required(login_url='/login/')
 def mastersheet(request,project_id):
     # print("mastersheet called")
     existing_project = project_details.objects.get(id=project_id)
@@ -793,7 +793,7 @@ def save_tables_to_file(request, project_id):
 #         # print(f'Error saving file: {e}')
 #         return JsonResponse({'success': False, 'error': str(e)})
     
-# @login_required
+# @login_required(login_url='/login/')
 # def save_data_to_file(request):
 #     if request.method == 'POST':
 #         try:
@@ -816,7 +816,8 @@ def save_tables_to_file(request, project_id):
     
 
 def logout(request):
-    auth_logout(request)
+    if request.user.is_authenticated:
+        auth_logout(request)
     return render(request,'homepage.html')
 
 def save_table_data1(request,project_id):
@@ -993,7 +994,7 @@ def save_as_excel(request):
 
 
 def download_pdf(request):
-    print("download pdf called")
+    # print("download pdf called")
     pdf_path = request.GET.get('path')
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
@@ -1004,7 +1005,7 @@ def download_pdf(request):
     return response
 
 def download_excel(request):
-    print("download excel called")
+    # print("download excel called")
     excel_path = request.GET.get('path')
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = f'attachment; filename="{os.path.basename(excel_path)}"'
