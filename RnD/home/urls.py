@@ -23,6 +23,7 @@ urlpatterns = [
     path('soe/<int:project_id>/<str:period>/', views.soe, name='soe'),
     path('ucr/<int:project_id>/',views.ucr,name='ucr'),
     path('save-as-pdf/', views.save_as_pdf, name='save_as_pdf'),
+    path('save-as-excel/', views.save_as_excel, name='save_as_excel'),
     path('download-pdf/', views.download_pdf, name='download_pdf'),
     path('submit_project_data/<int:project_id>/', views.submit_project_data, name='submit_project_data'),
     path('delete_project/<int:project_id>/',views.delete_project,name='delete_project'),

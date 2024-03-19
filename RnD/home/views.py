@@ -728,8 +728,8 @@ def soe(request,project_id,period):
         # 'total_grants':total_grants
         'zipped_data_2':zipped_data_2
     }
-    print("zipped data",new_parsed_data.items())
-    print("total sanctions",total_sanctions)
+    # print("zipped data",new_parsed_data.items())
+    # print("total sanctions",total_sanctions)
 
 
     return render(request,'soe_copy.html',data)
@@ -904,6 +904,7 @@ def project_listwise(request):
 def save_as_pdf(request):
     if request.method == 'POST':
         try:
+            # print("save as pdf called")
             data = json.loads(request.body)
             image_data = data.get('imageData')
 
@@ -938,8 +939,58 @@ def save_as_pdf(request):
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 
+import io
+import json
+import base64
+import os
+from django.http import JsonResponse, HttpResponse
+from django.core.files.base import ContentFile
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+import xlsxwriter
+
+def save_as_excel(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            html_content = data.get('htmlContent')
+
+            # Convert HTML content to Excel
+            output = io.BytesIO()
+            workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+            worksheet = workbook.add_worksheet()
+
+            # Parse HTML content and write to Excel
+            rows = html_content.split('</tr>')
+            for i, row in enumerate(rows):
+                columns = row.split('</th>') + row.split('</td>')
+                for j, column in enumerate(columns[:-1]):
+                    text = column.split('>')[-1]
+                    worksheet.write(i, j, text)
+
+            workbook.close()
+
+            # Save the Excel file temporarily
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT)
+            excel_path = fs.save('temp_excel.xlsx', ContentFile(output.getvalue()))
+            output.close()
+
+            # Provide the download link
+            download_link = settings.MEDIA_URL + excel_path
+
+            return JsonResponse({'downloadLink': download_link})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
+
 
 def download_pdf(request):
+    print("download pdf called")
     pdf_path = request.GET.get('path')
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
@@ -948,6 +999,18 @@ def download_pdf(request):
         response.write(pdf_file.read())
 
     return response
+
+def download_excel(request):
+    print("download excel called")
+    excel_path = request.GET.get('path')
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename="{os.path.basename(excel_path)}"'
+
+    with open(excel_path, 'rb') as excel_file:
+        response.write(excel_file.read())
+
+    return response
+
 
 
 
