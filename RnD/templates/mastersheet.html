@@ -150,6 +150,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-left: 30px;
+        margin-right: 30px;
+        padding: 5px;
       }
 
       .side-by-side table{
@@ -369,7 +372,7 @@
         </a>
     </div>
 
-  <div class="side-by-side">
+  <div class="side-by-side overflow">
 
     <table class="table1" id="data-table">
       <thead>
@@ -518,7 +521,7 @@
 
   </div>
 
-  <button class="btn" id="update-button" onclick="updation('{{project_id}}')">Update</button>
+  {% comment %} <button class="btn" id="update-button" onclick="updation('{{project_id}}')">Update</button> {% endcomment %}
 
   <br>
   <h2 class="table3h2">Details of Committed Expenditure</h2>

@@ -345,7 +345,7 @@
                 <th>Action</th>
                 <th onclick="sortTable('Title_of_Project')">Project Title</th>
                 <th onclick="sortTable('Project_Fellowship_No')">Project_Fellowship_No</th>
-                <th >Project ID</th>
+                {% comment %} <th >Project ID</th> {% endcomment %}
                 <th>Catergory</th>
                 <th>Country</th>
                 <th>Status</th>
@@ -387,24 +387,24 @@
                     {% csrf_token %}
                     <td>
                       <button type="submit" class="button">Submit</button>
-                      <a style="text-decoration: none;" href="{% url 'complete_task' project_id=project.id %}">
-                        <button class="button">Complete Task</button>
+                      <a style="text-decoration: none;" href="{% url 'complete_task' project_id=project.id %}">                
+                        <button class="button" type = "button">Complete Project</button>
                     </a>
                   </td>
                   <td>
                     <a style="text-decoration: none;" href="{% url 'fill' project_id=project.id %}">
-                        <button class="button">Monthly Sheet</button>
+                        <button class="button" type = "button">Monthly Sheet</button>
                     </a>
                     <a style="text-decoration: none;" href="{% url 'mastersheet' project_id=project.id %}">
-                        <button class="button">Mastersheet</button>
+                        <button class="button" type = "button">Mastersheet</button>
                     </a>
                   
                 </td>
                   <td><input  type="text" name="Title_of_Project" value="{{ project.Title_of_Project }}"></td>
                   <td><input  type="text" name="Project_Fellowship_No" value="{{ project.Project_Fellowship_No }}"></td>
-                  <td><input disabled type="text" name="Project_id" value="{{ project.id }}"></td>
+                  {% comment %} <td><input disabled type="text" name="Project_id" value="{{ project.id }}"></td> {% endcomment %}
                   <td><input type="text" name="Category" value="{{ project.Category }}"></td>
-                  <td><input type="text" name="Country_Involved" value="{{ project.Country_Involved }}"></td>
+                  <td><input type="text" name="Country" value="{{ project.Country}}"></td>
                   <td><input type="text" name="task" value="{{ project.task }}"></td>
                   <td><input type="text" name="PI_of_Project" value="{{ project.PI_of_Project }}"></td>
                   <td><input type="text" name="Co_PI_of_Project" value="{{ project.Co_PI_of_Project }}"></td>

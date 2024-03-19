@@ -322,6 +322,7 @@
           <!-- <a class="dropdown-item" href="#" onclick="showAllProjects()">All Projects</a> -->
           <a class="dropdown-item" id="ongoing" href="#" onclick="showOngoingProjects()">Ongoing Projects</a>
           <a class="dropdown-item" href="#" id="completed" onclick="showCompletedProjects()">Completed Projects</a>
+          {% comment %} <a href="{% url "status_wise_display" %}">Ongoing Projects</a> {% endcomment %}
         </div>
       </div>
 
@@ -415,8 +416,7 @@
             });
         });
     }); {% endcomment %}
-
-
+      
 
         var ongoing = document.getElementById("ongoing");
         var completed = document.getElementById("completed");

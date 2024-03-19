@@ -149,6 +149,7 @@ class project_details(models.Model):
     end_month = models.IntegerField(null=True)
     funding_agency = models.CharField(max_length=100,blank=True,null=True)
     Co_PI_of_Project = models.CharField(max_length=100,blank=True,null=True)
+    Country = models.CharField(max_length=100,blank=True,null=True)
     Country_Involved = models.CharField(max_length=100,blank=True,null=True)
     Department = models.CharField(max_length=100,blank=True,null=True)
     Category = models.CharField(max_length=100,blank=True,null=True)
