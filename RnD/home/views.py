@@ -934,6 +934,7 @@ def save_as_pdf(request):
 
             return JsonResponse({'downloadLink': download_link})
         except Exception as e:
+            print(e)
             return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'Invalid request method'}, status=400)
@@ -975,13 +976,15 @@ def save_as_excel(request):
             # Save the Excel file temporarily
             fs = FileSystemStorage(location=settings.MEDIA_ROOT)
             excel_path = fs.save('temp_excel.xlsx', ContentFile(output.getvalue()))
+            print(excel_path)
             output.close()
 
             # Provide the download link
-            download_link = settings.MEDIA_URL + excel_path
-
+            download_link = reverse('download_excel') + f'?path={excel_path}'
+            print(download_link)
             return JsonResponse({'downloadLink': download_link})
         except Exception as e:
+            print(e)
             return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'Invalid request method'}, status=400)

@@ -507,6 +507,7 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    alert(data.downloadLink)
                     // The backend should respond with a download link
                     window.location.href = data.downloadLink;
                 })
@@ -525,16 +526,11 @@
                 },
                 body: JSON.stringify({ htmlContent: htmlContent }),
             })
-            .then(response => response.blob())
-            .then(blob => {
-                // Create a download link and trigger download
-                var url = window.URL.createObjectURL(blob);
-                var a = document.createElement('a');
-                a.href = url;
-                a.download = 'output.xlsx';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
+            .then(response => response.json())
+            .then(data => {
+                alert(data.downloadLink)
+                // The backend should respond with a download link
+                window.location.href = data.downloadLink;
             })
             .catch(error => console.error('Error:', error));
         }
