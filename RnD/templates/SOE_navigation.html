@@ -1,8 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://kit.fontawesome.com/0ceeca1f1f.js" crossorigin="anonymous"></script>
     <title>Date Range Form</title>
     <style>
         /* Dropdown button styling */
@@ -43,25 +46,175 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+        .body{
+            min-height: 70vh;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;        
+        }
+
+        .body .form1, form, .drp{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form1 h2, .drp h2{
+            font-size: 30px;
+            color: #000;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .form1 h2::after, .drp h2::after{
+            position: absolute;
+            content: '';
+            background: var(--secondary-color);
+            height: 3px;
+            width: 30%;
+            left: 35%;
+            bottom: -10px;
+        }
+
+        .form1 form input{
+            height: 40px;
+            font-size: 15px;
+            padding: 5px;
+            cursor: pointer;
+            outline: none;
+            margin-bottom: 20px;
+            border: none;
+            border-bottom: 1.5px solid var(--secondary-color);
+            border-radius: 10px;
+            color: var(--secondary-color);
+        }
+
+        .form1 form button{
+            margin-top: 30px;
+            height: 40px;
+            width: 120px;
+            margin: auto;
+            font-size: 15px;
+            padding: 5px;
+            cursor: pointer;
+            border: 1.5px solid var(--secondary-color);
+            background: none;
+            color: var(--secondary-color);
+            border-radius: 10px;
+            transition: 0.3s all ease-in-out;
+        }
+
+        .form1 form button:hover{
+            background: var(--secondary-color);
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0px 0px 5px var(--secondary-color);
+        }
+
+
+        .dropdown button{
+            display: block;
+            margin: auto;
+            width: 120px;
+            height: 40px;
+            font-size: 16px;
+            border-radius: 10px;
+            background: none;
+            background: var(--secondary-color);
+            color: #fff;
+            position: relative;
+        }
+
+        .dropdown button:hover{
+            box-shadow: 0px 0px 5px var(--secondary-color);
+        }
+
+        .dropdown-content{
+            position: absolute;
+            right: 20px;
+        }
     </style>
 </head>
 <body>
-    <h2>Date Range Form</h2>
-    <form id="dateRangeForm">
-        <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" name="startDate">
-        <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" name="endDate">
-        <button type="submit">Submit</button>
-    </form>
-
-    <h2>SOE Dropdown Menu</h2>
-    <div class="dropdown">
-        <button id="soeDropdownButton">SOE</button>
-        <div class="dropdown-content" id="soeDropdown">
-            <!-- SOE period options will be added here -->
+    <div class="navbar1">
+        <div class="title">
+            <a href="{% url "homepage" %}" class="lo">
+              <img src="{% static "IITI_Logo.png" %}" class="logo">
+              <h3>IIT Indore</h3>
+            </a>
+        </div>
+        <div class="links">
+            <ul>
+                <li><a href="{% url "index" %}">New Project Deal</a></li>
+                <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>           
+                <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+            </ul>
         </div>
     </div>
+
+    <div class="navbar2">
+        <div class="ham">
+          <p><i class="fa-solid fa-bars"></i></p>
+        </div>
+        <div class="title">
+          <a href="{% url "index" %}" class="lo">
+            <img src="{% static "IITI_Logo.png" %}" class="logo">
+            <h3>IIT Indore</h3>
+          </a>
+      </div>
+    </div>
+    <div class="side-bar">
+        <div id="close"><i class="fa-solid fa-xmark"></i></div>
+        <ul>
+            <li><a href="{% url "index" %}">New Project Deal</a></li>
+            <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
+            <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="body">
+        <div class="form1">
+            <h2>Date Range Form</h2>
+            <form id="dateRangeForm">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" name="endDate">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="drp">
+        <h2>SOE Dropdown Menu</h2>
+        <div class="dropdown">
+            <button id="soeDropdownButton">SOE</button>
+            <div class="dropdown-content" id="soeDropdown">
+                <!-- SOE period options will be added here -->
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer">
+          <div class="info">
+            <h4>IIT Indore</h4>
+          </div>
+          <div class="social">
+            <ul>
+              <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa-brands fa-facebook"></i></a></li>
+            </ul>
+          </div>
+          <div class="rights">
+            <p><i class="fa-solid fa-copyright"></i> Copyrights reserved.</p>
+          </div>
+        </div>
+        
+      </footer>
+           
+    <script src="{% static 'script.js' %}"></script>
 
     <script>
         // Dropdown menu functionality
