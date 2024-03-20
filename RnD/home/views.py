@@ -22,7 +22,7 @@ import base64
 
 period=0
 
-# @login_required
+# @login_required(login_url='/login/')
 def duration(date1,date2):
     date1 = datetime.strptime(date1,"%Y-%m-%d")
     date2 = datetime.strptime(date2,"%Y-%m-%d")
@@ -55,7 +55,7 @@ def duration(date1,date2):
     return result
 
 # import pickle
-# @login_required
+# @login_required(login_url='/login/')
 # def createfile(Project_file_name,period_range):
 #     # print('called create file')
 #     file_path = os.path.join(settings.BASE_DIR,os.path.join('project_files',f'{Project_file_name}.txt'))
@@ -182,7 +182,7 @@ def duration(date1,date2):
 #         file.write(json_data)
 
 from django.core.exceptions import ObjectDoesNotExist
-@login_required
+@login_required(login_url='/login/')
 def index(request):
     if request.method == "POST":
         Project_Fellowship_No =request.POST.get('Project_Fellowship_No')
@@ -267,7 +267,7 @@ def login(request):
     return render(request, "login.html")         
 
 
-
+@login_required(login_url='/login/')
 def project_list(request):
     projects = project_details.objects.all()
     filter_option = request.GET.get('filter')
@@ -279,7 +279,7 @@ def project_list(request):
     return render(request, 'project_list.html', context)
 
 
-@login_required
+@login_required(login_url='/login/')
 def fill(request, project_id):
     try:
         project = project_details.objects.get(id = project_id)
@@ -344,7 +344,7 @@ def ucr(request,project_id):
 
 
 
-# @login_required
+# @login_required(login_url='/login/')
 # def monthly(request):
     
 #     if request.method == "POST":
@@ -418,7 +418,7 @@ def ucr(request,project_id):
 
 
 from datetime import datetime
-@login_required
+@login_required(login_url='/login/')
 def mastersheet(request,project_id):
     # print("mastersheet called")
     existing_project = project_details.objects.get(id=project_id)
@@ -728,8 +728,8 @@ def soe(request,project_id,period):
         # 'total_grants':total_grants
         'zipped_data_2':zipped_data_2
     }
-    print("zipped data",new_parsed_data.items())
-    print("total sanctions",total_sanctions)
+    # print("zipped data",new_parsed_data.items())
+    # print("total sanctions",total_sanctions)
 
 
     return render(request,'soe_copy.html',data)
@@ -793,7 +793,7 @@ def save_tables_to_file(request, project_id):
 #         # print(f'Error saving file: {e}')
 #         return JsonResponse({'success': False, 'error': str(e)})
     
-# @login_required
+# @login_required(login_url='/login/')
 # def save_data_to_file(request):
 #     if request.method == 'POST':
 #         try:
@@ -816,7 +816,8 @@ def save_tables_to_file(request, project_id):
     
 
 def logout(request):
-    auth_logout(request)
+    if request.user.is_authenticated:
+        auth_logout(request)
     return render(request,'homepage.html')
 
 def save_table_data1(request,project_id):
@@ -904,6 +905,7 @@ def project_listwise(request):
 def save_as_pdf(request):
     if request.method == 'POST':
         try:
+            # print("save as pdf called")
             data = json.loads(request.body)
             image_data = data.get('imageData')
 
@@ -933,13 +935,66 @@ def save_as_pdf(request):
 
             return JsonResponse({'downloadLink': download_link})
         except Exception as e:
+            print(e)
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
+import io
+import json
+import base64
+import os
+from django.http import JsonResponse, HttpResponse
+from django.core.files.base import ContentFile
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+import xlsxwriter
+
+def save_as_excel(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            html_content = data.get('htmlContent')
+
+            # Convert HTML content to Excel
+            output = io.BytesIO()
+            workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+            worksheet = workbook.add_worksheet()
+
+            # Parse HTML content and write to Excel
+            rows = html_content.split('</tr>')
+            for i, row in enumerate(rows):
+                columns = row.split('</th>') + row.split('</td>')
+                for j, column in enumerate(columns[:-1]):
+                    text = column.split('>')[-1]
+                    worksheet.write(i, j, text)
+
+            workbook.close()
+
+            # Save the Excel file temporarily
+            fs = FileSystemStorage(location=settings.MEDIA_ROOT)
+            excel_path = fs.save('temp_excel.xlsx', ContentFile(output.getvalue()))
+            print(excel_path)
+            output.close()
+
+            # Provide the download link
+            download_link = reverse('download_excel') + f'?path={excel_path}'
+            print(download_link)
+            return JsonResponse({'downloadLink': download_link})
+        except Exception as e:
+            print(e)
             return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 
 
+
 def download_pdf(request):
+    # print("download pdf called")
     pdf_path = request.GET.get('path')
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
@@ -948,6 +1003,18 @@ def download_pdf(request):
         response.write(pdf_file.read())
 
     return response
+
+def download_excel(request):
+    # print("download excel called")
+    excel_path = request.GET.get('path')
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename="{os.path.basename(excel_path)}"'
+
+    with open(excel_path, 'rb') as excel_file:
+        response.write(excel_file.read())
+
+    return response
+
 
 
 

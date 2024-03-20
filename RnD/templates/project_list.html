@@ -277,6 +277,9 @@
     </style>
 </head>
 <body>
+  {% load account %}
+  {% user_display user %}
+  
     <div class="navbar1">
         <div class="title">
             <a href="{% url "homepage" %}" class="lo">

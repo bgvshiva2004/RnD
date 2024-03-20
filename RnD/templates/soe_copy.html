@@ -120,11 +120,10 @@
             color: var(--secondary-color);
         }
 
-        .table0  {
-          width: 200px; /* Adjust the max-width value as needed */
-          {% comment %} overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap; {% endcomment %}
+       
+
+      .table0 th, td{
+        width: 100px;
       }
       
 
@@ -168,9 +167,10 @@
               border: 1px solid var(--secondary-color);
           }
           
-          .side-by-side table tr th, .side-by-side table tr td{
+          {% comment %} .side-by-side table tr th, .side-by-side table tr td{
               width: 7vw;
-          }
+          } {% endcomment %}
+          
           input[type="date"] {
             border: none;
             /* Optional: Additional styling */
@@ -283,6 +283,7 @@
   font-size: 15px;
   margin-right: 20px;
 }
+
 
     </style>
   </head>
@@ -497,7 +498,7 @@
                 </tbody>
               </table>
               
-              <table class="table0" id="data-table0" style="min-width:20vw; min-height:65vh">
+              <table class="table0" id="data-table0" style="min-width:15vw; min-height:65vh">
 
                 <thead>
                     <tr>
@@ -527,7 +528,7 @@
           
                       {% endfor %}
                     
-                      <td contenteditable="false" id="sanction-total-{{ period }} style="max-width: 150px;" ">0</td>
+                      <td contenteditable="false" id="sanction-total-{{ period }}" style="max-width: 150px;">0</td>
                     
           
                     </tr>
@@ -545,7 +546,7 @@
             
             
             
-              <table class="table2" id="data-table1">
+              <table class="table2" id="data-table1" style="min-height: 65vh;">
                 <thead>
                     <!-- Parent row for "Sanctioned Amount Rs." -->
                     

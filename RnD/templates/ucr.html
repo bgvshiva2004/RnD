@@ -461,6 +461,7 @@
     </div>
 </div>
 <button class="btn" onclick="saveAsPdf()">Save as PDF</button>
+<button class="btn" onclick="saveAsExcel()">Save as Excel</button>
    
     <footer>
         <div class="footer">
@@ -506,12 +507,35 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                   // alert(data.downloadLink)
                     // The backend should respond with a download link
                     window.location.href = data.downloadLink;
                 })
                 .catch(error => console.error('Error:', error));
             });
         }
+
+        function saveAsExcel() {
+            var htmlContent = document.getElementById('print').innerHTML;
+        
+            fetch('/save-as-excel/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify({ htmlContent: htmlContent }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // alert(data.downloadLink)
+                // The backend should respond with a download link
+                window.location.href = data.downloadLink;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        
+        
        
         // Helper function to get CSRF token from cookies
         function getCookie(name) {
