@@ -1318,6 +1318,7 @@
           for(let i=1;i<=n;i++){
 
               var storedValue = localStorage.getItem(`committed_expenditure_${project_id}_${i}`);
+              console.log("stored value",storedValue);
               var inputField = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
 
               if(inputField){
@@ -1326,9 +1327,12 @@
               }
 
               if(storedValue){
+                console.log("stored value",storedValue);
                 committed_expenditure_sum += parseInt(storedValue);
               }
           }
+
+          console.log("total ce: ",total_committed_expenditure_all_domains);
 
           var total_committed_expenditure_all_domains = document.getElementById('total_committed_expenditure_all_domains');
           total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
