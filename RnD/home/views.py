@@ -343,6 +343,12 @@ def ucr(request,project_id):
     return render(request, "ucr.html",{'project_id':project_id})
 
 
+def ucnr(request,project_id):
+    # existing_project = project_details.objects.get(id=project_id)
+    
+    return render(request, "ucnr.html",{'project_id':project_id})
+
+
 
 # @login_required(login_url='/login/')
 # def monthly(request):

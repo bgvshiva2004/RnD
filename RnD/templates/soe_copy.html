@@ -366,12 +366,14 @@
             </tr>
             <tr>
                 <th>5</th>
-                <th>Date of Commencement</th>
+                <th>Date of Project Commencement</th>
                 <td>{{existing_project.Project_Start_Date}}</td>
             </tr>
         </table>
 
-        <h2 style='font-size:27px'>Statement of Expenditure (during current financial year)</h2>
+        <h2 style='font-size:27px'>Statement of Expenditure (during financial year: {{financialYearStartYear}}-{{financialYearStartYear|add:1}})</h2>
+        <br></br>
+        <input type="text">
 
         <table id="expenditureTable">
             <thead>
@@ -440,8 +442,13 @@
                   <td class="grant">{{grant}}</td>
                 </tr>
               {% endfor %}
+              <tr>
                     <td>Interest, if any</td>
-                    <td><input type='number' name='interest_if_any' id='interest_if_any'></td>
+                    <td><input type='number' name='interest_if_any' id='interest_if_any' placeholder="Specify if any"></td>
+                </tr>
+                <tr>
+                  <td>Refund, if any</td>
+                  <td><input type='number' name='refund_if_any' id='refund_if_any' placeholder="Refund Amount if any"></td>
                 </tr>
                 <tr>
                     <td>Total</td>
@@ -461,14 +468,14 @@
                     <tr>
                         <th rowspan="2">S.No.</th>
                         <th rowspan="2">Budget Head</th>
-                        <th colspan="{{ financial_years|length|add:1 }}">Grant Amount Rs.</th>
+                        <th colspan="{{ financial_years|length|add:1 }}">Sanctioned Amount Rs.</th>
                        
                     </tr>
                     <tr>
                       {% for year in financial_years %}
                         <th  style="display: none;" class="column-names" id='years'>{{ year }}</th>
                       {% endfor %}
-                      <th   class="column-names">Funds Granted</th>
+                      <th   class="column-names">Funds Sanctioned</th>
                     </tr>
                   </thead>
                 <tbody>
@@ -503,7 +510,7 @@
                 <thead>
                     <tr>
                         
-                      <th >Sanction Amount </th>
+                      <th >Released Amount Rs.</th>
                       
                       
                     </tr>
@@ -513,7 +520,7 @@
                       {% for year in financial_years %}
                         <th style="display: none;"  class="column-names">{{ year }}</th>
                       {% endfor %}
-                      <th  class="column-names">Funds Sanctioned</th>
+                      <th  class="column-names">Funds Released</th>
           
                     </tr>
                 </thead>
