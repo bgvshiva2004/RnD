@@ -16,12 +16,17 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1y+qnjl@g&929^msvww%sku71q(3#-7=&_cu4_*ep+c%zh)e@s'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -89,8 +94,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         'APP': {
-            'client_id': '69705222899-2h8lma8o6t5sismgbeliei6oeugf51ng.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id' : os.environ.get('client_id'),
+            'secret' : os.environ.get('secret'),
             'key': ''
         }
     }
