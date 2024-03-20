@@ -120,32 +120,28 @@
             color: var(--secondary-color);
         }
 
-       
-
-      .table0 th, td{
-        width: 100px;
-      }
-      
-
         .mtitle .mbtn a button:hover{
             box-shadow: 0px 10px 10px var(--secondary-color);
         }
+
         .side-by-side{
             display: flex;
             align-items: center;
             justify-content: center;
-            
+            margin-bottom: 20px;
+            padding-left: 150px;
           }
 
+        .overflow{
+          overflow-x: auto;
+          width: 100%;
+        }
     
-          .side-by-side table{
+        .side-by-side table{
               min-width: 40vw;
               margin-right: 0px;
               margin-left: 0px;
-              height: 60vh;
-              max-height:200px;
-          }
-          
+          }    
     
           .side-by-side table{
               border-collapse: collapse;
@@ -167,9 +163,9 @@
               border: 1px solid var(--secondary-color);
           }
           
-          {% comment %} .side-by-side table tr th, .side-by-side table tr td{
-              width: 7vw;
-          } {% endcomment %}
+       /*   {% comment %} .side-by-side table tr th, .side-by-side table tr td{
+             width: 7vw;
+          } {% endcomment %}*/
           
           input[type="date"] {
             border: none;
@@ -460,9 +456,9 @@
         <h2>Statement of Expenditure</h2>
 
         {% comment %} <h2>Project Information</h2> {% endcomment %}
-        <div class="side-by-side">
+        <div class="side-by-side overflow">
 
-
+          <!-- <div class="overflow"> -->
             <table class="table1" id="data-table">
                 <thead>
                     <tr>
@@ -535,7 +531,7 @@
           
                       {% endfor %}
                     
-                      <td contenteditable="false" id="sanction-total-{{ period }}" style="max-width: 150px;">0</td>
+                      <td contenteditable="false" id="sanction-total-{{ period }}">0</td>
                     
           
                     </tr>
@@ -570,7 +566,7 @@
                       {% for year in financial_years %}
                         <th  class="column-names">{{ year }}</th>
                       {% endfor %}
-                      <th  class="column-names">Total Expenditure</th>
+                      <th  class="column-names">Expenditure</th>
             
                     </tr>
                   </thead>
@@ -583,7 +579,7 @@
                     <!-- Add dynamic cells for each financial year -->
                     {% for table_key, sum_data in tablesdata1.items %}
             
-                    <td contenteditable="false" id="2-row-{{ period }}-col-{{table_key}}" class="row-{{ period }}"></td>
+                    <td contenteditable="false" id="2-row-{{ period }}-col-{{table_key}}" class="row-{{ period }}" style="padding-left: 50px; padding-right: 50px;"></td>
                   
                   
                     
@@ -606,7 +602,8 @@
                     <td   style="display: none;" id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
                     <td class='total_balance_amount_all_domains' name='total_balance_amount_all_domains'></td>
                 </tbody>
-              </table>              
+              </table>   
+            <!-- </div>            -->
             </div>
             
             <div class="last">

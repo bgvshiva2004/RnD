@@ -274,6 +274,13 @@
         background-color: var(--secondary-color);
         color: #fff;
       }
+
+      h5.name{
+        text-align: right;
+        font-size: 20px;
+        margin-right: 30px;
+        color: var(--secondary-color);
+      }
     </style>
 </head>
 <body>
@@ -315,7 +322,7 @@
         </ul>
     </div>
 
-    Welcome {% user_display user %}
+    <h5 class="name">Welcome {% user_display user %}!!</h5>
 
     <div class="titles">
       <div class="dropdown">
@@ -427,14 +434,10 @@
         function showAllProjects() {
             // Redirect to the same page without any filter
             window.location.href = "{% url 'project_list' %}";
-            ongoing.classList.remove("active1");
-            completed.classList.remove("active1");
           }
         
           function showOngoingProjects() {
             // Redirect to the same page with a filter for ongoing projects
-            ongoing.classList.add("active1");
-            completed.classList.remove("active1");
             window.location.href = "{% url 'project_list' %}?filter=ongoing";
             
           }

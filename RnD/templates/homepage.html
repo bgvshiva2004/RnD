@@ -148,6 +148,13 @@
             text-align: center; 
           }
         }
+
+        h5.name{
+          text-align: right;
+          font-size: 20px;
+          margin-right: 30px;
+          color: var(--secondary-color);
+        }
     
       </style>
 </head>
@@ -197,6 +204,11 @@
           </ul>
         </div>
 
+      {% if user.is_authenticated %}
+      {% load account %}
+      <h5 class="name">Welcome {% user_display user %}!!</h5>
+      {% endif %}
+
       <div class="body">
               <div class="d1">
                 <img src="{% static 'IITI_Logo.png' %}">
@@ -204,8 +216,6 @@
               </div>
               <div classs="d2">
                 {% if user.is_authenticated %}
-                {% load account %}
-                  Welcome {% user_display user %}
                 <a href='{% url "logout" %}'><button> <i class="fa-solid fa-user"></i> Logout</button></a>
                 {% else %}
                 <a href='{% url "login" %}'><button> <i class="fa-solid fa-user"></i> Login</button></a>
