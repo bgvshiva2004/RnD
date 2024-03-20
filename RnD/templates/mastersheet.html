@@ -379,14 +379,14 @@
           <tr>
               <th rowspan="2">S.No.</th>
               <th rowspan="2">Budget Head</th>
-              <th colspan="{{ financial_years|length|add:1 }}">Grant Amount</th>
+              <th colspan="{{ financial_years|length|add:1 }}">Sanctioned Amount</th>
             
           </tr>
           <tr>
             {% for year in financial_years %}
               <th  class="column-names" id='years'>{{ year }}</th>
             {% endfor %}
-            <th   class="column-names">Funds Granted</th>
+            <th   class="column-names">Total</th>
           </tr>
       </thead>
       
@@ -421,7 +421,7 @@
       <thead>
           <tr>
               
-            <th colspan="{{ financial_years|length|add:1 }}"  >Sanction Amount</th>
+            <th colspan="{{ financial_years|length|add:1 }}"  >Released Amount</th>
             
           </tr>
         
@@ -430,7 +430,7 @@
             {% for year in financial_years %}
               <th  class="column-names">{{ year }}</th>
             {% endfor %}
-            <th  class="column-names">Funds Sanctioned</th>
+            <th  class="column-names">Total</th>
 
           </tr>
       </thead>

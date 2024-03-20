@@ -22,6 +22,7 @@ urlpatterns = [
     path('SOE_navigation/<int:project_id>/',views.SOE_navigation,name='SOE_navigation'),
     path('soe/<int:project_id>/<str:period>/', views.soe, name='soe'),
     path('ucr/<int:project_id>/',views.ucr,name='ucr'),
+    path('ucnr/<int:project_id>/',views.ucr,name='ucnr'),
     path('save-as-pdf/', views.save_as_pdf, name='save_as_pdf'),
     path('save-as-excel/', views.save_as_excel, name='save_as_excel'),
     path('download-pdf/', views.download_pdf, name='download_pdf'),
