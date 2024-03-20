@@ -204,6 +204,8 @@
               </div>
               <div classs="d2">
                 {% if user.is_authenticated %}
+                {% load account %}
+                  Welcome {% user_display user %}
                 <a href='{% url "logout" %}'><button> <i class="fa-solid fa-user"></i> Logout</button></a>
                 {% else %}
                 <a href='{% url "login" %}'><button> <i class="fa-solid fa-user"></i> Login</button></a>
