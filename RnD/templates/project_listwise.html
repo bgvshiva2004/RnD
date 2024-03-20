@@ -387,9 +387,14 @@
                     {% csrf_token %}
                     <td>
                       <button type="submit" class="button">Submit</button>
+                      {% if project.task == "ongoing" %}
                       <a style="text-decoration: none;" href="{% url 'complete_task' project_id=project.id %}">                
-                        <button class="button" type = "button">Complete Project</button>
-                    </a>
+                          <button class="button" type="button">Complete Project</button>
+                      </a>
+                  {% else %}
+                      <button  type="button" disabled>Completed Project</button>
+                  {% endif %}
+                  
                   </td>
                   <td>
                     <a style="text-decoration: none;" href="{% url 'fill' project_id=project.id %}">

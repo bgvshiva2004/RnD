@@ -870,7 +870,8 @@ def complete_task(request,project_id):
     project.task = 'completed'
     project.save()
     
-    return render(request,'project_listwise.html')
+    return redirect('project_listwise')
+    # return render(request,'project_listwise.html')
 
 
 def project_listwise(request):
