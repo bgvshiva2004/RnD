@@ -184,11 +184,10 @@
             </form>
         </div> {% endcomment %}
         <div class="drp">
-        <h2>SOE Dropdown Menu</h2>
+        <h2>UCNR Dropdown Menu</h2>
         <div class="dropdown">
-            <button id="soeDropdownButton">SOE</button>
-            <div class="dropdown-content" id="soeDropdown">
-                <!-- SOE period options will be added here -->
+            <button id="ucrDropdownButton">UCNR</button>
+            <div class="dropdown-content" id="ucrDropdown">
             </div>
         </div>
         </div>
@@ -218,30 +217,28 @@
 
     <script>
         // Dropdown menu functionality
-        var soeDropdownButton = document.getElementById("soeDropdownButton");
-        var soeDropdown = document.getElementById("soeDropdown");
+        var ucrDropdownButton = document.getElementById("ucrDropdownButton");
+        var ucrDropdown = document.getElementById("ucrDropdown");
 
-        // Fill the SOE dropdown with periods
-        var periods = ({{ financial_years | safe }});// Replace with your actual periods
+        // Fill the UCNR dropdown with periods
+        var periods = ({{ financial_years | safe }});
         periods.forEach(function(period) {
             var option = document.createElement("a");
             option.textContent = period;
         
-            option.href = "{% url 'soe' project_id=project_id %}&period=" + encodeURIComponent(period); // Modify URL as needed
+            option.href = "{% url 'ucnr' project_id=project_id %}&period=" + encodeURIComponent(period);
             option.classList.add("dropdown-item");
 
-            soeDropdown.appendChild(option);
+            ucrDropdown.appendChild(option);
         });
 
 
-        // Show/hide dropdown content
-        soeDropdownButton.addEventListener("click", function() {
-            soeDropdown.classList.toggle("show");
+        ucrDropdownButton.addEventListener("click", function() {
+            ucrDropdown.classList.toggle("show");
         });
 
-        // Close the dropdown if the user clicks outside of it
         window.addEventListener("click", function(event) {
-            if (!event.target.matches("#soeDropdownButton")) {
+            if (!event.target.matches("#ucrDropdownButton")) {
                 var dropdowns = document.getElementsByClassName("dropdown-content");
                 for (var i = 0; i < dropdowns.length; i++) {
                     var openDropdown = dropdowns[i];

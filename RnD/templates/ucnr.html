@@ -85,6 +85,7 @@
         
         .mtitle .mbtn a button{
             height: 60px;
+            width:150px;
             padding: 10px;
             font-size: 20px;
             outline: 0;
@@ -145,7 +146,7 @@
             <ul>
                 <li><a href="{% url "index" %}">New Project Deal</a></li>
                 <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
-                <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+                <li><a href="{% url "logout" %}">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -166,18 +167,23 @@
         <ul>
             <li><a href="{% url "index" %}">New Project Deal</a></li>
             <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
-            <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+            <li><a href="{% url "logout" %}">Logout</a></li>
         </ul>
     </div>
     <div class="mtitle">
         <div class="mbtn">
-            <a href="#">
+            <a href="{% url 'mastersheet' project_id=project_id  %}">
                 <button type="button">Mastersheet</button>
             </a> 
         </div>
          <div class="mbtn">
-         <a href="#">
-            <button type="button">Soe Copy</button>
+            <a href="{% url 'SOE_navigation' project_id=project_id %}">
+            <button type="button">SOE</button>
+        </a>
+        </div>
+         <div class="mbtn">
+            <a href="{% url 'UCR_navigation' project_id=project_id %}">
+            <button type="button">UCR</button>
         </a>
         </div>
     </div>

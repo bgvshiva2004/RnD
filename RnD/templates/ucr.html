@@ -206,7 +206,7 @@
             <ul>
                 <li><a href="{% url "index" %}">New Project Deal</a></li>
                 <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
-                <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+                <li><a href="{% url "logout" %}">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -227,18 +227,23 @@
         <ul>
             <li><a href="{% url "index" %}">New Project Deal</a></li>
             <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
-            <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+            <li><a href="{% url "logout" %}">Logout</a></li>
         </ul>
     </div>
     <div class="mtitle">
         <div class="mbtn">
-            <a href="{% url 'mastersheet' project_id=project.id  %}">
+            <a href="{% url 'mastersheet' project_id=project_id  %}">
                 <button type="button">Mastersheet</button>
             </a> 
         </div>
          <div class="mbtn">
-            <a href="{% url 'soe' project_id=project.id  %}">
+            <a href="{% url 'SOE_navigation' project_id=project_id %}">
             <button type="button">SOE</button>
+        </a>
+        </div>
+         <div class="mbtn">
+            <a href="{% url 'UCNR_navigation' project_id=project_id %}">
+            <button type="button">UCNR</button>
         </a>
         </div>
     </div>
@@ -268,19 +273,19 @@
                 </tr>
                 <tr>
                     <th>2. Name of Principal Investigator (PI)</th>
-                    <td>{{project.PI_of_Project}}</td>
+                    <td>{{PI_of_Project}}</td>
                 </tr>
                 <tr>
                     <th>3. SERB Sanction order no. & date</th>
-                    <td >{{project.Project_Fellowship_No}} <br>Dated:</td>
+                    <td >{{Project_Fellowship_No}} <br>Dated:</td>
                 </tr>
                 <tr>
                     <th>4. Title of the Project</th>
-                    <td>{{project.Title_of_Project}}</td>
+                    <td>{{Title_of_Project}}</td>
                 </tr>
                 <tr>
                     <th>5. Name of the SERB Scheme</th>
-                    <td>{{project.scheme_name}}</td>
+                    <td>{{scheme_name}}</td>
                 </tr>
                 <tr>
                     <th>6. Whether recurring or non-recurring grants</th>

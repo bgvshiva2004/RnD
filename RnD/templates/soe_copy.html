@@ -295,7 +295,7 @@
             <ul>
                 <li><a href="{% url "index" %}">New Project Deal</a></li>
                 <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
-                <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+                <li><a href="{% url "logout" %}">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -316,7 +316,7 @@
         <ul>
             <li><a href="{% url "index" %}">New Project Deal</a></li>
             <li><a href="{% url "project_list" %}" class="active">Project Deals</a></li>
-            <li><a href="{% url "logout" %}"><i class="fa-solid fa-user"></i></a></li>
+            <li><a href="{% url "logout" %}">Logout</a></li>
         </ul>
     </div>
     <div class="mtitle">
@@ -326,8 +326,13 @@
             </a> 
         </div>
          <div class="mbtn">
-          <a href="{% url 'ucr' project_id=existing_project.id  %}">
+          <a href="{% url 'UCR_navigation' project_id=existing_project.id  %}">
             <button type="button">UCR</button>
+        </a>
+        </div>
+         <div class="mbtn">
+          <a href="{% url 'UCNR_navigation' project_id=existing_project.id  %}">
+            <button type="button">UCNR</button>
         </a>
         </div>
     </div>
