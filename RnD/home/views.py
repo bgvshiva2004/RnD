@@ -338,9 +338,21 @@ def fill(request, project_id):
 
 
 def ucr(request,project_id):
-    # existing_project = project_details.objects.get(id=project_id)
-    
-    return render(request, "ucr.html",{'project_id':project_id})
+    project = project_details.objects.get(id = project_id)
+    # Project_Fellowship_No = project.Project_Fellowship_No
+    # PI_of_Project = project.PI_of_Project
+    # Title_of_Project = project.Title_of_Project
+
+    # data = {
+    #     'project' : project,
+    #     'Project_Fellowship_No' : Project_Fellowship_No,
+    #     'PI_of_Project' : PI_of_Project,
+    #     'Title_of_Project' :Title_of_Project,
+    #     'project_id' : project_id
+    # }
+    data = {'project': project}
+
+    return render(request, "ucr.html",data)
 
 
 def ucnr(request,project_id):
