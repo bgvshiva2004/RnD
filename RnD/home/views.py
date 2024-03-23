@@ -917,6 +917,8 @@ def soe(request,project_id,period):
 ]
     file_path = os.path.join('project_files', f'{existing_project.Project_file_name}.txt')
     file_path1 = os.path.join('commited', f'{existing_project.id}.txt')
+    file_path2 = os.path.join('soedata',  f'{existing_project.id}.txt')
+    # file_path2 = os.path.join('soedata', f'{existing_project.id}.txt')
     # print(file_path1)
     with open(file_path, 'r') as file:
         table_data1 = file.read()
@@ -989,6 +991,21 @@ def soe(request,project_id,period):
 
     zipped_data_2 = zip(financial_years,total_sanctions)
 
+    if os.path.exists(file_path2):
+        with open(file_path2, 'r') as file:
+         table_data3 = file.read()
+        parsed_data3 = json.loads(table_data3)
+        print("there is file")
+        print(parsed_data3)
+        details = True
+    else :
+        details = False
+        print("no file")
+
+
+    print(details)    
+
+
     data={
         'financial_years':financial_years,  
         'period_range' :period_range,
@@ -1001,6 +1018,8 @@ def soe(request,project_id,period):
         'tablesdata1':new_parsed_data,
         'existing_project':existing_project,
         'parsed_data2':parsed_data2,
+        'details':str(details).lower(),
+        'parsed_data3':parsed_data3,
         'project_id':project_id,
         'financialYearStartYear':financialYearStartYear,
         'monthwise_exp':monthwise_exp,
@@ -1367,3 +1386,57 @@ def delete_project(request,project_id):
     return render(request,'project_list.html', context)
 
 
+# views.py
+
+import json
+
+def save_info(request, project_id):
+    if request.method == 'POST':
+        print( json.loads(request.body))
+       
+        data = json.loads(request.body)  # Assuming you are sending data using form POST method
+        print(data.get('projectDescription'))
+        # Extracting data from the POST request
+        # projectName = data.get('projectName')
+        projectDescription = data.get('projectDescription')
+        print(projectDescription)
+        projectCost = data.get('projectCost')
+        interest_if_any1 = data.get('interest_if_any1')
+        interest_if_any2 = data.get('interest_if_any2')
+        interest_if_any3 = data.get('interest_if_any3')
+        interest_if_any4 = data.get('interest_if_any4')
+        interest_if_any5 = data.get('interest_if_any5')
+        refund_if_any1 = data.get('refund_if_any1')
+        refund_if_any2 = data.get('refund_if_any2')
+        refund_if_any3 = data.get('refund_if_any3')
+        refund_if_any4 = data.get('refund_if_any4')
+        refund_if_any5 = data.get('refund_if_any5')
+        # total_funds_sanctioned_all_years = data.get('total_funds_sanctioned_all_years')
+
+        # Construct the data to be saved into a dictionary
+        save_data = {
+            # 'projectName': projectName,
+            'projectDescription': projectDescription,
+            'projectCost': projectCost,
+            'interest_if_any1': interest_if_any1,
+            'interest_if_any2': interest_if_any2,
+            'interest_if_any3': interest_if_any3,
+            'interest_if_any4': interest_if_any4,
+            'interest_if_any5': interest_if_any5,
+            'refund_if_any1': refund_if_any1,
+            'refund_if_any2': refund_if_any2,
+            'refund_if_any3': refund_if_any3,
+            'refund_if_any4': refund_if_any4,
+            'refund_if_any5': refund_if_any5,
+        }
+
+        # Write the data to a new file
+        file_path = f'soedata/{project_id}.txt'  # Replace 'path/to/save/data.json' with your desired file path
+        
+        with open(file_path, 'w') as file:
+            json.dump(save_data, file)
+
+        # Return a success message
+        return JsonResponse({'message': 'Data saved to file successfully'}, status=200)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)

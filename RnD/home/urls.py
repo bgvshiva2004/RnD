@@ -33,4 +33,6 @@ urlpatterns = [
     path('download-excel/', views.download_excel, name='download_excel'),
     path('submit_project_data/<int:project_id>/', views.submit_project_data, name='submit_project_data'),
     path('delete_project/<int:project_id>/',views.delete_project,name='delete_project'),
+    path('save_info/<int:project_id>/', views.save_info, name='save_info'),
+
 ]

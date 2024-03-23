@@ -363,7 +363,7 @@
             <tr>
                 <th>4</th>
                 <th>Revised Project Cost</th>
-                <td><input name='revised_project_cost' type='number' placeholder='(specify if applicable)'></td>
+                <td><input name='revised_project_cost'  id="projectCost" type='number' placeholder='(specify if applicable)'></td>
             </tr>
             <tr>
                 <th>5</th>
@@ -374,7 +374,11 @@
 
         <h2 style='font-size:27px'>Statement of Expenditure (during financial year: {{financialYearStartYear}}-{{financialYearStartYear|add:1}})</h2>
         <br></br>
+<<<<<<< Updated upstream
         <input type="text">
+=======
+        <input type="text" id="projectDescription">
+>>>>>>> Stashed changes
 
         <table id="expenditureTable">
             <thead>
@@ -429,31 +433,47 @@
             </tbody>
         </table>
 
-        <table>
+        <table style="max-width:200px">
             <thead>
                 <tr>
                     <th>Financial Years</th>
-                    <th>Grant received in each year</th>
+                    <th colspan="5" >Grant received in each year</th>
                 </tr>
             </thead>
             <tbody>
               {% for year,grant in zipped_data_2 %}
                 <tr>
                   <td>{{year}}</td>
-                  <td class="grant">{{grant}}</td>
+                  <td colspan="5" class="grant">{{grant}}</td>
                 </tr>
               {% endfor %}
               <tr>
                     <td>Interest, if any</td>
+<<<<<<< Updated upstream
                     <td><input type='number' name='interest_if_any' id='interest_if_any' placeholder="Specify if any"></td>
                 </tr>
                 <tr>
                   <td>Refund, if any</td>
                   <td><input type='number' name='refund_if_any' id='refund_if_any' placeholder="Refund Amount if any"></td>
+=======
+                    <td><input type='number' name='interest_if_any1' id='interest_if_any1' placeholder="Specify if any"></td>
+                    <td><input type='number' name='interest_if_any2' id='interest_if_any2' placeholder="Specify if any"></td>
+                    <td><input type='number' name='interest_if_any3' id='interest_if_any3' placeholder="Specify if any"></td>
+                    <td><input type='number' name='interest_if_any4' id='interest_if_any4' placeholder="Specify if any"></td>
+                    <td><input type='number' name='interest_if_any5' id='interest_if_any5' placeholder="Specify if any"></td>
+                </tr>
+                <tr>
+                  <td>Refund, if any</td>
+                  <td><input type='number' name='refund_if_any1' id='refund_if_any1' placeholder="Refund Amount if any"></td>
+                  <td><input type='number' name='refund_if_any2' id='refund_if_any2' placeholder="Refund Amount if any"></td>
+                  <td><input type='number' name='refund_if_any3' id='refund_if_any3' placeholder="Refund Amount if any"></td>
+                  <td><input type='number' name='refund_if_any4' id='refund_if_any4' placeholder="Refund Amount if any"></td>
+                  <td><input type='number' name='refund_if_any5' id='refund_if_any5' placeholder="Refund Amount if any"></td>
+>>>>>>> Stashed changes
                 </tr>
                 <tr>
                     <td>Total</td>
-                    <td id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
+                    <td colspan="5" id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
                 </tr>
             </tbody>
         </table>
@@ -668,6 +688,7 @@
     </div>
   </div>
 </div>
+<button onclick="saveInfo()">Save Info</button>
 <button onclick="saveAsPdf()" class='btn'>Save as PDF</button>
 {% comment %} <button onclick="convertToImageAndSave()">Convert to Image and Save</button> {% endcomment %}
 
@@ -763,11 +784,11 @@
       
         var project_id = {{ existing_project.id }};
         var tablesData = {{ tablesdata|safe }};
-        console.log(tablesData)
-        console.log("1")
+        // console.log(tablesData)
+       //  console.log("1")
       
         // console.log(zipped_data)
-         console.log(tablesData[1]['1_Grant_Amount'])
+        //  console.log(tablesData[1]['1_Grant_Amount'])
        
          // Function to get the value of a cell based on its id
          function getCellValue(cellId) {
@@ -775,7 +796,7 @@
            var tableKey = parts[0];
            var row = parts[2];
            var col = parts[4];
-           console.log(row+"+"+col+"+"+tableKey)
+        //    console.log(row+"+"+col+"+"+tableKey)
            
            if (tablesData[col] && tablesData[col][row + '_Grant_Amount']) {
              return tablesData[col][row + '_Grant_Amount'];
@@ -861,10 +882,10 @@
       // Function to fill the cells with data
       
       function fillCells2() {
-        console.log(tablesData[1])
+      //   console.log(tablesData[1])
       var tableBody = document.getElementById('data-table');
       var rows = tableBody.getElementsByTagName('tr');
-      console.log(rows)
+  //     console.log(rows)
       
       for (var i = 2; i < rows.length; i++) {
         var cells = rows[i].getElementsByTagName('td');
@@ -876,7 +897,7 @@
          // Check if the ID starts with "text-"
          if (cellId.startsWith('text-')) {
              var rowNumber = cellId.replace('text-', '');
-             console.log(rowNumber)
+          //    console.log(rowNumber)
       
            cells[j].textContent = tablesData[1][rowNumber + '_text'] || 'Not found';
          }
@@ -885,9 +906,41 @@
       }
          
       document.addEventListener('DOMContentLoaded', function() {
+        console.log("pared datA3")
+      console.log({{parsed_data3.interest_if_any1}})
       
-        console.log("hi")
-        console.log("hi")
+      if ({{ details }}) {
+        var projectDescription = document.getElementById('projectDescription');
+        var projectCostInput = document.getElementById('projectCost');
+        var interestIfAny1Input = document.getElementById('interest_if_any1');
+        var interestIfAny2Input = document.getElementById('interest_if_any2');
+        var interestIfAny3Input = document.getElementById('interest_if_any3');
+        var interestIfAny4Input = document.getElementById('interest_if_any4');
+        var interestIfAny5Input = document.getElementById('interest_if_any5');
+        var refundIfAny1Input = document.getElementById('refund_if_any1');
+        var refundIfAny2Input = document.getElementById('refund_if_any2');
+        var refundIfAny3Input = document.getElementById('refund_if_any3');
+        var refundIfAny4Input = document.getElementById('refund_if_any4');
+        var refundIfAny5Input = document.getElementById('refund_if_any5');
+
+        // Assuming parsed_data3 contains the project cost and refund/interest values sent from the backend
+        projectDescription.value = "{{ parsed_data3.projectDescription }}";
+        projectCostInput.value = "{{ parsed_data3.projectCost }}";
+        interestIfAny1Input.value = "{{ parsed_data3.interest_if_any1 }}";
+        interestIfAny2Input.value = "{{ parsed_data3.interest_if_any2 }}";
+        interestIfAny3Input.value = "{{ parsed_data3.interest_if_any3 }}";
+        interestIfAny4Input.value = "{{ parsed_data3.interest_if_any4 }}";
+        interestIfAny5Input.value = "{{ parsed_data3.interest_if_any5 }}";
+        refundIfAny1Input.value = "{{ parsed_data3.refund_if_any1 }}";
+        refundIfAny2Input.value = "{{ parsed_data3.refund_if_any2 }}";
+        refundIfAny3Input.value = "{{ parsed_data3.refund_if_any3 }}";
+        refundIfAny4Input.value = "{{ parsed_data3.refund_if_any4 }}";
+        refundIfAny5Input.value = "{{ parsed_data3.refund_if_any5 }}";
+    }
+    else{
+      console.log("else")
+    }
+    
         fillCells1();
         fillCells2();
         fillCells();
@@ -896,14 +949,14 @@
       
         var updateButton = document.getElementById('update-button');
         var tableData = Array.from({ length: 7 }, () => Array(3).fill(0));  // Initialize as a 6x3 matrix of zeros
-        console.log("called")
+     //    console.log("called")
         updateTotalCell();
-        console.log("called")
+      //   console.log("called")
       
         });
        
         function sendToServer(data, project_id) {
-          console.log(JSON.stringify(data));
+        //   console.log(JSON.stringify(data));
           fetch(`/save_tables_to_file/${project_id}/`, {
               method: 'POST',
               headers: {
@@ -914,7 +967,7 @@
           })
           .then(response => response.json())
           .then(result => {
-              console.log(result);
+        //       console.log(result);
               // Handle success or error as needed
           })
           .catch(error => {
@@ -923,7 +976,7 @@
         }   
       
         let n = {{ budget_heads|length }};
-        console.log("n",n)
+    //     console.log("n",n)
         function updateTotalCell() {
           for(let j=1;j<=n;j++){
           var totalCell = document.getElementById(`total-${j}`);
@@ -956,7 +1009,7 @@
             }
             totalCell_sanction.textContent = sum_sanction;
         }
-          console.log(totalCell1)
+       //    console.log(totalCell1)
           if (totalCell1) {
             // Get the values from cells with the 'sum-cell' class and calculate the sum
             var sumCells = document.getElementsByClassName(`row-${j}`);
@@ -967,7 +1020,7 @@
               var cellValue = parseFloat(sumCells[i].textContent) || 0;
               sum += cellValue;
             }
-           console.log(sum)
+         //   console.log(sum)
             // Update the "Total" cell
             totalCell1.textContent = sum;
           }
@@ -998,12 +1051,15 @@
         // alert('project_id',project_id);
       
           document.addEventListener('DOMContentLoaded',function(){
+           
+
+           
       
             let n = {{ budget_heads|length }};
-            console.log('n start',n);
+            {% comment %} console.log('n start',n); {% endcomment %}
                   
             var columns = document.getElementById('years');
-            console.log('columns length',years.length,",",columns);
+            {% comment %} console.log('columns length',years.length,",",columns); {% endcomment %}
             var values={};
             var sanctions = {};
             var expenses={};
@@ -1085,13 +1141,13 @@
               var totalFundsEle = document.getElementById(`total-${i}`);
               var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
       
-             console.log('totalFunds',totalFunds);
+             {% comment %} console.log('totalFunds',totalFunds); {% endcomment %}
       
               var totalExpEle = document.getElementById(`2-row-${i}`);
               var totalExp = parseInt(totalExpEle.innerHTML)||0;
       
-              console.log('totalEXp',totalExp);
-      
+              {% comment %} console.log('totalEXp',totalExp);
+       {% endcomment %}
              {% comment %} console.log('before committed_expenditure');
               var committedExpEle = document.getElementById(`2-row-${i}-col-com`);
               var committedExp = committedExpEle ? parseInt(committedExpEle.textContent) || 0 : 0;
@@ -1102,7 +1158,7 @@
             //  balance_amount_row = totalFunds-totalExp-committedExp;
               balance_amount_row = totalFunds-totalExp;
       
-              console.log('balance',balance_amount_row);
+           //   console.log('balance',balance_amount_row);
       
              // var inputField = document.querySelector(`input[name$="2-row-${i}-col-101-${project_id}"]`);
               var inputField = document.getElementById(`2-row-${i}-col-bal`);
@@ -1117,14 +1173,15 @@
             }
       
             var total_balance_amount_all_domains = document.getElementsByClassName('total_balance_amount_all_domains');
-            console.log(total_balance_amount_all_domains.length)
+            // console.log(total_balance_amount_all_domains.length)
             for(var i=0;i<total_balance_amount_all_domains.length;i++){
-              console.log('i',i)
+              // console.log('i',i)
               total_balance_amount_all_domains[i].textContent = total_balance_amount;
             }
             
-      
+            
           //   calculateTotalBalance();
+  
       
           });
       
@@ -1185,6 +1242,9 @@
               calculateTotalBalance();
               
            } {% endcomment %}
+
+          
+          
       
           function calculateTotalBalance(){
             let n = {{ budget_heads|length }};
@@ -1194,23 +1254,23 @@
              var totalFundsEle = document.getElementById(`total-${i}`);
              var totalFunds = parseInt(totalFundsEle.innerHTML)||0;
       
-            console.log('totalFunds',totalFunds);
+          //   console.log('totalFunds',totalFunds);
       
              var totalExpEle = document.getElementById(`2-row-${i}`);
              var totalExp = parseInt(totalExpEle.innerHTML)||0;
       
-             console.log('totalEXp',totalExp);
+            //  console.log('totalEXp',totalExp);
       
             //  console.log('before committed_expenditure');
              var committedExpEle = document.getElementById(`2-row-${i}-col-com`);
              var committedExp = committedExpEle ? parseInt(committedExpEle.textContent) || 0 : 0;
             //  console.log('after committed_expenditure');
       
-             console.log('committedExp',committedExp);
+             // console.log('committedExp',committedExp);
       
              balance_amount_row = totalFunds-totalExp-committedExp;
       
-             console.log('balance',balance_amount_row);
+            //  console.log('balance',balance_amount_row);
       
              var inputField = document.querySelector(`input[name$="2-row-${i}-col-101-${project_id}"]`);
       
@@ -1242,17 +1302,17 @@
             for(let i=1;i<=n;i++){
               var storedValue = localStorage.getItem(`committed_expenditure_${project_id}_${i}`);
               var inputField = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
-              console.log()
-              console.log('before inputfield');
+          //     console.log()
+           //    console.log('before inputfield');
               if(inputField){
                 // Check if the stored value is not null or undefined
                 var storedValueIsDefined = storedValue !== null && storedValue !== undefined;
       
                 // Set the input value to the stored value if defined, otherwise set it to '0'
                 inputField.value = storedValueIsDefined ? storedValue.trim() : '0';
-                console.log('near inputField', inputField.value);
+             //    console.log('near inputField', inputField.value);
               }
-              console.log('near inputField 2');
+           //    console.log('near inputField 2');
               if(storedValue){
                 committed_expenditure_sum += parseInt(storedValue);
               }
@@ -1285,8 +1345,8 @@
           // Set the total to the total_funds_sanctioned_all_years element
           var totalElement = document.getElementById('total_funds_sanctioned_all_years');
           totalElement.textContent = total;
-          console.log("called")
-          console.log(total)
+         //  console.log("called")
+         //  console.log(total)
       }
       //setInterval(calculateTotalFunds, 1000);
   
@@ -1303,7 +1363,77 @@
               calculateTotalFunds();
           }
       });
+
+      function saveInfo() {
+        // Extracting specific information
+        //var projectName = document.getElementById("projectName").value;
+        var projectDescription = document.getElementById("projectDescription").value;
+        console.log(projectDescription)
+        var projectCost = document.getElementById("projectCost").value;
+        var interest_if_any1 = document.getElementById("interest_if_any1").value;
+        var interest_if_any2 = document.getElementById("interest_if_any2").value;
+        var interest_if_any3 = document.getElementById("interest_if_any3").value;
+        var interest_if_any4 = document.getElementById("interest_if_any4").value;
+        var interest_if_any5 = document.getElementById("interest_if_any5").value;
+        var refund_if_any1 = document.getElementById("refund_if_any1").value;
+        var refund_if_any2 = document.getElementById("refund_if_any2").value;
+        var refund_if_any3 = document.getElementById("refund_if_any3").value;
+        var refund_if_any4 = document.getElementById("refund_if_any4").value;
+        var refund_if_any5 = document.getElementById("refund_if_any5").value;
+
+        var data = {
+        //  projectName: document.getElementById("projectName").value,
+          projectDescription: document.getElementById("projectDescription").value,
+          projectCost: document.getElementById("projectCost").value,
+          interest_if_any1: document.getElementById("interest_if_any1").value,
+          interest_if_any2: document.getElementById("interest_if_any2").value,
+          interest_if_any3: document.getElementById("interest_if_any3").value,
+          interest_if_any4: document.getElementById("interest_if_any4").value,
+          interest_if_any5: document.getElementById("interest_if_any5").value,
+          refund_if_any1: document.getElementById("refund_if_any1").value,
+          refund_if_any2: document.getElementById("refund_if_any2").value,
+          refund_if_any3: document.getElementById("refund_if_any3").value,
+          refund_if_any4: document.getElementById("refund_if_any4").value,
+          refund_if_any5: document.getElementById("refund_if_any5").value
+         // total_funds_sanctioned_all_years: document.getElementById("total_funds_sanctioned_all_years").value
+      };
+
+     // Assuming you have the project_id stored in a variable called projectId
+var projectId = project_id;  // Replace '123' with the actual project ID
+
+// Construct the URL with the project_id as a query parameter
+var url = '/save_info/?project_id=' + projectId;
+var csrftoken = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
+
+// Sending data to the backend using AJAX
+fetch(`/save_info/${projectId}/`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken 
+    },
+    body: JSON.stringify(data),
+})
+.then(response => {
+    if (response.ok) {
+        console.log('Info saved successfully.');
+        // Do something after successful save if needed
+    } else {
+        console.error('Failed to save info.');
+        // Handle error if needed
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+    // Handle error if needed
+});
+      }
+
+
+    
+      
+
   </script>
   
   </body>
-</html>
+</html> 
