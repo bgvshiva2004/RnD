@@ -34,5 +34,7 @@ urlpatterns = [
     path('submit_project_data/<int:project_id>/', views.submit_project_data, name='submit_project_data'),
     path('delete_project/<int:project_id>/',views.delete_project,name='delete_project'),
     path('save_info/<int:project_id>/', views.save_info, name='save_info'),
+    path('save_infoucnr/<int:project_id>/', views.save_infoucnr, name='save_infoucnr'),
+    path('save_infoucr/<int:project_id>/', views.save_infoucr, name='save_infoucr'),
 
 ]

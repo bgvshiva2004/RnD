@@ -392,7 +392,7 @@
                 </tr>
                 <tr>
                     <td>ii) Unspent balance refunded to SERB</td>
-                    <th><input type='number' id='unspent_balance_refunded_to_serb' name='unspent_balance_refunded_to_serb'></th>
+                    <th><input type='number' id='unspent_balance_refunded_to_serb' name='unspent_balance_refunded_to_serb'></th> 
                 </tr>
                 <tr>
                     <td>iii) Balance carried forward to the next financial year</td>
@@ -464,6 +464,7 @@
         </div>
     </div>
 </div>
+<button onclick="saveInfo()">Save Info</button>
 <button class="btn" onclick="saveAsPdf()">Save as PDF</button>
    
     <footer>
@@ -495,6 +496,101 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if the details are available
+            if ({{ details }}) {
+                var interest_1_Input = document.getElementById('interest_1');
+                var interest_2_Input = document.getElementById('interest_2');
+                var carryForwardInput = document.getElementById('carry_forward_from_prev_fy');
+                var othersInput = document.getElementById('others');
+                var unspentInput = document.getElementById('unspent');
+                var amountInput = document.getElementById('amount');
+                var grantInAidGeneralInput = document.getElementById('grant_in_aid_general');
+                var grantInAidCAInput = document.getElementById('grant_in_aid_ca');
+                var balanceAtEndInput = document.getElementById('balance_at_end_of_fy');
+                var unspentBalanceRefundedInput = document.getElementById('unspent_balance_refunded_to_serb');
+                var balanceCarriedForwardInput = document.getElementById('balance_carrried_forward');
+        
+                interest_1_Input.value = "{{ parsed_data3.interest_1 }}";
+                interest_2_Input.value = "{{ parsed_data3.interest_2 }}";
+                carryForwardInput.value = "{{ parsed_data3.carry_forward_from_prev_fy }}";
+                othersInput.value = "{{ parsed_data3.others }}";
+                unspentInput.value = "{{ parsed_data3.unspent }}";
+                amountInput.value = "{{ parsed_data3.amount }}";
+                grantInAidGeneralInput.value = "{{ parsed_data3.grant_in_aid_general }}";
+                grantInAidCAInput.value = "{{ parsed_data3.grant_in_aid_ca }}";
+                balanceAtEndInput.value = "{{ parsed_data3.balance_at_end_of_fy }}";
+                unspentBalanceRefundedInput.value = "{{ parsed_data3.unspent_balance_refunded_to_serb }}";
+                balanceCarriedForwardInput.value = "{{ parsed_data3.balance_carrried_forward }}";
+            } else {
+                console.log("Details are not available");
+            }
+        });
+        
+        function saveInfo() {
+            var interest_1 = document.getElementById("interest_1").value;
+            var interest_2 = document.getElementById("interest_2").value;
+            var carry_forward_from_prev_fy = document.getElementById("carry_forward_from_prev_fy").value;
+            var others = document.getElementById("others").value;
+            var unspent = document.getElementById("unspent").value;
+            var amount = document.getElementById("amount").value;
+            var grant_in_aid_general = document.getElementById("grant_in_aid_general").value;
+            var grant_in_aid_ca = document.getElementById("grant_in_aid_ca").value;
+            var balance_at_end_of_fy = document.getElementById("balance_at_end_of_fy").value;
+            var unspent_balance_refunded_to_serb = document.getElementById("unspent_balance_refunded_to_serb").value;
+            var balance_carrried_forward = document.getElementById("balance_carrried_forward").value;
+    
+            var data = {
+                interest_1: interest_1,
+                interest_2: interest_2,
+                carry_forward_from_prev_fy: carry_forward_from_prev_fy,
+                others: others,
+                unspent: unspent,
+                amount: amount,
+                grant_in_aid_general: grant_in_aid_general,
+                grant_in_aid_ca: grant_in_aid_ca,
+                balance_at_end_of_fy: balance_at_end_of_fy,
+                unspent_balance_refunded_to_serb: unspent_balance_refunded_to_serb,
+                balance_carrried_forward: balance_carrried_forward
+            };
+    
+            // Do something with the data, for example, send it to the server via AJAX
+            console.log(data);
+    
+            // Optionally, you can perform validation or additional processing here before sending the data
+
+            var project_id = {{ existing_project.id }};
+            console.log(project_id)
+            var projectId = project_id;  // Replace '123' with the actual project ID
+
+// Construct the URL with the project_id as a query parameter
+var url = '/save_infoucnr/?project_id=' + projectId;
+var csrftoken = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
+
+// Sending data to the backend using AJAX
+fetch(`/save_infoucnr/${projectId}/`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken 
+    },
+    body: JSON.stringify(data),
+})
+.then(response => {
+    if (response.ok) {
+        console.log('Info saved successfully.');
+        // Do something after successful save if needed
+    } else {
+        console.error('Failed to save info.');
+        // Handle error if needed
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+    // Handle error if needed
+});
+        }
+
         function saveAsPdf() {
             html2canvas(document.getElementById('print')).then(function (canvas) {
                 var imgData = canvas.toDataURL('image/png');

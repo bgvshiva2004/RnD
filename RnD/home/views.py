@@ -392,6 +392,7 @@ def ucr(request, project_id, period):
         "project_files", f"{existing_project.Project_file_name}.txt"
     )
     file_path1 = os.path.join("commited", f"{existing_project.id}.txt")
+    file_path2 = os.path.join("ucrdata", f"{existing_project.id}.txt")
     # print(file_path1)
     with open(file_path, "r") as file:
         table_data1 = file.read()
@@ -465,6 +466,21 @@ def ucr(request, project_id, period):
     #     print(i)
 
     zipped_data_2 = zip(financial_years, total_grants)
+    if os.path.exists(file_path2):
+        with open(file_path2, "r") as file:
+            table_data3 = file.read()
+        # print("table data3",table_data3)
+        if table_data3:
+            parsed_data3 = json.loads(table_data3)
+            details = True
+        else:
+            details = False
+            print("no file")
+        # print("there is file")
+        # print(parsed_data3)
+    else:
+        details = False
+        print("no file")
 
     data = {
         "financial_years": financial_years,
@@ -481,6 +497,7 @@ def ucr(request, project_id, period):
         "project_id": project_id,
         "financialYearStartYear": financialYearStartYear,
         "monthwise_exp": monthwise_exp,
+        "details": str(details).lower(),
         # 'total_grants':total_grants
         "zipped_data_2": zipped_data_2,
         "PI_of_Project": existing_project.PI_of_Project,
@@ -488,6 +505,10 @@ def ucr(request, project_id, period):
         "Title_of_Project": existing_project.Title_of_Project,
         "scheme_name": existing_project.scheme_name,
     }
+    print(details)
+    print(parsed_data3)
+    if details:
+        data["parsed_data3"] = parsed_data3
 
     return render(request, "ucr.html", data)
 
@@ -521,6 +542,7 @@ def ucnr(request, project_id, period):
         "project_files", f"{existing_project.Project_file_name}.txt"
     )
     file_path1 = os.path.join("commited", f"{existing_project.id}.txt")
+    file_path2 = os.path.join("ucnrdata", f"{existing_project.id}.txt")
     # print(file_path1)
     with open(file_path, "r") as file:
         table_data1 = file.read()
@@ -595,6 +617,22 @@ def ucnr(request, project_id, period):
 
     zipped_data_2 = zip(financial_years, total_sanctions)
 
+    if os.path.exists(file_path2):
+        with open(file_path2, "r") as file:
+            table_data3 = file.read()
+        # print("table data3",table_data3)
+        if table_data3:
+            parsed_data3 = json.loads(table_data3)
+            details = True
+        else:
+            details = False
+            print("no file")
+        # print("there is file")
+        # print(parsed_data3)
+    else:
+        details = False
+        print("no file")
+
     data = {
         "financial_years": financial_years,
         "period_range": period_range,
@@ -607,6 +645,7 @@ def ucnr(request, project_id, period):
         "tablesdata1": new_parsed_data,
         "existing_project": existing_project,
         "parsed_data2": parsed_data2,
+        "details": str(details).lower(),
         "project_id": project_id,
         "financialYearStartYear": financialYearStartYear,
         "monthwise_exp": monthwise_exp,
@@ -617,6 +656,8 @@ def ucnr(request, project_id, period):
         "Title_of_Project": existing_project.Title_of_Project,
         "scheme_name": existing_project.scheme_name,
     }
+    if details:
+        data["parsed_data3"] = parsed_data3
 
     return render(request, "ucnr.html", data)
 
@@ -1506,6 +1547,62 @@ def save_info(request, project_id):
 
         # Write the data to a new file
         file_path = f"soedata/{project_id}.txt"  # Replace 'path/to/save/data.json' with your desired file path
+
+        with open(file_path, "w") as file:
+            json.dump(save_data, file)
+
+        # Return a success message
+        return JsonResponse({"message": "Data saved to file successfully"}, status=200)
+    else:
+        return JsonResponse({"error": "Method not allowed"}, status=405)
+
+def save_infoucnr(request, project_id):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        save_data = {
+            "interest_1": data.get("interest_1"),
+            "interest_2": data.get("interest_2"),
+            "carry_forward_from_prev_fy": data.get("carry_forward_from_prev_fy"),
+            "others": data.get("others"),
+            "unspent": data.get("unspent"),
+            "amount": data.get("amount"),
+            "grant_in_aid_general": data.get("grant_in_aid_general"),
+            "grant_in_aid_ca": data.get("grant_in_aid_ca"),
+            "balance_at_end_of_fy": data.get("balance_at_end_of_fy"),
+            "unspent_balance_refunded_to_serb": data.get("unspent_balance_refunded_to_serb"),
+            "balance_carrried_forward": data.get("balance_carrried_forward"),
+        }
+
+        # Write the data to a new file
+        file_path = f"ucnrdata/{project_id}.txt"
+
+        with open(file_path, "w") as file:
+            json.dump(save_data, file)
+
+        # Return a success message
+        return JsonResponse({"message": "Data saved to file successfully"}, status=200)
+    else:
+        return JsonResponse({"error": "Method not allowed"}, status=405)
+    
+def save_infoucr(request, project_id):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        save_data = {
+            "interest_1": data.get("interest_1"),
+            "interest_2": data.get("interest_2"),
+            "carry_forward_from_prev_fy": data.get("carry_forward_from_prev_fy"),
+            "others": data.get("others"),
+            "unspent": data.get("unspent"),
+            # "amount": data.get("amount"),
+            "grant_in_aid_general": data.get("grant_in_aid_general"),
+            "grant_in_aid_ca": data.get("grant_in_aid_ca"),
+            "balance_at_end_of_fy": data.get("balance_at_end_of_fy"),
+            "unspent_balance_refunded_to_serb": data.get("unspent_balance_refunded_to_serb"),
+            "balance_carrried_forward": data.get("balance_carrried_forward"),
+        }
+
+        # Write the data to a new file
+        file_path = f"ucrdata/{project_id}.txt"
 
         with open(file_path, "w") as file:
             json.dump(save_data, file)
