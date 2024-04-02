@@ -1,5 +1,5 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -163,9 +163,9 @@
               border: 1px solid var(--secondary-color);
           }
           
-       /*   {% comment %} .side-by-side table tr th, .side-by-side table tr td{
+          {% comment %} .side-by-side table tr th, .side-by-side table tr td{
              width: 7vw;
-          } {% endcomment %}*/
+          } {% endcomment %}
           
           input[type="date"] {
             border: none;
@@ -374,11 +374,7 @@
 
         <h2 style='font-size:27px'>Statement of Expenditure (during financial year: {{financialYearStartYear}}-{{financialYearStartYear|add:1}})</h2>
         <br></br>
-<<<<<<< Updated upstream
-        <input type="text">
-=======
         <input type="text" id="projectDescription">
->>>>>>> Stashed changes
 
         <table id="expenditureTable">
             <thead>
@@ -437,7 +433,7 @@
             <thead>
                 <tr>
                     <th>Financial Years</th>
-                    <th colspan="5" >Grant received in each year</th>
+                    <th colspan="5" >Sanctioned Amount in each year</th>
                 </tr>
             </thead>
             <tbody>
@@ -449,13 +445,6 @@
               {% endfor %}
               <tr>
                     <td>Interest, if any</td>
-<<<<<<< Updated upstream
-                    <td><input type='number' name='interest_if_any' id='interest_if_any' placeholder="Specify if any"></td>
-                </tr>
-                <tr>
-                  <td>Refund, if any</td>
-                  <td><input type='number' name='refund_if_any' id='refund_if_any' placeholder="Refund Amount if any"></td>
-=======
                     <td><input type='number' name='interest_if_any1' id='interest_if_any1' placeholder="Specify if any"></td>
                     <td><input type='number' name='interest_if_any2' id='interest_if_any2' placeholder="Specify if any"></td>
                     <td><input type='number' name='interest_if_any3' id='interest_if_any3' placeholder="Specify if any"></td>
@@ -469,11 +458,10 @@
                   <td><input type='number' name='refund_if_any3' id='refund_if_any3' placeholder="Refund Amount if any"></td>
                   <td><input type='number' name='refund_if_any4' id='refund_if_any4' placeholder="Refund Amount if any"></td>
                   <td><input type='number' name='refund_if_any5' id='refund_if_any5' placeholder="Refund Amount if any"></td>
->>>>>>> Stashed changes
                 </tr>
                 <tr>
                     <td>Total</td>
-                    <td colspan="5" id="total_funds_sanctioned_all_years" name="total_funds_sanctioned_all_years"></td>
+                    <td colspan="5" id="total_grant_with_interest_an_refund" name="total_grant_with_interest_an_refund"></td>
                 </tr>
             </tbody>
         </table>
@@ -633,7 +621,7 @@
             
             <div class="last">
               <h3>Amount to be Refunded/Received: </h3>
-              <h3 class='total_balance_amount_all_domains' name='total_balance_amount_all_domains'></h3>
+              <h3 id='total_balance_amount_all_domains_including_interests_excluding_refunds' name='total_balance_amount_all_domains_including_interests_excluding_refunds'></h3>
             </div>
             <div class="row">
               <div>
@@ -911,6 +899,7 @@
       
       if ({{ details }}) {
         var projectDescription = document.getElementById('projectDescription');
+        // var soe_dated = document.getElementById('soe_dated');
         var projectCostInput = document.getElementById('projectCost');
         var interestIfAny1Input = document.getElementById('interest_if_any1');
         var interestIfAny2Input = document.getElementById('interest_if_any2');
@@ -924,6 +913,7 @@
         var refundIfAny5Input = document.getElementById('refund_if_any5');
 
         // Assuming parsed_data3 contains the project cost and refund/interest values sent from the backend
+       // soe_dated.value = "{{parsed_data3.soe_dated}}";
         projectDescription.value = "{{ parsed_data3.projectDescription }}";
         projectCostInput.value = "{{ parsed_data3.projectCost }}";
         interestIfAny1Input.value = "{{ parsed_data3.interest_if_any1 }}";
@@ -1065,6 +1055,7 @@
             var expenses={};
             var sum_yearwise = 0;
             var sanction_sum_yearwise = 0;
+            var grant_sum_yearwise = 0;
             var expense_sum_yearwise = 0;
             for(let j=1;j<years.length+1;j++){
               values[`values${j}`] = [];
@@ -1105,6 +1096,7 @@
               }
               total_grants_yearwise.textContent = sum;
               sum_yearwise += sum;
+              grant_sum_yearwise += sum;
 
               total_sanctions_yearwise.textContent = sanction_sum;
               sanction_sum_yearwise += sanction_sum;
@@ -1124,12 +1116,36 @@
             total_funds_sanctioned_all_years[i].textContent = sanction_sum_yearwise;
           }
           {% comment %} var total_funds_sanctioned_all_years = document.getElementById('total_funds_sanctioned_all_years');
-          total_funds_sanctioned_all_years.textContent = sanction_sum_yearwise; {% endcomment %}
+          total_funds_sanctioned_all_years.textContent = grant_sum_yearwise; {% endcomment %}
              
               
              {% comment %} var total_expenditure_all_years = document.getElementById('total_expenditure_all_years');
              total_expenditure_all_years.textContent = expense_sum_yearwise;
        {% endcomment %}
+
+            var total_grant_with_interest_an_refund = document.getElementById("total_grant_with_interest_an_refund");
+            var interest_if_any1 = document.getElementById("interest_if_any1").value || 0;
+            var interest_if_any2 = document.getElementById("interest_if_any2").value || 0;
+            var interest_if_any3 = document.getElementById("interest_if_any3").value || 0;
+            var interest_if_any4 = document.getElementById("interest_if_any4").value || 0;
+            var interest_if_any5 = document.getElementById("interest_if_any5").value || 0;
+            var refund_if_any1 = document.getElementById("refund_if_any1").value || 0;
+            var refund_if_any2 = document.getElementById("refund_if_any2").value || 0;
+            var refund_if_any3 = document.getElementById("refund_if_any3").value || 0;
+            var refund_if_any4 = document.getElementById("refund_if_any4").value || 0;
+            var refund_if_any5 = document.getElementById("refund_if_any5").value || 0;
+
+            var final_total = parseFloat(grant_sum_yearwise)+parseFloat(interest_if_any1)+parseFloat(interest_if_any2)+parseFloat(interest_if_any3)+parseFloat(interest_if_any4)+parseFloat(interest_if_any5) - (parseFloat(refund_if_any1)+parseFloat(refund_if_any2)+parseFloat(refund_if_any3)+parseFloat(refund_if_any4)+parseFloat(refund_if_any5));
+            // console.log("final total",final_total)
+            
+            total_grant_with_interest_an_refund.textContent = final_total
+
+            var total_balance_amount_all_domains_including_interests_excluding_refunds = document.getElementById('total_balance_amount_all_domains_including_interests_excluding_refunds');
+            var amount_to_be_refunded = parseFloat(final_total)-parseFloat(expense_sum_yearwise);
+            console.log("amount to be: ",amount_to_be_refunded);
+            total_balance_amount_all_domains_including_interests_excluding_refunds.textContent = amount_to_be_refunded;
+
+
       
             initializeZero(project_id);
       
@@ -1351,18 +1367,18 @@
       //setInterval(calculateTotalFunds, 1000);
   
       // Get the interest input field
-      var interestElement = document.getElementById('interest_if_any');
-  
-      // Add keydown event listener to the interest input field
-      interestElement.addEventListener('keydown', function(event) {
-          // Check if the pressed key is Enter key (key code 13)
-          if (event.keyCode === 13) {
-              // Prevent the default form submission behavior
-              event.preventDefault();
-              // Calculate total funds when Enter key is pressed
-              calculateTotalFunds();
-          }
-      });
+    //  var interestElement = document.getElementById('interest_if_any');
+  //
+    //  // Add keydown event listener to the interest input field
+    //  interestElement.addEventListener('keydown', function(event) {
+    //      // Check if the pressed key is Enter key (key code 13)
+    //      if (event.keyCode === 13) {
+    //          // Prevent the default form submission behavior
+    //          event.preventDefault();
+    //          // Calculate total funds when Enter key is pressed
+    //          calculateTotalFunds();
+    //      }
+    //  });
 
       function saveInfo() {
         // Extracting specific information
@@ -1398,6 +1414,11 @@
          // total_funds_sanctioned_all_years: document.getElementById("total_funds_sanctioned_all_years").value
       };
 
+
+     
+
+      
+
      // Assuming you have the project_id stored in a variable called projectId
 var projectId = project_id;  // Replace '123' with the actual project ID
 
@@ -1429,7 +1450,7 @@ fetch(`/save_info/${projectId}/`, {
 });
       }
 
-
+      
     
       
 

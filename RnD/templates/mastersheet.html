@@ -518,7 +518,7 @@
                 <td id="total-expense-{{forloop.counter}}"></td>
         {% endfor %}
             <td id="total_expenditure_all_years" name="total_expenditure_all_years">{{total_expenditure_all_years}}</td>
-            <td id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains' value={{total_committed_expenditure_all_domains}}></td>
+            <td id='total_committed_expenditure_all_domains' name='total_committed_expenditure_all_domains'>{{total_committed_expenditure_all_domains}}</td>
             <td id='total_balance_amount_all_domains' name='total_balance_amount_all_domains'>{{total_balance_amount_all_domains}}</td>
       </tbody>
 
@@ -1211,10 +1211,11 @@
 
           initializeZero(project_id);
 
-          loadValues(project_id);
+       //   loadValues(project_id);
 
           var total_balance_amount = 0;
 
+          var committed_exp_total = 0;
           // calculating the balance amount for all the rows
           for(let i=1;i<=n;i++){
 
@@ -1227,8 +1228,10 @@
 
               var committedExpEle = document.getElementById(`2-row-${i}-col-com`);
               var committedExp = committedExpEle ? parseInt(committedExpEle.textContent) || 0 : 0;
+              console.log("committed exp",committedExp);
 
               balance_amount_row = totalFunds-totalExp-committedExp;
+
 
               var inputField = document.querySelector(`input[name$="2-row-${i}-col-101-${project_id}"]`);
 
@@ -1248,12 +1251,16 @@
 
 
               total_balance_amount+=balance_amount_row;
+              committed_exp_total+=committedExp;
 
           }
 
           var total_balance_amount_all_domains = document.getElementById('total_balance_amount_all_domains');
           total_balance_amount_all_domains.textContent = total_balance_amount;
           var numeric_balance_amount = parseFloat(total_balance_amount);
+
+          var total_committed_expenditure_all_domains = document.getElementById('total_committed_expenditure_all_domains');
+          total_committed_expenditure_all_domains.textContent = committed_exp_total;
 
           // Check if the number is negative
           if (numeric_balance_amount < 0) {
@@ -1316,32 +1323,33 @@
           }
       }
 
-      function loadValues(project_id){
-
-          var committed_expenditure_sum = 0;
-          
-          for(let i=1;i<=n;i++){
-
-              var storedValue = localStorage.getItem(`committed_expenditure_${project_id}_${i}`);
-              console.log("stored value",storedValue);
-              var inputField = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
-
-              if(inputField){
-                var storedValueIsDefined = storedValue !== null && storedValue !== undefined;
-                inputField.value = storedValueIsDefined ? storedValue.trim() : '0';
-              }
-
-              if(storedValue){
-                console.log("stored value",storedValue);
-                committed_expenditure_sum += parseInt(storedValue);
-              }
-          }
-
-          console.log("total ce: ",total_committed_expenditure_all_domains);
-
-          var total_committed_expenditure_all_domains = document.getElementById('total_committed_expenditure_all_domains');
-          total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
-      }
+    //  function loadValues(project_id){
+//
+    //      var committed_expenditure_sum = 0;
+    //      
+    //      for(let i=1;i<=n;i++){
+//
+    //          var storedValue = localStorage.getItem(`committed_expenditure_${project_id}_${i}`);
+    //          console.log("stored value",storedValue);
+    //          var inputField = document.querySelector(`input[name$="2-row-${i}-col-100-${project_id}"]`);
+//
+    //          if(inputField){
+    //            var storedValueIsDefined = storedValue !== null && storedValue !== undefined;
+    //            inputField.value = storedValueIsDefined ? storedValue.trim() : '0';
+    //          }
+//
+    //          if(storedValue){
+    //            console.log("stored value",storedValue);
+    //            committed_expenditure_sum += parseInt(storedValue);
+    //          }
+    //      }
+//
+    //      console.log("ce",committed_expenditure_sum);
+//
+    //      var total_committed_expenditure_all_domains = document.getElementById('total_committed_expenditure_all_domains');
+    //      total_committed_expenditure_all_domains.textContent = committed_expenditure_sum;
+    //      console.log("total ce: ",total_committed_expenditure_all_domains);
+    //  }
 
       function updateTotalRow( parsedData) {
         var tbody = document.querySelector("#data-table3 tbody");
