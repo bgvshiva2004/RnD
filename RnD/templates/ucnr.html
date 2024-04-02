@@ -29,13 +29,13 @@
             background-color: var(--secondary-color);
             color: #fff;
             border: 1px solid #fff;
-            text-align: left;
+            text-align: center;
             padding: 8px;
         }
 
         td{
             border: 1px solid var(--secondary-color);
-            text-align: left;
+            text-align: center;
             padding: 8px;
         }
 
@@ -132,6 +132,61 @@
             font-size: 18px;
         }
 
+        button.btn{
+            display: block;
+            height: 50px;
+            font-size: 20px;
+            padding: 10px;
+            margin: 30px auto;
+            width: 150px;
+            cursor: pointer;
+            border: 1px solid var(--secondary-color);
+            outline: none;
+            border-radius: 30px;
+            background-color: #fff;
+            color: var(--secondary-color);
+            font-weight: 400;
+            transition: 0.3s ease-in-out;
+            position: relative;
+            box-shadow: 3px 3px 1px -1px rgba(0, 0, 0, 0.15),
+                 -3px -3px 5px -1px rgba(255, 255, 255, 0.7);
+            z-index: 3;      
+      }
+
+        button.btn:hover{
+            color: #fff;
+            box-shadow: 6px 6px 1px -1px rgba(72,68,163,0.2),
+                        -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+            z-index: 4;
+        }
+    
+        button.btn:hover::before{
+            content: '';
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            left: 0px;
+            top: 0px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            animation: btn 0.3s linear forwards;
+            border-radius: 30px;
+            opacity: 1;
+            z-index: -2;
+        }
+    
+        @keyframes btn{
+            0%{
+                width: 0%;
+            }
+            50%{
+                width: 50%;
+            }
+            100%{
+                width: 100%;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -194,11 +249,11 @@
             <h6>GFR 12 - A</h3>
             {% comment %} <p>[(SEE RULE 238 (1))]</p> {% endcomment %}
 
-            <h3>UTILIZATION CERTIFICATE FOR THE YEAR 2022-23</h3>
+            <h3>UTILIZATION CERTIFICATE FOR THE YEAR {{financialYearStartYear}}-{{financialYearStartYear|add:1}}</h3>
             <p>In respect of NON-RECURRING</p>
-            <p>As on 31-03-2023 to be submitted to SERB</p>
+            <p>As on 31-03-{{financialYearStartYear|add:1}} to be submitted to SERB</p>
 
-            <h6>Is the UC 2022-23 (Provisional/Audited)</h3>
+            <h6>Is the UC 2022-23 {{financialYearStartYear}}-{{financialYearStartYear|add:1}}</h3>
 
             <p>(To be given separately for each financial year ending on 31st March)</p>
         </div>
@@ -213,42 +268,46 @@
                 </tr>
                 <tr>
                     <th>2. Name of Principal Investigator (PI)</th>
-                    <td>Dr. Rama</td>
+                    <td>{{PI_of_Project}}</td>
                 </tr>
                 <tr>
-                    <th>3. SERB Sanction order no. & date</th>
-                    <td >CRG/2022/**** Dated: 04-01-2020</td>
+                    <th>3. SERB Sanction order no.</th>
+                    <td >{{Project_Fellowship_No}}</td>
+                </tr>
+                <tr>
+                    <th>4.Dated</th>
+                    <td ><input type='date' id='dated' name='dated'></td>
                 </tr>
                 <tr>
                     <th>4. Title of the Project</th>
-                    <td>"Thermal Management photoelectrodes for sustainable and clean solar-driven hydrogen fuel generation"</td>
+                    <td>{{Title_of_Project}}</td>
                 </tr>
                 <tr>
                     <th>5. Name of the SERB Scheme</th>
-                    <td>CRG</td>
+                    <td>{{scheme_name}}</td>
                 </tr>
                 <tr>
                     <th>6. Whether recurring or non-recurring grants</th>
-                    <td>Non Recurring</td>
+                    <td>Recurring</td>
                 </tr>
                 <tr>
-                    <th >7. Grants position at the beginning of the Financial year (Grants released by SERB)</th>   
+                    <th>7. Grants position at the beginning of the Financial year (Grants released by SERB)</th>   
                     <td>-</td>
                 </tr>
                 <tr>
                     
                     <th>(i) Carry forward from the previous financial year</th>
-                    <td>0</td>
+                    <td><input type='number' name='carry_forward_from_prev_fy' id='carry_forward_from_prev_fy'></td>
                 </tr>
                 <tr>
                     
                     <th>(ii) Others, If any</th>
-                    <td>0</td>
+                    <td><input type='number' name='others' id='others'></td>
                 </tr>
                 <tr>
                 
                     <th>(iii) Total</th>
-                    <td>0</td>
+                    <td id='total' name='total'></td>
                 </tr>
             </tbody>
         </table>
@@ -258,13 +317,13 @@
         <table>
             <thead>
                 <tr>
-                    <th rowspan="1">Unspent </th>
-                    <th rowspan="1">Interest</th>
-                    <th rowspan="1">Interest</th>
+                    <th rowspan="2">Unspent </th>
+                    <th rowspan="2">Interest</th>
+                    <th rowspan="2">Interest</th>
                     <th colspan="3">Grant received during the year</th>
-                    <th rowspan="1">Total </th>
-                    <th rowspan="1">Expenditure </th>
-                    <th rowspan="1">Closing </th>
+                    <th rowspan="2">Total </th>
+                    <th rowspan="2">Expenditure </th>
+                    <th rowspan="2">Closing </th>
                 </tr>
                 {% comment %} <tr>
                     <th rowspan="1">1</th>
@@ -277,28 +336,28 @@
                 
                 </tr> {% endcomment %}
                 <tr>
+                    {% comment %} <th></th>
                     <th></th>
-                    <th></th>
-                    <th></th>
+                    <th></th> {% endcomment %}
                     <th>Sanction No.</th>
                     <th>Date</th>
                     <th>Amount</th>
+                    {% comment %} <th></th>
                     <th></th>
-                    <th></th>
-                    <th></th>
+                    <th></th> {% endcomment %}
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>0</td>
-                    <td>3184</td>
-                    <td>0</td>
-                    <td>CRG/2022/****</td>
-                    <td>10-02-2023</td>
-                    <td>902000</td>
-                    <td>905184</td>
-                    <td>23,668</td>
-                    <td>881,516</td>
+                    <td><input type='number' id='unspent' name='unspent'></td>
+                    <td><input type='number' id='interest_1' name='interest_1'></td>
+                    <td><input type='number' id='interest_2' name='interest_2'></td>
+                    <td>{{Project_Fellowship_No}}</td>
+                    <td><input type='date' id='date' name='date'></td>
+                    <td><input type='amount' id='amount' name='amount'></td>
+                    <td id='total' name='total'></td>
+                    <td id='expenditure' name='expenditure'></td>
+                    <td id='closing' name='closing'></td>
                 </tr>
             </tbody>
         </table>
@@ -316,9 +375,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>23,668</td>
-                    <td>-</td>
-                    <td>23,668</td>
+                    <td><input type='number' id='grant_in_aid_general' name='grant_in_aid_general'></td>
+                    <td><input type='number' id='grant_in_aid_ca' name='grant_in_aid_ca'></td></td>
+                    <td id='component_wise_grant_total' name='component_wise_grant_total'></td>
                 </tr>
             </tbody>
         </table>
@@ -329,15 +388,15 @@
             <thead>
                 <tr>
                     <td>i) Balance available at the end of financial year</td>
-                    <th>881,516</th>
+                    <th><input type='number' id='balance_at_end_of_fy' name='balance_at_end_of_fy'></th>
                 </tr>
                 <tr>
                     <td>ii) Unspent balance refunded to SERB</td>
-                    <th>0</th>
+                    <th><input type='number' id='unspent_balance_refunded_to_serb' name='unspent_balance_refunded_to_serb'></th>
                 </tr>
                 <tr>
                     <td>iii) Balance carried forward to the next financial year</td>
-                    <th>881,516</th>
+                    <th><input type='number' id='balance_carrried_forward' name='balance_carrried_forward'></th>
                 </tr>
             </thead>
         </table>
@@ -405,7 +464,7 @@
         </div>
     </div>
 </div>
-<button onclick="saveAsPdf()">Save as PDF</button>
+<button class="btn" onclick="saveAsPdf()">Save as PDF</button>
    
     <footer>
         <div class="footer">
