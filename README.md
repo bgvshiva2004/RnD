@@ -1,7 +1,7 @@
 # Research and Development Department (R&D) UC/SE Software
 
 ## Overview
-This project aims to develop a custom software solution tailored for the Research and Development Department (R&D) of IIT Indore. The software enables employees to efficiently manage and track data related to grants, sanctions, and expenses for various projects. It facilitates the generation of month-wise balance sheets, annual balance sheets, and other custom documents such as UCR (Utilization Certificate for Research) and UCNR (Utilization Certificate for Non-Research) for each project. The software ensures seamless data management and eliminates ambiguity between different projects, enhancing the efficiency and professionalism of the department's operations.
+This project aims to develop a custom software solution tailored for the Research and Development Department (R&D) of IIT Indore. The software enables employees to efficiently manage and track data related to grants, sanctions, and expenses for various projects. It facilitates the generation of month-wise balance sheets, annual balance sheets, and other custom documents such as UCR and UCNR for each project. The software ensures seamless data management and eliminates ambiguity between different projects, enhancing the efficiency and professionalism of the department's operations.
 
 ## Features
 - Secure storage and management of grant, sanction, and expense data for each project.
