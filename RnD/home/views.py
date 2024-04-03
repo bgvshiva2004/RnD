@@ -393,6 +393,7 @@ def ucr(request, project_id, period):
     )
     file_path1 = os.path.join("commited", f"{existing_project.id}.txt")
     file_path2 = os.path.join("ucrdata", f"{existing_project.id}.txt")
+
     # print(file_path1)
     with open(file_path, "r") as file:
         table_data1 = file.read()
@@ -481,6 +482,7 @@ def ucr(request, project_id, period):
     else:
         details = False
         print("no file")
+        
 
     data = {
         "financial_years": financial_years,
@@ -506,7 +508,7 @@ def ucr(request, project_id, period):
         "scheme_name": existing_project.scheme_name,
     }
     print(details)
-    print(parsed_data3)
+    # print(parsed_data3)
     if details:
         data["parsed_data3"] = parsed_data3
 
@@ -1565,12 +1567,14 @@ def save_infoucnr(request, project_id):
             "carry_forward_from_prev_fy": data.get("carry_forward_from_prev_fy"),
             "others": data.get("others"),
             "unspent": data.get("unspent"),
+            "expenditure":data.get("expenditure"),
             "amount": data.get("amount"),
             "grant_in_aid_general": data.get("grant_in_aid_general"),
             "grant_in_aid_ca": data.get("grant_in_aid_ca"),
             "balance_at_end_of_fy": data.get("balance_at_end_of_fy"),
             "unspent_balance_refunded_to_serb": data.get("unspent_balance_refunded_to_serb"),
             "balance_carrried_forward": data.get("balance_carrried_forward"),
+            "scheme":data.get("scheme")
         }
 
         # Write the data to a new file
@@ -1593,12 +1597,14 @@ def save_infoucr(request, project_id):
             "carry_forward_from_prev_fy": data.get("carry_forward_from_prev_fy"),
             "others": data.get("others"),
             "unspent": data.get("unspent"),
+            "expenditure":data.get("expenditure"),
             # "amount": data.get("amount"),
             "grant_in_aid_general": data.get("grant_in_aid_general"),
             "grant_in_aid_ca": data.get("grant_in_aid_ca"),
             "balance_at_end_of_fy": data.get("balance_at_end_of_fy"),
             "unspent_balance_refunded_to_serb": data.get("unspent_balance_refunded_to_serb"),
             "balance_carrried_forward": data.get("balance_carrried_forward"),
+            "scheme":data.get("scheme")
         }
 
         # Write the data to a new file

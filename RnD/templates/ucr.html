@@ -338,17 +338,17 @@
                 <tr>
                     
                     <th>(i) Carry forward from the previous financial year</th>
-                    <td><input type='number' name='carry_forward_from_prev_fy' id='carry_forward_from_prev_fy'></td>
+                    <td><input type='number' name='carry_forward_from_prev_fy' id='carry_forward_from_prev_fy' placeholder="Specify if any"></td>
                 </tr>
                 <tr>
                     
                     <th>(ii) Others, If any</th>
-                    <td><input type='number' name='others' id='others'></td>
+                    <td><input type='number' name='others' id='others' placeholder="Specify if any"></td>
                 </tr>
                 <tr>
                 
                     <th>(iii) Total</th>
-                    <td id='total' name='total'></td>
+                    <td class='total' name='total'></td>
                 </tr>
             </tbody>
         </table>
@@ -390,14 +390,14 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type='number' id='unspent' name='unspent'></td>
-                    <td><input type='number' id='interest_1' name='interest_1'></td>
-                    <td><input type='number' id='interest_2' name='interest_2'></td>
+                    <td><input type='number' id='unspent' name='unspent' placeholder="Specify if any"></td>
+                    <td><input type='number' id='interest_1' name='interest_1' placeholder="Specify if any"></td>
+                    <td><input type='number' id='interest_2' name='interest_2' placeholder="Specify if any"></td>
                     <td>{{Project_Fellowship_No}}</td>
-                    <td><input type='date' id='date' name='date'></td>
-                    <td><input type='amount' id='amount' name='amount'></td>
-                    <td id='total' name='total'></td>
-                    <td id='expenditure' name='expenditure'></td>
+                    <td><input type='date' id='date' name='date' placeholder="Specify if any"></td>
+                    <td><input type='number' id='amount' name='amount' placeholder="Specify if any"></td>
+                    <td class='total' name='total'></td>
+                    <td><input type='number' id='expenditure' name='expenditure'></td>
                     <td id='closing' name='closing'></td>
                 </tr>
             </tbody>
@@ -416,8 +416,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type='number' id='grant_in_aid_general' name='grant_in_aid_general'></td>
-                    <td><input type='number' id='grant_in_aid_ca' name='grant_in_aid_ca'></td></td>
+                    <td><input type='number' id='grant_in_aid_general' name='grant_in_aid_general' placeholder="Specify if any"></td>
+                    <td><input type='number' id='grant_in_aid_ca' name='grant_in_aid_ca' placeholder="Specify if any"></td></td>
                     <td id='component_wise_grant_total' name='component_wise_grant_total'></td>
                 </tr>
             </tbody>
@@ -429,15 +429,15 @@
             <thead>
                 <tr>
                     <td>i) Balance available at the end of financial year</td>
-                    <th><input type='number' id='balance_at_end_of_fy' name='balance_at_end_of_fy'></th>
+                    <th><input type='number' id='balance_at_end_of_fy' name='balance_at_end_of_fy' placeholder="Specify if any" style="color:white;"></th>
                 </tr>
                 <tr>
                     <td>ii) Unspent balance refunded to SERB</td>
-                    <th><input type='number' id='unspent_balance_refunded_to_serb' name='unspent_balance_refunded_to_serb'></th>
+                    <th><input type='number' id='unspent_balance_refunded_to_serb' name='unspent_balance_refunded_to_serb' placeholder="Specify if any" style="color:white;"></th>
                 </tr>
                 <tr>
                     <td>iii) Balance carried forward to the next financial year</td>
-                    <th><input type='number' id='balance_carrried_forward' name='balance_carrried_forward'></th>
+                    <th id='balance_carrried_forward' name='balance_carrried_forward' placeholder="Specify if any"></th>
                 </tr>
             </thead>
         </table>
@@ -457,7 +457,7 @@
 
             <p>6. The expenditure on various components of the scheme was in the proportions authorized as per the scheme guidelines and terms and conditions of the grants-in-aid.</p>
 
-            <p>7. It has been ensured that the physical and financial performance under CRG has been according to the requirements, as prescribed in the guidelines issued by Govt. of India and the performance/targets achieved statement for the year to which the utilization of the fund resulted in outcomes given at Annexures.</p>
+            <p>7. It has been ensured that the physical and financial performance under <input type='text' id='scheme' name='scheme' placeholder="Specify the Scheme Name"> has been according to the requirements, as prescribed in the guidelines issued by Govt. of India and the performance/targets achieved statement for the year to which the utilization of the fund resulted in outcomes given at Annexures.</p>
 
             <p>8. The utilization of the fund resulted in outcomes given at Annexure duly enclosed (to be formulated by the Ministry/Department concerned as per their requirements/specifications).</p>
 
@@ -505,9 +505,9 @@
         </div>
     </div>
 </div>
-<div class="btn-row">       
+<div class="btn-row">  
+    <button class="btn" onclick="saveInfo()">Save Info</button>     
     <button class="btn" onclick="saveAsPdf()">Save as PDF</button>
-    <button class="btn" onclick="saveInfo()">Save Info</button>
 </div>
 {% comment %} <button class="btn" onclick="saveAsExcel()">Save as Excel</button> {% endcomment %}
    
@@ -543,30 +543,37 @@
        
         
         function saveInfo() {
-            var interest_1 = document.getElementById("interest_1").value;
-            var interest_2 = document.getElementById("interest_2").value;
-            var carry_forward_from_prev_fy = document.getElementById("carry_forward_from_prev_fy").value;
-            var others = document.getElementById("others").value;
-            var unspent = document.getElementById("unspent").value;
+            var interest_1 = document.getElementById("interest_1").value || 0;
+            var interest_2 = document.getElementById("interest_2").value || 0;
+            var carry_forward_from_prev_fy = document.getElementById("carry_forward_from_prev_fy").value ||0;
+            var others = document.getElementById("others").value ||0;
+            var unspent = document.getElementById("unspent").value ||0;
+            var expenditure = document.getElementById("expenditure").value ||0;
           //  var amount = document.getElementById("amount").value;
-            var grant_in_aid_general = document.getElementById("grant_in_aid_general").value;
-            var grant_in_aid_ca = document.getElementById("grant_in_aid_ca").value;
-            var balance_at_end_of_fy = document.getElementById("balance_at_end_of_fy").value;
-            var unspent_balance_refunded_to_serb = document.getElementById("unspent_balance_refunded_to_serb").value;
-            var balance_carrried_forward = document.getElementById("balance_carrried_forward").value;
+            var grant_in_aid_general = document.getElementById("grant_in_aid_general").value ||0;
+            var grant_in_aid_ca = document.getElementById("grant_in_aid_ca").value ||0;
+            var balance_at_end_of_fy = document.getElementById("balance_at_end_of_fy").value ||0;
+            var unspent_balance_refunded_to_serb = document.getElementById("unspent_balance_refunded_to_serb").value ||0;
+            var balance_carrried_forward = document.getElementById("balance_carrried_forward").value ||0;
     
+            var scheme = document.getElementById("scheme").value;
+            // console.log("scheme",scheme);
+    
+
             var data = {
                 interest_1: interest_1,
                 interest_2: interest_2,
                 carry_forward_from_prev_fy: carry_forward_from_prev_fy,
                 others: others,
                 unspent: unspent,
+                expenditure:expenditure,
                 //amount: amount,
                 grant_in_aid_general: grant_in_aid_general,
                 grant_in_aid_ca: grant_in_aid_ca,
                 balance_at_end_of_fy: balance_at_end_of_fy,
                 unspent_balance_refunded_to_serb: unspent_balance_refunded_to_serb,
-                balance_carrried_forward: balance_carrried_forward
+                balance_carrried_forward: balance_carrried_forward,
+                scheme : scheme
             };
     
             // Do something with the data, for example, send it to the server via AJAX
@@ -578,32 +585,32 @@
             console.log(project_id)
             var projectId = project_id;  // Replace '123' with the actual project ID
 
-// Construct the URL with the project_id as a query parameter
-var url = '/save_infoucr/?project_id=' + projectId;
-var csrftoken = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
+            // Construct the URL with the project_id as a query parameter
+            var url = '/save_infoucr/?project_id=' + projectId;
+            var csrftoken = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
 
-// Sending data to the backend using AJAX
-fetch(`/save_infoucr/${projectId}/`, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken 
-    },
-    body: JSON.stringify(data),
-})
-.then(response => {
-    if (response.ok) {
-        console.log('Info saved successfully.');
-        // Do something after successful save if needed
-    } else {
-        console.error('Failed to save info.');
-        // Handle error if needed
-    }
-})
-.catch(error => {
-    console.error('Error:', error);
-    // Handle error if needed
-});
+            // Sending data to the backend using AJAX
+            fetch(`/save_infoucr/${projectId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken 
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Info saved successfully.');
+                    // Do something after successful save if needed
+                } else {
+                    console.error('Failed to save info.');
+                    // Handle error if needed
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle error if needed
+            });
         }
 
         function saveAsPdf() {
@@ -667,35 +674,24 @@ fetch(`/save_infoucr/${projectId}/`, {
             return cookieValue;
         }
 
-        document.addEventListener('DOMContentLoaded',function(){
-            var carry_forward_from_prev_fy = document.getElementById('carry_forward_from_prev_fy').value || 0;
-            var others = document.getElementById('others').value || 0;
-            var total = document.getElementById('total');
-
-            var total_ele = parseFloat(carry_forward_from_prev_fy)+parseFloat(others);
-            total.textContent = total_ele;
-
-            var grant_in_aid_general = document.getElementById('grant_in_aid_general').value || 0;
-            var grant_in_aid_ca = document.getElementById('grant_in_aid_ca').value || 0;
-
-            var component_wise_grant_total = document.getElementById('component_wise_grant_total');
-
-            var total_ele = parseFloat(grant_in_aid_general)+parseFloat(grant_in_aid_ca);
-            component_wise_grant_total.textContent = total_ele;
+        document.addEventListener('DOMContentLoaded',function(){            
 
             if ({{ details }}) {
                 console.log("entered")
                 var interest_1_Input = document.getElementById('interest_1');
                 var interest_2_Input = document.getElementById('interest_2');
                 var carryForwardInput = document.getElementById('carry_forward_from_prev_fy');
+                
                 var othersInput = document.getElementById('others');
                 var unspentInput = document.getElementById('unspent');
+                var expenditure = document.getElementById('expenditure');
               //  var amountInput = document.getElementById('amount');
                 var grantInAidGeneralInput = document.getElementById('grant_in_aid_general');
                 var grantInAidCAInput = document.getElementById('grant_in_aid_ca');
                 var balanceAtEndInput = document.getElementById('balance_at_end_of_fy');
                 var unspentBalanceRefundedInput = document.getElementById('unspent_balance_refunded_to_serb');
                 var balanceCarriedForwardInput = document.getElementById('balance_carrried_forward');
+                var scheme = document.getElementById("scheme");
         
                 interest_1_Input.value = "{{ parsed_data3.interest_1 }}";
                 console.log({{ parsed_data3.interest_1 }});
@@ -704,16 +700,46 @@ fetch(`/save_infoucr/${projectId}/`, {
                 carryForwardInput.value = "{{ parsed_data3.carry_forward_from_prev_fy }}";
                 othersInput.value = "{{ parsed_data3.others }}";
                 unspentInput.value = "{{ parsed_data3.unspent }}";
+                expenditure.value = "{{ parsed_data3.expenditure }}";
                // amountInput.value = "{{ parsed_data3.amount }}";
                 grantInAidGeneralInput.value = "{{ parsed_data3.grant_in_aid_general }}";
                 grantInAidCAInput.value = "{{ parsed_data3.grant_in_aid_ca }}";
                 balanceAtEndInput.value = "{{ parsed_data3.balance_at_end_of_fy }}";
                 unspentBalanceRefundedInput.value = "{{ parsed_data3.unspent_balance_refunded_to_serb }}";
                 balanceCarriedForwardInput.value = "{{ parsed_data3.balance_carrried_forward }}";
+                scheme.value = "{{parsed_data3.scheme}}";
             } else {
                 console.log("Details are not available");
             }
 
+            var total = document.getElementsByClassName('total');
+
+            console.log("carryForwardInput.value: ",carryForwardInput.value);
+            console.log("others: ",others.value);
+
+            var total_ele = parseFloat(carryForwardInput.value)+parseFloat(othersInput.value);
+            for(var i=0;i<total.length;i++){
+                var ele = total[i];
+                ele.textContent = total_ele;
+            }
+
+            var closing = document.getElementById('closing');
+
+            console.log("total", total_ele);
+            var closing_ele = total_ele - parseFloat(expenditure.value);
+            console.log("closing_ele",closing_ele);
+            closing.textContent = closing_ele;
+
+            var component_wise_grant_total = document.getElementById('component_wise_grant_total');
+
+            var total_ele = parseFloat(grantInAidGeneralInput.value)+parseFloat(grantInAidCAInput.value);
+            component_wise_grant_total.textContent = total_ele;
+
+            var balance_at_end_of_fy = document.getElementById('balance_at_end_of_fy');
+            var unspent_balance_refunded_to_serb = document.getElementById('unspent_balance_refunded_to_serb');
+            var balance_carrried_forward = document.getElementById('balance_carrried_forward');
+
+            balance_carrried_forward.textContent = parseFloat(balance_at_end_of_fy.value) - parseFloat(unspent_balance_refunded_to_serb.value);
 
         });
 
