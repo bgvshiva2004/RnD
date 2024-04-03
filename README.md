@@ -14,7 +14,7 @@ This project aims to develop a custom software solution tailored for the Researc
 ## Installation
 To deploy the software, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/bgvshiva2004/RnD.git`
+1. Clone the repository: [clone RnD]`git clone https://github.com/bgvshiva2004/RnD.git`
 2. Navigate to the project directory: `cd RnD`
 3. Install dependencies: `pip install -r requirements.txt`
 4. Set up the database and configure the environment variables as per the provided instructions.
@@ -22,6 +22,10 @@ To deploy the software, follow these steps:
 
 ## Dependencies
 - Python 3.11.3
+- Other dependencies specified in the requirements.txt file
+
+## Documentation
+- Here is the [Documentation](https://onedrive.live.com/edit?id=A9A58A59588E982E!85926&resid=A9A58A59588E982E!85926&ithint=file%2cdocx&authkey=!AJGx3gX43ihXUMw&wdo=2&cid=a9a58a59588e982e) of the software
 
 ## Contributing
 Contributions to the project are welcome! If you have suggestions for improvements or feature requests, please open a pull request or raise an issue in the repository.
