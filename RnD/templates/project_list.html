@@ -409,7 +409,7 @@
            
     <script src="{% static 'script.js' %}"></script>
     <script >
-
+    
       {% comment %} document.addEventListener('DOMContentLoaded', function() {
         const deleteButtons = document.querySelectorAll('.delete-project');
         
@@ -431,6 +431,21 @@
         });
     }); {% endcomment %}
       
+    document.addEventListener('DOMContentLoaded', function() {
+      // Parse the current URL
+      const urlParams = new URLSearchParams(window.location.search);
+      
+      // Check if the filter parameter exists and its value
+      const filter = urlParams.get('filter');
+      
+      // Highlight the corresponding button based on the filter parameter
+      if (filter === 'ongoing') {
+          document.getElementById("ongoing").classList.add("active1");
+      } else if (filter === 'completed') {
+          document.getElementById("completed").classList.add("active1");
+      }
+      
+  });
 
         var ongoing = document.getElementById("ongoing");
         var completed = document.getElementById("completed");
@@ -440,16 +455,17 @@
           }
         
           function showOngoingProjects() {
-            // Redirect to the same page with a filter for ongoing projects
-            window.location.href = "{% url 'project_list' %}?filter=ongoing";
+            // Redirect to the same page with a filter for ongoing projects           
+            window.location.href = "{% url 'project_list' %}?filter=ongoing"; 
             
           }
         
           function showCompletedProjects() {
             // Redirect to the same page with a filter for completed projects
             window.location.href = "{% url 'project_list' %}?filter=completed";
-            ongoing.classList.remove("active1");
-            completed.classList.add("active1");
+            document.getElementById("completed").classList.add("active");
+            // Remove active class from ongoing projects button (if it exists)
+            document.getElementById("ongoing").classList.remove("active");
           }
 
           function confirmDelete() {

@@ -280,7 +280,13 @@
   margin-right: 20px;
 }
 
-
+.btn-row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  margin: auto;
+}
     </style>
   </head>
   <body>
@@ -676,8 +682,10 @@
     </div>
   </div>
 </div>
-<button onclick="saveInfo()">Save Info</button>
-<button onclick="saveAsPdf()" class='btn'>Save as PDF</button>
+<div class="btn-row">
+  <button onclick="saveInfo()" class="btn">Save Info</button>
+  <button onclick="saveAsPdf()" class='btn'>Save as PDF</button>
+</div>
 {% comment %} <button onclick="convertToImageAndSave()">Convert to Image and Save</button> {% endcomment %}
 
     <footer>

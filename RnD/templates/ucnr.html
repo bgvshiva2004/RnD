@@ -187,6 +187,42 @@
             }
         }
 
+        .btn-row{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40%;
+            margin: auto;
+        }
+
+        input{
+            border: none;
+            outline: none;
+            background: transparent;
+            text-align: center;
+        }
+
+        td input{
+            width: 150px;
+        }
+
+        th.table-head{
+            width: 150px;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield; /* Firefox */
+    }
+
+    table.unspent tr td input{
+        width: 100px;
+    }
     </style>
 </head>
 <body>
@@ -314,7 +350,7 @@
 
         <h2>8. Details of grants received, expenditure incurred and closing balances: (Actuals)</h2>
 
-        <table>
+        <table class="unspent">
             <thead>
                 <tr>
                     <th rowspan="2">Unspent </th>
@@ -368,9 +404,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>Grant-in-aid General</th>
-                    <th>Grant-in-aid Creation of Capital Asset</th>
-                    <th>Total</th>
+                    <th class="table-head">Grant-in-aid General</th>
+                    <th class="table-head">Grant-in-aid Creation of Capital Asset</th>
+                    <th class="table-head">Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -464,9 +500,10 @@
         </div>
     </div>
 </div>
-<button onclick="saveInfo()">Save Info</button>
-<button class="btn" onclick="saveAsPdf()">Save as PDF</button>
-   
+<div class="btn-row">
+    <button class="btn" onclick="saveInfo()">Save Info</button>
+    <button class="btn" onclick="saveAsPdf()">Save as PDF</button>
+</div>
     <footer>
         <div class="footer">
           <div class="info">
