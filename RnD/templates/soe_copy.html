@@ -287,6 +287,15 @@
   width: 40%;
   margin: auto;
 }
+
+input#projectDescription{
+  border: none;
+  outline:none;
+  border-bottom: 1.5px solid var(--secondary-color);
+  font-size: 18px;
+  padding: 5px;
+  text-align:center;
+}
     </style>
   </head>
   <body>
@@ -380,7 +389,7 @@
 
         <h2 style='font-size:27px'>Statement of Expenditure (during financial year: {{financialYearStartYear}}-{{financialYearStartYear|add:1}})</h2>
         <br></br>
-        <input type="text" id="projectDescription">
+        <input type="text" id="projectDescription" placeholder="(Note, if any)">
 
         <table id="expenditureTable">
             <thead>
