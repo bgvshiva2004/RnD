@@ -1,0 +1,1 @@
+{"interest_1": "200", "interest_2": "300", "carry_forward_from_prev_fy": "2000", "others": "0", "unspent": "100", "expenditure": "500", "grant_in_aid_general": "500", "grant_in_aid_ca": "0", "balance_at_end_of_fy": "1500", "unspent_balance_refunded_to_serb": "100", "balance_carrried_forward": "0", "scheme": ""}
